@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Request home sample collection for your lab tests on MediConnect.">
+  <title>Sample Collection – MediConnect</title>
+  <link rel="stylesheet" href="/css/variables.css"><link rel="stylesheet" href="/css/base.css"><link rel="stylesheet" href="/css/components.css"><link rel="stylesheet" href="/css/layout.css"><link rel="stylesheet" href="/css/forms.css"><link rel="stylesheet" href="/css/dashboard.css"><link rel="stylesheet" href="/css/utilities.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar (rendered by sidebar.js) -->
+    <aside class="sidebar" id="sidebar"></aside>
+    <main class="main">
+      <!-- Topbar (rendered by sidebar.js) -->
+      <header class="topbar" id="topbar"></header>
+      <div class="content fade-in">
+        <div class="page-header"><div><h1 class="page-header__title">Sample Collection</h1><p class="page-header__subtitle">Request home sample pickup for your lab tests</p></div>
+          <button class="btn btn--primary" onclick="SampleCollection.openRequestModal()">+ Request Pickup</button>
+        </div>
+        <div id="sample-requests-list"><div class="empty-state"><div class="spinner"></div></div></div>
+      </div>
+    </main>
+  </div>
+  <div class="modal-overlay" id="sample-collection-modal"><div class="modal"><div class="modal__header"><h3>Request Sample Collection</h3><button class="btn btn--ghost btn--icon" onclick="UI.closeModal('sample-collection-modal')">✕</button></div><div class="modal__body">
+    <form id="sample-collection-form">
+      <div class="form-group"><label class="form-label form-label--required" for="sc-booking-id">Eligible Lab Booking</label><select id="sc-booking-id" class="form-select" required><option value="">Select an Eligible Lab Booking</option></select></div>
+      <div class="form-group"><label class="form-label form-label--required" for="sc-address">Collection Address</label><textarea id="sc-address" class="form-textarea" rows="3" placeholder="Enter your full address for sample pickup..." required></textarea></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label form-label--required" for="sc-date">Preferred Date</label><input type="date" id="sc-date" class="form-input" required></div>
+        <div class="form-group"><label class="form-label" for="sc-time-slot">Time Slot</label><select id="sc-time-slot" class="form-select"><option value="09:00-11:00">9:00 AM – 11:00 AM</option><option value="11:00-13:00">11:00 AM – 1:00 PM</option><option value="14:00-16:00">2:00 PM – 4:00 PM</option><option value="16:00-18:00">4:00 PM – 6:00 PM</option></select></div>
+      </div>
+      <div class="form-group"><label class="form-label" for="sc-notes">Notes</label><textarea id="sc-notes" class="form-textarea" rows="2" placeholder="Any special instructions..."></textarea></div>
+      <button type="submit" class="btn btn--primary btn--block">Submit Request</button>
+    </form>
+  </div></div></div>
+
+  <script src="/js/config.js"></script><script src="/js/api.js"></script><script src="/js/ui.js"></script><script src="/js/validation.js"></script><script src="/js/auth.js"></script><script src="/js/sidebar.js"></script><script src="/js/router.js"></script><script src="/js/sample-collection.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => { Sidebar.init('Sample Collection', 'Home / Sample Collection'); SampleCollection.init(); });</script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sign up for MediConnect – Create your free account and start managing your healthcare digitally.">
+  <title>Sign Up – MediConnect</title>
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/forms.css">
+  <link rel="stylesheet" href="/css/auth.css">
+  <link rel="stylesheet" href="/css/utilities.css">
+</head>
+<body>
+  <div class="auth-page">
+    <div class="auth-panel">
+      <div class="auth-panel__content">
+        <div class="auth-panel__logo">M</div>
+        <h1 class="auth-panel__title">Join MediConnect</h1>
+        <p class="auth-panel__description">Create your free account and take control of your healthcare journey today.</p>
+        <div class="auth-panel__features">
+          <div class="auth-panel__feature"><div class="auth-panel__feature-icon">🏥</div><span>For patients & doctors</span></div>
+          <div class="auth-panel__feature"><div class="auth-panel__feature-icon">🔒</div><span>Secure & private</span></div>
+          <div class="auth-panel__feature"><div class="auth-panel__feature-icon">⚡</div><span>Set up in 30 seconds</span></div>
+          <div class="auth-panel__feature"><div class="auth-panel__feature-icon">💸</div><span>Completely free</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="auth-form-container">
+      <div class="auth-form">
+        <div class="auth-form__header">
+          <h2 class="auth-form__title">Create Account</h2>
+          <p class="auth-form__subtitle">Select your role and fill in your details</p>
+        </div>
+
+        <!-- Alert Message Area -->
+        <div id="signup-alert" class="auth-alert"></div>
+
+        <!-- Role Toggle -->
+        <div class="role-toggle" id="role-toggle">
+          <button type="button" class="role-toggle__btn active" data-role="patient" id="role-patient-btn">
+            <span class="role-toggle__icon">🩺</span> Patient
+          </button>
+          <button type="button" class="role-toggle__btn" data-role="doctor" id="role-doctor-btn">
+            <span class="role-toggle__icon">👨‍⚕️</span> Doctor
+          </button>
+        </div>
+
+        <form id="signup-form">
+          <!-- Hidden role field -->
+          <input type="hidden" id="signup-role" value="patient">
+
+          <div class="form-group">
+            <label class="form-label form-label--required" for="signup-name">Full Name</label>
+            <input type="text" id="signup-name" class="form-input" placeholder="Enter your full name" required autocomplete="name">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label form-label--required" for="signup-email">Email Address</label>
+            <input type="email" id="signup-email" class="form-input" placeholder="you@example.com" required autocomplete="email">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="signup-phone">Phone Number</label>
+            <input type="tel" id="signup-phone" class="form-input" placeholder="9876543210" autocomplete="tel">
+          </div>
+
+          <!-- Doctor-specific fields -->
+          <div class="doctor-fields" id="doctor-fields">
+            <div class="doctor-fields__header">
+              <span>🩻</span> Professional Details
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label form-label--required" for="signup-specialization">Specialization</label>
+                <select id="signup-specialization" class="form-select">
+                  <option value="">Select specialization</option>
+                  <option value="Cardiology">Cardiology</option>
+                  <option value="Dermatology">Dermatology</option>
+                  <option value="Endocrinology">Endocrinology</option>
+                  <option value="Gastroenterology">Gastroenterology</option>
+                  <option value="General Medicine">General Medicine</option>
+                  <option value="Gynecology">Gynecology</option>
+                  <option value="Neurology">Neurology</option>
+                  <option value="Oncology">Oncology</option>
+                  <option value="Ophthalmology">Ophthalmology</option>
+                  <option value="Orthopedics">Orthopedics</option>
+                  <option value="Pediatrics">Pediatrics</option>
+                  <option value="Psychiatry">Psychiatry</option>
+                  <option value="Pulmonology">Pulmonology</option>
+                  <option value="Radiology">Radiology</option>
+                  <option value="Surgery">Surgery</option>
+                  <option value="Urology">Urology</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label form-label--required" for="signup-qualification">Qualification</label>
+                <input type="text" id="signup-qualification" class="form-input" placeholder="e.g. MBBS, MD">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="signup-experience">Experience (years)</label>
+                <input type="number" id="signup-experience" class="form-input" placeholder="0" min="0" max="60">
+              </div>
+              <div class="form-group">
+                <label class="form-label form-label--required" for="signup-license">License Number</label>
+                <input type="text" id="signup-license" class="form-input" placeholder="MCI-XXXX-XXX">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label form-label--required" for="signup-password">Password</label>
+            <div class="password-wrapper">
+              <input type="password" id="signup-password" class="form-input" placeholder="Min. 6 characters" required autocomplete="new-password">
+              <button type="button" class="password-toggle" id="signup-password-toggle" aria-label="Toggle password visibility">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                  <line x1="1" y1="1" x2="23" y2="23" style="display:none;" class="eye-slash-line"></line>
+                </svg>
+              </button>
+            </div>
+            <div class="password-strength" id="password-strength">
+              <div class="password-strength__bar">
+                <div class="password-strength__fill" id="password-strength-fill"></div>
+              </div>
+              <span class="password-strength__label" id="password-strength-label"></span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label form-label--required" for="signup-confirm-password">Confirm Password</label>
+            <div class="password-wrapper">
+              <input type="password" id="signup-confirm-password" class="form-input" placeholder="Re-enter your password" required autocomplete="new-password">
+              <button type="button" class="password-toggle" id="confirm-password-toggle" aria-label="Toggle password visibility">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                  <line x1="1" y1="1" x2="23" y2="23" style="display:none;" class="eye-slash-line"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-check">
+              <input type="checkbox" id="signup-terms" required> I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--block btn--lg" id="signup-btn">Create Account</button>
+        </form>
+
+        <div class="auth-form__footer">
+          Already have an account? <a href="/login.html">Sign in</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/validation.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/router.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => Auth.initSignupPage());</script>
+</body>
+</html>

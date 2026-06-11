@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="View and manage your notifications on MediConnect.">
+  <title>Notifications – MediConnect</title>
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/forms.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/utilities.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar (rendered by sidebar.js) -->
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <!-- Topbar (rendered by sidebar.js) -->
+      <header class="topbar" id="topbar"></header>
+
+      <!-- Content -->
+      <div class="content fade-in">
+        <div class="dashboard-section">
+          <div class="dashboard-section__header">
+            <h3 class="dashboard-section__title">Notifications</h3>
+            <button class="btn btn--sm btn--outline" id="mark-all-read-btn">Mark All as Read</button>
+          </div>
+          <!-- Filter Panel -->
+          <div class="card mb-4" style="background: var(--bg-surface); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color);">
+            <div class="d-flex gap-3 flex-wrap align-items-center">
+              <div style="flex: 1; min-width: 200px;">
+                <input type="text" id="notif-search" class="form-input" placeholder="Search title or message content..." style="margin-bottom: 0;">
+              </div>
+              <div style="width: 180px;">
+                <select id="notif-filter-type" class="form-select" style="margin-bottom: 0;">
+                  <option value="">All Categories</option>
+                  <option value="appointment">Appointment</option>
+                  <option value="lab">Lab Test</option>
+                  <option value="report">Medical Report</option>
+                  <option value="system">System Updates</option>
+                  <option value="reminder">Reminders</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div id="notifications-list">
+            <div class="empty-state"><div class="spinner"></div></div>
+          </div>
+          <div id="notifications-pagination"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/validation.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/router.js"></script>
+  <script src="/js/notifications.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => { Sidebar.init('Notifications', 'Home / Notifications'); Notifications.init(); });</script>
+</body>
+</html>

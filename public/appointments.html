@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Manage your appointments – Book, view, reschedule, and cancel appointments on MediConnect.">
+  <title>Appointments – MediConnect</title>
+  <link rel="stylesheet" href="/css/variables.css"><link rel="stylesheet" href="/css/base.css"><link rel="stylesheet" href="/css/components.css"><link rel="stylesheet" href="/css/layout.css"><link rel="stylesheet" href="/css/forms.css"><link rel="stylesheet" href="/css/dashboard.css"><link rel="stylesheet" href="/css/utilities.css">
+  <style>.slot-btn { min-width: 90px; margin: 4px; } .time-slots-grid { display: flex; flex-wrap: wrap; gap: 4px; margin-top: var(--space-4); }</style>
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar (rendered by sidebar.js) -->
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <main class="main">
+      <!-- Topbar (rendered by sidebar.js) -->
+      <header class="topbar" id="topbar"></header>
+
+      <div class="content fade-in">
+        <div class="page-header">
+          <div><h1 class="page-header__title">Appointments</h1><p class="page-header__subtitle">Manage all your appointments</p></div>
+          <div class="d-flex gap-3">
+            <input type="text" id="search-appointments" class="form-input" placeholder="Search doctor or reason..." style="width:200px;">
+            <select id="filter-status" class="form-select" style="width:auto;">
+              <option value="">All Status</option>
+              <option value="pending">Pending</option>
+              <option value="scheduled">Scheduled</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+              <option value="rescheduled">Rescheduled</option>
+            </select>
+            <button class="btn btn--primary" onclick="UI.openModal('book-appointment-modal')">+ Book Appointment</button>
+          </div>
+        </div>
+
+        <div id="appointments-list"><div class="empty-state"><div class="spinner"></div></div></div>
+        <div id="appointments-pagination"></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Book Appointment Modal -->
+  <div class="modal-overlay" id="book-appointment-modal">
+    <div class="modal">
+      <div class="modal__header"><h3>Book an Appointment</h3><button class="btn btn--ghost btn--icon" onclick="UI.closeModal('book-appointment-modal')">✕</button></div>
+      <div class="modal__body">
+        <form id="book-appointment-form">
+          <div class="form-group"><label class="form-label form-label--required" for="appt-doctor">Select Doctor</label><select id="appt-doctor" class="form-select" required><option value="">Loading doctors...</option></select></div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label form-label--required" for="appt-date">Date</label><input type="date" id="appt-date" class="form-input" required></div>
+            <div class="form-group"><label class="form-label" for="appt-type">Type</label><select id="appt-type" class="form-select"><option value="in_person">In-Person</option><option value="teleconsult">Teleconsult</option></select></div>
+          </div>
+          <input type="hidden" id="appt-time" value="">
+          <div class="form-group"><label class="form-label">Available Slots</label><div class="time-slots-grid" id="time-slots"><p class="text-muted text-sm">Select a doctor and date to see available slots.</p></div></div>
+          <div class="form-group"><label class="form-label" for="appt-reason">Reason (Optional)</label><textarea id="appt-reason" class="form-textarea" rows="3" placeholder="Describe your symptoms or reason for visit..."></textarea></div>
+          <button type="submit" class="btn btn--primary btn--block">Confirm Booking</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Appointment Detail Modal -->
+  <div class="modal-overlay" id="appointment-detail-modal">
+    <div class="modal" style="max-width:600px;">
+      <div class="modal__header"><h3>Appointment Details</h3><button class="btn btn--ghost btn--icon" onclick="UI.closeModal('appointment-detail-modal')">✕</button></div>
+      <div class="modal__body" id="appointment-details"></div>
+    </div>
+  </div>
+
+  <!-- Reschedule Appointment Modal -->
+  <div class="modal-overlay" id="reschedule-appointment-modal">
+    <div class="modal">
+      <div class="modal__header"><h3>Reschedule Appointment</h3><button class="btn btn--ghost btn--icon" onclick="UI.closeModal('reschedule-appointment-modal')">✕</button></div>
+      <div class="modal__body">
+        <form id="reschedule-appointment-form">
+          <input type="hidden" id="reschedule-appt-id" value="">
+          <input type="hidden" id="reschedule-doctor-id" value="">
+          <div class="form-group">
+            <label class="form-label form-label--required" for="reschedule-date">New Date</label>
+            <input type="date" id="reschedule-date" class="form-input" required>
+          </div>
+          <input type="hidden" id="reschedule-time" value="">
+          <div class="form-group">
+            <label class="form-label">Available Slots</label>
+            <div class="time-slots-grid" id="reschedule-time-slots">
+              <p class="text-muted text-sm">Please select a date to see available slots.</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="reschedule-reason">Reason for Rescheduling</label>
+            <textarea id="reschedule-reason" class="form-textarea" rows="2" placeholder="Brief reason..."></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary btn--block">Confirm Reschedule</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/config.js"></script><script src="/js/api.js"></script><script src="/js/ui.js"></script><script src="/js/validation.js"></script><script src="/js/auth.js"></script><script src="/js/sidebar.js"></script><script src="/js/router.js"></script><script src="/js/appointments.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => { Sidebar.init('Appointments', 'Home / Appointments'); Appointments.init(); });</script>
+</body>
+</html>

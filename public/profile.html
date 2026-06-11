@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Manage your patient profile – update contact details, emergency info, and personal information on MediConnect.">
+  <title>My Profile – MediConnect</title>
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/forms.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/utilities.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar (rendered by sidebar.js) -->
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <!-- Topbar (rendered by sidebar.js) -->
+      <header class="topbar" id="topbar"></header>
+
+      <!-- Content -->
+      <div class="content fade-in">
+        <div class="page-header">
+          <div>
+            <h1 class="page-header__title">My Profile</h1>
+            <p class="page-header__subtitle">View and update your personal information</p>
+          </div>
+        </div>
+
+        <!-- Profile Header Card -->
+        <div class="profile-header-card" id="profile-header">
+          <div class="profile-header-card__avatar" id="profile-avatar">P</div>
+          <div class="profile-header-card__info">
+            <div class="profile-header-card__name" id="profile-name">Loading...</div>
+            <div class="profile-header-card__role" id="profile-role">Patient</div>
+            <div class="profile-header-card__email" id="profile-email">—</div>
+          </div>
+        </div>
+
+        <!-- Profile Form -->
+        <div class="card">
+          <div class="card__header">
+            <h3>Personal Information</h3>
+          </div>
+          <div class="card__body">
+            <form id="profile-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="prof-name">Full Name</label>
+                  <input type="text" id="prof-name" class="form-input" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="prof-email">Email</label>
+                  <input type="email" id="prof-email" class="form-input" disabled>
+                  <small class="text-muted">Email cannot be changed</small>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="prof-phone">Phone</label>
+                  <input type="tel" id="prof-phone" class="form-input" placeholder="Enter phone number">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="prof-dob">Date of Birth</label>
+                  <input type="date" id="prof-dob" class="form-input">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="prof-gender">Gender</label>
+                  <select id="prof-gender" class="form-select">
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="prof-blood-group">Blood Group</label>
+                  <select id="prof-blood-group" class="form-select">
+                    <option value="">Select Blood Group</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="prof-address">Address</label>
+                <textarea id="prof-address" class="form-textarea" rows="3" placeholder="Enter your full address"></textarea>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="prof-emergency">Emergency Contact</label>
+                  <input type="tel" id="prof-emergency" class="form-input" placeholder="Emergency contact number">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="prof-allergies">Allergies</label>
+                  <input type="text" id="prof-allergies" class="form-input" placeholder="e.g., Penicillin, Peanuts">
+                </div>
+              </div>
+
+              <div class="d-flex gap-3 mt-4">
+                <button type="submit" class="btn btn--primary">Save Changes</button>
+                <button type="button" class="btn btn--ghost" onclick="Profile.loadProfile()">Reset</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Notification Preferences Card -->
+        <div class="card mt-4">
+          <div class="card__header">
+            <h3>Notification Preferences</h3>
+          </div>
+          <div class="card__body">
+            <form id="preferences-form">
+              <p class="text-muted mb-4">Choose which notifications you would like to receive. Critical system updates will always be sent.</p>
+              
+              <div class="form-group mb-3">
+                <label class="form-check">
+                  <input type="checkbox" id="pref-appointments" name="enable_appointment_reminders">
+                  <span><strong>Appointments</strong> <span class="text-muted text-sm">— Booking confirmations, rescheduling, and upcoming reminder alerts</span></span>
+                </label>
+              </div>
+
+              <div class="form-group mb-3">
+                <label class="form-check">
+                  <input type="checkbox" id="pref-consultations" name="enable_consultation_reminders">
+                  <span><strong>Online Consultations</strong> <span class="text-muted text-sm">— Consultation booking details, updates, call links, and prescription alerts</span></span>
+                </label>
+              </div>
+
+              <div class="form-group mb-3">
+                <label class="form-check">
+                  <input type="checkbox" id="pref-labs" name="enable_lab_reminders">
+                  <span><strong>Lab Bookings</strong> <span class="text-muted text-sm">— Lab test slot bookings, updates, and booking confirmations</span></span>
+                </label>
+              </div>
+
+              <div class="form-group mb-3">
+                <label class="form-check">
+                  <input type="checkbox" id="pref-collections" name="enable_collection_reminders">
+                  <span><strong>Home Sample Collections</strong> <span class="text-muted text-sm">— Medical staff sample collection assignments, timing updates, and status</span></span>
+                </label>
+              </div>
+
+              <div class="form-group mb-3">
+                <label class="form-check">
+                  <input type="checkbox" id="pref-reports" name="enable_report_notifications">
+                  <span><strong>Medical Reports</strong> <span class="text-muted text-sm">— Notification of medical report uploads, modifications, and download updates</span></span>
+                </label>
+              </div>
+
+              <div class="form-group mb-3">
+                <label class="form-check">
+                  <input type="checkbox" id="pref-system" name="enable_system_notifications">
+                  <span><strong>System & Announcements</strong> <span class="text-muted text-sm">— General system announcements, security alerts, and administrative updates</span></span>
+                </label>
+              </div>
+
+              <div class="d-flex gap-3 mt-4">
+                <button type="submit" class="btn btn--primary">Save Preferences</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/validation.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/router.js"></script>
+  <script src="/js/profile.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => { Sidebar.init('My Profile', 'Home / Profile'); Profile.init(); });</script>
+</body>
+</html>

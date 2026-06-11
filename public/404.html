@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found – MediConnect</title>
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/utilities.css">
+  <style>
+    .error-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-bg);
+      text-align: center;
+      padding: 2rem;
+    }
+    .error-page__code {
+      font-size: 8rem;
+      font-weight: 800;
+      color: var(--color-primary);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      opacity: 0.3;
+    }
+    .error-page__title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--color-dark);
+      margin-bottom: 0.75rem;
+    }
+    .error-page__message {
+      color: var(--color-gray-500);
+      margin-bottom: 2rem;
+      max-width: 400px;
+    }
+    .error-page__actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="error-page">
+    <div>
+      <div class="error-page__code">404</div>
+      <div class="error-page__title">Page Not Found</div>
+      <p class="error-page__message">
+        The page you're looking for doesn't exist or has been moved.
+        Let's get you back on track.
+      </p>
+      <div class="error-page__actions">
+        <a href="/" class="btn btn--primary">Go Home</a>
+        <a href="javascript:history.back()" class="btn btn--outline">Go Back</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

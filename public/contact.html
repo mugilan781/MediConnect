@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact MediConnect – Get in touch with our support team for any queries or assistance.">
+  <title>Contact Us – MediConnect</title>
+  <link rel="stylesheet" href="/css/variables.css"><link rel="stylesheet" href="/css/base.css"><link rel="stylesheet" href="/css/components.css"><link rel="stylesheet" href="/css/layout.css"><link rel="stylesheet" href="/css/forms.css"><link rel="stylesheet" href="/css/utilities.css">
+  <style>
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); max-width: 1000px; margin: 0 auto; padding: var(--space-12) var(--space-8); }
+    .contact-info { display: flex; flex-direction: column; gap: var(--space-6); }
+    .contact-info__item { display: flex; gap: var(--space-4); align-items: flex-start; }
+    .contact-info__icon { width: 48px; height: 48px; border-radius: var(--radius-lg); background: var(--color-mint-light); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+    .contact-info__text h4 { margin-bottom: var(--space-1); }
+    .contact-info__text p { color: var(--color-text-light); font-size: var(--font-size-sm); }
+    @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body class="public-page">
+  <header class="public-header">
+    <a href="/index.html" class="public-header__logo"><div class="sidebar__logo-icon">M</div><span style="font-size:var(--font-size-lg);font-weight:var(--font-weight-bold);color:var(--color-gray-800);">MediConnect</span></a>
+    <nav class="public-header__nav"><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/faq.html">FAQ</a><a href="/login.html" class="btn btn--secondary btn--sm">Login</a><a href="/signup.html" class="btn btn--primary btn--sm">Sign Up</a></nav>
+  </header>
+
+  <div style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); padding: var(--space-16) var(--space-8); text-align: center; color: white;">
+    <h1 id="contact-hero-title" style="font-size: var(--font-size-3xl); margin-bottom: var(--space-4); color: white;">Get in Touch</h1>
+    <p id="contact-hero-subtitle" style="opacity: 0.9; font-size: var(--font-size-lg);">We'd love to hear from you. Reach out with any questions or feedback.</p>
+  </div>
+
+  <div class="contact-grid">
+    <div>
+      <h2 class="mb-6">Send us a message</h2>
+      <form id="contact-form">
+        <div class="form-group"><label class="form-label form-label--required" for="contact-name">Your Name</label><input type="text" id="contact-name" class="form-input" placeholder="Enter your full name" required></div>
+        <div class="form-group"><label class="form-label form-label--required" for="contact-email">Email Address</label><input type="email" id="contact-email" class="form-input" placeholder="you@example.com" required></div>
+        <div class="form-group"><label class="form-label form-label--required" for="contact-subject">Subject</label><input type="text" id="contact-subject" class="form-input" placeholder="How can we help?" required></div>
+        <div class="form-group"><label class="form-label form-label--required" for="contact-message">Message</label><textarea id="contact-message" class="form-textarea" rows="5" placeholder="Type your message here..." required></textarea></div>
+        <button type="submit" class="btn btn--primary btn--lg">Send Message</button>
+      </form>
+    </div>
+    <div id="contact-info-container" class="contact-info">
+      <h2 class="mb-6">Contact Information</h2>
+      <div class="contact-info__item"><div class="contact-info__icon">📍</div><div class="contact-info__text"><h4 id="contact-address-title">Address</h4><p id="contact-address-value">100 Health Avenue, Bengaluru 560001, India</p></div></div>
+      <div class="contact-info__item"><div class="contact-info__icon">📞</div><div class="contact-info__text"><h4 id="contact-phone-title">Phone</h4><p id="contact-phone-value">+91-80-1234-5678</p></div></div>
+      <div class="contact-info__item"><div class="contact-info__icon">📧</div><div class="contact-info__text"><h4 id="contact-email-title">Email</h4><p id="contact-email-value">contact@mediconnect.com</p></div></div>
+      <div class="contact-info__item"><div class="contact-info__icon">🕐</div><div class="contact-info__text"><h4 id="contact-hours-title">Working Hours</h4><p id="contact-hours-value">Mon – Sat: 8:00 AM – 8:00 PM<br>Sunday: 9:00 AM – 2:00 PM</p></div></div>
+    </div>
+  </div>
+
+  <footer class="public-footer"><div style="text-align:center;"><p>&copy; 2026 MediConnect. All rights reserved.</p></div></footer>
+
+  <script src="/js/config.js"></script><script src="/js/api.js"></script><script src="/js/ui.js"></script><script src="/js/validation.js"></script><script src="/js/auth.js"></script><script src="/js/router.js"></script><script src="/js/contact.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => { Sidebar.init('Contact Us', 'Home / Contact'); Contact.init(); });</script>
+</body>
+</html>

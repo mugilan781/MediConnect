@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="View and manage medical reports – lab results, prescriptions, and imaging reports on MediConnect.">
+  <title>Reports – MediConnect</title>
+  <link rel="stylesheet" href="/css/variables.css"><link rel="stylesheet" href="/css/base.css"><link rel="stylesheet" href="/css/components.css"><link rel="stylesheet" href="/css/layout.css"><link rel="stylesheet" href="/css/forms.css"><link rel="stylesheet" href="/css/dashboard.css"><link rel="stylesheet" href="/css/utilities.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar (rendered by sidebar.js) -->
+    <aside class="sidebar" id="sidebar"></aside>
+    <main class="main">
+      <!-- Topbar (rendered by sidebar.js) -->
+      <header class="topbar" id="topbar"></header>
+      <div class="content fade-in">
+        <div class="page-header"><div><h1 class="page-header__title">Medical Reports</h1><p class="page-header__subtitle">View and download your medical reports</p></div></div>
+        <div id="reports-list"><div class="empty-state"><div class="spinner"></div></div></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/config.js"></script><script src="/js/api.js"></script><script src="/js/ui.js"></script><script src="/js/validation.js"></script><script src="/js/auth.js"></script><script src="/js/sidebar.js"></script><script src="/js/router.js"></script><script src="/js/reports.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => { Sidebar.init('Reports', 'Home / Reports'); Reports.init(); });</script>
+</body>
+</html>

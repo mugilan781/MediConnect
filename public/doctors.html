@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Find a Doctor – Search healthcare professionals and book your appointments online on MediConnect.">
+  <title>Find a Doctor – MediConnect</title>
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/forms.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/utilities.css">
+  <style>
+    .doctor-card {
+      background: white;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all var(--transition-base);
+    }
+    .doctor-card:hover {
+      box-shadow: var(--shadow-card-hover);
+      border-color: var(--color-primary);
+      transform: translateY(-2px);
+    }
+    .doctor-card__header {
+      display: flex;
+      gap: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+    .doctor-card__avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--color-primary-light);
+      color: var(--color-primary-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-bold);
+    }
+    .doctor-card__info {
+      flex: 1;
+    }
+    .doctor-card__name {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-gray-800);
+      margin-bottom: var(--space-1);
+    }
+    .doctor-card__spec {
+      color: var(--color-primary);
+      font-weight: var(--font-weight-semibold);
+      font-size: var(--font-size-sm);
+      margin-bottom: var(--space-2);
+    }
+    .doctor-card__meta {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-light);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .doctor-card__footer {
+      border-top: 1px solid var(--color-border);
+      padding-top: var(--space-4);
+      margin-top: var(--space-4);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .doctor-card__fee {
+      font-weight: var(--font-weight-bold);
+      color: var(--color-gray-800);
+    }
+    .doctors-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: var(--space-6);
+      margin-top: var(--space-6);
+    }
+    .slot-btn {
+      min-width: 80px;
+      margin: 4px;
+      font-size: var(--font-size-xs);
+    }
+    .time-slots-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: var(--space-3);
+    }
+    .doctor-detail-header {
+      display: flex;
+      gap: var(--space-4);
+      align-items: center;
+      margin-bottom: var(--space-6);
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .doctor-detail-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--color-primary-light);
+      color: var(--color-primary-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-bold);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <main class="main">
+      <!-- Topbar -->
+      <header class="topbar" id="topbar"></header>
+
+      <div class="content fade-in">
+        <div class="page-header">
+          <div>
+            <h1 class="page-header__title">Find a Doctor</h1>
+            <p class="page-header__subtitle">Search specialists and book appointments instantly</p>
+          </div>
+          <div class="d-flex gap-3">
+            <input type="text" id="search-doctors" class="form-input" placeholder="Search doctor by name..." style="width:220px;">
+            <select id="filter-specialization" class="form-select" style="width:180px;">
+              <option value="">All Specializations</option>
+              <option value="Cardiology">Cardiology</option>
+              <option value="Dermatology">Dermatology</option>
+              <option value="Pediatrics">Pediatrics</option>
+              <option value="Neurology">Neurology</option>
+              <option value="General Medicine">General Medicine</option>
+              <option value="Orthopedics">Orthopedics</option>
+              <option value="Ophthalmology">Ophthalmology</option>
+              <option value="Gynecology">Gynecology</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="doctors-list-container">
+          <div class="doctors-grid" id="doctors-grid">
+            <div class="empty-state"><div class="spinner"></div></div>
+          </div>
+        </div>
+        <div id="doctors-pagination" style="margin-top: var(--space-6);"></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Book Appointment Modal -->
+  <div class="modal-overlay" id="book-modal">
+    <div class="modal" style="max-width: 600px;">
+      <div class="modal__header">
+        <h3>Doctor Profile & Booking</h3>
+        <button class="btn btn--ghost btn--icon" onclick="UI.closeModal('book-modal')">✕</button>
+      </div>
+      <div class="modal__body">
+        <div id="doctor-profile-detail"></div>
+        <form id="booking-form" style="margin-top: var(--space-4);">
+          <input type="hidden" id="booking-doctor-id" value="">
+          <input type="hidden" id="booking-time" value="">
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label form-label--required" for="booking-date">Choose Date</label>
+              <input type="date" id="booking-date" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="booking-type">Consultation Type</label>
+              <select id="booking-type" class="form-select">
+                <option value="in_person">In-Person Visit</option>
+                <option value="teleconsult">Video Teleconsult</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Select Available Time Slot</label>
+            <div class="time-slots-grid" id="booking-slots">
+              <p class="text-muted text-sm">Please select a date to view available time slots.</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="booking-reason">Reason for Appointment</label>
+            <textarea id="booking-reason" class="form-textarea" rows="2" placeholder="Briefly describe the symptoms or consultation reason..."></textarea>
+          </div>
+
+          <div class="d-flex justify-content-end gap-3" style="margin-top: var(--space-6);">
+            <button type="button" class="btn btn--secondary" onclick="UI.closeModal('book-modal')">Cancel</button>
+            <button type="submit" class="btn btn--primary">Book Appointment</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/validation.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/router.js"></script>
+  <script src="/js/doctors.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Guard access: only patients are allowed here
+      const user = Auth.getUser();
+      if (!user || user.role !== 'patient') {
+        window.location.href = '/login.html';
+        return;
+      }
+      Sidebar.init('Find a Doctor', 'Home / Find a Doctor');
+      Doctors.init();
+    });
+  </script>
+</body>
+</html>

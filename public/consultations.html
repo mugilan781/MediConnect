@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="View consultation records – diagnosis, prescriptions, and follow-up dates on MediConnect.">
+  <title>Consultations – MediConnect</title>
+  <link rel="stylesheet" href="/css/variables.css"><link rel="stylesheet" href="/css/base.css"><link rel="stylesheet" href="/css/components.css"><link rel="stylesheet" href="/css/layout.css"><link rel="stylesheet" href="/css/forms.css"><link rel="stylesheet" href="/css/dashboard.css"><link rel="stylesheet" href="/css/utilities.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar (rendered by sidebar.js) -->
+    <aside class="sidebar" id="sidebar"></aside>
+    <main class="main">
+      <!-- Topbar (rendered by sidebar.js) -->
+      <header class="topbar" id="topbar"></header>
+      <div class="content fade-in">
+        <div class="page-header">
+          <div><h1 class="page-header__title">Consultations</h1><p class="page-header__subtitle">View consultation requests and clinical notes</p></div>
+          <div class="d-flex gap-3">
+            <select id="filter-consultation-status" class="form-select" style="width:auto;">
+              <option value="">All Status</option>
+              <option value="active">Active Requests</option>
+              <option value="requested">Requested</option>
+              <option value="accepted">Accepted</option>
+              <option value="scheduled">Scheduled</option>
+              <option value="in_progress">In Progress</option>
+              <option value="completed">Completed</option>
+              <option value="rejected">Rejected</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+            <button id="btn-request-consultation" class="btn btn--primary" style="display:none;" onclick="UI.openModal('request-consultation-modal')">+ Request Consultation</button>
+          </div>
+        </div>
+        <div id="consultations-list"><div class="empty-state"><div class="spinner"></div></div></div>
+        <div id="consultations-pagination"></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Detail Modal -->
+  <div class="modal-overlay" id="consultation-detail-modal">
+    <div class="modal" style="max-width:700px;">
+      <div class="modal__header">
+        <h3>Consultation Details</h3>
+        <button class="btn btn--ghost btn--icon" onclick="UI.closeModal('consultation-detail-modal')">✕</button>
+      </div>
+      <div class="modal__body" id="consultation-details"></div>
+    </div>
+  </div>
+
+  <!-- Request Consultation Modal (Patient) -->
+  <div class="modal-overlay" id="request-consultation-modal">
+    <div class="modal">
+      <div class="modal__header">
+        <h3>Request Online Consultation</h3>
+        <button class="btn btn--ghost btn--icon" onclick="UI.closeModal('request-consultation-modal')">✕</button>
+      </div>
+      <div class="modal__body">
+        <form id="request-consultation-form">
+          <div class="form-group">
+            <label class="form-label form-label--required" for="request-doctor">Select Doctor</label>
+            <select id="request-doctor" class="form-select" required>
+              <option value="">Loading doctors...</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label form-label--required" for="request-date">Preferred Date</label>
+            <input type="date" id="request-date" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label form-label--required" for="request-symptoms">Symptoms / Concerns</label>
+            <textarea id="request-symptoms" class="form-textarea" rows="2" placeholder="Describe your symptoms..." required></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="request-concerns">Health Concerns (Optional)</label>
+            <textarea id="request-concerns" class="form-textarea" rows="2" placeholder="E.g. chronic diseases, current medication..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="request-notes">Additional Notes</label>
+            <textarea id="request-notes" class="form-textarea" rows="2" placeholder="Any additional notes for the doctor..."></textarea>
+          </div>
+          <div class="d-flex justify-content-end gap-3" style="margin-top: var(--space-6);">
+            <button type="button" class="btn btn--secondary" onclick="UI.closeModal('request-consultation-modal')">Cancel</button>
+            <button type="submit" class="btn btn--primary">Submit Request</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reject Consultation Modal (Doctor) -->
+  <div class="modal-overlay" id="reject-consultation-modal">
+    <div class="modal">
+      <div class="modal__header">
+        <h3>Decline Consultation Request</h3>
+        <button class="btn btn--ghost btn--icon" onclick="UI.closeModal('reject-consultation-modal')">✕</button>
+      </div>
+      <div class="modal__body">
+        <form id="reject-consultation-form">
+          <input type="hidden" id="reject-consultation-id" value="">
+          <div class="form-group">
+            <label class="form-label form-label--required" for="reject-reason">Reason for Declining</label>
+            <textarea id="reject-reason" class="form-textarea" rows="3" placeholder="Provide a brief explanation for the patient..." required></textarea>
+          </div>
+          <div class="d-flex justify-content-end gap-3" style="margin-top: var(--space-6);">
+            <button type="button" class="btn btn--secondary" onclick="UI.closeModal('reject-consultation-modal')">Cancel</button>
+            <button type="submit" class="btn btn--danger">Decline Request</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Schedule Consultation Modal (Doctor) -->
+  <div class="modal-overlay" id="schedule-consultation-modal">
+    <div class="modal">
+      <div class="modal__header">
+        <h3>Schedule Online Consultation</h3>
+        <button class="btn btn--ghost btn--icon" onclick="UI.closeModal('schedule-consultation-modal')">✕</button>
+      </div>
+      <div class="modal__body">
+        <form id="schedule-consultation-form">
+          <input type="hidden" id="schedule-consultation-id" value="">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label form-label--required" for="schedule-date">Date</label>
+              <input type="date" id="schedule-date" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label form-label--required" for="schedule-time">Time</label>
+              <input type="time" id="schedule-time" class="form-input" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label form-label--required" for="schedule-duration">Duration (Minutes)</label>
+            <input type="number" id="schedule-duration" class="form-input" value="30" min="5" max="240" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="schedule-notes">Notes for Patient</label>
+            <textarea id="schedule-notes" class="form-textarea" rows="2" placeholder="Instructions, video meeting details..."></textarea>
+          </div>
+          <div class="d-flex justify-content-end gap-3" style="margin-top: var(--space-6);">
+            <button type="button" class="btn btn--secondary" onclick="UI.closeModal('schedule-consultation-modal')">Cancel</button>
+            <button type="submit" class="btn btn--primary">Save Schedule</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Complete Consultation Modal (Doctor) -->
+  <div class="modal-overlay" id="complete-consultation-modal">
+    <div class="modal" style="max-width: 650px;">
+      <div class="modal__header">
+        <h3>Complete Consultation & Add Clinical Notes</h3>
+        <button class="btn btn--ghost btn--icon" onclick="UI.closeModal('complete-consultation-modal')">✕</button>
+      </div>
+      <div class="modal__body">
+        <form id="complete-consultation-form">
+          <input type="hidden" id="complete-consultation-id" value="">
+          <div class="form-group">
+            <label class="form-label form-label--required" for="complete-diagnosis">Diagnosis</label>
+            <textarea id="complete-diagnosis" class="form-textarea" rows="2" placeholder="Primary diagnosis..." required></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="complete-recommendations">Recommendations</label>
+            <textarea id="complete-recommendations" class="form-textarea" rows="2" placeholder="Medical advice, diets, exercises..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="complete-prescription">Prescription Notes</label>
+            <textarea id="complete-prescription" class="form-textarea" rows="3" placeholder="Drug name, dosage, frequency, duration..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="complete-followup">Follow-up Date (Optional)</label>
+            <input type="date" id="complete-followup" class="form-input">
+          </div>
+          <div class="d-flex justify-content-end gap-3" style="margin-top: var(--space-6);">
+            <button type="button" class="btn btn--secondary" onclick="UI.closeModal('complete-consultation-modal')">Cancel</button>
+            <button type="submit" class="btn btn--primary">Complete Consultation</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/config.js"></script><script src="/js/api.js"></script><script src="/js/ui.js"></script><script src="/js/validation.js"></script><script src="/js/auth.js"></script><script src="/js/sidebar.js"></script><script src="/js/router.js"></script><script src="/js/consultations.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => { Sidebar.init('Consultations', 'Home / Consultations'); Consultations.init(); });</script>
+</body>
+</html>

@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Doctor Dashboard – Manage appointments, view patient records, write prescriptions, and configure schedules on MediConnect.">
+  <title>Doctor Dashboard – MediConnect</title>
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/forms.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/utilities.css">
+  <style>
+    /* Scoped styling for local sub-tabs and responsive tabbar */
+    .tab-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-color);
+      scrollbar-width: thin;
+    }
+    .tab-bar::-webkit-scrollbar {
+      height: 4px;
+    }
+    .tab-bar::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 2px;
+    }
+    .tab-btn {
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 500;
+      font-size: 14px;
+      white-space: nowrap;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: var(--bg-surface);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .tab-btn:hover {
+      background: var(--bg-hover);
+      color: var(--text-color);
+    }
+    .tab-btn.active {
+      background: var(--color-primary);
+      color: white;
+    }
+    .badge-count {
+      background: var(--color-danger);
+      color: white;
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+    .time-slot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 10px;
+      margin-top: 15px;
+    }
+    .schedule-day-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      align-items: center;
+      padding: 15px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .schedule-day-row:last-child {
+      border-bottom: none;
+    }
+    .schedule-day-label {
+      width: 100px;
+      font-weight: 600;
+    }
+    .nested-tabs {
+      display: flex;
+      gap: 5px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 15px;
+      overflow-x: auto;
+    }
+    .nested-tab-btn {
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      border: none;
+      background: none;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+    }
+    .nested-tab-btn.active {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <!-- Main -->
+    <main class="main">
+      <!-- Topbar -->
+      <header class="topbar" id="topbar"></header>
+
+      <!-- Content Container -->
+      <div class="content fade-in">
+        <!-- Sub-Tabs Navigation Bar -->
+        <div class="tab-bar">
+          <button class="tab-btn active" data-tab="overview">📊 Overview</button>
+          <button class="tab-btn" data-tab="appointments">📅 Appointments</button>
+          <button class="tab-btn" data-tab="consultations">🩺 Consultations <span class="badge-count" id="badge-consultations" style="display:none;">0</span></button>
+          <button class="tab-btn" data-tab="patients">👤 Patient Records</button>
+          <button class="tab-btn" data-tab="schedule">⚙️ Weekly Schedule</button>
+          <button class="tab-btn" data-tab="slots">⏰ Custom Slots</button>
+          <button class="tab-btn" data-tab="leaves">🏖️ Leaves</button>
+          <button class="tab-btn" data-tab="reports">📄 Reports</button>
+          <button class="tab-btn" data-tab="notifications">🔔 Notifications <span class="badge-count" id="badge-notifs" style="display:none;">0</span></button>
+          <button class="tab-btn" data-tab="profile">⚙️ Profile Settings</button>
+        </div>
+
+        <!-- ==================== TAB 1: OVERVIEW ==================== -->
+        <div id="tab-overview" class="tab-content">
+          <div class="welcome-banner mb-4">
+            <div class="welcome-banner__content">
+              <div class="welcome-banner__greeting">Welcome back,</div>
+              <div class="welcome-banner__name" id="welcome-name">Doctor</div>
+              <div class="welcome-banner__message">Manage your schedule, patients, and digital consultations.</div>
+            </div>
+          </div>
+
+          <div class="stats-row mb-4">
+            <div class="stat-card">
+              <div class="stat-card__icon stat-card__icon--primary">📅</div>
+              <div class="stat-card__content">
+                <div class="stat-card__label">Today's Appointments</div>
+                <div class="stat-card__value" id="stat-today-appts">0</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card__icon stat-card__icon--success">🗓️</div>
+              <div class="stat-card__content">
+                <div class="stat-card__label">Upcoming Bookings</div>
+                <div class="stat-card__value" id="stat-upcoming-appts">0</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card__icon stat-card__icon--warning">🩺</div>
+              <div class="stat-card__content">
+                <div class="stat-card__label">Pending Consultations</div>
+                <div class="stat-card__value" id="stat-pending-consults">0</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card__icon stat-card__icon--info">👤</div>
+              <div class="stat-card__content">
+                <div class="stat-card__label">Active Patients</div>
+                <div class="stat-card__value" id="stat-active-patients">0</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dashboard-grid-2">
+            <div class="card">
+              <div class="card__header"><h3>Today's Schedule</h3></div>
+              <div class="card__body" id="overview-today-list"><div class="empty-state"><div class="spinner"></div></div></div>
+            </div>
+            <div class="card">
+              <div class="card__header"><h3>Pending Action / Requests</h3></div>
+              <div class="card__body" id="overview-requests-list"><div class="empty-state"><div class="spinner"></div></div></div>
+            </div>
+          </div>
+
+          <!-- Recent Notifications Card -->
+          <div class="card mt-4">
+            <div class="card__header d-flex justify-between items-center">
+              <h3>Recent Notifications</h3>
+              <button class="btn btn--secondary btn--xs" onclick="document.querySelector('[data-tab=notifications]').click()">View All</button>
+            </div>
+            <div class="card__body" id="overview-notifications-list"><div class="empty-state"><div class="spinner"></div></div></div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 2: APPOINTMENTS ==================== -->
+        <div id="tab-appointments" class="tab-content" style="display:none;">
+          <div class="card">
+            <div class="card__header d-flex justify-between items-center flex-wrap gap-3">
+              <h3>Appointments Management</h3>
+              <div class="d-flex gap-2 flex-wrap">
+                <input type="text" id="appt-search" class="form-input" placeholder="Search patient..." style="max-width:200px;">
+                <select id="appt-filter-status" class="form-select" style="max-width:150px;">
+                  <option value="">All Statuses</option>
+                  <option value="scheduled">Scheduled</option>
+                  <option value="confirmed">Confirmed</option>
+                  <option value="completed">Completed</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+              </div>
+            </div>
+            <div class="card__body" id="appts-list"><div class="empty-state"><div class="spinner"></div></div></div>
+            <div class="card__footer" id="appts-pagination"></div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 3: CONSULTATIONS ==================== -->
+        <div id="tab-consultations" class="tab-content" style="display:none;">
+          <div class="card">
+            <div class="card__header d-flex justify-between items-center flex-wrap gap-3">
+              <h3>Consultation Requests & Records</h3>
+              <select id="consult-filter-status" class="form-select" style="max-width:150px;">
+                <option value="">All Consultations</option>
+                <option value="requested">Requested</option>
+                <option value="accepted">Accepted</option>
+                <option value="completed">Completed</option>
+                <option value="rejected">Rejected</option>
+              </select>
+            </div>
+            <div class="card__body" id="consults-list"><div class="empty-state"><div class="spinner"></div></div></div>
+            <div class="card__footer" id="consults-pagination"></div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 4: PATIENT RECORDS ==================== -->
+        <div id="tab-patients" class="tab-content" style="display:none;">
+          <div class="card">
+            <div class="card__header d-flex justify-between items-center flex-wrap gap-3">
+              <h3>My Patient Records</h3>
+              <input type="text" id="patient-search" class="form-input" placeholder="Search patient name..." style="max-width:250px;">
+            </div>
+            <div class="card__body" id="patients-list"><div class="empty-state"><div class="spinner"></div></div></div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 5: WEEKLY SCHEDULE ==================== -->
+        <div id="tab-schedule" class="tab-content" style="display:none;">
+          <div class="card">
+            <div class="card__header"><h3>Weekly Availability Hours</h3></div>
+            <div class="card__body">
+              <form id="weekly-schedule-form">
+                <div class="form-group" style="max-width:300px; margin-bottom: 20px;">
+                  <label class="form-label" for="sched-slot-duration">Default Slot Duration (minutes)</label>
+                  <select id="sched-slot-duration" class="form-select">
+                    <option value="15">15 mins</option>
+                    <option value="30">30 mins</option>
+                    <option value="45">45 mins</option>
+                    <option value="60">60 mins</option>
+                  </select>
+                </div>
+                <div id="weekly-schedule-days">
+                  <!-- Generated by JS -->
+                </div>
+                <div class="mt-4">
+                  <button type="submit" class="btn btn--primary">Save Weekly Schedule</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 6: CUSTOM AVAILABILITY SLOTS ==================== -->
+        <div id="tab-slots" class="tab-content" style="display:none;">
+          <div class="card">
+            <div class="card__header d-flex justify-between items-center">
+              <h3>Custom Availability Slots</h3>
+              <button class="btn btn--primary btn--sm" onclick="UI.openModal('add-slot-modal')">+ Create Custom Slot</button>
+            </div>
+            <div class="card__body" id="custom-slots-list"><div class="empty-state"><div class="spinner"></div></div></div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 7: LEAVE REQUESTS ==================== -->
+        <div id="tab-leaves" class="tab-content" style="display:none;">
+          <div class="card">
+            <div class="card__header d-flex justify-between items-center">
+              <h3>My Leaves Schedule</h3>
+              <button class="btn btn--primary btn--sm" onclick="UI.openModal('add-leave-modal')">+ Request Leave</button>
+            </div>
+            <div class="card__body" id="leaves-list"><div class="empty-state"><div class="spinner"></div></div></div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 8: MEDICAL REPORTS ==================== -->
+        <div id="tab-reports" class="tab-content" style="display:none;">
+          <div class="card">
+            <div class="card__header d-flex justify-between items-center flex-wrap gap-3">
+              <h3>Uploaded Medical Reports</h3>
+              <button class="btn btn--primary btn--sm" onclick="DoctorDashboard.openUploadReportModal()">+ Upload Report</button>
+            </div>
+            <div class="card__body" id="reports-list"><div class="empty-state"><div class="spinner"></div></div></div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 9: NOTIFICATIONS ==================== -->
+        <div id="tab-notifications" class="tab-content" style="display:none;">
+          <div class="card">
+            <div class="card__header d-flex justify-between items-center flex-wrap gap-3">
+              <h3>Doctor Notifications</h3>
+              <div class="d-flex gap-2 flex-wrap">
+                <input type="text" id="notif-search" class="form-input" placeholder="Search title/message..." style="max-width:200px;">
+                <select id="notif-filter-type" class="form-select" style="max-width:150px;">
+                  <option value="">All Types</option>
+                  <option value="appointment">Appointment</option>
+                  <option value="lab">Lab</option>
+                  <option value="report">Report</option>
+                  <option value="system">System</option>
+                  <option value="reminder">Reminder</option>
+                </select>
+                <button class="btn btn--secondary btn--sm" id="btn-mark-all-read">Mark All Read</button>
+              </div>
+            </div>
+            <div class="card__body" id="notifications-list"><div class="empty-state"><div class="spinner"></div></div></div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 10: PROFILE SETTINGS ==================== -->
+        <div id="tab-profile" class="tab-content" style="display:none;">
+          <div class="card">
+            <div class="card__header"><h3>Doctor Profile Management</h3></div>
+            <div class="card__body">
+              <form id="doctor-profile-form">
+                <div class="form-row">
+                  <div class="form-group"><label class="form-label form-label--required" for="prof-name">Full Name</label><input type="text" id="prof-name" class="form-input" required></div>
+                  <div class="form-group"><label class="form-label form-label--required" for="prof-phone">Phone Number</label><input type="text" id="prof-phone" class="form-input" required></div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group"><label class="form-label form-label--required" for="prof-spec">Specialization</label><input type="text" id="prof-spec" class="form-input" required></div>
+                  <div class="form-group"><label class="form-label form-label--required" for="prof-qual">Qualification</label><input type="text" id="prof-qual" class="form-input" required></div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group"><label class="form-label" for="prof-exp">Experience (Years)</label><input type="number" id="prof-exp" class="form-input" min="0"></div>
+                  <div class="form-group"><label class="form-label" for="prof-avatar">Profile Image URL</label><input type="text" id="prof-avatar" class="form-input" placeholder="https://example.com/avatar.jpg"></div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="prof-bio">Biography / Notes</label>
+                  <textarea id="prof-bio" class="form-textarea" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn btn--primary">Save Profile Changes</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ==================== MODALS ==================== -->
+
+  <!-- Reschedule Appointment Modal -->
+  <div class="modal-overlay" id="reschedule-modal">
+    <div class="modal">
+      <div class="modal__header"><h3>Reschedule Appointment</h3><button class="btn btn--ghost btn--icon" onclick="UI.closeModal('reschedule-modal')">✕</button></div>
+      <div class="modal__body">
+        <form id="reschedule-form">
+          <input type="hidden" id="reschedule-appt-id">
+          <div class="form-group"><label class="form-label form-label--required" for="resched-date">New Date</label><input type="date" id="resched-date" class="form-input" required></div>
+          <div class="form-group"><label class="form-label form-label--required" for="resched-time">New Time</label><input type="time" id="resched-time" class="form-input" required></div>
+          <button type="submit" class="btn btn--primary btn--block">Confirm Reschedule</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Consultation / Diagnosis Modal -->
+  <div class="modal-overlay" id="consultation-modal">
+    <div class="modal">
+      <div class="modal__header"><h3>Consultation Record</h3><button class="btn btn--ghost btn--icon" onclick="UI.closeModal('consultation-modal')">✕</button></div>
+      <div class="modal__body">
+        <form id="consultation-form">
+          <input type="hidden" id="consult-appt-id">
+          <input type="hidden" id="consult-id">
+          <div class="form-group"><label class="form-label" for="consult-symptoms">Symptoms</label><textarea id="consult-symptoms" class="form-textarea" rows="2" placeholder="List symptoms..."></textarea></div>
+          <div class="form-group"><label class="form-label form-label--required" for="consult-diagnosis">Diagnosis</label><textarea id="consult-diagnosis" class="form-textarea" rows="2" placeholder="Primary diagnosis details..." required></textarea></div>
+          <div class="form-group"><label class="form-label" for="consult-prescription">Prescription</label><textarea id="consult-prescription" class="form-textarea" rows="3" placeholder="Medications & dosages..."></textarea></div>
+          <div class="form-group"><label class="form-label" for="consult-followup">Follow-up Date</label><input type="date" id="consult-followup" class="form-input"></div>
+          <div class="form-group"><label class="form-label" for="consult-notes">Clinical Notes</label><textarea id="consult-notes" class="form-textarea" rows="2" placeholder="Internal clinical notes..."></textarea></div>
+          <button type="submit" class="btn btn--primary btn--block" id="btn-save-consult">Submit Consultation</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Custom Availability Slot Modal -->
+  <div class="modal-overlay" id="add-slot-modal">
+    <div class="modal">
+      <div class="modal__header"><h3>Create Custom Availability Slot</h3><button class="btn btn--ghost btn--icon" onclick="UI.closeModal('add-slot-modal')">✕</button></div>
+      <div class="modal__body">
+        <form id="add-slot-form">
+          <div class="form-group"><label class="form-label form-label--required" for="slot-date">Date</label><input type="date" id="slot-date" class="form-input" required></div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label form-label--required" for="slot-start">Start Time</label><input type="time" id="slot-start" class="form-input" required></div>
+            <div class="form-group"><label class="form-label form-label--required" for="slot-end">End Time</label><input type="time" id="slot-end" class="form-input" required></div>
+          </div>
+          <button type="submit" class="btn btn--primary btn--block">Create Slot</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Leave Modal -->
+  <div class="modal-overlay" id="add-leave-modal">
+    <div class="modal">
+      <div class="modal__header"><h3>Request Leave / Absence</h3><button class="btn btn--ghost btn--icon" onclick="UI.closeModal('add-leave-modal')">✕</button></div>
+      <div class="modal__body">
+        <form id="add-leave-form">
+          <div class="form-group"><label class="form-label form-label--required" for="leave-start">Start Date</label><input type="date" id="leave-start" class="form-input" required></div>
+          <div class="form-group"><label class="form-label form-label--required" for="leave-end">End Date</label><input type="date" id="leave-end" class="form-input" required></div>
+          <div class="form-group"><label class="form-label" for="leave-reason">Reason</label><textarea id="leave-reason" class="form-textarea" rows="2" placeholder="e.g. medical leave, personal leave..."></textarea></div>
+          <button type="submit" class="btn btn--primary btn--block">Submit Leave</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Upload Medical Report Modal -->
+  <div class="modal-overlay" id="upload-report-modal">
+    <div class="modal">
+      <div class="modal__header"><h3>Upload Patient Report</h3><button class="btn btn--ghost btn--icon" onclick="UI.closeModal('upload-report-modal')">✕</button></div>
+      <div class="modal__body">
+        <form id="upload-report-form">
+          <input type="hidden" id="rep-id">
+          <div class="form-group">
+            <label class="form-label form-label--required" for="rep-patient-id">Select Patient</label>
+            <select id="rep-patient-id" class="form-select" required></select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label form-label--required" for="rep-type">Report Type</label>
+              <select id="rep-type" class="form-select" required>
+                <option value="prescription">Prescription</option>
+                <option value="lab_result">Lab Result</option>
+                <option value="imaging">Imaging (X-ray/MRI)</option>
+                <option value="discharge_summary">Discharge Summary</option>
+                <option value="other">Other Report</option>
+              </select>
+            </div>
+            <div class="form-group"><label class="form-label form-label--required" for="rep-title">Report Title</label><input type="text" id="rep-title" class="form-input" placeholder="e.g. Chest X-Ray, Blood Report" required></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label form-label--required" for="rep-category">Report Category</label>
+              <select id="rep-category" class="form-select" required>
+                <option value="">Select Category</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Share Options</label>
+              <label class="form-checkbox" style="margin-top: 10px;">
+                <input type="checkbox" id="rep-shared" checked>
+                <span>Share with Patient</span>
+              </label>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="rep-appointment-id">Link to Appointment</label>
+              <select id="rep-appointment-id" class="form-select">
+                <option value="">None</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="rep-consultation-id">Link to Consultation</label>
+              <select id="rep-consultation-id" class="form-select">
+                <option value="">None</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="rep-lab-booking-id">Link to Lab Booking</label>
+            <select id="rep-lab-booking-id" class="form-select">
+              <option value="">None</option>
+            </select>
+          </div>
+          <div class="form-group" id="rep-file-group">
+            <label class="form-label form-label--required" for="rep-file">File</label>
+            <input type="file" id="rep-file" class="form-input" accept=".pdf,.doc,.docx,.jpg,.png">
+          </div>
+          <div class="form-group"><label class="form-label" for="rep-notes">Notes</label><textarea id="rep-notes" class="form-textarea" rows="2"></textarea></div>
+          <button type="submit" class="btn btn--primary btn--block" id="btn-save-report">Upload & Save Report</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Associated Patient Full Record Modal (Nested tabbed layout) -->
+  <div class="modal-overlay" id="patient-details-modal">
+    <div class="modal" style="max-width: 800px; width: 90%;">
+      <div class="modal__header"><h3>Patient Complete Records</h3><button class="btn btn--ghost btn--icon" onclick="UI.closeModal('patient-details-modal')">✕</button></div>
+      <div class="modal__body">
+        <div class="nested-tabs">
+          <button class="nested-tab-btn active" data-nested-tab="pat-info">👤 Profile Info</button>
+          <button class="nested-tab-btn" data-nested-tab="pat-history">📜 History Timeline</button>
+          <button class="nested-tab-btn" data-nested-tab="pat-appts">📅 Appointments</button>
+          <button class="nested-tab-btn" data-nested-tab="pat-consults">🩺 Consultations</button>
+          <button class="nested-tab-btn" data-nested-tab="pat-reports">📄 Reports</button>
+          <button class="nested-tab-btn" data-nested-tab="pat-labtests">🔬 Lab Tests</button>
+        </div>
+
+        <div id="nested-pat-info" class="nested-tab-content">
+          <div id="pat-info-profile"></div>
+        </div>
+        <div id="nested-pat-history" class="nested-tab-content" style="display:none;">
+          <div id="pat-info-history"></div>
+        </div>
+        <div id="nested-pat-appts" class="nested-tab-content" style="display:none;">
+          <div id="pat-info-appts"></div>
+        </div>
+        <div id="nested-pat-consults" class="nested-tab-content" style="display:none;">
+          <div id="pat-info-consults"></div>
+        </div>
+        <div id="nested-pat-reports" class="nested-tab-content" style="display:none;">
+          <div id="pat-info-reports"></div>
+        </div>
+        <div id="nested-pat-labtests" class="nested-tab-content" style="display:none;">
+          <div id="pat-info-labtests"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/js/config.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/validation.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/router.js"></script>
+  <script src="/js/doctor-dashboard.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Sidebar.init('Doctor Dashboard', 'Home / Dashboard');
+      DoctorDashboard.init();
+    });
+  </script>
+</body>
+</html>

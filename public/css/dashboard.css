@@ -1,0 +1,373 @@
+/* ============================================================
+   MediConnect – dashboard.css
+   Dashboard-specific layouts, stat cards, charts area
+   ============================================================ */
+
+/* ── Welcome Banner ── */
+.welcome-banner {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-8);
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome-banner::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 300px;
+  height: 300px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+}
+
+.welcome-banner::after {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  right: 10%;
+  width: 200px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 50%;
+}
+
+.welcome-banner__content {
+  position: relative;
+  z-index: 1;
+}
+
+.welcome-banner__greeting {
+  font-size: var(--font-size-md);
+  opacity: 0.9;
+  margin-bottom: var(--space-2);
+}
+
+.welcome-banner__name {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--space-2);
+}
+
+.welcome-banner__message {
+  opacity: 0.85;
+  font-size: var(--font-size-base);
+}
+
+/* ── Dashboard Stats Row ── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+/* ── Dashboard Section ── */
+.dashboard-section {
+  margin-bottom: var(--space-8);
+}
+
+.dashboard-section__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-5);
+}
+
+.dashboard-section__title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+}
+
+.dashboard-section__link {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary);
+}
+
+/* ── Appointment List Item ── */
+.appointment-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  margin-bottom: var(--space-3);
+  background: var(--bg-card);
+  transition: all var(--transition-fast);
+}
+
+.appointment-item:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.appointment-item__time {
+  text-align: center;
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-mint-light);
+  border-radius: var(--radius-md);
+  min-width: 70px;
+}
+
+.appointment-item__time-value {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary-dark);
+}
+
+.appointment-item__time-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-light);
+}
+
+.appointment-item__info {
+  flex: 1;
+}
+
+.appointment-item__name {
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-1);
+}
+
+.appointment-item__detail {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+}
+
+/* ── Quick Actions ── */
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--space-4);
+}
+
+.quick-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-6) var(--space-4);
+  background: var(--bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.quick-action:hover {
+  border-color: var(--color-primary);
+  background: var(--color-mint-light);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.quick-action__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  background: var(--color-mint-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xl);
+  color: var(--color-primary);
+}
+
+.quick-action__label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  text-align: center;
+}
+
+/* ── Chart Area ── */
+.chart-container {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-card);
+}
+
+.chart-container canvas {
+  width: 100% !important;
+  max-height: 300px;
+}
+
+/* ── Recent Activity ── */
+.activity-list {
+  list-style: none;
+}
+
+.activity-item {
+  display: flex;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.activity-item:last-child { border-bottom: none; }
+
+.activity-item__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+
+.activity-item__dot--primary { background: var(--color-primary); }
+.activity-item__dot--success { background: var(--color-success); }
+.activity-item__dot--warning { background: var(--color-warning); }
+.activity-item__dot--danger  { background: var(--color-danger); }
+
+.activity-item__content {
+  flex: 1;
+}
+
+.activity-item__text {
+  font-size: var(--font-size-base);
+  margin-bottom: var(--space-1);
+}
+
+.activity-item__time {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+/* ── Dashboard 2-Column Grid ── */
+.dashboard-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Profile Header Card ── */
+.profile-header-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  color: var(--color-white);
+  margin-bottom: var(--space-8);
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-header-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 300px;
+  height: 300px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+}
+
+.profile-header-card__avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.profile-header-card__info {
+  position: relative;
+  z-index: 1;
+}
+
+.profile-header-card__name {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--space-1);
+}
+
+.profile-header-card__role {
+  font-size: var(--font-size-sm);
+  opacity: 0.85;
+  text-transform: capitalize;
+  margin-bottom: var(--space-1);
+}
+
+.profile-header-card__email {
+  font-size: var(--font-size-sm);
+  opacity: 0.75;
+}
+
+/* ── Detail Grid (for modals) ── */
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-5);
+}
+
+.detail-group {
+  padding: var(--space-3);
+  background: var(--color-gray-50, #f9fafb);
+  border-radius: var(--radius-md);
+}
+
+.detail-group--full {
+  grid-column: 1 / -1;
+}
+
+.detail-label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--space-1);
+}
+
+.detail-value {
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+}
+
+@media (max-width: 480px) {
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Notification Unread Highlight ── */
+.notif-unread {
+  background: var(--color-mint-light) !important;
+  border-color: var(--color-primary) !important;
+}
+
+/* ── Mint Light Background Utility ── */
+.bg-mint-light {
+  background-color: var(--color-mint-light);
+}
+

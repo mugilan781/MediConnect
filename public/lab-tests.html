@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Browse and book lab tests – Complete blood count, lipid profile, thyroid tests, and more on MediConnect.">
+  <title>Lab Tests – MediConnect</title>
+  <link rel="stylesheet" href="/css/variables.css"><link rel="stylesheet" href="/css/base.css"><link rel="stylesheet" href="/css/components.css"><link rel="stylesheet" href="/css/layout.css"><link rel="stylesheet" href="/css/forms.css"><link rel="stylesheet" href="/css/dashboard.css"><link rel="stylesheet" href="/css/utilities.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar (rendered by sidebar.js) -->
+    <aside class="sidebar" id="sidebar"></aside>
+    <main class="main">
+      <!-- Topbar (rendered by sidebar.js) -->
+      <header class="topbar" id="topbar"></header>
+      <div class="content fade-in">
+        <div class="page-header"><div><h1 class="page-header__title">Lab Tests</h1><p class="page-header__subtitle">Browse available tests and manage your bookings</p></div></div>
+
+        <div class="dashboard-section">
+          <div class="dashboard-section__header">
+            <h3 class="dashboard-section__title">Available Tests</h3>
+          </div>
+          <!-- Catalog Search & Filter Controls -->
+          <div class="search-filter-bar" style="display: flex; gap: var(--space-4); margin-bottom: var(--space-4); flex-wrap: wrap; align-items: center;">
+            <div style="flex: 1; min-width: 250px;">
+              <input type="text" id="lab-search" class="form-input" placeholder="Search lab tests by name or code..." style="width: 100%; height: 38px;">
+            </div>
+            <div style="width: 200px;">
+              <select id="lab-filter-category" class="form-select" style="width: 100%; height: 38px;">
+                <option value="">All Categories</option>
+              </select>
+            </div>
+          </div>
+          <div id="lab-tests-catalog">
+            <div class="empty-state"><div class="spinner"></div></div>
+          </div>
+        </div>
+
+        <div class="dashboard-section"><div class="dashboard-section__header"><h3 class="dashboard-section__title">My Bookings</h3></div><div id="lab-bookings-list"><div class="empty-state"><div class="spinner"></div></div></div></div>
+      </div>
+    </main>
+  </div>
+  <!-- Book Lab Modal -->
+  <div class="modal-overlay" id="book-lab-modal"><div class="modal"><div class="modal__header"><h3>Book Lab Test: <span id="book-lab-test-name"></span></h3><button class="btn btn--ghost btn--icon" onclick="UI.closeModal('book-lab-modal')">✕</button></div><div class="modal__body">
+    <form id="book-lab-form"><input type="hidden" id="book-lab-test-id">
+      <div class="form-group"><label class="form-label form-label--required" for="book-lab-date">Preferred Date</label><input type="date" id="book-lab-date" class="form-input" required></div>
+      <div class="form-group"><label class="form-label" for="book-lab-time">Preferred Time</label><input type="time" id="book-lab-time" class="form-input"></div>
+      <div class="form-group"><label class="form-label" for="book-lab-notes">Notes</label><textarea id="book-lab-notes" class="form-textarea" rows="2" placeholder="Any special notes..."></textarea></div>
+      <button type="submit" class="btn btn--primary btn--block">Confirm Booking</button>
+    </form>
+  </div></div></div>
+
+  <script src="/js/config.js"></script><script src="/js/api.js"></script><script src="/js/ui.js"></script><script src="/js/validation.js"></script><script src="/js/auth.js"></script><script src="/js/sidebar.js"></script><script src="/js/router.js"></script><script src="/js/lab-tests.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => { Sidebar.init('Lab Tests', 'Home / Lab Tests'); LabTests.init(); });</script>
+</body>
+</html>

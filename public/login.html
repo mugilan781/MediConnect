@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Login to MediConnect – Access your digital clinic dashboard, appointments, and medical records.">
+  <title>Login – MediConnect</title>
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/forms.css">
+  <link rel="stylesheet" href="/css/auth.css">
+  <link rel="stylesheet" href="/css/utilities.css">
+</head>
+<body>
+  <div class="auth-page">
+    <!-- Left Panel -->
+    <div class="auth-panel">
+      <div class="auth-panel__content">
+        <div class="auth-panel__logo">M</div>
+        <h1 class="auth-panel__title">MediConnect</h1>
+        <p class="auth-panel__description">Your complete digital clinic management platform. Access appointments, consultations, and medical records securely.</p>
+        <div class="auth-panel__features">
+          <div class="auth-panel__feature">
+            <div class="auth-panel__feature-icon">✓</div>
+            <span>Book appointments instantly</span>
+          </div>
+          <div class="auth-panel__feature">
+            <div class="auth-panel__feature-icon">✓</div>
+            <span>Access lab results online</span>
+          </div>
+          <div class="auth-panel__feature">
+            <div class="auth-panel__feature-icon">✓</div>
+            <span>Secure medical history</span>
+          </div>
+          <div class="auth-panel__feature">
+            <div class="auth-panel__feature-icon">✓</div>
+            <span>Real-time notifications</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Panel -->
+    <div class="auth-form-container">
+      <div class="auth-form">
+        <div class="auth-form__header">
+          <h2 class="auth-form__title">Welcome Back</h2>
+          <p class="auth-form__subtitle">Sign in to your MediConnect account</p>
+        </div>
+
+        <!-- Alert Message Area -->
+        <div id="login-alert" class="auth-alert"></div>
+
+        <form id="login-form">
+          <div class="form-group">
+            <label class="form-label form-label--required" for="login-email">Email Address</label>
+            <input type="email" id="login-email" class="form-input" placeholder="you@example.com" required autocomplete="email">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label form-label--required" for="login-password">Password</label>
+            <div class="password-wrapper">
+              <input type="password" id="login-password" class="form-input" placeholder="Enter your password" required autocomplete="current-password">
+              <button type="button" class="password-toggle" id="login-password-toggle" aria-label="Toggle password visibility">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" id="login-eye-open"></path>
+                  <circle cx="12" cy="12" r="3" id="login-eye-circle"></circle>
+                  <line x1="1" y1="1" x2="23" y2="23" id="login-eye-slash" style="display:none;"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="auth-form__remember">
+            <label class="form-check">
+              <input type="checkbox" id="login-remember"> Remember me
+            </label>
+            <a href="#" id="forgot-password-link" style="font-size: var(--font-size-sm); color: var(--color-primary);">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--block btn--lg" id="login-btn">Sign In</button>
+        </form>
+
+        <!-- Forgot Password Section -->
+        <div id="forgot-section" class="forgot-section">
+          <div class="forgot-section__title">Reset Your Password</div>
+          <p class="forgot-section__desc">Enter your email address and we'll send you a link to reset your password.</p>
+          <form id="forgot-form">
+            <div class="form-group">
+              <label class="form-label form-label--required" for="forgot-email">Email Address</label>
+              <input type="email" id="forgot-email" class="form-input" placeholder="you@example.com" required>
+            </div>
+            <div class="forgot-section__actions">
+              <button type="submit" class="btn btn--primary" id="forgot-btn">Send Reset Link</button>
+              <button type="button" class="btn btn--ghost" id="forgot-cancel">Cancel</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="auth-form__footer">
+          Don't have an account? <a href="/signup.html">Create one</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/validation.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/router.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => Auth.initLoginPage());</script>
+</body>
+</html>

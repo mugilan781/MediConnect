@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Patient Dashboard – View appointments, lab results, and manage your health records on MediConnect.">
+  <title>Patient Dashboard – MediConnect</title>
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/forms.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/utilities.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar (rendered by sidebar.js) -->
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <!-- Topbar (rendered by sidebar.js) -->
+      <header class="topbar" id="topbar"></header>
+
+      <!-- Content -->
+      <div class="content fade-in">
+        <!-- Welcome Banner -->
+        <div class="welcome-banner">
+          <div class="welcome-banner__content">
+            <div class="welcome-banner__greeting">Good day,</div>
+            <div class="welcome-banner__name" id="welcome-name">Patient</div>
+            <div class="welcome-banner__message">Here's a quick overview of your health dashboard.</div>
+          </div>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-card__icon stat-card__icon--primary">📅</div>
+            <div class="stat-card__content">
+              <div class="stat-card__label">Total Appointments</div>
+              <div class="stat-card__value" id="stat-appointments">0</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__icon stat-card__icon--success">🗓️</div>
+            <div class="stat-card__content">
+              <div class="stat-card__label">Upcoming</div>
+              <div class="stat-card__value" id="stat-upcoming">0</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__icon stat-card__icon--warning">🔬</div>
+            <div class="stat-card__content">
+              <div class="stat-card__label">Lab Tests</div>
+              <div class="stat-card__value" id="stat-lab-tests">0</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__icon stat-card__icon--info">📄</div>
+            <div class="stat-card__content">
+              <div class="stat-card__label">Reports</div>
+              <div class="stat-card__value" id="stat-reports">0</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__icon stat-card__icon--primary" style="background:#e6fffa;color:#0d9488;">🩺</div>
+            <div class="stat-card__content">
+              <div class="stat-card__label">Active Consultations</div>
+              <div class="stat-card__value" id="stat-consultations">0</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__icon stat-card__icon--success" style="background:#f0fdf4;color:#16a34a;">🏠</div>
+            <div class="stat-card__content">
+              <div class="stat-card__label">Active Collections</div>
+              <div class="stat-card__value" id="stat-collections">0</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="dashboard-section">
+          <div class="dashboard-section__header">
+            <h3 class="dashboard-section__title">Quick Actions</h3>
+          </div>
+          <div class="quick-actions">
+            <a href="/appointments.html" class="quick-action"><div class="quick-action__icon">📅</div><div class="quick-action__label">Book Appointment</div></a>
+            <a href="/consultations.html" class="quick-action"><div class="quick-action__icon">🩺</div><div class="quick-action__label">Consultation Request</div></a>
+            <a href="/lab-tests.html" class="quick-action"><div class="quick-action__icon">🔬</div><div class="quick-action__label">Book Lab Test</div></a>
+            <a href="/reports.html" class="quick-action"><div class="quick-action__icon">📄</div><div class="quick-action__label">View Reports</div></a>
+          </div>
+        </div>
+
+        <!-- Upcoming Appointments -->
+        <div class="dashboard-section">
+          <div class="dashboard-section__header">
+            <h3 class="dashboard-section__title">Upcoming Appointments</h3>
+            <a href="/appointments.html" class="dashboard-section__link">View All →</a>
+          </div>
+          <div id="upcoming-appointments-list">
+            <div class="empty-state"><div class="spinner"></div></div>
+          </div>
+        </div>
+
+        <!-- Online Consultations Section -->
+        <div class="dashboard-grid-2">
+          <!-- Upcoming Consultations -->
+          <div class="dashboard-section">
+            <div class="dashboard-section__header">
+              <h3 class="dashboard-section__title">Upcoming Consultations</h3>
+              <a href="/consultations.html" class="dashboard-section__link">View All →</a>
+            </div>
+            <div id="upcoming-consultations-list">
+              <div class="empty-state"><div class="spinner"></div></div>
+            </div>
+          </div>
+
+          <!-- Consultation History -->
+          <div class="dashboard-section">
+            <div class="dashboard-section__header">
+              <h3 class="dashboard-section__title">Recent Consultations History</h3>
+              <a href="/consultations.html" class="dashboard-section__link">View All →</a>
+            </div>
+            <div id="consultation-history-list">
+              <div class="empty-state"><div class="spinner"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dashboard Grid: Reports + Lab Bookings side by side -->
+        <div class="dashboard-grid-2">
+          <!-- Recent Reports -->
+          <div class="dashboard-section">
+            <div class="dashboard-section__header">
+              <h3 class="dashboard-section__title">Recent Reports</h3>
+              <a href="/reports.html" class="dashboard-section__link">View All →</a>
+            </div>
+            <div id="recent-reports-list">
+              <div class="empty-state"><div class="spinner"></div></div>
+            </div>
+          </div>
+
+          <!-- Latest Lab Bookings -->
+          <div class="dashboard-section">
+            <div class="dashboard-section__header">
+              <h3 class="dashboard-section__title">Latest Lab Bookings</h3>
+              <a href="/lab-tests.html" class="dashboard-section__link">View All →</a>
+            </div>
+            <div id="recent-lab-bookings-list">
+              <div class="empty-state"><div class="spinner"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upcoming Sample Collections -->
+        <div class="dashboard-section">
+          <div class="dashboard-section__header">
+            <h3 class="dashboard-section__title">Upcoming Sample Collections</h3>
+            <a href="/sample-collection.html" class="dashboard-section__link">View All →</a>
+          </div>
+          <div id="upcoming-collections-list">
+            <div class="empty-state"><div class="spinner"></div></div>
+          </div>
+        </div>
+
+        <!-- Recent Healthcare Journey (History) -->
+        <div class="dashboard-section">
+          <div class="dashboard-section__header">
+            <h3 class="dashboard-section__title">Recent Healthcare Journey (History)</h3>
+            <a href="/history.html" class="dashboard-section__link">View Full Timeline →</a>
+          </div>
+          <div id="recent-history-timeline-list">
+            <div class="empty-state"><div class="spinner"></div></div>
+          </div>
+        </div>
+
+        <!-- Recent Notifications -->
+        <div class="dashboard-section">
+          <div class="dashboard-section__header">
+            <h3 class="dashboard-section__title">Recent Notifications</h3>
+            <a href="/notifications.html" class="dashboard-section__link">View All →</a>
+          </div>
+          <div id="recent-notifications-list">
+            <div class="empty-state"><div class="spinner"></div></div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/validation.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/router.js"></script>
+  <script src="/js/dashboard.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => { Sidebar.init('Dashboard', 'Home / Patient Dashboard'); Dashboard.initPatient(); });</script>
+</body>
+</html>
