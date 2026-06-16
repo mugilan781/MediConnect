@@ -1,39 +1,38 @@
 // ============================================================
 // MediConnect – public/js/lab-tests.js
-// Lab test catalog & booking UI
+// Premium Lab Test Catalog, Booking & Diagnostic Page
 // ============================================================
 
 const LabTests = {
-  currentPage: 1,
   searchDebounce: null,
+  currentTestId: null,
 
   async init() {
-    await this.loadCategories();
-    await this.loadTests();
-    await this.loadBookings();
+    this.loadCategories();
+    this.loadTests();
+    this.loadFAQs();
     this.bindEvents();
+    this.initCountUp();
+    this.initScrollAnimations();
   },
 
   bindEvents() {
-    // Search with debounce
     const searchInput = document.getElementById('lab-search');
     if (searchInput) {
       searchInput.addEventListener('input', () => {
         clearTimeout(this.searchDebounce);
-        this.searchDebounce = setTimeout(() => {
-          this.currentPage = 1;
-          this.loadTests();
-        }, 400);
+        this.searchDebounce = setTimeout(() => this.loadTests(), 400);
       });
     }
 
-    // Category filter
     const catFilter = document.getElementById('lab-filter-category');
     if (catFilter) {
-      catFilter.addEventListener('change', () => {
-        this.currentPage = 1;
-        this.loadTests();
-      });
+      catFilter.addEventListener('change', () => this.loadTests());
+    }
+
+    const filterBtn = document.getElementById('lab-filter-btn');
+    if (filterBtn) {
+      filterBtn.addEventListener('click', () => this.loadTests());
     }
 
     const form = document.getElementById('book-lab-form');
@@ -43,73 +42,268 @@ const LabTests = {
         await this.bookTest();
       });
     }
-  },
 
-  async loadCategories() {
-    try {
-      const response = await Api.get('/lab-tests/categories');
-      const select = document.getElementById('lab-filter-category');
-      if (!select || !response.success) return;
-      select.innerHTML = '<option value="">All Categories</option>' + response.data.map(cat => `
-        <option value="${cat}">${cat}</option>
-      `).join('');
-    } catch (error) {
-      console.error('Failed to load lab categories:', error);
+    document.addEventListener('click', (e) => {
+      const detailBtn = e.target.closest('[data-test-detail]');
+      if (detailBtn) {
+        const id = parseInt(detailBtn.dataset.testDetail, 10);
+        this.openDetail(id);
+      }
+      const bookBtn = e.target.closest('[data-book-test]');
+      if (bookBtn) {
+        const id = parseInt(bookBtn.dataset.bookTest, 10);
+        const name = bookBtn.dataset.testName;
+        this.openBookModal(id, name);
+      }
+      const faqBtn = e.target.closest('[data-faq-toggle]');
+      if (faqBtn) {
+        this.toggleFaq(faqBtn);
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        this.closeDetail();
+      }
+    });
+
+    const overlay = document.getElementById('lab-detail-overlay');
+    if (overlay) {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) this.closeDetail();
+      });
     }
   },
 
+  // ── Section 3: Load Categories ──
+  async loadCategories() {
+    try {
+      const response = await Api.get('/lab-tests/categories');
+      if (!response.success) return;
+
+      const categories = response.data;
+      const grid = document.getElementById('lab-categories-grid');
+      if (!grid) return;
+
+      const categoryIcons = {
+        'Blood': '\uD83D\uDD0C',
+        'Diabetes': '\uD83C\uDF4E',
+        'Thyroid': '\uD83E\uDDEA',
+        'Liver': '\uD83C\uDF4C',
+        'Vitamin': '\uD83C\uDF3F',
+        'Preventive': '\uD83D\uDEE1\uFE0F',
+      };
+
+      const categoryColors = [
+        'lab-category-card__icon',
+      ];
+
+      if (categories.length === 0) {
+        grid.innerHTML = this.getCategoryFallbackHTML();
+        return;
+      }
+
+      grid.innerHTML = categories.map(cat => {
+        const icon = Object.keys(categoryIcons).find(k => cat.toLowerCase().includes(k.toLowerCase()));
+        const emoji = categoryIcons[icon] || '\uD83D\uDD2C';
+        return `
+          <button class="lab-category-card" data-category-filter="${cat}">
+            <div class="lab-category-card__icon">${emoji}</div>
+            <div class="lab-category-card__info">
+              <h4>${this.escapeHtml(cat)}</h4>
+              <span>View all tests in this category \u2192</span>
+            </div>
+            <div class="lab-category-card__arrow">\u2192</div>
+          </button>
+        `;
+      }).join('');
+
+      grid.querySelectorAll('.lab-category-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const cat = card.dataset.categoryFilter;
+          const filter = document.getElementById('lab-filter-category');
+          if (filter) {
+            filter.value = cat;
+            this.loadTests();
+            document.getElementById('test-catalog')?.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+    } catch (error) {
+      console.error('Failed to load categories:', error);
+      const grid = document.getElementById('lab-categories-grid');
+      if (grid) grid.innerHTML = this.getCategoryFallbackHTML();
+    }
+  },
+
+  getCategoryFallbackHTML() {
+    const fallbackCats = [
+      { name: 'Blood Tests', icon: '\uD83D\uDD0C' },
+      { name: 'Diabetes Tests', icon: '\uD83C\uDF4E' },
+      { name: 'Thyroid Tests', icon: '\uD83E\uDDEA' },
+      { name: 'Liver Function Tests', icon: '\uD83C\uDF4C' },
+      { name: 'Vitamin Tests', icon: '\uD83C\uDF3F' },
+      { name: 'Preventive Health Packages', icon: '\uD83D\uDEE1\uFE0F' },
+    ];
+    return fallbackCats.map(cat => `
+      <button class="lab-category-card" data-category-filter="${cat.name}">
+        <div class="lab-category-card__icon">${cat.icon}</div>
+        <div class="lab-category-card__info">
+          <h4>${cat.name}</h4>
+          <span>View all tests \u2192</span>
+        </div>
+        <div class="lab-category-card__arrow">\u2192</div>
+      </button>
+    `).join('');
+  },
+
+  // ── Section 4 & 5: Search & Load Tests ──
   async loadTests() {
     try {
       const searchVal = document.getElementById('lab-search')?.value || '';
       const catFilter = document.getElementById('lab-filter-category')?.value || '';
-      
-      let url = `/lab-tests?limit=50&is_active=1`;
+
+      let url = '/lab-tests?limit=50&is_active=1';
       if (searchVal) url += `&search=${encodeURIComponent(searchVal)}`;
       if (catFilter) url += `&category=${encodeURIComponent(catFilter)}`;
 
       const response = await Api.get(url);
       const container = document.getElementById('lab-tests-catalog');
-      if (!container || !response.success) return;
+      const countEl = document.getElementById('lab-tests-count');
+      if (!container) return;
 
-      if (response.data.length === 0) {
-        container.innerHTML = UI.emptyState('🔬', 'No Lab Tests Found', 'No lab tests match your search criteria.');
+      if (!response.success || response.data.length === 0) {
+        container.innerHTML = `
+          <div class="lab-no-results">
+            <div class="lab-no-results__icon">\uD83D\uDD2C</div>
+            <div class="lab-no-results__title">No Tests Found</div>
+            <div class="lab-no-results__text">No lab tests match your search criteria. Try a different search term or category.</div>
+          </div>
+        `;
+        if (countEl) countEl.textContent = '';
         return;
       }
 
-      container.innerHTML = `<div class="grid grid--3">
-        ${response.data.map(test => `
-          <div class="card">
-            <div class="card__body" style="display:flex; flex-direction:column; justify-content:space-between; height:100%;">
-              <div>
-                <div class="d-flex justify-between items-center mb-3">
-                  <span class="badge badge--info">${test.category || 'General'}</span>
-                  <span class="font-bold text-primary">₹${parseFloat(test.price).toFixed(2)}</span>
-                </div>
-                <h4 class="mb-2">${test.test_name}</h4>
-                <p class="text-sm text-muted mb-3">${test.description || 'Standard laboratory test.'}</p>
-                <div class="text-xs text-muted mb-4">⏱ Results in ${test.turnaround_hours}h • Code: ${test.test_code}</div>
-              </div>
-              <button class="btn btn--primary btn--block btn--sm" onclick="LabTests.openBookModal(${test.id}, '${test.test_name.replace(/'/g, "\\'")}')">Book Test</button>
-            </div>
-          </div>
-        `).join('')}
+      if (countEl) {
+        countEl.textContent = `${response.data.length} test${response.data.length !== 1 ? 's' : ''} found`;
+      }
+
+      container.innerHTML = `<div class="lab-tests-grid">
+        ${response.data.map(test => this.renderTestCard(test)).join('')}
       </div>`;
     } catch (error) {
       UI.showToast('Failed to load lab tests.', 'error');
     }
   },
 
+  renderTestCard(test) {
+    const price = parseFloat(test.price).toFixed(2);
+    const name = this.escapeHtml(test.test_name);
+    const desc = this.escapeHtml(test.description || 'Standard laboratory diagnostic test.');
+    const category = this.escapeHtml(test.category || 'General');
+    const hours = test.turnaround_hours || 24;
+    const code = this.escapeHtml(test.test_code);
+
+    return `
+      <div class="lab-test-card">
+        <div class="lab-test-card__header">
+          <span class="lab-test-card__category">${category}</span>
+          <span class="lab-test-card__price">\u20B9${price}</span>
+        </div>
+        <div class="lab-test-card__body">
+          <h3 class="lab-test-card__name">${name}</h3>
+          <p class="lab-test-card__desc">${desc}</p>
+          <div class="lab-test-card__meta">
+            <span class="lab-test-card__meta-item">\u23F1 ${hours}h</span>
+            <span class="lab-test-card__meta-item">\uD83D\uDCC4 Digital</span>
+            <span class="lab-test-card__meta-item">\uD83D\uDD0D ${code}</span>
+          </div>
+          <div class="lab-test-card__actions">
+            <button class="btn btn--ghost lab-test-card__view-btn btn--sm" data-test-detail="${test.id}">
+              View Details
+            </button>
+            <button class="btn btn--primary btn--sm" data-book-test="${test.id}" data-test-name="${name.replace(/"/g, '&quot;')}">
+              Book Now
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  },
+
+  // ── Section 6: Test Detail Showcase ──
+  async openDetail(testId) {
+    const overlay = document.getElementById('lab-detail-overlay');
+    const loading = document.getElementById('lab-detail-loading');
+    const content = document.getElementById('lab-detail-content');
+    if (!overlay) return;
+
+    loading.style.display = 'flex';
+    content.style.display = 'none';
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    try {
+      const response = await Api.get(`/lab-tests/${testId}`);
+      if (!response.success || !response.data) {
+        UI.showToast('Failed to load test details.', 'error');
+        this.closeDetail();
+        return;
+      }
+
+      const test = response.data;
+      this.currentTestId = testId;
+
+      document.getElementById('detail-category').textContent = test.category || 'General';
+      document.getElementById('detail-name').textContent = test.test_name;
+      document.getElementById('detail-code').textContent = test.test_code;
+      document.getElementById('detail-description').textContent = test.description || 'No description available.';
+      document.getElementById('detail-preparation').textContent = test.preparation_instructions || 'No special preparation required. Follow any instructions provided by your healthcare provider.';
+      document.getElementById('detail-turnaround').textContent = `${test.turnaround_hours || 24} hours`;
+      document.getElementById('detail-price').textContent = `\u20B9${parseFloat(test.price).toFixed(2)}`;
+
+      const bookBtn = document.getElementById('detail-book-btn');
+      if (bookBtn) {
+        const name = test.test_name.replace(/"/g, '&quot;');
+        bookBtn.setAttribute('data-book-test', test.id);
+        bookBtn.setAttribute('data-test-name', name);
+      }
+
+      loading.style.display = 'none';
+      content.style.display = 'block';
+    } catch (error) {
+      UI.showToast('Failed to load test details.', 'error');
+      this.closeDetail();
+    }
+  },
+
+  closeDetail() {
+    const overlay = document.getElementById('lab-detail-overlay');
+    if (overlay) {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  },
+
+  // ── Booking Modal ──
   openBookModal(testId, testName) {
+    if (!Auth.isAuthenticated()) {
+      UI.showToast('Please log in to book a test.', 'warning');
+      const currentPath = window.location.pathname;
+      sessionStorage.setItem('redirect_after_login', currentPath);
+      window.location.href = '/login.html';
+      return;
+    }
+
     document.getElementById('book-lab-test-id').value = testId;
     document.getElementById('book-lab-test-name').textContent = testName;
 
-    // Set min date to today
     const dateInput = document.getElementById('book-lab-date');
     if (dateInput) {
       dateInput.value = '';
       dateInput.setAttribute('min', new Date().toISOString().split('T')[0]);
     }
-    
+
     UI.openModal('book-lab-modal');
   },
 
@@ -122,14 +316,17 @@ const LabTests = {
         notes: document.getElementById('book-lab-notes')?.value || '',
       };
 
-      if (!data.booking_date) { UI.showToast('Please select a date.', 'warning'); return; }
+      if (!data.booking_date) {
+        UI.showToast('Please select a date.', 'warning');
+        return;
+      }
 
       UI.showLoader();
       const response = await Api.post('/lab-bookings', data);
       if (response.success) {
         UI.showToast('Lab test booked successfully!', 'success');
         UI.closeModal('book-lab-modal');
-        await this.loadBookings();
+        document.getElementById('book-lab-form')?.reset();
       } else {
         UI.showToast(response.message || 'Booking failed.', 'error');
       }
@@ -140,61 +337,128 @@ const LabTests = {
     }
   },
 
-  async loadBookings() {
-    try {
-      const response = await Api.get(`/lab-bookings?page=${this.currentPage}&limit=${CONFIG.DEFAULT_PAGE_SIZE}`);
-      const container = document.getElementById('lab-bookings-list');
-      if (!container || !response.success) return;
+  // ── Section 9: FAQ ──
+  async loadFAQs() {
+    const container = document.getElementById('lab-faq-list');
+    if (!container) return;
 
-      if (response.data.length === 0) {
-        container.innerHTML = UI.emptyState('📝', 'No Bookings', 'You haven\'t booked any lab tests yet.');
+    try {
+      const response = await Api.get('/cms/faqs');
+      if (response.success && response.data.length > 0) {
+        container.innerHTML = response.data.map(faq => `
+          <div class="lab-faq-item">
+            <button class="lab-faq-question" data-faq-toggle>
+              <span>${this.escapeHtml(faq.question)}</span>
+              <span class="lab-faq-toggle">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </button>
+            <div class="lab-faq-answer">
+              <div class="lab-faq-answer-inner">${this.escapeHtml(faq.answer)}</div>
+            </div>
+          </div>
+        `).join('');
         return;
       }
-
-      container.innerHTML = `
-        <div class="table-container">
-          <table class="data-table">
-            <thead><tr><th>Test</th><th>Date</th><th>Status</th><th>Result</th><th>Actions</th></tr></thead>
-            <tbody>
-              ${response.data.map(b => {
-                const canCancel = ['pending', 'confirmed'].includes(b.status);
-                return `
-                  <tr>
-                    <td><strong>${b.test_name}</strong><br><span class="text-xs text-muted">${b.test_code}</span></td>
-                    <td>${UI.formatDate(b.booking_date)}</td>
-                    <td>${UI.statusBadge(b.status)}</td>
-                    <td>${b.result_file_url ? `<a href="${b.result_file_url}" target="_blank" class="btn btn--sm btn--ghost">Download</a>` : '—'}</td>
-                    <td>
-                      ${canCancel ? `<button class="btn btn--sm btn--danger" onclick="LabTests.cancelBooking(${b.id})">Cancel</button>` : '—'}
-                    </td>
-                  </tr>
-                `;
-              }).join('')}
-            </tbody>
-          </table>
-        </div>`;
     } catch (error) {
-      UI.showToast('Failed to load bookings.', 'error');
+      // Silently fall back to static FAQ
     }
+
+    container.innerHTML = this.getFallbackFAQs();
   },
 
-  async cancelBooking(id) {
-    if (!confirm('Are you sure you want to cancel this lab test booking?')) return;
-    try {
-      UI.showLoader();
-      const response = await Api.put(`/lab-bookings/${id}/cancel`, {});
-      if (response.success) {
-        UI.showToast('Booking cancelled successfully.', 'success');
-        await this.loadBookings();
+  getFallbackFAQs() {
+    const faqs = [
+      { q: 'How do I book a lab test?', a: 'Simply browse our test catalog, select the test you need, choose a convenient date, and confirm your booking. If you\'re a new user, you\'ll need to create an account first.' },
+      { q: 'Can I get my samples collected from home?', a: 'Yes! We offer free home sample collection with every test booking. A certified phlebotomist will visit your home at your preferred time.' },
+      { q: 'How long do test results take?', a: 'Most test results are delivered within 24–48 hours. Some specialized tests may take longer. Urgent results can be available in as little as 6 hours for select tests.' },
+      { q: 'How will I receive my test reports?', a: 'Reports are uploaded to your secure MediConnect account as digital PDFs. You\'ll receive an email notification when your report is ready. You can download, view, or share them anytime.' },
+      { q: 'Can I cancel or reschedule a booking?', a: 'Yes, you can cancel a booking as long as it\'s in "pending" or "confirmed" status. Simply go to your bookings and click the cancel button.' },
+      { q: 'Are my reports shared with my doctor?', a: 'You can easily share any report with your healthcare provider directly from your MediConnect account. You control who has access to your reports.' },
+      { q: 'What is the accuracy of your tests?', a: 'All our partner labs are NABL-accredited and follow strict quality control protocols. Every report is reviewed by qualified pathologists before release.' },
+      { q: 'How do I prepare for a blood test?', a: 'Preparation depends on the test. Common instructions include fasting for 8–12 hours, staying hydrated, and avoiding alcohol. Specific instructions are shown on the test details page.' },
+    ];
+    return faqs.map(faq => `
+      <div class="lab-faq-item">
+        <button class="lab-faq-question" data-faq-toggle>
+          <span>${this.escapeHtml(faq.q)}</span>
+          <span class="lab-faq-toggle">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </button>
+        <div class="lab-faq-answer">
+          <div class="lab-faq-answer-inner">${this.escapeHtml(faq.a)}</div>
+        </div>
+      </div>
+    `).join('');
+  },
+
+  toggleFaq(btn) {
+    const item = btn.closest('.lab-faq-item');
+    if (!item) return;
+
+    const isOpen = item.classList.contains('open');
+
+    document.querySelectorAll('.lab-faq-item.open').forEach(el => {
+      if (el !== item) el.classList.remove('open');
+    });
+
+    item.classList.toggle('open', !isOpen);
+  },
+
+  // ── Count-Up Animation ──
+  initCountUp() {
+    const counters = document.querySelectorAll('.count-up');
+    if (counters.length === 0) return;
+
+    let counted = false;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !counted) {
+          counted = true;
+          counters.forEach(counter => {
+            const target = parseInt(counter.dataset.target, 10);
+            if (isNaN(target)) return;
+            this.animateCount(counter, target);
+          });
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.5 });
+
+    counters.forEach(c => observer.observe(c));
+  },
+
+  animateCount(el, target) {
+    const duration = 2000;
+    const steps = 60;
+    const increment = target / steps;
+    let current = 0;
+
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        el.textContent = target;
+        clearInterval(timer);
       } else {
-        UI.showToast(response.message || 'Cancellation failed.', 'error');
+        el.textContent = Math.floor(current);
       }
-    } catch (error) {
-      UI.showToast(error.message || 'Cancellation failed.', 'error');
-    } finally {
-      UI.hideLoader();
+    }, duration / steps);
+  },
+
+  // ── Scroll Animations ──
+  initScrollAnimations() {
+    if (typeof Animations !== 'undefined' && Animations.init) {
+      Animations.init();
     }
   },
 
-  goToPage(page) { this.currentPage = page; this.loadBookings(); },
+  // ── Helpers ──
+  escapeHtml(str) {
+    if (!str) return '';
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  },
 };

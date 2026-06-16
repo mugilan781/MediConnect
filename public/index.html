@@ -3,223 +3,581 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="MediConnect – Your Digital Clinic & Appointment Management Platform. Book appointments, manage lab tests, and access medical records online.">
-  <title>MediConnect – Digital Clinic & Appointment Management</title>
+  <title>MediConnect – Smart Healthcare Platform</title>
+  <meta name="description" content="MediConnect is a comprehensive healthcare management platform connecting patients with top doctors. Book appointments, access lab reports, online consultations and more.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/variables.css">
   <link rel="stylesheet" href="/css/base.css">
-  <link rel="stylesheet" href="/css/components.css">
   <link rel="stylesheet" href="/css/layout.css">
-  <link rel="stylesheet" href="/css/forms.css">
-  <link rel="stylesheet" href="/css/utilities.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/footer.css">
+  <link rel="stylesheet" href="/css/animations.css">
   <link rel="stylesheet" href="/css/homepage.css">
-  <style>
-    .hero { padding: var(--space-20) var(--space-8); background: linear-gradient(145deg, var(--color-mint-light) 0%, var(--color-white) 100%); text-align: center; }
-    .hero__title { font-size: 3rem; font-weight: var(--font-weight-extrabold); color: var(--color-gray-800); max-width: 700px; margin: 0 auto var(--space-6); line-height: 1.2; }
-    .hero__title span { color: var(--color-primary); }
-    .hero__subtitle { font-size: var(--font-size-lg); color: var(--color-text-light); max-width: 560px; margin: 0 auto var(--space-8); line-height: var(--line-height-relaxed); }
-    .hero__actions { display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap; }
-    .features { padding: var(--space-20) var(--space-8); background: var(--color-white); }
-    .features__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-8); max-width: 1100px; margin: 0 auto; }
-    .feature-card { text-align: center; padding: var(--space-8); border-radius: var(--radius-xl); border: 1px solid var(--color-border); transition: all var(--transition-base); }
-    .feature-card:hover { border-color: var(--color-primary); box-shadow: var(--shadow-card-hover); transform: translateY(-4px); }
-    .feature-card__icon { width: 64px; height: 64px; border-radius: var(--radius-xl); background: var(--color-mint-light); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-4); font-size: 1.8rem; }
-    .feature-card__title { font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); margin-bottom: var(--space-3); }
-    .feature-card__desc { color: var(--color-text-light); font-size: var(--font-size-base); line-height: var(--line-height-relaxed); }
-    .section-title { text-align: center; font-size: var(--font-size-3xl); font-weight: var(--font-weight-bold); margin-bottom: var(--space-4); }
-    .section-subtitle { text-align: center; color: var(--color-text-light); margin-bottom: var(--space-12); max-width: 500px; margin-left: auto; margin-right: auto; }
-    .cta { padding: var(--space-20) var(--space-8); background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); text-align: center; color: white; }
-    .cta h2 { font-size: var(--font-size-3xl); margin-bottom: var(--space-4); color: white; }
-    .cta p { opacity: 0.9; margin-bottom: var(--space-8); font-size: var(--font-size-lg); }
-    .footer__inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-8); }
-    .footer__brand { font-size: var(--font-size-lg); font-weight: var(--font-weight-bold); color: var(--color-white); margin-bottom: var(--space-3); }
-    .footer__links h4 { color: var(--color-white); margin-bottom: var(--space-4); font-size: var(--font-size-base); }
-    .footer__links a { display: block; margin-bottom: var(--space-2); color: var(--color-gray-400); font-size: var(--font-size-sm); transition: color var(--transition-fast); }
-    .footer__links a:hover { color: var(--color-white); }
-    .footer__bottom { max-width: 1100px; margin: var(--space-8) auto 0; padding-top: var(--space-6); border-top: 1px solid rgba(255,255,255,0.1); text-align: center; font-size: var(--font-size-sm); }
-    @media (max-width: 768px) { .hero__title { font-size: 2rem; } }
-  </style>
 </head>
 <body class="public-page">
+  <div id="global-navbar"></div>
 
-  <!-- Header -->
-  <header class="public-header" id="public-header">
-    <a href="/index.html" class="public-header__logo">
-      <div class="sidebar__logo-icon">M</div>
-      <span style="font-size: var(--font-size-lg); font-weight: var(--font-weight-bold); color: var(--color-gray-800);">MediConnect</span>
-    </a>
-    <nav class="public-header__nav" style="display: flex; align-items: center; gap: var(--space-3);">
-      <a href="/about.html">About</a>
-      <a href="/contact.html">Contact</a>
-      <a href="/faq.html">FAQ</a>
-
-      <!-- Profile / Navigation Dropdown -->
-      <div style="position: relative;" id="nav-dropdown-wrapper">
-        <button id="nav-dropdown-toggle" style="
-          display: inline-flex; align-items: center; gap: var(--space-2);
-          padding: var(--space-2) var(--space-4); border-radius: var(--radius-full);
-          background: var(--color-primary); color: white; border: none; cursor: pointer;
-          font-family: var(--font-family); font-size: var(--font-size-sm);
-          font-weight: var(--font-weight-medium); transition: all var(--transition-base);
-        ">
-          <span style="font-size: 1.1rem;">☰</span> Menu
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="white"><path d="M6 8L1 3h10z"/></svg>
-        </button>
-
-        <div id="nav-dropdown-menu" style="
-          display: none; position: absolute; top: calc(100% + 8px); right: 0;
-          background: white; border-radius: var(--radius-lg); box-shadow: var(--shadow-xl);
-          border: 1px solid var(--color-border); min-width: 220px; z-index: var(--z-dropdown);
-          overflow: hidden; animation: slideDown 0.2s ease;
-        ">
-          <div style="padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--color-border); font-size: var(--font-size-xs); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.05em;">
-            Account
+  <main>
+      <!-- ════════════════════════════════════════════════════
+           SECTION 1: HERO
+           ════════════════════════════════════════════════════ -->
+      <section id="hero" class="home-hero">
+        <div class="container">
+          <div class="home-hero__content">
+            <div class="home-hero__badge">
+              <span class="home-hero__badge-dot"></span>
+              <span id="hero-badge">Now Serving 50,000+ Patients</span>
+            </div>
+            <h1 id="hero-title" class="home-hero__title">
+              Your Health, <span class="highlight">Intelligently</span> Managed
+            </h1>
+            <p id="hero-subtitle" class="home-hero__desc">
+              MediConnect brings together top doctors, seamless lab services, and your complete medical history — all in one platform.
+            </p>
+            <div class="home-hero__actions">
+              <a href="/doctors.html" class="btn btn--primary">
+                <i class="icon">👨‍⚕️</i> Find a Doctor
+              </a>
+              <a href="/signup.html" class="btn btn-secondary">Get Started Free</a>
+            </div>
+            <div class="home-hero__stats">
+              <div class="home-hero__stat">
+                <div class="home-hero__stat-value">50K+</div>
+                <div class="home-hero__stat-label">Active Patients</div>
+              </div>
+              <div class="home-hero__stat">
+                <div class="home-hero__stat-value">200+</div>
+                <div class="home-hero__stat-label">Expert Doctors</div>
+              </div>
+              <div class="home-hero__stat">
+                <div class="home-hero__stat-value">98%</div>
+                <div class="home-hero__stat-label">Satisfaction Rate</div>
+              </div>
+            </div>
           </div>
-          <a href="/login.html" style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); color: var(--color-text); text-decoration: none; font-size: var(--font-size-sm); transition: background var(--transition-fast);" onmouseover="this.style.background='var(--color-mint-light)'" onmouseout="this.style.background='transparent'">
-            <span>🔑</span> Login
-          </a>
-          <a href="/signup.html" style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); color: var(--color-text); text-decoration: none; font-size: var(--font-size-sm); transition: background var(--transition-fast);" onmouseover="this.style.background='var(--color-mint-light)'" onmouseout="this.style.background='transparent'">
-            <span>📝</span> Sign Up
-          </a>
-
-          <div style="padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--color-border); border-top: 1px solid var(--color-border); font-size: var(--font-size-xs); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 0;">
-            Dashboards
+          <div class="home-hero__visual">
+            <div class="home-hero__visual-card floating">
+              <div class="home-hero__visual-inner">
+                <div class="home-hero__visual-icon">🏥</div>
+                <div class="home-hero__visual-title">Complete Care Platform</div>
+                <div class="home-hero__visual-desc">Appointments • Lab Reports • Consultations • Health Records</div>
+              </div>
+            </div>
+            <div class="hero-widget hero-widget--1 floating floating-delay-1">
+              <span class="hero-widget__icon" style="background:#E8F4F1;">📋</span>
+              <span>Next Appt: Today 3PM</span>
+            </div>
+            <div class="hero-widget hero-widget--2 floating floating-delay-2">
+              <span class="hero-widget__icon" style="background:#FFF5E6;">📊</span>
+              <span>Reports Ready: 3 New</span>
+            </div>
+            <div class="hero-widget hero-widget--3 floating" style="animation-delay:1.5s;">
+              <span class="hero-widget__icon" style="background:#E0F0FF;">💬</span>
+              <span>Chat with Doctor</span>
+            </div>
           </div>
-          <a href="/patient-dashboard.html" style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); color: var(--color-text); text-decoration: none; font-size: var(--font-size-sm); transition: background var(--transition-fast);" onmouseover="this.style.background='var(--color-mint-light)'" onmouseout="this.style.background='transparent'">
-            <span>🩺</span> Patient Dashboard
-          </a>
-          <a href="/doctor-dashboard.html" style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); color: var(--color-text); text-decoration: none; font-size: var(--font-size-sm); transition: background var(--transition-fast);" onmouseover="this.style.background='var(--color-mint-light)'" onmouseout="this.style.background='transparent'">
-            <span>👨‍⚕️</span> Doctor Dashboard
-          </a>
-          <a href="/admin-dashboard.html" style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); color: var(--color-text); text-decoration: none; font-size: var(--font-size-sm); transition: background var(--transition-fast);" onmouseover="this.style.background='var(--color-mint-light)'" onmouseout="this.style.background='transparent'">
-            <span>⚙️</span> Admin Dashboard
-          </a>
         </div>
-      </div>
-    </nav>
-  </header>
+      </section>
 
-  <script>
-    // Dropdown toggle
-    document.addEventListener('DOMContentLoaded', () => {
-      const toggle = document.getElementById('nav-dropdown-toggle');
-      const menu = document.getElementById('nav-dropdown-menu');
-      if (toggle && menu) {
-        toggle.addEventListener('click', (e) => {
-          e.stopPropagation();
-          menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
-        });
-        document.addEventListener('click', () => { menu.style.display = 'none'; });
-        menu.addEventListener('click', (e) => e.stopPropagation());
-      }
-    });
-  </script>
+      <!-- ════════════════════════════════════════════════════
+           SECTION 2: TRUSTED BY
+           ════════════════════════════════════════════════════ -->
+      <section class="trusted-section animate-on-scroll">
+        <div class="container">
+          <p class="trusted-section__label">Trusted by healthcare providers nationwide</p>
+          <div class="trusted-grid">
+            <div class="trusted-item"><span class="trusted-item__icon">🏛️</span> City Hospital</div>
+            <div class="trusted-item"><span class="trusted-item__icon">🏥</span> MedLife Clinics</div>
+            <div class="trusted-item"><span class="trusted-item__icon">🏪</span> HealthFirst Group</div>
+            <div class="trusted-item"><span class="trusted-item__icon">🏨</span> PrimeCare Network</div>
+            <div class="trusted-item"><span class="trusted-item__icon">🏫</span> GreenValley Health</div>
+          </div>
+        </div>
+      </section>
 
-  <!-- Hero Section -->
-  <section class="hero" id="hero">
-    <h1 class="hero__title" id="hero-title">Your Health, <span>Connected</span> &amp; Simplified</h1>
-    <p class="hero__subtitle" id="hero-subtitle">Book appointments, consult with top doctors, manage lab tests, and access your complete medical history — all in one secure platform.</p>
-    <div class="hero__actions">
-      <a href="/signup.html" class="btn btn--primary btn--lg">Get Started Free</a>
-      <a href="/about.html" class="btn btn--secondary btn--lg">Learn More</a>
-    </div>
-  </section>
+      <!-- ════════════════════════════════════════════════════
+           SECTION 3: STATISTICS
+           ════════════════════════════════════════════════════ -->
+      <section id="stats-section" class="stats-section animate-on-scroll">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-header__label">By the Numbers</span>
+            <h2 class="section-header__title">Growing Trust Every Day</h2>
+            <p class="section-header__subtitle">Thousands rely on MediConnect for their healthcare journey</p>
+          </div>
+          <div class="stats-grid" id="stats-grid">
+            <div class="stat-card">
+              <div class="stat-card__icon">👥</div>
+              <div class="stat-card__number" id="stat-patients" data-target="50000">0</div>
+              <div class="stat-card__label">Registered Patients</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card__icon">👨‍⚕️</div>
+              <div class="stat-card__number" id="stat-doctors" data-target="200">0</div>
+              <div class="stat-card__label">Verified Doctors</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card__icon">📋</div>
+              <div class="stat-card__number" id="stat-appointments" data-target="150000">0</div>
+              <div class="stat-card__label">Appointments Completed</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card__icon">🧪</div>
+              <div class="stat-card__number" id="stat-labtests" data-target="80000">0</div>
+              <div class="stat-card__label">Lab Tests Processed</div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-  <!-- Features -->
-  <section class="features" id="features">
-    <h2 class="section-title" id="features-title">Everything You Need</h2>
-    <p class="section-subtitle" id="features-subtitle">A complete digital clinic management solution for patients, doctors, and administrators.</p>
-    <div class="features__grid" id="features-grid">
-      <div class="feature-card">
-        <div class="feature-card__icon">📅</div>
-        <h3 class="feature-card__title">Smart Appointments</h3>
-        <p class="feature-card__desc">Book, reschedule, or cancel appointments with real-time doctor availability and slot management.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-card__icon">🩺</div>
-        <h3 class="feature-card__title">Digital Consultations</h3>
-        <p class="feature-card__desc">Complete consultation records with diagnosis, prescriptions, and follow-up tracking in one place.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-card__icon">🔬</div>
-        <h3 class="feature-card__title">Lab Test Booking</h3>
-        <p class="feature-card__desc">Browse, book lab tests, and get results delivered digitally. Home sample collection available.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-card__icon">📄</div>
-        <h3 class="feature-card__title">Medical Reports</h3>
-        <p class="feature-card__desc">Securely upload, store, and access all your medical reports and documents anytime.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-card__icon">📜</div>
-        <h3 class="feature-card__title">Health History</h3>
-        <p class="feature-card__desc">Complete timeline of your medical journey — appointments, tests, prescriptions, and notes.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-card__icon">🔔</div>
-        <h3 class="feature-card__title">Smart Notifications</h3>
-        <p class="feature-card__desc">Never miss an appointment or lab result with real-time in-app and email notifications.</p>
-      </div>
-    </div>
-  </section>
+      <!-- ════════════════════════════════════════════════════
+           SECTION 4: WHY CHOOSE
+           ════════════════════════════════════════════════════ -->
+      <section id="why-choose" class="why-section animate-on-scroll">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-header__label">Why MediConnect</span>
+            <h2 id="features-title" class="section-header__title">Built for Better Healthcare</h2>
+            <p class="section-header__subtitle">Everything you need, nothing you don't</p>
+          </div>
+          <div class="why-grid" id="why-grid">
+            <div class="why-card">
+              <div class="why-card__icon">🔒</div>
+              <h3 class="why-card__title">Secure & Private</h3>
+              <p class="why-card__desc">Your health data is encrypted end-to-end. HIPAA-compliant infrastructure with bank-grade security protocols.</p>
+            </div>
+            <div class="why-card">
+              <div class="why-card__icon">⚡</div>
+              <h3 class="why-card__title">Lightning Fast</h3>
+              <p class="why-card__desc">Book appointments in under 30 seconds. Get lab reports delivered instantly. No waiting, no delays.</p>
+            </div>
+            <div class="why-card">
+              <div class="why-card__icon">🎯</div>
+              <h3 class="why-card__title">AI-Powered Insights</h3>
+              <p class="why-card__desc">Smart doctor recommendations based on your symptoms. Intelligent health predictions and reminders.</p>
+            </div>
+            <div class="why-card">
+              <div class="why-card__icon">📱</div>
+              <h3 class="why-card__title">Omnichannel Access</h3>
+              <p class="why-card__desc">Seamlessly switch between web and mobile. Access your health records anytime, anywhere.</p>
+            </div>
+            <div class="why-card">
+              <div class="why-card__icon">💬</div>
+              <h3 class="why-card__title">24/7 Support</h3>
+              <p class="why-card__desc">Round-the-clock customer support. Chat with our team anytime you need assistance.</p>
+            </div>
+            <div class="why-card">
+              <div class="why-card__icon">🔄</div>
+              <h3 class="why-card__title">Integrated Ecosystem</h3>
+              <p class="why-card__desc">Connect with pharmacies, labs, and specialists in one unified healthcare network.</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-  <!-- Statistics Section (Dynamic) -->
-  <section class="stats-section" id="stats-section"></section>
+      <!-- ════════════════════════════════════════════════════
+           SECTION 5: SERVICES OVERVIEW
+           ════════════════════════════════════════════════════ -->
+      <section id="services-section" class="services-section animate-on-scroll">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-header__label">Our Services</span>
+            <h2 class="section-header__title">Comprehensive Healthcare Solutions</h2>
+            <p class="section-header__subtitle">From appointments to lab tests — we've got you covered</p>
+          </div>
+          <div class="services-grid" id="services-grid">
+            <a href="/doctors.html" class="service-card">
+              <div class="service-card__icon">👨‍⚕️</div>
+              <h3 class="service-card__title">Doctor Appointments</h3>
+              <p class="service-card__desc">Book appointments with top specialists in your area. Real-time availability and instant confirmation.</p>
+              <span class="service-card__link">Browse Doctors <span>→</span></span>
+            </a>
+            <a href="/consultations.html" class="service-card">
+              <div class="service-card__icon">💻</div>
+              <h3 class="service-card__title">Online Consultation</h3>
+              <p class="service-card__desc">Video consultations with certified doctors from the comfort of your home.</p>
+              <span class="service-card__link">Consult Now <span>→</span></span>
+            </a>
+            <a href="/lab-tests.html" class="service-card">
+              <div class="service-card__icon">🧪</div>
+              <h3 class="service-card__title">Lab Tests</h3>
+              <p class="service-card__desc">Schedule lab tests with free home sample collection. Get digital reports in 24 hours.</p>
+              <span class="service-card__link">Book a Test <span>→</span></span>
+            </a>
+            <a href="/home-sample-collection.html" class="service-card">
+              <div class="service-card__icon">🏠</div>
+              <h3 class="service-card__title">Home Sample Collection</h3>
+              <p class="service-card__desc">Certified phlebotomists visit your home for safe and hygienic sample collection.</p>
+              <span class="service-card__link">Schedule Pickup <span>→</span></span>
+            </a>
+            <a href="/medical-reports.html" class="service-card">
+              <div class="service-card__icon">📄</div>
+              <h3 class="service-card__title">Medical Reports</h3>
+              <p class="service-card__desc">Access your test reports, prescriptions, and medical history in one secure place.</p>
+              <span class="service-card__link">View Reports <span>→</span></span>
+            </a>
+            <a href="/pricing.html" class="service-card">
+              <div class="service-card__icon">💎</div>
+              <h3 class="service-card__title">Premium Plans</h3>
+              <p class="service-card__desc">Choose from flexible pricing plans designed for individuals, families, and enterprises.</p>
+              <span class="service-card__link">View Pricing <span>→</span></span>
+            </a>
+          </div>
+        </div>
+      </section>
 
-  <!-- Featured Doctors Section (Dynamic) -->
-  <section class="doctors-section" id="doctors-section"></section>
+      <!-- ════════════════════════════════════════════════════
+           SECTION 6: PATIENT EXPERIENCE
+           ════════════════════════════════════════════════════ -->
+      <section id="patient-experience" class="experience-section animate-on-scroll">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-header__label">For Patients</span>
+            <h2 class="section-header__title">Your Care Journey, Simplified</h2>
+            <p class="section-header__subtitle">From finding the right doctor to follow-up care — we guide you every step</p>
+          </div>
+          <div class="experience-grid">
+            <div class="experience-visual">
+              <div class="experience-visual__icon">👤</div>
+              <div class="experience-visual__title">Patient Dashboard</div>
+              <div class="experience-visual__desc">Manage appointments, view reports, track health metrics, and communicate with your care team.</div>
+            </div>
+            <div class="experience-steps">
+              <div class="experience-step">
+                <div class="experience-step__num">1</div>
+                <div>
+                  <div class="experience-step__title">Find the Right Doctor</div>
+                  <div class="experience-step__desc">Search by specialization, location, or symptoms. Read reviews and check availability.</div>
+                </div>
+              </div>
+              <div class="experience-step">
+                <div class="experience-step__num">2</div>
+                <div>
+                  <div class="experience-step__title">Book in Seconds</div>
+                  <div class="experience-step__desc">Choose your preferred time slot and get instant confirmation. No phone calls needed.</div>
+                </div>
+              </div>
+              <div class="experience-step">
+                <div class="experience-step__num">3</div>
+                <div>
+                  <div class="experience-step__title">Get Treated</div>
+                  <div class="experience-step__desc">Visit the clinic or connect via video. Receive prescriptions and care instructions.</div>
+                </div>
+              </div>
+              <div class="experience-step">
+                <div class="experience-step__num">4</div>
+                <div>
+                  <div class="experience-step__title">Follow Up Digitally</div>
+                  <div class="experience-step__desc">Access reports online, get medication reminders, and schedule follow-ups with one click.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-  <!-- Popular Lab Tests Section (Dynamic) -->
-  <section class="lab-tests-section" id="lab-tests-section"></section>
+      <!-- ════════════════════════════════════════════════════
+           SECTION 7: DOCTOR EXPERIENCE
+           ════════════════════════════════════════════════════ -->
+      <section id="doctor-experience" class="experience-section experience-section--alt animate-on-scroll">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-header__label">For Doctors</span>
+            <h2 class="section-header__title">Practice Management, Reimagined</h2>
+            <p class="section-header__subtitle">Streamline your practice with powerful tools designed for healthcare professionals</p>
+          </div>
+          <div class="experience-grid" style="direction:rtl;">
+            <div class="experience-visual" style="direction:ltr;">
+              <div class="experience-visual__icon">👨‍⚕️</div>
+              <div class="experience-visual__title">Doctor Dashboard</div>
+              <div class="experience-visual__desc">Manage your schedule, view patient histories, write digital prescriptions, and track clinic performance.</div>
+            </div>
+            <div style="direction:ltr;">
+              <div class="experience-steps">
+                <div class="experience-step">
+                  <div class="experience-step__num">1</div>
+                  <div>
+                    <div class="experience-step__title">Manage Your Schedule</div>
+                    <div class="experience-step__desc">Set availability, manage time slots, and control your appointment calendar in real time.</div>
+                  </div>
+                </div>
+                <div class="experience-step">
+                  <div class="experience-step__num">2</div>
+                  <div>
+                    <div class="experience-step__title">Digital Prescriptions</div>
+                    <div class="experience-step__desc">Write and send e-prescriptions directly to pharmacies. No more paper clutter.</div>
+                  </div>
+                </div>
+                <div class="experience-step">
+                  <div class="experience-step__num">3</div>
+                  <div>
+                    <div class="experience-step__title">Patient History at a Glance</div>
+                    <div class="experience-step__desc">Access complete medical histories, past prescriptions, and lab results instantly.</div>
+                  </div>
+                </div>
+                <div class="experience-step">
+                  <div class="experience-step__num">4</div>
+                  <div>
+                    <div class="experience-step__title">Analytics & Insights</div>
+                    <div class="experience-step__desc">Track practice growth, patient satisfaction, and revenue with detailed analytics.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-  <!-- Contact Section (Dynamic) -->
-  <section class="contact-section" id="contact-section"></section>
+      <!-- ════════════════════════════════════════════════════
+           SECTION 8: ADMIN CONTROL
+           ════════════════════════════════════════════════════ -->
+      <section id="admin-control" class="admin-section animate-on-scroll">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-header__label">Admin Control Center</span>
+            <h2 class="section-header__title">Enterprise-Grade Management</h2>
+            <p class="section-header__subtitle">Full oversight of your healthcare platform with powerful admin tools</p>
+          </div>
+          <div class="admin-features">
+            <div class="admin-feature">
+              <div class="admin-feature__icon">📊</div>
+              <div class="admin-feature__title">Real-Time Dashboard</div>
+              <div class="admin-feature__desc">Live metrics on patients, doctors, appointments and revenue. Make data-driven decisions.</div>
+            </div>
+            <div class="admin-feature">
+              <div class="admin-feature__icon">👥</div>
+              <div class="admin-feature__title">User Management</div>
+              <div class="admin-feature__desc">Manage patients, doctors, and staff accounts with role-based access control.</div>
+            </div>
+            <div class="admin-feature">
+              <div class="admin-feature__icon">⚙️</div>
+              <div class="admin-feature__title">System Configuration</div>
+              <div class="admin-feature__desc">Configure platform settings, fee structures, specializations, and service categories.</div>
+            </div>
+            <div class="admin-feature">
+              <div class="admin-feature__icon">📱</div>
+              <div class="admin-feature__title">Content Management</div>
+              <div class="admin-feature__desc">Update homepage content, banners, and notifications without touching code.</div>
+            </div>
+            <div class="admin-feature">
+              <div class="admin-feature__icon">🧾</div>
+              <div class="admin-feature__title">Billing & Reports</div>
+              <div class="admin-feature__desc">Track payments, generate invoices, and export financial reports with ease.</div>
+            </div>
+            <div class="admin-feature">
+              <div class="admin-feature__icon">🔔</div>
+              <div class="admin-feature__title">Notification Engine</div>
+              <div class="admin-feature__desc">Send automated reminders, alerts, and broadcast messages to users.</div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-  <!-- CTA -->
-  <section class="cta" id="cta">
-    <h2 id="cta-title">Ready to Transform Your Healthcare Experience?</h2>
-    <p id="cta-subtitle">Join thousands of patients and doctors using MediConnect for seamless clinic management.</p>
-    <a href="/signup.html" class="btn btn--lg" id="cta-button" style="background: white; color: var(--color-primary); font-weight: var(--font-weight-semibold);">Create Free Account</a>
-  </section>
+      <!-- ════════════════════════════════════════════════════
+           SECTION 9: TESTIMONIALS
+           ════════════════════════════════════════════════════ -->
+      <section id="testimonials" class="testimonials-section animate-on-scroll">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-header__label">Success Stories</span>
+            <h2 class="section-header__title">What Our Users Say</h2>
+            <p class="section-header__subtitle">Real stories from patients, doctors, and healthcare administrators</p>
+          </div>
+          <div class="testimonials-grid" id="testimonials-grid">
+            <div class="testimonial-card">
+              <div class="testimonial-card__stars">★★★★★</div>
+              <p class="testimonial-card__text">"MediConnect transformed how I manage my health. Booking appointments and accessing reports has never been easier. The AI doctor recommendations are incredibly accurate."</p>
+              <div class="testimonial-card__author">
+                <div class="testimonial-card__avatar">S</div>
+                <div>
+                  <div class="testimonial-card__name">Sarah Johnson</div>
+                  <div class="testimonial-card__role">Patient, 3 years on MediConnect</div>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <div class="testimonial-card__stars">★★★★★</div>
+              <p class="testimonial-card__text">"As a busy practitioner, MediConnect's doctor dashboard saves me hours every week. Digital prescriptions and instant patient history access are game-changers."</p>
+              <div class="testimonial-card__author">
+                <div class="testimonial-card__avatar">D</div>
+                <div>
+                  <div class="testimonial-card__name">Dr. Michael Chen</div>
+                  <div class="testimonial-card__role">Cardiologist, MediConnect Partner</div>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <div class="testimonial-card__stars">★★★★★</div>
+              <p class="testimonial-card__text">"Managing a network of 50+ clinics was a challenge until MediConnect. The admin dashboard gives us complete visibility and control over operations across all locations."</p>
+              <div class="testimonial-card__author">
+                <div class="testimonial-card__avatar">R</div>
+                <div>
+                  <div class="testimonial-card__name">Raj Patel</div>
+                  <div class="testimonial-card__role">Operations Director, PrimeCare Network</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-  <!-- Footer -->
-  <footer class="public-footer" id="footer">
-    <div class="footer__inner">
-      <div>
-        <div class="footer__brand" id="footer-brand">MediConnect</div>
-        <p style="font-size: var(--font-size-sm);" id="footer-desc">Your trusted digital clinic and appointment management platform.</p>
-      </div>
-      <div class="footer__links">
-        <h4>Platform</h4>
-        <a href="/about.html">About Us</a>
-        <a href="/contact.html">Contact</a>
-        <a href="/login.html">Login</a>
-        <a href="/signup.html">Sign Up</a>
-      </div>
-      <div class="footer__links">
-        <h4>Services</h4>
-        <a href="#">Appointments</a>
-        <a href="#">Lab Tests</a>
-        <a href="#">Consultations</a>
-        <a href="#">Medical Reports</a>
-      </div>
-      <div class="footer__links">
-        <h4>Support</h4>
-        <a href="/contact.html">Help Center</a>
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Service</a>
-      </div>
-    </div>
-    <div class="footer__bottom">
-      <p id="footer-copyright">&copy; 2026 MediConnect. All rights reserved.</p>
-    </div>
-  </footer>
+      <!-- ════════════════════════════════════════════════════
+           SECTION 10: SCREENSHOTS
+           ════════════════════════════════════════════════════ -->
+      <section id="screenshots" class="screenshots-section animate-on-scroll">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-header__label">Platform Preview</span>
+            <h2 class="section-header__title">See MediConnect in Action</h2>
+            <p class="section-header__subtitle">Intuitive interfaces built for every healthcare role</p>
+          </div>
+          <div class="screenshots-grid">
+            <div class="screenshot-card">
+              <div class="screenshot-card__preview screenshot-card__preview--patient">📱</div>
+              <div class="screenshot-card__body">
+                <div class="screenshot-card__title">Patient Portal</div>
+                <div class="screenshot-card__desc">Book appointments, view reports, and manage your health journey from one dashboard.</div>
+              </div>
+            </div>
+            <div class="screenshot-card">
+              <div class="screenshot-card__preview screenshot-card__preview--doctor">💻</div>
+              <div class="screenshot-card__body">
+                <div class="screenshot-card__title">Doctor Workspace</div>
+                <div class="screenshot-card__desc">Manage patients, write digital prescriptions, and access medical histories instantly.</div>
+              </div>
+            </div>
+            <div class="screenshot-card">
+              <div class="screenshot-card__preview screenshot-card__preview--admin">📊</div>
+              <div class="screenshot-card__body">
+                <div class="screenshot-card__title">Admin Console</div>
+                <div class="screenshot-card__desc">Complete platform oversight with real-time analytics, user management, and system config.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
+      <!-- ════════════════════════════════════════════════════
+           SECTION 11: FAQ PREVIEW
+           ════════════════════════════════════════════════════ -->
+      <section id="faq-preview" class="faq-preview-section animate-on-scroll">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-header__label">FAQ</span>
+            <h2 class="section-header__title">Frequently Asked Questions</h2>
+            <p class="section-header__subtitle">Quick answers to common questions about our platform</p>
+          </div>
+          <div class="faq-preview-list" id="faq-preview-list">
+            <div class="faq-preview-item">
+              <button class="faq-preview-question" onclick="toggleFaq(this)">
+                How do I book an appointment?
+                <span class="icon">▼</span>
+              </button>
+              <div class="faq-preview-answer">
+                <div class="faq-preview-answer-inner">Simply browse our directory of doctors, choose your preferred specialist, select an available time slot, and confirm your booking. You'll receive an instant confirmation via email and SMS.</div>
+              </div>
+            </div>
+            <div class="faq-preview-item">
+              <button class="faq-preview-question" onclick="toggleFaq(this)">
+                Are online consultations available?
+                <span class="icon">▼</span>
+              </button>
+              <div class="faq-preview-answer">
+                <div class="faq-preview-answer-inner">Yes! Many of our doctors offer video consultations. You can filter by "Online Consultation" when searching for doctors. Simply book a slot and join the video call at the scheduled time.</div>
+              </div>
+            </div>
+            <div class="faq-preview-item">
+              <button class="faq-preview-question" onclick="toggleFaq(this)">
+                How do I get my lab test results?
+                <span class="icon">▼</span>
+              </button>
+              <div class="faq-preview-answer">
+                <div class="faq-preview-answer-inner">Lab test results are uploaded to your account within 24-48 hours. You'll receive a notification when they're ready. You can view, download, and share reports directly from your patient dashboard.</div>
+              </div>
+            </div>
+            <div class="faq-preview-item">
+              <button class="faq-preview-question" onclick="toggleFaq(this)">
+                Is my health data secure?
+                <span class="icon">▼</span>
+              </button>
+              <div class="faq-preview-answer">
+                <div class="faq-preview-answer-inner">Absolutely. We use bank-grade encryption (AES-256) for all data. Our platform is HIPAA-compliant and undergoes regular security audits. Your health information is accessible only to you and your authorized healthcare providers.</div>
+              </div>
+            </div>
+            <div class="faq-preview-item">
+              <button class="faq-preview-question" onclick="toggleFaq(this)">
+                Can I cancel or reschedule an appointment?
+                <span class="icon">▼</span>
+              </button>
+              <div class="faq-preview-answer">
+                <div class="faq-preview-answer-inner">Yes, you can cancel or reschedule appointments up to 2 hours before the scheduled time at no charge. Simply go to your appointments section and select the booking you'd like to modify.</div>
+              </div>
+            </div>
+          </div>
+          <div style="text-align:center;margin-top:var(--space-8);">
+            <a href="/faq.html" class="btn btn-secondary">View All FAQs</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════
+           SECTION 12: CTA
+           ════════════════════════════════════════════════════ -->
+      <section class="cta-section animate-on-scroll">
+        <div class="container">
+          <h2 id="cta-title">Ready to Transform Your Healthcare Experience?</h2>
+          <p id="cta-subtitle">Join 50,000+ patients and 200+ doctors who trust MediConnect for smarter healthcare management.</p>
+          <a id="cta-button" href="/signup.html" class="btn">Get Started Free →</a>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════
+           DYNAMIC: DOCTORS (loaded from API)
+           ════════════════════════════════════════════════════ -->
+      <section id="doctors-section" class="doctors-section animate-on-scroll">
+        <div class="container">
+          <div class="doctors-section__header">
+            <h2 class="doctors-section__title">Our Top Doctors</h2>
+            <p class="doctors-section__subtitle">Meet our verified specialists across multiple disciplines</p>
+          </div>
+          <div id="doctors-grid" class="doctors-grid">
+            <!-- Populated by homepage.js -->
+          </div>
+          <div style="text-align:center;">
+            <a href="/doctors.html" class="section-view-all">View All Doctors →</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════
+           DYNAMIC: LAB TESTS (loaded from API)
+           ════════════════════════════════════════════════════ -->
+      <section id="lab-tests-section" class="lab-tests-section animate-on-scroll">
+        <div class="container">
+          <div class="lab-tests-section__header">
+            <h2 class="lab-tests-section__title">Popular Lab Tests</h2>
+            <p class="lab-tests-section__subtitle">Comprehensive diagnostic tests with home collection available</p>
+          </div>
+          <div id="lab-tests-grid" class="lab-tests-grid">
+            <!-- Populated by homepage.js -->
+          </div>
+          <div style="text-align:center;">
+            <a href="/lab-tests.html" class="section-view-all">View All Tests →</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+  <div id="global-footer"></div>
+
+  <!-- Scripts -->
   <script src="/js/config.js"></script>
   <script src="/js/api.js"></script>
-  <script src="/js/ui.js"></script>
-  <script src="/js/validation.js"></script>
   <script src="/js/auth.js"></script>
-  <script src="/js/router.js"></script>
+  <script src="/js/global-navbar.js"></script>
+  <script src="/js/global-footer.js"></script>
+  <script src="/js/animations.js"></script>
   <script src="/js/homepage.js"></script>
 </body>
 </html>

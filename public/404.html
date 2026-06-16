@@ -8,34 +8,42 @@
   <link rel="stylesheet" href="/css/base.css">
   <link rel="stylesheet" href="/css/components.css">
   <link rel="stylesheet" href="/css/utilities.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/footer.css">
   <style>
     .error-page {
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--color-bg);
+      background: var(--gradient-hero);
       text-align: center;
       padding: 2rem;
+      padding-top: calc(var(--navbar-height) + 2rem);
     }
     .error-page__code {
-      font-size: 8rem;
+      font-size: 10rem;
       font-weight: 800;
-      color: var(--color-primary);
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-mint) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
       line-height: 1;
       margin-bottom: 0.5rem;
-      opacity: 0.3;
     }
     .error-page__title {
-      font-size: 1.75rem;
+      font-size: 2rem;
       font-weight: 700;
-      color: var(--color-dark);
+      color: var(--color-gray-800);
       margin-bottom: 0.75rem;
     }
     .error-page__message {
-      color: var(--color-gray-500);
+      color: var(--color-text-light);
       margin-bottom: 2rem;
       max-width: 400px;
+      font-size: var(--font-size-base);
+      line-height: var(--line-height-relaxed);
     }
     .error-page__actions {
       display: flex;
@@ -46,19 +54,29 @@
   </style>
 </head>
 <body>
+  <div id="global-navbar"></div>
   <div class="error-page">
     <div>
-      <div class="error-page__code">404</div>
-      <div class="error-page__title">Page Not Found</div>
-      <p class="error-page__message">
+      <div class="error-page__code anim-fade-in-up">404</div>
+      <div class="error-page__title anim-fade-in-up anim-delay-200">Page Not Found</div>
+      <p class="error-page__message anim-fade-in-up anim-delay-400">
         The page you're looking for doesn't exist or has been moved.
         Let's get you back on track.
       </p>
-      <div class="error-page__actions">
+      <div class="error-page__actions anim-fade-in-up anim-delay-600">
         <a href="/" class="btn btn--primary">Go Home</a>
-        <a href="javascript:history.back()" class="btn btn--outline">Go Back</a>
+        <a href="javascript:history.back()" class="btn btn--secondary">Go Back</a>
       </div>
     </div>
   </div>
+  <div id="global-footer"></div>
+  <script src="/js/config.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/router.js"></script>
+  <script src="/js/global-navbar.js"></script>
+  <script src="/js/global-footer.js"></script>
+  <script src="/js/animations.js"></script>
 </body>
 </html>

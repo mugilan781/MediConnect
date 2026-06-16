@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Admin Dashboard – Platform-wide analytics, user management, and system settings for MediConnect.">
-  <title>Admin Dashboard – MediConnect</title>
+  <meta name="description" content="Admin Dashboard – Enterprise platform-wide analytics, user management, and system settings on MediConnect.">
+  <title>Admin Control Center – MediConnect</title>
   <link rel="stylesheet" href="/css/variables.css">
   <link rel="stylesheet" href="/css/base.css">
   <link rel="stylesheet" href="/css/components.css">
@@ -12,141 +12,23 @@
   <link rel="stylesheet" href="/css/forms.css">
   <link rel="stylesheet" href="/css/dashboard.css">
   <link rel="stylesheet" href="/css/utilities.css">
-  <style>
-    /* Scoped styling for local sub-tabs and responsive tabbar */
-    .tab-bar {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 24px;
-      overflow-x: auto;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--border-color);
-      scrollbar-width: thin;
-    }
-    .tab-bar::-webkit-scrollbar {
-      height: 4px;
-    }
-    .tab-bar::-webkit-scrollbar-thumb {
-      background: var(--border-color);
-      border-radius: 2px;
-    }
-    .tab-btn {
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-weight: 500;
-      font-size: 14px;
-      white-space: nowrap;
-      border: none;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      background: var(--bg-surface);
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .tab-btn:hover {
-      background: var(--bg-hover);
-      color: var(--text-color);
-    }
-    .tab-btn.active {
-      background: var(--color-primary);
-      color: white;
-    }
-    .badge-count {
-      background: var(--color-danger);
-      color: white;
-      font-size: 11px;
-      padding: 2px 6px;
-      border-radius: 10px;
-      font-weight: bold;
-    }
-    .nested-tabs {
-      display: flex;
-      gap: 5px;
-      border-bottom: 1px solid var(--border-color);
-      margin-bottom: 15px;
-      overflow-x: auto;
-    }
-    .nested-tab-btn {
-      padding: 8px 12px;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-muted);
-      border: none;
-      background: none;
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-    }
-    .nested-tab-btn.active {
-      color: var(--color-primary);
-      border-bottom-color: var(--color-primary);
-    }
-    /* SVG Chart layout simple bar styling */
-    .bar-chart-container {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      height: 200px;
-      padding-top: 20px;
-      border-bottom: 2px solid var(--color-border);
-      border-left: 2px solid var(--color-border);
-      padding-left: 10px;
-      padding-right: 10px;
-      position: relative;
-    }
-    .bar-chart-bar {
-      flex: 1;
-      margin: 0 4px;
-      background-color: var(--color-primary);
-      border-radius: 4px 4px 0 0;
-      position: relative;
-      min-height: 5px;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-    .bar-chart-bar:hover {
-      background-color: var(--color-primary-dark);
-    }
-    .bar-chart-bar-tooltip {
-      position: absolute;
-      top: -30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #333;
-      color: #fff;
-      padding: 2px 6px;
-      font-size: 10px;
-      border-radius: 4px;
-      white-space: nowrap;
-      display: none;
-      z-index: 10;
-    }
-    .bar-chart-bar:hover .bar-chart-bar-tooltip {
-      display: block;
-    }
-    .bar-chart-label {
-      text-align: center;
-      font-size: 9px;
-      color: var(--text-muted);
-      margin-top: 5px;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-    }
-  </style>
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/footer.css">
 </head>
 <body>
+  <div id="global-navbar"></div>
   <div class="app">
-    <!-- Sidebar (rendered by sidebar.js) -->
+    <!-- Sidebar -->
     <aside class="sidebar" id="sidebar"></aside>
 
     <main class="main">
-      <!-- Topbar (rendered by sidebar.js) -->
+      <!-- Topbar -->
       <header class="topbar" id="topbar"></header>
 
       <div class="content fade-in">
-        <!-- Sub-Tabs Navigation Bar -->
+
+        <!-- ═══ TAB BAR ═══ -->
         <div class="tab-bar">
           <button class="tab-btn active" data-tab="overview">📊 Overview</button>
           <button class="tab-btn" data-tab="patients">👥 Patients</button>
@@ -162,90 +44,110 @@
           <button class="tab-btn" data-tab="settings">⚙️ Settings</button>
         </div>
 
-        <!-- ==================== TAB 1: OVERVIEW ==================== -->
+        <!-- ════════════════════════════════════════════════════
+             TAB 1: OVERVIEW — Enterprise Command Center
+             ════════════════════════════════════════════════════ -->
         <div id="tab-overview" class="tab-content">
-          <div class="welcome-banner mb-4" style="background: linear-gradient(135deg, #2D3748 0%, #1A202C 100%);">
+
+          <!-- SECTION 1 – Executive Overview -->
+          <div class="welcome-banner" style="background:linear-gradient(135deg,#1e293b 0%,#0f172a 100%);margin-bottom:var(--space-6);">
             <div class="welcome-banner__content">
-              <div class="welcome-banner__greeting">Admin Panel</div>
-              <div class="welcome-banner__name">MediConnect Control Center</div>
-              <div class="welcome-banner__message">Platform-wide analytics and management.</div>
+              <div class="welcome-banner__greeting">Admin Control Center</div>
+              <div class="welcome-banner__name">MediConnect Enterprise</div>
+              <div class="welcome-banner__message">Platform-wide analytics, user management, and system administration.</div>
             </div>
           </div>
 
-          <div class="stats-row mb-4">
-            <div class="stat-card">
-              <div class="stat-card__icon stat-card__icon--primary">👥</div>
-              <div class="stat-card__content">
-                <div class="stat-card__label">Total Users</div>
-                <div class="stat-card__value" id="stat-total-users">0</div>
-              </div>
+          <!-- SECTION 2 – KPI Grid -->
+          <div class="doc-section" style="margin-bottom:var(--space-6);">
+            <div class="doc-section__header">
+              <h3 class="doc-section__title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Executive Overview</h3>
+              <span class="doc-trend doc-trend--neutral">Live</span>
             </div>
-            <div class="stat-card">
-              <div class="stat-card__icon stat-card__icon--success">🏥</div>
-              <div class="stat-card__content">
-                <div class="stat-card__label">Patients</div>
-                <div class="stat-card__value" id="stat-total-patients">0</div>
-              </div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-card__icon stat-card__icon--info">🩺</div>
-              <div class="stat-card__content">
-                <div class="stat-card__label">Doctors</div>
-                <div class="stat-card__value" id="stat-total-doctors">0</div>
-              </div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-card__icon stat-card__icon--warning">📅</div>
-              <div class="stat-card__content">
-                <div class="stat-card__label">Today's Appointments</div>
-                <div class="stat-card__value" id="stat-today-appts">0</div>
-              </div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-card__icon stat-card__icon--primary">📊</div>
-              <div class="stat-card__content">
-                <div class="stat-card__label">Total Appointments</div>
-                <div class="stat-card__value" id="stat-total-appts">0</div>
-              </div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-card__icon stat-card__icon--danger">🔬</div>
-              <div class="stat-card__content">
-                <div class="stat-card__label">Pending Lab Bookings</div>
-                <div class="stat-card__value" id="stat-pending-labs">0</div>
-              </div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-card__icon stat-card__icon--info">📄</div>
-              <div class="stat-card__content">
-                <div class="stat-card__label">Medical Reports</div>
-                <div class="stat-card__value" id="stat-total-reports">0</div>
-              </div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-card__icon stat-card__icon--success">💾</div>
-              <div class="stat-card__content">
-                <div class="stat-card__label">Storage Used</div>
-                <div class="stat-card__value" id="stat-reports-storage">0 KB</div>
-              </div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-card__icon stat-card__icon--warning" style="background:#fffbeb;color:#d97706;">📜</div>
-              <div class="stat-card__content">
-                <div class="stat-card__label">System History Events</div>
-                <div class="stat-card__value" id="stat-total-history">0</div>
+            <div class="doc-section__body" style="padding-bottom:var(--space-6);">
+              <div class="doc-analytics-grid" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr));">
+                <div class="doc-analytics-card">
+                  <div class="doc-analytics-card__icon" style="background:#e0f2fe;color:#0284c7;">👥</div>
+                  <div class="doc-analytics-card__content">
+                    <div class="doc-analytics-card__label">Total Users</div>
+                    <div class="doc-analytics-card__value" id="stat-total-users">0</div>
+                  </div>
+                </div>
+                <div class="doc-analytics-card">
+                  <div class="doc-analytics-card__icon" style="background:#f0fdf4;color:#16a34a;">🏥</div>
+                  <div class="doc-analytics-card__content">
+                    <div class="doc-analytics-card__label">Patients</div>
+                    <div class="doc-analytics-card__value" id="stat-total-patients">0</div>
+                  </div>
+                </div>
+                <div class="doc-analytics-card">
+                  <div class="doc-analytics-card__icon" style="background:#dbeafe;color:#2563eb;">🩺</div>
+                  <div class="doc-analytics-card__content">
+                    <div class="doc-analytics-card__label">Doctors</div>
+                    <div class="doc-analytics-card__value" id="stat-total-doctors">0</div>
+                  </div>
+                </div>
+                <div class="doc-analytics-card">
+                  <div class="doc-analytics-card__icon" style="background:#fef3c7;color:#d97706;">📅</div>
+                  <div class="doc-analytics-card__content">
+                    <div class="doc-analytics-card__label">Today's Appointments</div>
+                    <div class="doc-analytics-card__value" id="stat-today-appts">0</div>
+                  </div>
+                </div>
+                <div class="doc-analytics-card">
+                  <div class="doc-analytics-card__icon" style="background:#f3e8ff;color:#9333ea;">📊</div>
+                  <div class="doc-analytics-card__content">
+                    <div class="doc-analytics-card__label">Total Appointments</div>
+                    <div class="doc-analytics-card__value" id="stat-total-appts">0</div>
+                  </div>
+                </div>
+                <div class="doc-analytics-card">
+                  <div class="doc-analytics-card__icon" style="background:#fce4ec;color:#e11d48;">🔬</div>
+                  <div class="doc-analytics-card__content">
+                    <div class="doc-analytics-card__label">Pending Lab Bookings</div>
+                    <div class="doc-analytics-card__value" id="stat-pending-labs">0</div>
+                  </div>
+                </div>
+                <div class="doc-analytics-card">
+                  <div class="doc-analytics-card__icon" style="background:#e0f2fe;color:#0284c7;">📄</div>
+                  <div class="doc-analytics-card__content">
+                    <div class="doc-analytics-card__label">Medical Reports</div>
+                    <div class="doc-analytics-card__value" id="stat-total-reports">0</div>
+                  </div>
+                </div>
+                <div class="doc-analytics-card">
+                  <div class="doc-analytics-card__icon" style="background:#f0fdf4;color:#16a34a;">💾</div>
+                  <div class="doc-analytics-card__content">
+                    <div class="doc-analytics-card__label">Storage Used</div>
+                    <div class="doc-analytics-card__value" id="stat-reports-storage">0 KB</div>
+                  </div>
+                </div>
+                <div class="doc-analytics-card">
+                  <div class="doc-analytics-card__icon" style="background:#fef3c7;color:#d97706;">📜</div>
+                  <div class="doc-analytics-card__content">
+                    <div class="doc-analytics-card__label">System History Events</div>
+                    <div class="doc-analytics-card__value" id="stat-total-history">0</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <div class="dashboard-grid-2">
-            <div class="card">
-              <div class="card__header"><h3>Recent Activity Feed</h3></div>
-              <div class="card__body" id="overview-activity-list"><div class="empty-state"><div class="spinner"></div></div></div>
+          <!-- SECTION 3 – Recent Activity + Quick Actions -->
+          <div class="dashboard-grid-2" style="margin-bottom:var(--space-6);">
+            <div class="doc-section">
+              <div class="doc-section__header">
+                <h3 class="doc-section__title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Recent Activity Feed</h3>
+              </div>
+              <div class="doc-section__body" id="overview-activity-list" style="min-height:120px;">
+                <div class="empty-state"><div class="spinner"></div></div>
+              </div>
             </div>
-            <div class="card">
-              <div class="card__header"><h3>Administrative Quick Actions</h3></div>
-              <div class="card__body">
+            <div class="doc-section">
+              <div class="doc-section__header">
+                <h3 class="doc-section__title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Quick Actions</h3>
+              </div>
+              <div class="doc-section__body">
                 <div class="quick-actions">
                   <a href="#" class="quick-action" onclick="AdminDashboard.switchTab('appointments')">
                     <div class="quick-action__icon">📅</div>
@@ -267,43 +169,48 @@
               </div>
             </div>
           </div>
+
         </div>
 
-        <!-- ==================== TAB 2: PATIENTS ==================== -->
+        <!-- ════════════════════════════════════════════════════
+             TAB 2: PATIENTS
+             ════════════════════════════════════════════════════ -->
         <div id="tab-patients" class="tab-content" style="display:none;">
-          <div class="card">
-            <div class="card__header d-flex justify-between items-center flex-wrap gap-3">
-              <h3>Patients Directory</h3>
-              <div class="d-flex gap-2 flex-wrap">
-                <input type="text" id="patient-search" class="form-input" placeholder="Search patients..." style="max-width:250px;">
-              </div>
+          <div class="doc-section">
+            <div class="doc-section__header">
+              <h3 class="doc-section__title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Patients Directory</h3>
+              <input type="text" id="patient-search" class="form-input" placeholder="Search patients..." style="max-width:250px;">
             </div>
-            <div class="card__body" id="patients-list"><div class="empty-state"><div class="spinner"></div></div></div>
-            <div class="card__footer" id="patients-pagination"></div>
+            <div class="doc-section__body" id="patients-list"><div class="empty-state"><div class="spinner"></div></div></div>
+            <div class="doc-section__header" id="patients-pagination" style="justify-content:center;border-top:1px solid var(--color-border);border-bottom:none;"></div>
           </div>
         </div>
 
-        <!-- ==================== TAB 3: DOCTORS ==================== -->
+        <!-- ════════════════════════════════════════════════════
+             TAB 3: DOCTORS
+             ════════════════════════════════════════════════════ -->
         <div id="tab-doctors" class="tab-content" style="display:none;">
-          <div class="card">
-            <div class="card__header d-flex justify-between items-center flex-wrap gap-3">
-              <h3>Doctors Directory</h3>
-              <div class="d-flex gap-2 flex-wrap">
+          <div class="doc-section">
+            <div class="doc-section__header">
+              <h3 class="doc-section__title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Doctors Directory</h3>
+              <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;">
                 <input type="text" id="doctor-search" class="form-input" placeholder="Search doctors..." style="max-width:200px;">
                 <button class="btn btn--primary btn--sm" onclick="AdminDashboard.openRegisterDoctorModal()">+ Register Doctor</button>
               </div>
             </div>
-            <div class="card__body" id="doctors-list"><div class="empty-state"><div class="spinner"></div></div></div>
-            <div class="card__footer" id="doctors-pagination"></div>
+            <div class="doc-section__body" id="doctors-list"><div class="empty-state"><div class="spinner"></div></div></div>
+            <div class="doc-section__header" id="doctors-pagination" style="justify-content:center;border-top:1px solid var(--color-border);border-bottom:none;"></div>
           </div>
         </div>
 
-        <!-- ==================== TAB 4: APPOINTMENTS ==================== -->
+        <!-- ════════════════════════════════════════════════════
+             TAB 4: APPOINTMENTS
+             ════════════════════════════════════════════════════ -->
         <div id="tab-appointments" class="tab-content" style="display:none;">
-          <div class="card">
-            <div class="card__header d-flex justify-between items-center flex-wrap gap-3">
-              <h3>Platform Appointments</h3>
-              <div class="d-flex gap-2 flex-wrap">
+          <div class="doc-section">
+            <div class="doc-section__header">
+              <h3 class="doc-section__title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Platform Appointments</h3>
+              <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;">
                 <input type="text" id="appt-search" class="form-input" placeholder="Search patient/doctor..." style="max-width:200px;">
                 <select id="appt-filter-status" class="form-select" style="max-width:150px;">
                   <option value="">All Statuses</option>
@@ -314,46 +221,48 @@
                 </select>
               </div>
             </div>
-            <div class="card__body" id="appts-list"><div class="empty-state"><div class="spinner"></div></div></div>
-            <div class="card__footer" id="appts-pagination"></div>
+            <div class="doc-section__body" id="appts-list"><div class="empty-state"><div class="spinner"></div></div></div>
+            <div class="doc-section__header" id="appts-pagination" style="justify-content:center;border-top:1px solid var(--color-border);border-bottom:none;"></div>
           </div>
         </div>
 
-        <!-- ==================== TAB 5: CONSULTATIONS ==================== -->
+        <!-- ════════════════════════════════════════════════════
+             TAB 5: CONSULTATIONS
+             ════════════════════════════════════════════════════ -->
         <div id="tab-consultations" class="tab-content" style="display:none;">
-          <div class="card">
-            <div class="card__header d-flex justify-between items-center flex-wrap gap-3">
-              <h3>Consultation History</h3>
-              <div class="d-flex gap-2 flex-wrap">
-                <input type="text" id="consult-search" class="form-input" placeholder="Search..." style="max-width:200px;">
-              </div>
+          <div class="doc-section">
+            <div class="doc-section__header">
+              <h3 class="doc-section__title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>Consultation History</h3>
+              <input type="text" id="consult-search" class="form-input" placeholder="Search..." style="max-width:200px;">
             </div>
-            <div class="card__body" id="consults-list"><div class="empty-state"><div class="spinner"></div></div></div>
-            <div class="card__footer" id="consults-pagination"></div>
+            <div class="doc-section__body" id="consults-list"><div class="empty-state"><div class="spinner"></div></div></div>
+            <div class="doc-section__header" id="consults-pagination" style="justify-content:center;border-top:1px solid var(--color-border);border-bottom:none;"></div>
           </div>
         </div>
 
-        <!-- ==================== TAB 6: LAB TESTS ==================== -->
+        <!-- ════════════════════════════════════════════════════
+             TAB 6: LAB TESTS
+             ════════════════════════════════════════════════════ -->
         <div id="tab-lab-tests" class="tab-content" style="display:none;">
-          <div class="nested-tabs mb-4">
+          <div class="nested-tabs" style="margin-bottom:var(--space-5);">
             <button class="nested-tab-btn active" data-nested-tab="lab-tests-list">🔬 Lab Tests Catalog</button>
             <button class="nested-tab-btn" data-nested-tab="lab-bookings-list">📅 Lab Booking Requests</button>
           </div>
 
           <div id="nested-lab-tests-list" class="nested-tab-content">
-            <div class="card">
-              <div class="card__header d-flex justify-between items-center">
-                <h3>Available Lab Tests</h3>
+            <div class="doc-section">
+              <div class="doc-section__header">
+                <h3 class="doc-section__title">Available Lab Tests</h3>
                 <button class="btn btn--primary btn--sm" onclick="AdminDashboard.openAddLabTestModal()">+ Add Lab Test</button>
               </div>
-              <div class="card__body" id="lab-tests-catalog"><div class="empty-state"><div class="spinner"></div></div></div>
+              <div class="doc-section__body" id="lab-tests-catalog"><div class="empty-state"><div class="spinner"></div></div></div>
             </div>
           </div>
 
           <div id="nested-lab-bookings-list" class="nested-tab-content" style="display:none;">
-            <div class="card">
-              <div class="card__header d-flex justify-between items-center">
-                <h3>Lab Booking Statuses</h3>
+            <div class="doc-section">
+              <div class="doc-section__header">
+                <h3 class="doc-section__title">Lab Booking Statuses</h3>
                 <select id="lab-booking-filter-status" class="form-select" style="max-width:150px;">
                   <option value="">All Bookings</option>
                   <option value="booked">Booked</option>
@@ -363,42 +272,44 @@
                   <option value="cancelled">Cancelled</option>
                 </select>
               </div>
-              <div class="card__body" id="lab-bookings-grid"><div class="empty-state"><div class="spinner"></div></div></div>
-              <div class="card__footer" id="lab-bookings-pagination"></div>
+              <div class="doc-section__body" id="lab-bookings-grid"><div class="empty-state"><div class="spinner"></div></div></div>
+              <div class="doc-section__header" id="lab-bookings-pagination" style="justify-content:center;border-top:1px solid var(--color-border);border-bottom:none;"></div>
             </div>
           </div>
         </div>
 
-        <!-- ==================== TAB 7: SAMPLES ==================== -->
+        <!-- ════════════════════════════════════════════════════
+             TAB 7: SAMPLES
+             ════════════════════════════════════════════════════ -->
         <div id="tab-samples" class="tab-content" style="display:none;">
-          <!-- Collection Monitoring Panel Statistics KPI Cards -->
-          <div class="stats-row mb-4">
-            <div class="stat-card">
-              <div class="stat-card__icon stat-card__icon--warning">📋</div>
-              <div class="stat-card__content">
-                <div class="stat-card__label">Pending Collections</div>
-                <div class="stat-card__value" id="stat-col-pending">0</div>
+          <!-- KPI cards for sample collection -->
+          <div class="doc-analytics-grid" style="margin-bottom:var(--space-5);grid-template-columns:repeat(auto-fit,minmax(180px,1fr));">
+            <div class="doc-analytics-card">
+              <div class="doc-analytics-card__icon" style="background:#fef3c7;color:#d97706;">📋</div>
+              <div class="doc-analytics-card__content">
+                <div class="doc-analytics-card__label">Pending Collections</div>
+                <div class="doc-analytics-card__value" id="stat-col-pending">0</div>
               </div>
             </div>
-            <div class="stat-card">
-              <div class="stat-card__icon stat-card__icon--primary">👤</div>
-              <div class="stat-card__content">
-                <div class="stat-card__label">Assigned Collections</div>
-                <div class="stat-card__value" id="stat-col-assigned">0</div>
+            <div class="doc-analytics-card">
+              <div class="doc-analytics-card__icon" style="background:#dbeafe;color:#2563eb;">👤</div>
+              <div class="doc-analytics-card__content">
+                <div class="doc-analytics-card__label">Assigned Collections</div>
+                <div class="doc-analytics-card__value" id="stat-col-assigned">0</div>
               </div>
             </div>
-            <div class="stat-card">
-              <div class="stat-card__icon stat-card__icon--success">✅</div>
-              <div class="stat-card__content">
-                <div class="stat-card__label">Completed Collections</div>
-                <div class="stat-card__value" id="stat-col-completed">0</div>
+            <div class="doc-analytics-card">
+              <div class="doc-analytics-card__icon" style="background:#f0fdf4;color:#16a34a;">✅</div>
+              <div class="doc-analytics-card__content">
+                <div class="doc-analytics-card__label">Completed Collections</div>
+                <div class="doc-analytics-card__value" id="stat-col-completed">0</div>
               </div>
             </div>
           </div>
 
-          <div class="card">
-            <div class="card__header d-flex justify-between items-center flex-wrap gap-3">
-              <h3>Home Sample Collection Requests</h3>
+          <div class="doc-section">
+            <div class="doc-section__header">
+              <h3 class="doc-section__title">Home Sample Collection Requests</h3>
               <select id="sample-filter-status" class="form-select" style="max-width:150px;">
                 <option value="">All Requests</option>
                 <option value="requested">Requested</option>
@@ -412,84 +323,87 @@
                 <option value="cancelled">Cancelled</option>
               </select>
             </div>
-            <div class="card__body" id="samples-list"><div class="empty-state"><div class="spinner"></div></div></div>
-            <div class="card__footer" id="samples-pagination"></div>
+            <div class="doc-section__body" id="samples-list"><div class="empty-state"><div class="spinner"></div></div></div>
+            <div class="doc-section__header" id="samples-pagination" style="justify-content:center;border-top:1px solid var(--color-border);border-bottom:none;"></div>
           </div>
         </div>
 
-        <!-- ==================== TAB 8: REPORTS ==================== -->
+        <!-- ════════════════════════════════════════════════════
+             TAB 8: REPORTS
+             ════════════════════════════════════════════════════ -->
         <div id="tab-reports" class="tab-content" style="display:none;">
-          <div class="nested-tabs mb-4">
+          <div class="nested-tabs" style="margin-bottom:var(--space-5);">
             <button class="nested-tab-btn active" data-nested-tab="reports-list-tab">📄 Uploaded Reports</button>
             <button class="nested-tab-btn" data-nested-tab="reports-categories-tab">🏷️ Manage Categories</button>
             <button class="nested-tab-btn" data-nested-tab="reports-logs-tab">🔒 HIPAA Audit Logs</button>
           </div>
 
-          <!-- Reports List Sub-Tab -->
           <div id="nested-reports-list-tab" class="nested-tab-content">
-            <div class="card">
-              <div class="card__header d-flex justify-between items-center flex-wrap gap-3">
-                <h3>Uploaded Medical Reports</h3>
+            <div class="doc-section">
+              <div class="doc-section__header">
+                <h3 class="doc-section__title">Uploaded Medical Reports</h3>
                 <input type="text" id="report-search" class="form-input" placeholder="Search reports..." style="max-width:200px;">
               </div>
-              <div class="card__body" id="reports-list"><div class="empty-state"><div class="spinner"></div></div></div>
-              <div class="card__footer" id="reports-pagination"></div>
+              <div class="doc-section__body" id="reports-list"><div class="empty-state"><div class="spinner"></div></div></div>
+              <div class="doc-section__header" id="reports-pagination" style="justify-content:center;border-top:1px solid var(--color-border);border-bottom:none;"></div>
             </div>
           </div>
 
-          <!-- Categories Sub-Tab -->
           <div id="nested-reports-categories-tab" class="nested-tab-content" style="display:none;">
-            <div class="card">
-              <div class="card__header d-flex justify-between items-center">
-                <h3>Report Categories Catalog</h3>
+            <div class="doc-section">
+              <div class="doc-section__header">
+                <h3 class="doc-section__title">Report Categories Catalog</h3>
                 <button class="btn btn--primary btn--sm" onclick="AdminDashboard.openAddCategoryModal()">+ Add Category</button>
               </div>
-              <div class="card__body" id="reports-categories-list"><div class="empty-state"><div class="spinner"></div></div></div>
+              <div class="doc-section__body" id="reports-categories-list"><div class="empty-state"><div class="spinner"></div></div></div>
             </div>
           </div>
 
-          <!-- HIPAA Audit Logs Sub-Tab -->
           <div id="nested-reports-logs-tab" class="nested-tab-content" style="display:none;">
-            <div class="card">
-              <div class="card__header">
-                <h3>HIPAA Security & Access Logs</h3>
+            <div class="doc-section">
+              <div class="doc-section__header">
+                <h3 class="doc-section__title">HIPAA Security & Access Logs</h3>
               </div>
-              <div class="card__body" id="reports-audit-logs"><div class="empty-state"><div class="spinner"></div></div></div>
+              <div class="doc-section__body" id="reports-audit-logs"><div class="empty-state"><div class="spinner"></div></div></div>
             </div>
           </div>
         </div>
 
-        <!-- ==================== TAB 9: NOTIFICATIONS ==================== -->
+        <!-- ════════════════════════════════════════════════════
+             TAB 9: NOTIFICATIONS
+             ════════════════════════════════════════════════════ -->
         <div id="tab-notifications" class="tab-content" style="display:none;">
-          <!-- KPI Cards Row -->
-          <div class="stats-row mb-4">
-            <div class="stat-card">
-              <div class="stat-card__icon stat-card__icon--primary">🔔</div>
-              <div class="stat-card__content">
-                <div class="stat-card__label">Total Sent</div>
-                <div class="stat-card__value" id="stat-notif-sent">0</div>
+          <!-- KPI Row -->
+          <div class="doc-analytics-grid" style="margin-bottom:var(--space-5);grid-template-columns:repeat(auto-fit,minmax(180px,1fr));">
+            <div class="doc-analytics-card">
+              <div class="doc-analytics-card__icon" style="background:var(--color-mint-light);color:var(--color-primary);">🔔</div>
+              <div class="doc-analytics-card__content">
+                <div class="doc-analytics-card__label">Total Sent</div>
+                <div class="doc-analytics-card__value" id="stat-notif-sent">0</div>
               </div>
             </div>
-            <div class="stat-card">
-              <div class="stat-card__icon stat-card__icon--warning">⏳</div>
-              <div class="stat-card__content">
-                <div class="stat-card__label">Pending Scheduled</div>
-                <div class="stat-card__value" id="stat-notif-scheduled">0</div>
+            <div class="doc-analytics-card">
+              <div class="doc-analytics-card__icon" style="background:#fef3c7;color:#d97706;">⏳</div>
+              <div class="doc-analytics-card__content">
+                <div class="doc-analytics-card__label">Pending Scheduled</div>
+                <div class="doc-analytics-card__value" id="stat-notif-scheduled">0</div>
               </div>
             </div>
-            <div class="stat-card">
-              <div class="stat-card__icon stat-card__icon--danger">🔇</div>
-              <div class="stat-card__content">
-                <div class="stat-card__label">Muted Preferences</div>
-                <div class="stat-card__value" id="stat-notif-muted">0</div>
+            <div class="doc-analytics-card">
+              <div class="doc-analytics-card__icon" style="background:#fce4ec;color:#e11d48;">🔇</div>
+              <div class="doc-analytics-card__content">
+                <div class="doc-analytics-card__label">Muted Preferences</div>
+                <div class="doc-analytics-card__value" id="stat-notif-muted">0</div>
               </div>
             </div>
           </div>
 
-          <div class="dashboard-grid-2 mb-4">
-            <div class="card">
-              <div class="card__header"><h3>Compose Administrative Notification</h3></div>
-              <div class="card__body">
+          <div class="dashboard-grid-2" style="margin-bottom:var(--space-5);">
+            <div class="doc-section">
+              <div class="doc-section__header">
+                <h3 class="doc-section__title">Compose Administrative Notification</h3>
+              </div>
+              <div class="doc-section__body">
                 <form id="broadcast-notification-form">
                   <div class="form-group">
                     <label class="form-label form-label--required" for="notif-target-user">Target Recipient</label>
@@ -525,60 +439,76 @@
                   <div class="form-group">
                     <label class="form-label" for="notif-scheduled-for">Schedule Delivery (Optional)</label>
                     <input type="datetime-local" id="notif-scheduled-for" class="form-input">
-                    <span class="text-xs text-muted" style="margin-top: 4px; display: block;">Leave blank for immediate delivery.</span>
+                    <span class="text-xs text-muted" style="margin-top:4px;display:block;">Leave blank for immediate delivery.</span>
                   </div>
-                  <button type="submit" class="btn btn--primary btn--block mt-4">Send Notification</button>
+                  <button type="submit" class="btn btn--primary btn--block" style="margin-top:var(--space-5);">Send Notification</button>
                 </form>
               </div>
             </div>
 
-            <div class="card">
-              <div class="card__header"><h3>Notification History Logs</h3></div>
-              <div class="card__body" id="notifications-logs-list"><div class="empty-state"><div class="spinner"></div></div></div>
-              <div class="card__footer" id="notifications-logs-pagination"></div>
+            <div class="doc-section">
+              <div class="doc-section__header">
+                <h3 class="doc-section__title">Notification History Logs</h3>
+              </div>
+              <div class="doc-section__body" id="notifications-logs-list"><div class="empty-state"><div class="spinner"></div></div></div>
+              <div class="doc-section__header" id="notifications-logs-pagination" style="justify-content:center;border-top:1px solid var(--color-border);border-bottom:none;"></div>
             </div>
           </div>
 
-          <div class="card">
-            <div class="card__header"><h3>Delivery Trends by Notification Type</h3></div>
-            <div class="card__body">
+          <div class="doc-section">
+            <div class="doc-section__header">
+              <h3 class="doc-section__title">Delivery Trends by Notification Type</h3>
+            </div>
+            <div class="doc-section__body">
               <div id="notif-stats-chart" class="bar-chart-container"></div>
             </div>
           </div>
         </div>
 
-        <!-- ==================== TAB 10: ANALYTICS ==================== -->
+        <!-- ════════════════════════════════════════════════════
+             TAB 10: ANALYTICS
+             ════════════════════════════════════════════════════ -->
         <div id="tab-analytics" class="tab-content" style="display:none;">
-          <div class="dashboard-grid-2 mb-4">
-            <div class="card">
-              <div class="card__header"><h3>Patient Signups (Last 30 Days)</h3></div>
-              <div class="card__body">
+          <div class="dashboard-grid-2" style="margin-bottom:var(--space-6);">
+            <div class="doc-section">
+              <div class="doc-section__header">
+                <h3 class="doc-section__title">Patient Signups (Last 30 Days)</h3>
+              </div>
+              <div class="doc-section__body">
                 <div id="analytics-signups-chart" class="bar-chart-container"></div>
               </div>
             </div>
-            <div class="card">
-              <div class="card__header"><h3>Completed Lab Bookings Revenue</h3></div>
-              <div class="card__body">
+            <div class="doc-section">
+              <div class="doc-section__header">
+                <h3 class="doc-section__title">Completed Lab Bookings Revenue</h3>
+              </div>
+              <div class="doc-section__body">
                 <div id="analytics-revenue-chart" class="bar-chart-container"></div>
               </div>
             </div>
           </div>
 
           <div class="dashboard-grid-2">
-            <div class="card">
-              <div class="card__header"><h3>Top Performing Doctors</h3></div>
-              <div class="card__body" id="analytics-top-doctors"></div>
+            <div class="doc-section">
+              <div class="doc-section__header">
+                <h3 class="doc-section__title">Top Performing Doctors</h3>
+              </div>
+              <div class="doc-section__body" id="analytics-top-doctors"></div>
             </div>
-            <div class="card">
-              <div class="card__header"><h3>Popular Lab Tests Booked</h3></div>
-              <div class="card__body" id="analytics-top-labtests"></div>
+            <div class="doc-section">
+              <div class="doc-section__header">
+                <h3 class="doc-section__title">Popular Lab Tests Booked</h3>
+              </div>
+              <div class="doc-section__body" id="analytics-top-labtests"></div>
             </div>
           </div>
         </div>
 
-        <!-- ==================== TAB 11: CMS CONTENT ==================== -->
+        <!-- ════════════════════════════════════════════════════
+             TAB 11: CMS CONTENT
+             ════════════════════════════════════════════════════ -->
         <div id="tab-cms" class="tab-content" style="display:none;">
-          <div class="nested-tabs mb-4">
+          <div class="nested-tabs" style="margin-bottom:var(--space-5);">
             <button class="nested-tab-btn active" data-nested-tab="cms-pages">📄 Pages</button>
             <button class="nested-tab-btn" data-nested-tab="cms-home-sections">🏠 Home Sections</button>
             <button class="nested-tab-btn" data-nested-tab="cms-about-contact">🏢 About & Contact</button>
@@ -588,11 +518,12 @@
             <button class="nested-tab-btn" data-nested-tab="cms-seo">🔍 SEO Settings</button>
           </div>
 
-          <!-- SUB-TAB 1: Pages List -->
           <div id="nested-cms-pages" class="nested-tab-content">
-            <div class="card">
-              <div class="card__header"><h3>Pages Management</h3></div>
-              <div class="card__body">
+            <div class="doc-section">
+              <div class="doc-section__header">
+                <h3 class="doc-section__title">Pages Management</h3>
+              </div>
+              <div class="doc-section__body">
                 <div class="table-responsive">
                   <table class="table">
                     <thead>
@@ -612,11 +543,10 @@
             </div>
           </div>
 
-          <!-- SUB-TAB 2: Home Sections -->
           <div id="nested-cms-home-sections" class="nested-tab-content" style="display:none;">
-            <div class="card">
-              <div class="card__header d-flex justify-between items-center">
-                <h3>Homepage Dynamic Sections</h3>
+            <div class="doc-section">
+              <div class="doc-section__header">
+                <h3 class="doc-section__title">Homepage Dynamic Sections</h3>
                 <select id="cms-home-section-select" class="form-select" style="max-width:200px;">
                   <option value="hero">Hero Section</option>
                   <option value="features">Features Section</option>
@@ -625,21 +555,20 @@
                   <option value="footer">Footer Section</option>
                 </select>
               </div>
-              <div class="card__body">
+              <div class="doc-section__body">
                 <form id="cms-home-editor-form">
                   <div id="cms-home-fields-container"></div>
-                  <button type="submit" class="btn btn--primary mt-4">Save Homepage Section</button>
+                  <button type="submit" class="btn btn--primary" style="margin-top:var(--space-4);">Save Homepage Section</button>
                 </form>
               </div>
             </div>
           </div>
 
-          <!-- SUB-TAB 3: About & Contact Dynamic Content -->
           <div id="nested-cms-about-contact" class="nested-tab-content" style="display:none;">
-            <div style="display: grid; grid-template-columns: 1fr; gap: var(--space-6);">
-              <div class="card">
-                <div class="card__header"><h3>About Page Content</h3></div>
-                <div class="card__body">
+            <div style="display:grid;grid-template-columns:1fr;gap:var(--space-6);">
+              <div class="doc-section">
+                <div class="doc-section__header"><h3 class="doc-section__title">About Page Content</h3></div>
+                <div class="doc-section__body">
                   <form id="cms-about-form">
                     <div class="form-group"><label class="form-label form-label--required">Title</label><input type="text" id="about-title-input" class="form-input" required></div>
                     <div class="form-group"><label class="form-label form-label--required">Subtitle</label><textarea id="about-subtitle-input" class="form-textarea" rows="2" required></textarea></div>
@@ -657,9 +586,9 @@
                   </form>
                 </div>
               </div>
-              <div class="card">
-                <div class="card__header"><h3>Contact Page Content</h3></div>
-                <div class="card__body">
+              <div class="doc-section">
+                <div class="doc-section__header"><h3 class="doc-section__title">Contact Page Content</h3></div>
+                <div class="doc-section__body">
                   <form id="cms-contact-form">
                     <div class="form-group"><label class="form-label form-label--required">Title</label><input type="text" id="contact-title-input" class="form-input" required></div>
                     <div class="form-group"><label class="form-label form-label--required">Subtitle</label><textarea id="contact-subtitle-input" class="form-textarea" rows="2" required></textarea></div>
@@ -690,14 +619,13 @@
             </div>
           </div>
 
-          <!-- SUB-TAB 4: FAQs -->
           <div id="nested-cms-faqs" class="nested-tab-content" style="display:none;">
-            <div class="card mb-4">
-              <div class="card__header d-flex justify-between items-center">
-                <h3 id="faq-form-title">Add New FAQ</h3>
+            <div class="doc-section" style="margin-bottom:var(--space-5);">
+              <div class="doc-section__header">
+                <h3 class="doc-section__title" id="faq-form-title">Add New FAQ</h3>
                 <button type="button" class="btn btn--secondary btn--sm" id="btn-clear-faq-form">New FAQ</button>
               </div>
-              <div class="card__body">
+              <div class="doc-section__body">
                 <form id="cms-faq-form">
                   <input type="hidden" id="faq-id">
                   <div class="form-group"><label class="form-label form-label--required">Question</label><input type="text" id="faq-question-input" class="form-input" required></div>
@@ -716,10 +644,9 @@
                 </form>
               </div>
             </div>
-
-            <div class="card">
-              <div class="card__header"><h3>Help Center FAQs</h3></div>
-              <div class="card__body">
+            <div class="doc-section">
+              <div class="doc-section__header"><h3 class="doc-section__title">Help Center FAQs</h3></div>
+              <div class="doc-section__body">
                 <div class="table-responsive">
                   <table class="table">
                     <thead>
@@ -739,11 +666,10 @@
             </div>
           </div>
 
-          <!-- SUB-TAB 5: Social Links -->
           <div id="nested-cms-socials" class="nested-tab-content" style="display:none;">
-            <div class="card">
-              <div class="card__header"><h3>Social Media Profile Links</h3></div>
-              <div class="card__body">
+            <div class="doc-section">
+              <div class="doc-section__header"><h3 class="doc-section__title">Social Media Profile Links</h3></div>
+              <div class="doc-section__body">
                 <div class="table-responsive">
                   <table class="table">
                     <thead>
@@ -763,11 +689,10 @@
             </div>
           </div>
 
-          <!-- SUB-TAB 6: Media Library -->
           <div id="nested-cms-media" class="nested-tab-content" style="display:none;">
-            <div class="card mb-4">
-              <div class="card__header"><h3>Upload Image / Asset</h3></div>
-              <div class="card__body">
+            <div class="doc-section" style="margin-bottom:var(--space-5);">
+              <div class="doc-section__header"><h3 class="doc-section__title">Upload Image / Asset</h3></div>
+              <div class="doc-section__body">
                 <form id="cms-media-upload-form">
                   <div class="form-row">
                     <div class="form-group" style="flex:2;">
@@ -781,27 +706,25 @@
                 </form>
               </div>
             </div>
-
-            <div class="card">
-              <div class="card__header"><h3>Media Assets Grid</h3></div>
-              <div class="card__body">
-                <div style="display:grid;grid-template-columns:repeat(auto-fill, minmax(160px, 1fr));gap:15px;" id="cms-media-grid">
+            <div class="doc-section">
+              <div class="doc-section__header"><h3 class="doc-section__title">Media Assets Grid</h3></div>
+              <div class="doc-section__body">
+                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:15px;" id="cms-media-grid">
                   <!-- Dynamic grid -->
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- SUB-TAB 7: SEO & Meta Settings -->
           <div id="nested-cms-seo" class="nested-tab-content" style="display:none;">
-            <div class="card">
-              <div class="card__header d-flex justify-between items-center">
-                <h3>SEO & Open Graph Configurations</h3>
+            <div class="doc-section">
+              <div class="doc-section__header">
+                <h3 class="doc-section__title">SEO & Open Graph Configurations</h3>
                 <select id="cms-seo-page-select" class="form-select" style="max-width:200px;">
                   <!-- Populated dynamically -->
                 </select>
               </div>
-              <div class="card__body">
+              <div class="doc-section__body">
                 <form id="cms-seo-form">
                   <input type="hidden" id="seo-page-id">
                   <div class="form-row">
@@ -810,8 +733,7 @@
                   </div>
                   <div class="form-group"><label class="form-label">Meta Keywords</label><input type="text" id="seo-meta-keywords" class="form-input" placeholder="comma-separated tags"></div>
                   <div class="form-group"><label class="form-label">Meta Description</label><textarea id="seo-meta-desc" class="form-textarea" rows="3"></textarea></div>
-                  
-                  <div style="margin-top:20px;border-top:1px solid var(--border-color);padding-top:20px;">
+                  <div style="margin-top:20px;border-top:1px solid var(--color-border);padding-top:20px;">
                     <h4 style="margin-bottom:15px;color:var(--color-primary);">Open Graph Sharing Tags (Social Previews)</h4>
                     <div class="form-row">
                       <div class="form-group"><label class="form-label">OG Title</label><input type="text" id="seo-og-title" class="form-input"></div>
@@ -819,46 +741,48 @@
                     </div>
                     <div class="form-group"><label class="form-label">OG Description</label><textarea id="seo-og-desc" class="form-textarea" rows="2"></textarea></div>
                   </div>
-                  <button type="submit" class="btn btn--primary mt-4">Save SEO Settings</button>
+                  <button type="submit" class="btn btn--primary" style="margin-top:var(--space-4);">Save SEO Settings</button>
                 </form>
               </div>
             </div>
           </div>
-
         </div>
 
-        <!-- ==================== TAB 12: SETTINGS ==================== -->
+        <!-- ════════════════════════════════════════════════════
+             TAB 12: SETTINGS
+             ════════════════════════════════════════════════════ -->
         <div id="tab-settings" class="tab-content" style="display:none;">
-          <div class="card">
-            <div class="card__header"><h3>System Settings / Clinic Details</h3></div>
-            <div class="card__body">
-              <form id="system-settings-form">
-                <div class="form-row">
-                  <div class="form-group"><label class="form-label" for="setting-clinic_name">Clinic Name</label><input type="text" id="setting-clinic_name" class="form-input" required></div>
-                  <div class="form-group"><label class="form-label" for="setting-contact_email">Contact Email</label><input type="email" id="setting-contact_email" class="form-input" required></div>
+          <div class="doc-section">
+            <div class="doc-section__header">
+              <h3 class="doc-section__title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>System Settings / Clinic Details</h3>
+          </div>
+          <div class="doc-section__body">
+            <form id="system-settings-form">
+              <div class="form-row">
+                <div class="form-group"><label class="form-label" for="setting-clinic_name">Clinic Name</label><input type="text" id="setting-clinic_name" class="form-input" required></div>
+                <div class="form-group"><label class="form-label" for="setting-contact_email">Contact Email</label><input type="email" id="setting-contact_email" class="form-input" required></div>
+              </div>
+              <div class="form-row">
+                <div class="form-group"><label class="form-label" for="setting-contact_phone">Contact Phone</label><input type="text" id="setting-contact_phone" class="form-input" required></div>
+                <div class="form-group"><label class="form-label" for="setting-clinic_address">Clinic Address</label><input type="text" id="setting-clinic_address" class="form-input" required></div>
+              </div>
+              <div class="form-row">
+                <div class="form-group"><label class="form-label" for="setting-working_hours">Working Hours</label><input type="text" id="setting-working_hours" class="form-input" placeholder="Mon-Sat: 9AM - 8PM" required></div>
+                <div class="form-group">
+                  <label class="form-label" for="setting-allow_registrations">Allow New Signups</label>
+                  <select id="setting-allow_registrations" class="form-select" required>
+                    <option value="true">Yes, open to public</option>
+                    <option value="false">No, close registrations</option>
+                  </select>
                 </div>
-                <div class="form-row">
-                  <div class="form-group"><label class="form-label" for="setting-contact_phone">Contact Phone</label><input type="text" id="setting-contact_phone" class="form-input" required></div>
-                  <div class="form-group"><label class="form-label" for="setting-clinic_address">Clinic Address</label><input type="text" id="setting-clinic_address" class="form-input" required></div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group"><label class="form-label" for="setting-working_hours">Working Hours</label><input type="text" id="setting-working_hours" class="form-input" placeholder="Mon-Sat: 9AM - 8PM" required></div>
-                  <div class="form-group">
-                    <label class="form-label" for="setting-allow_registrations">Allow New Signups</label>
-                    <select id="setting-allow_registrations" class="form-select" required>
-                      <option value="true">Yes, open to public</option>
-                      <option value="false">No, close registrations</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group"><label class="form-label" for="setting-logo_path">Logo Image Path / URL</label><input type="text" id="setting-logo_path" class="form-input" placeholder="e.g. /uploads/cms/logo.png"></div>
-                  <div class="form-group"><label class="form-label" for="setting-favicon_path">Favicon Image Path</label><input type="text" id="setting-favicon_path" class="form-input" placeholder="e.g. /favicon.ico"></div>
-                </div>
-                <div class="form-group"><label class="form-label" for="setting-clinic_description">Clinic Description (CMS Footer)</label><textarea id="setting-clinic_description" class="form-textarea" rows="3" placeholder="Brief clinic description..."></textarea></div>
-                <button type="submit" class="btn btn--primary mt-4">Save Clinic Settings</button>
-              </form>
-            </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group"><label class="form-label" for="setting-logo_path">Logo Image Path / URL</label><input type="text" id="setting-logo_path" class="form-input" placeholder="e.g. /uploads/cms/logo.png"></div>
+                <div class="form-group"><label class="form-label" for="setting-favicon_path">Favicon Image Path</label><input type="text" id="setting-favicon_path" class="form-input" placeholder="e.g. /favicon.ico"></div>
+              </div>
+              <div class="form-group"><label class="form-label" for="setting-clinic_description">Clinic Description (CMS Footer)</label><textarea id="setting-clinic_description" class="form-textarea" rows="3" placeholder="Brief clinic description..."></textarea></div>
+              <button type="submit" class="btn btn--primary" style="margin-top:var(--space-4);">Save Clinic Settings</button>
+            </form>
           </div>
         </div>
 
@@ -866,11 +790,13 @@
     </main>
   </div>
 
-  <!-- ==================== MODALS ==================== -->
+  <!-- ════════════════════════════════════════════════════════════
+       MODALS
+       ════════════════════════════════════════════════════════════ -->
 
   <!-- Register Doctor Modal -->
   <div class="modal-overlay" id="register-doctor-modal">
-    <div class="modal" style="max-width: 600px; width: 90%;">
+    <div class="modal" style="max-width:600px;width:90%;">
       <div class="modal__header"><h3>Register Doctor Account</h3><button class="btn btn--ghost btn--icon" onclick="UI.closeModal('register-doctor-modal')">✕</button></div>
       <div class="modal__body">
         <form id="register-doctor-form">
@@ -894,7 +820,7 @@
             <div class="form-group"><label class="form-label" for="doc-reg-fee">Consultation Fee ($)</label><input type="number" id="doc-reg-fee" class="form-input" min="0" value="50"></div>
             <div class="form-group"><label class="form-label" for="doc-reg-dept">Department</label><input type="text" id="doc-reg-dept" class="form-input" placeholder="Outpatient"></div>
           </div>
-          <button type="submit" class="btn btn--primary btn--block mt-4">Create Doctor Account</button>
+          <button type="submit" class="btn btn--primary btn--block" style="margin-top:var(--space-4);">Create Doctor Account</button>
         </form>
       </div>
     </div>
@@ -902,7 +828,7 @@
 
   <!-- Edit Doctor Modal -->
   <div class="modal-overlay" id="edit-doctor-modal">
-    <div class="modal" style="max-width: 600px; width: 90%;">
+    <div class="modal" style="max-width:600px;width:90%;">
       <div class="modal__header"><h3>Edit Doctor Information</h3><button class="btn btn--ghost btn--icon" onclick="UI.closeModal('edit-doctor-modal')">✕</button></div>
       <div class="modal__body">
         <form id="edit-doctor-form">
@@ -930,7 +856,7 @@
               <option value="0">Unavailable</option>
             </select>
           </div>
-          <button type="submit" class="btn btn--primary btn--block mt-4">Save Doctor Details</button>
+          <button type="submit" class="btn btn--primary btn--block" style="margin-top:var(--space-4);">Save Doctor Details</button>
         </form>
       </div>
     </div>
@@ -938,15 +864,14 @@
 
   <!-- Doctor Details Modal (Schedules & Leaves) -->
   <div class="modal-overlay" id="doctor-details-modal">
-    <div class="modal" style="max-width: 700px; width: 90%;">
+    <div class="modal" style="max-width:700px;width:90%;">
       <div class="modal__header"><h3>Doctor Schedule & Leaves Panel</h3><button class="btn btn--ghost btn--icon" onclick="UI.closeModal('doctor-details-modal')">✕</button></div>
       <div class="modal__body">
-        <div class="nested-tabs mb-4">
+        <div class="nested-tabs" style="margin-bottom:var(--space-4);">
           <button class="nested-tab-btn active" data-nested-tab="doc-sched-view">📅 Weekly Schedule</button>
           <button class="nested-tab-btn" data-nested-tab="doc-slots-view">⏰ Custom Availability Slots</button>
           <button class="nested-tab-btn" data-nested-tab="doc-leaves-view">🏖️ Leaves Log</button>
         </div>
-
         <div id="nested-doc-sched-view" class="nested-tab-content">
           <div id="doc-schedule-render"></div>
         </div>
@@ -962,7 +887,7 @@
 
   <!-- Edit Patient Modal -->
   <div class="modal-overlay" id="edit-patient-modal">
-    <div class="modal" style="max-width: 600px; width: 90%;">
+    <div class="modal" style="max-width:600px;width:90%;">
       <div class="modal__header"><h3>Edit Patient Profile</h3><button class="btn btn--ghost btn--icon" onclick="UI.closeModal('edit-patient-modal')">✕</button></div>
       <div class="modal__body">
         <form id="edit-patient-form">
@@ -1002,7 +927,7 @@
           <div class="form-group"><label class="form-label" for="pat-edit-address">Home Address</label><input type="text" id="pat-edit-address" class="form-input"></div>
           <div class="form-group"><label class="form-label" for="pat-edit-emergency">Emergency Contact</label><input type="text" id="pat-edit-emergency" class="form-input"></div>
           <div class="form-group"><label class="form-label" for="pat-edit-allergies">Allergies</label><textarea id="pat-edit-allergies" class="form-textarea" rows="2"></textarea></div>
-          <button type="submit" class="btn btn--primary btn--block mt-4">Save Patient Profile</button>
+          <button type="submit" class="btn btn--primary btn--block" style="margin-top:var(--space-4);">Save Patient Profile</button>
         </form>
       </div>
     </div>
@@ -1010,10 +935,10 @@
 
   <!-- Patient Details Modal -->
   <div class="modal-overlay" id="patient-details-modal">
-    <div class="modal" style="max-width: 800px; width: 90%;">
+    <div class="modal" style="max-width:800px;width:90%;">
       <div class="modal__header"><h3>Patient Complete Records</h3><button class="btn btn--ghost btn--icon" onclick="UI.closeModal('patient-details-modal')">✕</button></div>
       <div class="modal__body">
-        <div class="nested-tabs mb-4">
+        <div class="nested-tabs" style="margin-bottom:var(--space-4);">
           <button class="nested-tab-btn active" data-nested-tab="pat-info-profile">👤 Profile Details</button>
           <button class="nested-tab-btn" data-nested-tab="pat-info-history">📜 History Log</button>
           <button class="nested-tab-btn" data-nested-tab="pat-info-appts">📅 Appointments</button>
@@ -1021,7 +946,6 @@
           <button class="nested-tab-btn" data-nested-tab="pat-info-reports">📄 Reports</button>
           <button class="nested-tab-btn" data-nested-tab="pat-info-labtests">🔬 Lab Bookings</button>
         </div>
-
         <div id="nested-pat-info-profile" class="nested-tab-content">
           <div id="pat-profile-render"></div>
         </div>
@@ -1179,6 +1103,10 @@
     </div>
   </div>
 
+  <div id="global-footer"></div>
+  </main>
+  </div>
+
   <!-- Scripts -->
   <script src="/js/config.js"></script>
   <script src="/js/api.js"></script>
@@ -1187,6 +1115,9 @@
   <script src="/js/auth.js"></script>
   <script src="/js/sidebar.js"></script>
   <script src="/js/router.js"></script>
+  <script src="/js/global-navbar.js"></script>
+  <script src="/js/global-footer.js"></script>
+  <script src="/js/animations.js"></script>
   <script src="/js/admin-dashboard.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {

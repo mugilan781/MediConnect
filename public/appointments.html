@@ -3,102 +3,404 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Manage your appointments – Book, view, reschedule, and cancel appointments on MediConnect.">
-  <title>Appointments – MediConnect</title>
-  <link rel="stylesheet" href="/css/variables.css"><link rel="stylesheet" href="/css/base.css"><link rel="stylesheet" href="/css/components.css"><link rel="stylesheet" href="/css/layout.css"><link rel="stylesheet" href="/css/forms.css"><link rel="stylesheet" href="/css/dashboard.css"><link rel="stylesheet" href="/css/utilities.css">
-  <style>.slot-btn { min-width: 90px; margin: 4px; } .time-slots-grid { display: flex; flex-wrap: wrap; gap: 4px; margin-top: var(--space-4); }</style>
+  <meta name="description" content="Book doctor appointments online – Browse specialists, check real-time availability, and schedule your visit at MediConnect.">
+  <title>Book Appointment – MediConnect</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/utilities.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/footer.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/appointments.css">
 </head>
-<body>
-  <div class="app">
-    <!-- Sidebar (rendered by sidebar.js) -->
-    <aside class="sidebar" id="sidebar"></aside>
+<body class="public-page">
+  <div id="global-navbar"></div>
 
-    <main class="main">
-      <!-- Topbar (rendered by sidebar.js) -->
-      <header class="topbar" id="topbar"></header>
+  <!-- ════════════════════════════════════════════════════
+       SECTION 1: HERO
+       ════════════════════════════════════════════════════ -->
+  <section class="appt-hero animate-on-scroll">
+    <div class="container">
+      <div class="appt-hero__content">
+        <div class="appt-hero__badge"><span class="appt-hero__badge-dot"></span> 50,000+ Appointments Booked</div>
+        <h1 class="appt-hero__title">Book Your <span class="text-gradient">Appointment</span> in Minutes</h1>
+        <p class="appt-hero__desc">Skip the waiting room. Browse 200+ specialists, check real-time availability, and book your appointment online — anytime, anywhere.</p>
+        <div class="appt-hero__actions">
+          <a href="#available-doctors" class="btn btn--primary">Find a Doctor</a>
+          <a href="#how-it-works" class="btn btn--secondary">How It Works</a>
+        </div>
+      </div>
+      <div class="appt-hero__visual">
+        <div class="appt-hero__illustration">📅</div>
+      </div>
+    </div>
+  </section>
 
-      <div class="content fade-in">
-        <div class="page-header">
-          <div><h1 class="page-header__title">Appointments</h1><p class="page-header__subtitle">Manage all your appointments</p></div>
-          <div class="d-flex gap-3">
-            <input type="text" id="search-appointments" class="form-input" placeholder="Search doctor or reason..." style="width:200px;">
-            <select id="filter-status" class="form-select" style="width:auto;">
-              <option value="">All Status</option>
-              <option value="pending">Pending</option>
-              <option value="scheduled">Scheduled</option>
-              <option value="confirmed">Confirmed</option>
-              <option value="completed">Completed</option>
-              <option value="cancelled">Cancelled</option>
-              <option value="rescheduled">Rescheduled</option>
-            </select>
-            <button class="btn btn--primary" onclick="UI.openModal('book-appointment-modal')">+ Book Appointment</button>
+  <!-- ════════════════════════════════════════════════════
+       SECTION 2: HOW APPOINTMENTS WORK (Timeline)
+       ════════════════════════════════════════════════════ -->
+  <section id="how-it-works" class="appt-timeline animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Process</span>
+        <h2 class="section-header__title">How Appointments Work</h2>
+        <p class="section-header__subtitle">From finding a doctor to visit confirmation — in 7 simple steps</p>
+      </div>
+      <div class="appt-timeline-steps" id="appt-timeline-steps">
+        <div class="timeline-step">
+          <div class="timeline-step__number">1</div>
+          <div class="timeline-step__content">
+            <h3>Search Doctor</h3>
+            <p>Browse our directory by name, specialization, or department to find the right healthcare professional for your needs.</p>
           </div>
         </div>
-
-        <div id="appointments-list"><div class="empty-state"><div class="spinner"></div></div></div>
-        <div id="appointments-pagination"></div>
-      </div>
-    </main>
-  </div>
-
-  <!-- Book Appointment Modal -->
-  <div class="modal-overlay" id="book-appointment-modal">
-    <div class="modal">
-      <div class="modal__header"><h3>Book an Appointment</h3><button class="btn btn--ghost btn--icon" onclick="UI.closeModal('book-appointment-modal')">✕</button></div>
-      <div class="modal__body">
-        <form id="book-appointment-form">
-          <div class="form-group"><label class="form-label form-label--required" for="appt-doctor">Select Doctor</label><select id="appt-doctor" class="form-select" required><option value="">Loading doctors...</option></select></div>
-          <div class="form-row">
-            <div class="form-group"><label class="form-label form-label--required" for="appt-date">Date</label><input type="date" id="appt-date" class="form-input" required></div>
-            <div class="form-group"><label class="form-label" for="appt-type">Type</label><select id="appt-type" class="form-select"><option value="in_person">In-Person</option><option value="teleconsult">Teleconsult</option></select></div>
+        <div class="timeline-step">
+          <div class="timeline-step__number">2</div>
+          <div class="timeline-step__content">
+            <h3>Choose Doctor</h3>
+            <p>Review doctor profiles including qualifications, experience, consultation fees, and patient ratings to make an informed choice.</p>
           </div>
-          <input type="hidden" id="appt-time" value="">
-          <div class="form-group"><label class="form-label">Available Slots</label><div class="time-slots-grid" id="time-slots"><p class="text-muted text-sm">Select a doctor and date to see available slots.</p></div></div>
-          <div class="form-group"><label class="form-label" for="appt-reason">Reason (Optional)</label><textarea id="appt-reason" class="form-textarea" rows="3" placeholder="Describe your symptoms or reason for visit..."></textarea></div>
-          <button type="submit" class="btn btn--primary btn--block">Confirm Booking</button>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <!-- Appointment Detail Modal -->
-  <div class="modal-overlay" id="appointment-detail-modal">
-    <div class="modal" style="max-width:600px;">
-      <div class="modal__header"><h3>Appointment Details</h3><button class="btn btn--ghost btn--icon" onclick="UI.closeModal('appointment-detail-modal')">✕</button></div>
-      <div class="modal__body" id="appointment-details"></div>
-    </div>
-  </div>
-
-  <!-- Reschedule Appointment Modal -->
-  <div class="modal-overlay" id="reschedule-appointment-modal">
-    <div class="modal">
-      <div class="modal__header"><h3>Reschedule Appointment</h3><button class="btn btn--ghost btn--icon" onclick="UI.closeModal('reschedule-appointment-modal')">✕</button></div>
-      <div class="modal__body">
-        <form id="reschedule-appointment-form">
-          <input type="hidden" id="reschedule-appt-id" value="">
-          <input type="hidden" id="reschedule-doctor-id" value="">
-          <div class="form-group">
-            <label class="form-label form-label--required" for="reschedule-date">New Date</label>
-            <input type="date" id="reschedule-date" class="form-input" required>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-step__number">3</div>
+          <div class="timeline-step__content">
+            <h3>Select Date</h3>
+            <p>Pick your preferred appointment date from the interactive calendar. Our system shows real-time availability for each day.</p>
           </div>
-          <input type="hidden" id="reschedule-time" value="">
-          <div class="form-group">
-            <label class="form-label">Available Slots</label>
-            <div class="time-slots-grid" id="reschedule-time-slots">
-              <p class="text-muted text-sm">Please select a date to see available slots.</p>
-            </div>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-step__number">4</div>
+          <div class="timeline-step__content">
+            <h3>Select Slot</h3>
+            <p>Choose from available time slots that fit your schedule. Each slot is dynamically generated based on the doctor's schedule.</p>
           </div>
-          <div class="form-group">
-            <label class="form-label" for="reschedule-reason">Reason for Rescheduling</label>
-            <textarea id="reschedule-reason" class="form-textarea" rows="2" placeholder="Brief reason..."></textarea>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-step__number">5</div>
+          <div class="timeline-step__content">
+            <h3>Book Appointment</h3>
+            <p>Confirm your booking with one click. You'll receive an instant confirmation via email and SMS.</p>
           </div>
-          <button type="submit" class="btn btn--primary btn--block">Confirm Reschedule</button>
-        </form>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-step__number">6</div>
+          <div class="timeline-step__content">
+            <h3>Doctor Approval</h3>
+            <p>The doctor reviews and confirms your appointment. You'll be notified immediately of any status changes.</p>
+          </div>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-step__number">7</div>
+          <div class="timeline-step__content">
+            <h3>Visit Confirmation</h3>
+            <p>Your appointment is confirmed. Get ready for your visit with automated reminders and easy rescheduling options.</p>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <script src="/js/config.js"></script><script src="/js/api.js"></script><script src="/js/ui.js"></script><script src="/js/validation.js"></script><script src="/js/auth.js"></script><script src="/js/sidebar.js"></script><script src="/js/router.js"></script><script src="/js/appointments.js"></script>
-  <script>document.addEventListener('DOMContentLoaded', () => { Sidebar.init('Appointments', 'Home / Appointments'); Appointments.init(); });</script>
+  <!-- ════════════════════════════════════════════════════
+       SECTION 3: BENEFITS
+       ════════════════════════════════════════════════════ -->
+  <section class="appt-benefits animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Why Choose Us</span>
+        <h2 class="section-header__title">Benefits of Online Booking</h2>
+        <p class="section-header__subtitle">Experience hassle-free appointment scheduling with MediConnect</p>
+      </div>
+      <div class="appt-benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-card__icon">⚡</div>
+          <h3>Easy Booking</h3>
+          <p>Book appointments in under 2 minutes with our intuitive interface. No phone calls, no waiting, no hassle.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-card__icon">👨‍⚕️</div>
+          <h3>Doctor Availability</h3>
+          <p>View real-time availability for all doctors. See exactly which slots are open and book instantly.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-card__icon">🔄</div>
+          <h3>Real-Time Updates</h3>
+          <p>Get instant notifications for booking confirmation, reminders, rescheduling, and cancellations.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-card__icon">🔒</div>
+          <h3>Secure Records</h3>
+          <p>All your medical data and appointment history are securely stored and accessible only by you and your doctor.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 4: SPECIALIZATION DIRECTORY
+       ════════════════════════════════════════════════════ -->
+  <section class="appt-specs animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Specialties</span>
+        <h2 class="section-header__title">Browse by Specialization</h2>
+        <p class="section-header__subtitle">Find the right specialist for your healthcare needs</p>
+      </div>
+      <div class="spec-grid">
+        <a href="/doctors.html?specialization=General Medicine" class="spec-card">
+          <div class="spec-card__icon">🩺</div>
+          <div class="spec-card__name">General Medicine</div>
+          <div class="spec-card__desc">Primary care & checkups</div>
+        </a>
+        <a href="/doctors.html?specialization=Cardiology" class="spec-card">
+          <div class="spec-card__icon">❤️</div>
+          <div class="spec-card__name">Cardiology</div>
+          <div class="spec-card__desc">Heart & vascular</div>
+        </a>
+        <a href="/doctors.html?specialization=Neurology" class="spec-card">
+          <div class="spec-card__icon">🧠</div>
+          <div class="spec-card__name">Neurology</div>
+          <div class="spec-card__desc">Brain & nervous system</div>
+        </a>
+        <a href="/doctors.html?specialization=Pediatrics" class="spec-card">
+          <div class="spec-card__icon">👶</div>
+          <div class="spec-card__name">Pediatrics</div>
+          <div class="spec-card__desc">Child healthcare</div>
+        </a>
+        <a href="/doctors.html?specialization=Dermatology" class="spec-card">
+          <div class="spec-card__icon">🧴</div>
+          <div class="spec-card__name">Dermatology</div>
+          <div class="spec-card__desc">Skin & hair</div>
+        </a>
+        <a href="/doctors.html?specialization=Orthopedics" class="spec-card">
+          <div class="spec-card__icon">🦴</div>
+          <div class="spec-card__name">Orthopedics</div>
+          <div class="spec-card__desc">Bones & joints</div>
+        </a>
+        <a href="/doctors.html?specialization=Gynecology" class="spec-card">
+          <div class="spec-card__icon">🌸</div>
+          <div class="spec-card__name">Gynecology</div>
+          <div class="spec-card__desc">Women's health</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 5: AVAILABLE DOCTORS PREVIEW
+       ════════════════════════════════════════════════════ -->
+  <section id="available-doctors" class="appt-doctors animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Our Doctors</span>
+        <h2 class="section-header__title">Available Doctors</h2>
+        <p class="section-header__subtitle">Browse our network of experienced healthcare professionals</p>
+      </div>
+      <div class="appt-doctors-grid" id="appt-doctors-grid">
+        <div class="skeleton skeleton-doc-card"></div>
+        <div class="skeleton skeleton-doc-card"></div>
+        <div class="skeleton skeleton-doc-card"></div>
+        <div class="skeleton skeleton-doc-card"></div>
+      </div>
+      <div style="text-align:center;margin-top:var(--space-8)">
+        <a href="/doctors.html" class="btn btn--secondary">View All Doctors →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 6: BOOKING SHOWCASE
+       ════════════════════════════════════════════════════ -->
+  <section class="appt-showcase animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Walkthrough</span>
+        <h2 class="section-header__title">How to Book</h2>
+        <p class="section-header__subtitle">Booking an appointment takes just a few clicks</p>
+      </div>
+      <div class="showcase-steps">
+        <div class="showcase-step">
+          <div class="showcase-step__icon">🔍</div>
+          <h3>Find Your Doctor</h3>
+          <p>Search by name, specialization, or department to find the right doctor for you.</p>
+        </div>
+        <div class="showcase-step">
+          <div class="showcase-step__icon">📋</div>
+          <h3>Review Profile</h3>
+          <p>Check qualifications, experience, fees, and availability before making your choice.</p>
+        </div>
+        <div class="showcase-step">
+          <div class="showcase-step__icon">📅</div>
+          <h3>Pick Date & Slot</h3>
+          <p>Select from real-time available slots that match your schedule perfectly.</p>
+        </div>
+        <div class="showcase-step">
+          <div class="showcase-step__icon">✅</div>
+          <h3>Confirm Booking</h3>
+          <p>Review and confirm. Get instant confirmation via email and SMS.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 7: APPOINTMENT STATUS TRACKER
+       ════════════════════════════════════════════════════ -->
+  <section class="appt-status-flow animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Status Flow</span>
+        <h2 class="section-header__title">Track Your Appointment</h2>
+        <p class="section-header__subtitle">Every appointment goes through a clear status lifecycle</p>
+      </div>
+      <div class="status-flow">
+        <div class="status-step">
+          <span class="status-step__badge status-step__badge--pending">⏳ Pending</span>
+          <span class="status-step__arrow">→</span>
+        </div>
+        <div class="status-step">
+          <span class="status-step__badge status-step__badge--confirmed">✅ Confirmed</span>
+          <span class="status-step__arrow">→</span>
+        </div>
+        <div class="status-step">
+          <span class="status-step__badge status-step__badge--completed">✔️ Completed</span>
+          <span class="status-step__arrow">→</span>
+        </div>
+        <div class="status-step">
+          <span class="status-step__badge status-step__badge--cancelled">❌ Cancelled</span>
+          <span class="status-step__arrow">→</span>
+        </div>
+        <div class="status-step">
+          <span class="status-step__badge status-step__badge--rescheduled">🔄 Rescheduled</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 8: PATIENT EXPERIENCE
+       ════════════════════════════════════════════════════ -->
+  <section class="appt-experience animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Testimonials</span>
+        <h2 class="section-header__title">Patient Experiences</h2>
+        <p class="section-header__subtitle">Hear from patients who've used MediConnect for their healthcare needs</p>
+      </div>
+      <div class="exp-grid" id="appt-experience-grid">
+        <div class="exp-card">
+          <div class="exp-card__rating">★★★★★</div>
+          <p class="exp-card__text">"Booking an appointment was incredibly easy. I found a great cardiologist in minutes and the whole process took less than 2 minutes. The reminders are a lifesaver!"</p>
+          <div class="exp-card__author">
+            <div class="exp-card__avatar">R</div>
+            <div><div class="exp-card__name">Rahul Sharma</div><div class="exp-card__role">Patient since 2024</div></div>
+          </div>
+        </div>
+        <div class="exp-card">
+          <div class="exp-card__rating">★★★★★</div>
+          <p class="exp-card__text">"I love how I can see real-time availability and book without making phone calls. The rescheduling feature is super convenient when my plans change."</p>
+          <div class="exp-card__author">
+            <div class="exp-card__avatar">P</div>
+            <div><div class="exp-card__name">Priya Patel</div><div class="exp-card__role">Patient since 2023</div></div>
+          </div>
+        </div>
+        <div class="exp-card">
+          <div class="exp-card__rating">★★★★★</div>
+          <p class="exp-card__text">"As a working parent, MediConnect has been a game-changer. I can book appointments for my kids late at night and get confirmation immediately. Highly recommended!"</p>
+          <div class="exp-card__author">
+            <div class="exp-card__avatar">A</div>
+            <div><div class="exp-card__name">Ananya Gupta</div><div class="exp-card__role">Parent of two</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 9: FAQ
+       ════════════════════════════════════════════════════ -->
+  <section class="appt-faq animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">FAQ</span>
+        <h2 class="section-header__title">Common Questions</h2>
+        <p class="section-header__subtitle">Everything you need to know about booking appointments</p>
+      </div>
+      <div class="appt-faq-list" id="appt-faq-list">
+        <div class="appt-faq-item">
+          <button class="appt-faq-question" onclick="AppointmentsPage.toggleFaq(this)">
+            How do I book an appointment?
+            <span class="icon">▼</span>
+          </button>
+          <div class="appt-faq-answer">
+            <div class="appt-faq-answer-inner">Simply browse our doctor directory, select your preferred doctor, choose a date and available time slot, and confirm your booking. You'll receive instant confirmation via email and SMS.</div>
+          </div>
+        </div>
+        <div class="appt-faq-item">
+          <button class="appt-faq-question" onclick="AppointmentsPage.toggleFaq(this)">
+            Do I need an account to book?
+            <span class="icon">▼</span>
+          </button>
+          <div class="appt-faq-answer">
+            <div class="appt-faq-answer-inner">Yes, you need to create a free account to book appointments. However, you can freely browse doctors, view profiles, and check availability without signing up.</div>
+          </div>
+        </div>
+        <div class="appt-faq-item">
+          <button class="appt-faq-question" onclick="AppointmentsPage.toggleFaq(this)">
+            Can I reschedule or cancel my appointment?
+            <span class="icon">▼</span>
+          </button>
+          <div class="appt-faq-answer">
+            <div class="appt-faq-answer-inner">Yes, you can easily reschedule or cancel appointments from your dashboard. Cancellations made at least 2 hours before the appointment are free. Rescheduling is subject to doctor availability.</div>
+          </div>
+        </div>
+        <div class="appt-faq-item">
+          <button class="appt-faq-question" onclick="AppointmentsPage.toggleFaq(this)">
+            How will I know if my appointment is confirmed?
+            <span class="icon">▼</span>
+          </button>
+          <div class="appt-faq-answer">
+            <div class="appt-faq-answer-inner">After booking, your appointment status will be "Pending" until the doctor confirms it. You'll receive notifications via email, SMS, and in-app for all status changes.</div>
+          </div>
+        </div>
+        <div class="appt-faq-item">
+          <button class="appt-faq-question" onclick="AppointmentsPage.toggleFaq(this)">
+            What if I need to see a doctor urgently?
+            <span class="icon">▼</span>
+          </button>
+          <div class="appt-faq-answer">
+            <div class="appt-faq-answer-inner">Many of our doctors offer video consultations with same-day availability. You can filter by "Online Consultation" and check for doctors with urgent appointment slots.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 10: CTA
+       ════════════════════════════════════════════════════ -->
+  <section class="appt-cta animate-on-scroll">
+    <div class="container">
+      <h2>Ready to Book Your Appointment?</h2>
+      <p>Join 50,000+ patients who trust MediConnect for smarter, more convenient healthcare scheduling.</p>
+      <div class="appt-cta__actions">
+        <a href="/doctors.html" class="btn">Browse Doctors →</a>
+        <a href="/signup.html" class="btn btn--outline">Create Free Account</a>
+      </div>
+    </div>
+  </section>
+
+  <div id="global-footer"></div>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/global-navbar.js"></script>
+  <script src="/js/global-footer.js"></script>
+  <script src="/js/animations.js"></script>
+  <script src="/js/appointments.js"></script>
 </body>
 </html>

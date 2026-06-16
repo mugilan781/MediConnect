@@ -124,6 +124,13 @@
 .relative { position: relative; }
 .absolute { position: absolute; }
 
+/* ── Vertical Spacing (space-y) ── */
+.space-y-2 > * + * { margin-top: var(--space-2); }
+.space-y-3 > * + * { margin-top: var(--space-3); }
+.space-y-4 > * + * { margin-top: var(--space-4); }
+.space-y-6 > * + * { margin-top: var(--space-6); }
+.space-y-8 > * + * { margin-top: var(--space-8); }
+
 /* ── Responsive Hidden ── */
 @media (max-width: 768px) {
   .hide-mobile { display: none !important; }
@@ -131,6 +138,24 @@
 @media (min-width: 769px) {
   .hide-desktop { display: none !important; }
 }
+
+@media (max-width: 1024px) {
+  .hide-tablet { display: none !important; }
+}
+@media (min-width: 1025px) {
+  .show-tablet { display: none !important; }
+}
+
+/* ── New Utilities ── */
+.object-cover { object-fit: cover; }
+.whitespace-nowrap { white-space: nowrap; }
+.list-none { list-style: none; }
+.no-underline { text-decoration: none; }
+.opacity-0 { opacity: 0; }
+.opacity-50 { opacity: 0.5; }
+.opacity-100 { opacity: 1; }
+.transition { transition: all var(--transition-base); }
+.transition-fast { transition: all var(--transition-fast); }
 
 /* ── Animation Utilities ── */
 .fade-in {

@@ -3,207 +3,568 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Frequently Asked Questions – Find quick answers to common queries about booking appointments, reports, and payments on MediConnect.">
-  <title>FAQ – MediConnect Support</title>
+  <meta name="description" content="MediConnect Help Center – Find answers to frequently asked questions about appointments, consultations, reports, billing, account management, and security.">
+  <title>Help Center – MediConnect FAQ</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/variables.css">
   <link rel="stylesheet" href="/css/base.css">
   <link rel="stylesheet" href="/css/components.css">
   <link rel="stylesheet" href="/css/layout.css">
-  <link rel="stylesheet" href="/css/forms.css">
   <link rel="stylesheet" href="/css/utilities.css">
-  <style>
-    .faq-hero {
-      padding: var(--space-16) var(--space-8);
-      text-align: center;
-      background: linear-gradient(145deg, var(--color-mint-light) 0%, white 100%);
-    }
-    .faq-hero h1 {
-      font-size: var(--font-size-3xl);
-      margin-bottom: var(--space-4);
-    }
-    .faq-hero p {
-      max-width: 600px;
-      margin: 0 auto;
-      color: var(--color-text-light);
-      font-size: var(--font-size-lg);
-      line-height: var(--line-height-relaxed);
-    }
-    .faq-search-wrapper {
-      max-width: 600px;
-      margin: var(--space-8) auto 0;
-      position: relative;
-    }
-    .faq-search-input {
-      width: 100%;
-      padding: var(--space-4) var(--space-12) var(--space-4) var(--space-5);
-      border-radius: var(--radius-full);
-      border: 2px solid var(--color-border);
-      font-size: var(--font-size-base);
-      font-family: var(--font-family);
-      transition: all var(--transition-base);
-      box-shadow: var(--shadow-sm);
-    }
-    .faq-search-input:focus {
-      border-color: var(--color-primary);
-      box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
-      outline: none;
-    }
-    .faq-search-icon {
-      position: absolute;
-      right: var(--space-5);
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 1.2rem;
-      color: var(--color-text-muted);
-      pointer-events: none;
-    }
-    .faq-container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: var(--space-12) var(--space-8);
-    }
-    .faq-list {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-4);
-      margin-top: var(--space-6);
-    }
-    .faq-item {
-      background: white;
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      transition: all var(--transition-base);
-    }
-    .faq-item:hover {
-      box-shadow: var(--shadow-md);
-      border-color: var(--color-primary-light);
-    }
-    .faq-header {
-      width: 100%;
-      padding: var(--space-5) var(--space-6);
-      background: none;
-      border: none;
-      text-align: left;
-      font-size: var(--font-size-base);
-      font-weight: var(--font-weight-semibold);
-      color: var(--color-gray-800);
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: var(--space-4);
-      transition: background-color var(--transition-fast);
-    }
-    .faq-header:hover {
-      background-color: var(--color-gray-50);
-    }
-    .faq-header.active {
-      background-color: var(--color-mint-light);
-      color: var(--color-primary-dark);
-      border-bottom: 1px solid rgba(20, 184, 166, 0.1);
-    }
-    .faq-toggle-icon {
-      font-size: 0.8rem;
-      transition: transform var(--transition-base);
-      color: var(--color-text-muted);
-      flex-shrink: 0;
-    }
-    .faq-header.active .faq-toggle-icon {
-      transform: rotate(180deg);
-      color: var(--color-primary);
-    }
-    .faq-content {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease-out;
-      background: white;
-    }
-    .faq-content-inner {
-      padding: var(--space-5) var(--space-6);
-      color: var(--color-text-light);
-      font-size: var(--font-size-sm);
-      line-height: var(--line-height-relaxed);
-    }
-    .faq-no-results {
-      text-align: center;
-      padding: var(--space-12) var(--space-6);
-      color: var(--color-text-muted);
-      font-size: var(--font-size-base);
-      display: none;
-    }
-  </style>
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/footer.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/faq.css">
 </head>
 <body class="public-page">
-  <header class="public-header">
-    <a href="/index.html" class="public-header__logo">
-      <div class="sidebar__logo-icon">M</div>
-      <span style="font-size:var(--font-size-lg);font-weight:var(--font-weight-bold);color:var(--color-gray-800);">MediConnect</span>
-    </a>
-    <nav class="public-header__nav">
-      <a href="/about.html">About</a>
-      <a href="/contact.html">Contact</a>
-      <a href="/faq.html">FAQ</a>
-      <a href="/login.html" class="btn btn--secondary btn--sm">Login</a>
-      <a href="/signup.html" class="btn btn--primary btn--sm">Sign Up</a>
-    </nav>
-  </header>
+  <div id="global-navbar"></div>
 
+  <!-- ════════════════════════════════════════════════════
+       SECTION 1: HERO
+       ════════════════════════════════════════════════════ -->
   <section class="faq-hero">
-    <h1 id="faq-hero-title">Frequently Asked Questions</h1>
-    <p id="faq-hero-subtitle">Have questions? We have answers. Search our help center or select a topic below.</p>
-    
-    <div class="faq-search-wrapper">
-      <input type="text" id="faq-search" class="faq-search-input" placeholder="Search FAQs by keywords...">
-      <span class="faq-search-icon">🔍</span>
+    <div class="container">
+      <div class="faq-hero__inner reveal">
+        <h1>Help <span class="text-gradient">Center</span></h1>
+        <p>Find answers to common questions about MediConnect's healthcare platform. Search our knowledge base or browse by topic.</p>
+        <div class="faq-hero__search" id="faqSearchWrapper">
+          <span class="faq-hero__search-icon">🔍</span>
+          <input type="text" id="faqSearch" placeholder="Search by keyword, topic, or question..." autocomplete="off">
+          <button class="faq-hero__search-clear" id="faqSearchClear">✕</button>
+        </div>
+      </div>
+      <div class="faq-hero__stats">
+        <div class="faq-hero__stat reveal"><span class="faq-hero__stat-number count-up" data-target="200">0</span>+ Articles</div>
+        <div class="faq-hero__stat reveal anim-delay-200"><span class="faq-hero__stat-number count-up" data-target="8">0</span> Topics</div>
+        <div class="faq-hero__stat reveal anim-delay-400"><span class="faq-hero__stat-number count-up" data-target="98">0</span>% Satisfaction</div>
+      </div>
     </div>
   </section>
 
-  <section class="faq-container">
-    <div id="faq-no-results" class="faq-no-results">
-      <div style="font-size: 2.5rem; margin-bottom: var(--space-3);">🔍</div>
-      <h3>No matching questions found</h3>
-      <p>Try searching using different keywords or contact our support team.</p>
+  <!-- ════════════════════════════════════════════════════
+       SECTION 2: CATEGORY TABS
+       ════════════════════════════════════════════════════ -->
+  <nav class="faq-tabs" id="faqTabs">
+    <div class="container">
+      <div class="faq-tabs__inner">
+        <button class="faq-tab is-active" data-target="all"><span>📋</span> All <span class="tab-count" id="countAll">0</span></button>
+        <button class="faq-tab" data-target="section-patient"><span>🩺</span> Patient <span class="tab-count" id="countPatient">0</span></button>
+        <button class="faq-tab" data-target="section-doctor"><span>👨‍⚕️</span> Doctor <span class="tab-count" id="countDoctor">0</span></button>
+        <button class="faq-tab" data-target="section-admin"><span>⚙️</span> Admin <span class="tab-count" id="countAdmin">0</span></button>
+        <button class="faq-tab" data-target="section-security"><span>🔒</span> Security <span class="tab-count" id="countSecurity">0</span></button>
+        <button class="faq-tab" data-target="section-account"><span>👤</span> Account <span class="tab-count" id="countAccount">0</span></button>
+        <button class="faq-tab" data-target="section-billing"><span>💳</span> Billing <span class="tab-count" id="countBilling">0</span></button>
+      </div>
     </div>
+  </nav>
 
-    <div id="faq-list-container" class="faq-list">
-      <!-- FAQs populated dynamically -->
-      <div class="faq-item">
-        <button class="faq-header">
-          <span>Loading FAQs...</span>
-          <span class="faq-toggle-icon">▼</span>
-        </button>
-        <div class="faq-content">
-          <div class="faq-content-inner">
-            Please wait while we fetch the latest questions and answers.
+  <!-- ════════════════════════════════════════════════════
+       NO RESULTS
+       ════════════════════════════════════════════════════ -->
+  <div class="faq-no-results" id="faqNoResults">
+    <div class="faq-no-results__icon">🔍</div>
+    <h3>No matching questions found</h3>
+    <p>Try using different keywords or browse a different category. If you still need help, reach out to our support team.</p>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 3: PATIENT FAQ
+       ════════════════════════════════════════════════════ -->
+  <section id="section-patient" class="faq-section faq-section--white" data-category="patient">
+    <div class="container">
+      <div class="faq-section__header reveal">
+        <div class="category-icon">🩺</div>
+        <h2>Patient FAQs</h2>
+        <p>Everything you need to know about appointments, consultations, lab tests, and medical reports.</p>
+      </div>
+      <div class="faq-section__list">
+        <div class="faq-item reveal">
+          <button class="faq-question" aria-expanded="false">
+            How do I book an appointment with a doctor?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Log in to your MediConnect account, go to the Patient Dashboard and click the Appointments tab. Search for your preferred doctor or specialty, select an available date and time slot, and confirm your booking. You'll receive an instant confirmation via email and SMS.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal anim-delay-100">
+          <button class="faq-question" aria-expanded="false">
+            Can I reschedule or cancel an appointment?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Yes, you can reschedule or cancel appointments up to 2 hours before the scheduled time from your Patient Dashboard. Cancellations made more than 24 hours in advance receive a full refund. Same-day cancellations may incur a nominal processing fee.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal anim-delay-200">
+          <button class="faq-question" aria-expanded="false">
+            How do online consultations work?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              After booking an online consultation, you'll receive a secure video link before the appointment. At the scheduled time, click the link from your dashboard to join the video call with your doctor. Consultations are HIPAA-compliant and end-to-end encrypted for your privacy.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal anim-delay-300">
+          <button class="faq-question" aria-expanded="false">
+            How do I book lab tests?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Navigate to the Lab Tests section from your dashboard or the main menu. Browse available tests by category, select the tests you need, choose between lab visit or home sample collection, and complete the booking. Test results are automatically uploaded to your account.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal anim-delay-400">
+          <button class="faq-question" aria-expanded="false">
+            How do I access my medical reports?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              All your medical reports are stored securely in your MediConnect account. Go to the Reports section from your dashboard to view, download, or share your reports. You can organize them by date, category, or doctor for easy access anytime.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal anim-delay-500">
+          <button class="faq-question" aria-expanded="false">
+            Can I schedule a home sample collection?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Yes, home sample collection is available for selected lab tests. When booking a lab test, choose the "Home Collection" option, select your preferred time slot, and our trained phlebotomist will visit your address. Results are delivered digitally within the test's turnaround time.
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="about-section" style="text-align: center; border-top: 1px solid var(--color-border); padding-top: var(--space-12);">
-    <h2>Still Have Questions?</h2>
-    <p style="max-width: 500px; margin: 0 auto var(--space-6); color: var(--color-text-light);">If you cannot find the answer to your question, feel free to drop us a line on our contact page.</p>
-    <a href="/contact.html" class="btn btn--secondary btn--lg">Contact Support</a>
+  <!-- ════════════════════════════════════════════════════
+       SECTION 4: DOCTOR FAQ
+       ════════════════════════════════════════════════════ -->
+  <section id="section-doctor" class="faq-section faq-section--alt" data-category="doctor">
+    <div class="container">
+      <div class="faq-section__header reveal">
+        <div class="category-icon">👨‍⚕️</div>
+        <h2>Doctor FAQs</h2>
+        <p>For healthcare professionals managing their practice on MediConnect.</p>
+      </div>
+      <div class="faq-section__list">
+        <div class="faq-item reveal">
+          <button class="faq-question" aria-expanded="false">
+            How do I manage my consultation schedule?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              From your Doctor Dashboard, use the Schedule section to set your availability, block time slots, and manage recurring appointments. You can set different hours for different days of the week and update your schedule in real time. Patients will only see available slots.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal anim-delay-100">
+          <button class="faq-question" aria-expanded="false">
+            How do I access patient reports and history?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              The Patient History section in your dashboard gives you a complete view of each patient's medical records, including past consultations, lab results, prescriptions, and uploaded reports. All data is presented chronologically for easy review during consultations.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal anim-delay-200">
+          <button class="faq-question" aria-expanded="false">
+            Can I conduct online consultations?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Yes, MediConnect supports secure video consultations directly from your dashboard. You can start a consultation with a single click at the scheduled time. The platform handles video routing, recording (with consent), and automatically logs the consultation to the patient's history.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal anim-delay-300">
+          <button class="faq-question" aria-expanded="false">
+            How do I generate digital prescriptions?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              After a consultation, use the e-Prescription feature to generate digital prescriptions. Select medications, specify dosage and duration, and sign digitally. Prescriptions are sent to the patient's account and can be printed or shared with pharmacies electronically.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal anim-delay-400">
+          <button class="faq-question" aria-expanded="false">
+            How do I manage patient follow-ups?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Use the Follow-Up feature in your dashboard to schedule automatic reminders for patients who need follow-up consultations. You can set the follow-up interval, send reminders, and track which patients have completed their follow-up appointments.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <footer class="public-footer">
-    <div style="text-align:center;">
-      <p>&copy; 2026 MediConnect. All rights reserved.</p>
+  <!-- ════════════════════════════════════════════════════
+       SECTION 5: ADMIN FAQ
+       ════════════════════════════════════════════════════ -->
+  <section id="section-admin" class="faq-section faq-section--white" data-category="admin">
+    <div class="container">
+      <div class="faq-section__header reveal">
+        <div class="category-icon">⚙️</div>
+        <h2>Admin FAQs</h2>
+        <p>Platform administration, content management, and operational controls.</p>
+      </div>
+      <div class="faq-section__list">
+        <div class="faq-item reveal">
+          <button class="faq-question" aria-expanded="false">
+            How do I manage FAQs and content?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              From the Admin Dashboard, navigate to the CMS section to manage FAQs, banners, and page content. You can add, edit, reorder, or deactivate FAQ items. Changes are reflected immediately on the public-facing pages. The CMS supports rich text formatting for detailed answers.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal anim-delay-100">
+          <button class="faq-question" aria-expanded="false">
+            How do I send notifications to users?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Use the Notifications section in the Admin Dashboard to create and send targeted notifications. You can filter by user role (patient, doctor), send SMS, email, or in-app notifications, and schedule them for future delivery. Notification history is logged for audit purposes.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal anim-delay-200">
+          <button class="faq-question" aria-expanded="false">
+            What analytics are available for administrators?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              The Analytics Dashboard provides real-time metrics on appointments, user registrations, revenue, consultation completion rates, and platform usage trends. You can export reports in CSV or PDF format and set custom date ranges for detailed analysis.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal anim-delay-300">
+          <button class="faq-question" aria-expanded="false">
+            How do I manage user accounts and roles?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              From the User Management section, you can view, activate, deactivate, or assign roles to users. MediConnect supports three roles: Patient, Doctor, and Admin. Role-based access control ensures each user sees only the features relevant to their role.
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </footer>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 6: SECURITY FAQ
+       ════════════════════════════════════════════════════ -->
+  <section id="section-security" class="faq-section faq-section--alt" data-category="security">
+    <div class="container">
+      <div class="faq-section__header reveal">
+        <div class="category-icon">🔒</div>
+        <h2>Security &amp; Privacy FAQs</h2>
+        <p>How MediConnect protects your healthcare data and ensures compliance.</p>
+      </div>
+      <div class="faq-section__list">
+        <div class="faq-item reveal">
+          <button class="faq-question" aria-expanded="false">
+            How does MediConnect protect my data?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              MediConnect uses end-to-end encryption (AES-256) for all data at rest and TLS 1.3 for data in transit. We implement role-based access control, multi-factor authentication, and regular security audits. Our infrastructure is hosted on SOC 2-compliant cloud providers.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal anim-delay-100">
+          <button class="faq-question" aria-expanded="false">
+            Is MediConnect HIPAA compliant?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Yes, MediConnect is fully HIPAA compliant. We implement administrative, physical, and technical safeguards required by HIPAA regulations, including access controls, audit trails, integrity controls, and secure transmission of electronic protected health information (ePHI).
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal anim-delay-200">
+          <button class="faq-question" aria-expanded="false">
+            Who has access to my medical records?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Your medical records are only accessible to you and the healthcare providers you authorize. Doctors can only view records of their own patients. Administrators have limited access for platform operations. You can revoke or grant access at any time from your account settings.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal anim-delay-300">
+          <button class="faq-question" aria-expanded="false">
+            How are video consultations secured?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              All video consultations are end-to-end encrypted using WebRTC with DTLS-SRTP encryption. Video streams are never stored on our servers unless explicitly recorded with patient consent. Recorded consultations are encrypted and stored in secure, access-controlled storage.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal anim-delay-400">
+          <button class="faq-question" aria-expanded="false">
+            How do you handle data backups?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Automated encrypted backups are performed every 6 hours across geographically redundant data centers. We maintain a 30-day backup retention policy with point-in-time recovery capability. Disaster recovery procedures are tested quarterly to ensure RPO and RTO compliance.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 7: ACCOUNT FAQ
+       ════════════════════════════════════════════════════ -->
+  <section id="section-account" class="faq-section faq-section--white" data-category="account">
+    <div class="container">
+      <div class="faq-section__header reveal">
+        <div class="category-icon">👤</div>
+        <h2>Account Management FAQs</h2>
+        <p>Managing your profile, login, and account preferences.</p>
+      </div>
+      <div class="faq-section__list">
+        <div class="faq-item reveal">
+          <button class="faq-question" aria-expanded="false">
+            How do I create a MediConnect account?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Click the "Sign Up" button on the homepage or navigate to the signup page. Fill in your name, email address, phone number, and create a secure password. Select your role (Patient, Doctor, or Admin) and complete the registration. You'll receive a verification email to activate your account.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal anim-delay-100">
+          <button class="faq-question" aria-expanded="false">
+            How do I reset my password?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              On the login page, click "Forgot Password." Enter your registered email address and we'll send you a password reset link. Click the link and follow the instructions to set a new password. For security, reset links expire after 30 minutes.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal anim-delay-200">
+          <button class="faq-question" aria-expanded="false">
+            How do I update my profile information?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Log in to your account and navigate to Profile Settings from the account dropdown menu. You can update your name, contact information, profile photo, and notification preferences. Changes are saved instantly and reflected across the platform.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal anim-delay-300">
+          <button class="faq-question" aria-expanded="false">
+            How do I delete my account?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              To delete your account, go to Profile Settings and select the "Delete Account" option. You'll be asked to confirm your decision. Account deletion is irreversible and removes all personal data within 30 days per our data retention policy. Download any important records before deletion.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal anim-delay-400">
+          <button class="faq-question" aria-expanded="false">
+            Can I use MediConnect on multiple devices?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Yes, your MediConnect account can be accessed from multiple devices simultaneously — desktop, tablet, and mobile. All your data syncs in real time across devices. For security, you can view and manage active sessions from your account settings.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 8: BILLING FAQ
+       ════════════════════════════════════════════════════ -->
+  <section id="section-billing" class="faq-section faq-section--alt" data-category="billing">
+    <div class="container">
+      <div class="faq-section__header reveal">
+        <div class="category-icon">💳</div>
+        <h2>Billing &amp; Payments FAQs</h2>
+        <p>Payment methods, subscription management, and refund policies.</p>
+      </div>
+      <div class="faq-section__list">
+        <div class="faq-item reveal">
+          <button class="faq-question" aria-expanded="false">
+            What payment methods do you accept?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              We accept all major credit and debit cards (Visa, MasterCard, American Express), UPI, net banking, and popular digital wallets. Enterprise plans can opt for invoicing with net-30 payment terms. All payments are processed securely through PCI-compliant payment gateways.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal anim-delay-100">
+          <button class="faq-question" aria-expanded="false">
+            How does the free trial work?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              All paid plans come with a 14-day free trial with full feature access. No credit card is required to start. You can cancel anytime during the trial period with no charges. After the trial, you'll be prompted to choose a plan and enter payment details to continue.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal anim-delay-200">
+          <button class="faq-question" aria-expanded="false">
+            Can I upgrade or downgrade my plan?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Yes, you can change your plan at any time from your account settings. Upgrades take effect immediately with prorated billing for the remainder of the billing cycle. Downgrades apply at the start of the next billing cycle. Your data is always preserved during plan changes.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal anim-delay-300">
+          <button class="faq-question" aria-expanded="false">
+            How do I get a refund for a cancelled appointment?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Cancellations made more than 24 hours before the scheduled appointment receive a full refund. For cancellations within 24 hours, a nominal processing fee may apply. Refunds are processed within 5-7 business days and credited to the original payment method.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal anim-delay-400">
+          <button class="faq-question" aria-expanded="false">
+            How do I cancel my subscription?
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              You can cancel your subscription anytime from the Billing section in your account settings. Your access continues until the end of the current billing period. We'll provide a data export option before cancellation so you don't lose any important records.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 9: SUPPORT OPTIONS
+       ════════════════════════════════════════════════════ -->
+  <section class="faq-support">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label reveal">Support</span>
+        <h2 class="section-header__title reveal">Still Need Help?</h2>
+        <p class="section-header__subtitle reveal">Our support team is here to assist you. Choose the option that works best for you.</p>
+      </div>
+      <div class="faq-support__grid">
+        <div class="faq-support__card reveal">
+          <div class="faq-support__icon">📧</div>
+          <h4>Email Support</h4>
+          <p>Send us a detailed message and our team will get back to you within 24 hours.</p>
+          <a href="mailto:support@mediconnect.com" class="faq-support__link">support@mediconnect.com →</a>
+        </div>
+        <div class="faq-support__card reveal anim-delay-200">
+          <div class="faq-support__icon">💬</div>
+          <h4>Live Chat</h4>
+          <p>Chat with our support team in real time during business hours.</p>
+          <a href="#" class="faq-support__link" id="startLiveChat">Start Live Chat →</a>
+        </div>
+        <div class="faq-support__card reveal anim-delay-400">
+          <div class="faq-support__icon">📞</div>
+          <h4>Phone Support</h4>
+          <p>Speak directly with a support representative for urgent inquiries.</p>
+          <a href="tel:+18001234567" class="faq-support__link">+1 (800) 123-4567 →</a>
+        </div>
+        <div class="faq-support__card reveal anim-delay-600">
+          <div class="faq-support__icon">📚</div>
+          <h4>Knowledge Base</h4>
+          <p>Browse our complete documentation library for in-depth guides.</p>
+          <a href="/services.html" class="faq-support__link">Browse Documentation →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 10: CTA
+       ════════════════════════════════════════════════════ -->
+  <section class="faq-cta">
+    <div class="container">
+      <h2 class="reveal">Ready to Get Started?</h2>
+      <p class="reveal anim-delay-200">Join thousands of satisfied patients and healthcare providers. Sign up today and experience the future of healthcare management.</p>
+      <div class="faq-cta__actions">
+        <a href="/signup.html" class="btn btn--primary reveal anim-delay-400">Create Free Account</a>
+        <a href="/contact.html" class="btn btn--secondary reveal anim-delay-600">Contact Sales</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       CMS FAQ SECTION (dynamically populated)
+       ════════════════════════════════════════════════════ -->
+  <section class="faq-cms-section" id="faqCmsSection" style="display:none">
+    <div class="container">
+      <div class="faq-section__header reveal">
+        <div class="category-icon">❓</div>
+        <h2>More Questions</h2>
+        <p>Additional frequently asked questions from our knowledge base.</p>
+      </div>
+      <div class="faq-cms-section__list" id="faqCmsList"></div>
+    </div>
+  </section>
+
+  <div id="global-footer"></div>
 
   <script src="/js/config.js"></script>
   <script src="/js/api.js"></script>
   <script src="/js/ui.js"></script>
+  <script src="/js/validation.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/global-navbar.js"></script>
+  <script src="/js/global-footer.js"></script>
+  <script src="/js/animations.js"></script>
   <script src="/js/faq.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      if (typeof Sidebar !== 'undefined' && Sidebar.init) {
-        Sidebar.init('FAQ', 'Home / FAQ');
-      }
-    });
-  </script>
 </body>
 </html>

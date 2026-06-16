@@ -1,56 +1,416 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Browse and book lab tests – Complete blood count, lipid profile, thyroid tests, and more on MediConnect.">
-  <title>Lab Tests – MediConnect</title>
-  <link rel="stylesheet" href="/css/variables.css"><link rel="stylesheet" href="/css/base.css"><link rel="stylesheet" href="/css/components.css"><link rel="stylesheet" href="/css/layout.css"><link rel="stylesheet" href="/css/forms.css"><link rel="stylesheet" href="/css/dashboard.css"><link rel="stylesheet" href="/css/utilities.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Book diagnostic lab tests online – Complete blood count, lipid profile, thyroid, liver function, vitamin tests and more. Fast, accurate, digital reports delivered to your inbox.">
+  <title>Diagnostic Lab Tests – MediConnect</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/utilities.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/footer.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/lab-tests.css">
 </head>
-<body>
-  <div class="app">
-    <!-- Sidebar (rendered by sidebar.js) -->
-    <aside class="sidebar" id="sidebar"></aside>
-    <main class="main">
-      <!-- Topbar (rendered by sidebar.js) -->
-      <header class="topbar" id="topbar"></header>
-      <div class="content fade-in">
-        <div class="page-header"><div><h1 class="page-header__title">Lab Tests</h1><p class="page-header__subtitle">Browse available tests and manage your bookings</p></div></div>
+<body class="public-page">
+  <div id="global-navbar"></div>
 
-        <div class="dashboard-section">
-          <div class="dashboard-section__header">
-            <h3 class="dashboard-section__title">Available Tests</h3>
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 1: HERO
+       ═══════════════════════════════════════════════════════ -->
+  <section class="lab-hero">
+    <div class="container">
+      <div class="lab-hero__grid">
+        <div class="lab-hero__content">
+          <span class="lab-hero__badge">Certified Diagnostics</span>
+          <h1>Advanced <span class="text-gradient">Lab Testing</span><br>At Your Fingertips</h1>
+          <p>500+ diagnostic tests with fast turnaround times. Book online, get samples collected from home, and receive digital reports within 24–48 hours.</p>
+          <div class="lab-hero__actions">
+            <a href="#test-catalog" class="lab-hero__btn lab-hero__btn--primary">Browse Tests</a>
+            <a href="#booking-process" class="lab-hero__btn lab-hero__btn--ghost">How It Works</a>
           </div>
-          <!-- Catalog Search & Filter Controls -->
-          <div class="search-filter-bar" style="display: flex; gap: var(--space-4); margin-bottom: var(--space-4); flex-wrap: wrap; align-items: center;">
-            <div style="flex: 1; min-width: 250px;">
-              <input type="text" id="lab-search" class="form-input" placeholder="Search lab tests by name or code..." style="width: 100%; height: 38px;">
+          <div class="lab-hero__stats">
+            <div class="lab-hero__stat">
+              <span class="lab-hero__stat-value"><span class="count-up" data-target="500">0</span>+</span>
+              <span class="lab-hero__stat-label">Tests</span>
             </div>
-            <div style="width: 200px;">
-              <select id="lab-filter-category" class="form-select" style="width: 100%; height: 38px;">
-                <option value="">All Categories</option>
-              </select>
+            <div class="lab-hero__stat">
+              <span class="lab-hero__stat-value"><span class="count-up" data-target="24">0</span>–48h</span>
+              <span class="lab-hero__stat-label">Reports</span>
             </div>
-          </div>
-          <div id="lab-tests-catalog">
-            <div class="empty-state"><div class="spinner"></div></div>
+            <div class="lab-hero__stat">
+              <span class="lab-hero__stat-value"><span class="count-up" data-target="98">0</span>%</span>
+              <span class="lab-hero__stat-label">Accuracy</span>
+            </div>
           </div>
         </div>
-
-        <div class="dashboard-section"><div class="dashboard-section__header"><h3 class="dashboard-section__title">My Bookings</h3></div><div id="lab-bookings-list"><div class="empty-state"><div class="spinner"></div></div></div></div>
+        <div class="lab-hero__visual">
+          <div class="lab-hero__illustration">
+            <div class="lab-hero__flask">
+              <svg viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M80 200 L80 80 L60 40 L140 40 L120 80 L120 200" stroke="#4E9A97" stroke-width="3" fill="rgba(78,154,151,0.08)" stroke-linejoin="round"/>
+                <path d="M80 80 L120 80" stroke="#4E9A97" stroke-width="3" stroke-linecap="round"/>
+                <path d="M60 40 L140 40" stroke="#4E9A97" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="100" cy="140" r="20" fill="rgba(78,154,151,0.15)" stroke="#4E9A97" stroke-width="2"/>
+                <circle cx="100" cy="140" r="10" fill="rgba(78,154,151,0.25)"/>
+                <circle cx="100" cy="100" r="8" fill="rgba(78,154,151,0.12)" stroke="#4E9A97" stroke-width="1.5"/>
+                <circle cx="88" cy="170" r="6" fill="rgba(78,154,151,0.12)" stroke="#4E9A97" stroke-width="1.5"/>
+                <circle cx="112" cy="170" r="6" fill="rgba(78,154,151,0.12)" stroke="#4E9A97" stroke-width="1.5"/>
+                <path d="M100 40 L100 20" stroke="#4E9A97" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 3"/>
+                <path d="M90 24 L110 24" stroke="#4E9A97" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="lab-hero__particle p1"></div>
+            <div class="lab-hero__particle p2"></div>
+            <div class="lab-hero__particle p3"></div>
+          </div>
+        </div>
       </div>
-    </main>
-  </div>
-  <!-- Book Lab Modal -->
-  <div class="modal-overlay" id="book-lab-modal"><div class="modal"><div class="modal__header"><h3>Book Lab Test: <span id="book-lab-test-name"></span></h3><button class="btn btn--ghost btn--icon" onclick="UI.closeModal('book-lab-modal')">✕</button></div><div class="modal__body">
-    <form id="book-lab-form"><input type="hidden" id="book-lab-test-id">
-      <div class="form-group"><label class="form-label form-label--required" for="book-lab-date">Preferred Date</label><input type="date" id="book-lab-date" class="form-input" required></div>
-      <div class="form-group"><label class="form-label" for="book-lab-time">Preferred Time</label><input type="time" id="book-lab-time" class="form-input"></div>
-      <div class="form-group"><label class="form-label" for="book-lab-notes">Notes</label><textarea id="book-lab-notes" class="form-textarea" rows="2" placeholder="Any special notes..."></textarea></div>
-      <button type="submit" class="btn btn--primary btn--block">Confirm Booking</button>
-    </form>
-  </div></div></div>
+    </div>
+  </section>
 
-  <script src="/js/config.js"></script><script src="/js/api.js"></script><script src="/js/ui.js"></script><script src="/js/validation.js"></script><script src="/js/auth.js"></script><script src="/js/sidebar.js"></script><script src="/js/router.js"></script><script src="/js/lab-tests.js"></script>
-  <script>document.addEventListener('DOMContentLoaded', () => { Sidebar.init('Lab Tests', 'Home / Lab Tests'); LabTests.init(); });</script>
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 2: LAB SERVICES OVERVIEW
+       ═══════════════════════════════════════════════════════ -->
+  <section class="lab-services-overview section-padding animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Why Choose Us</span>
+        <h2 class="section-header__title">Premium Diagnostic Services</h2>
+        <p class="section-header__subtitle">State-of-the-art laboratory services with uncompromising quality and convenience</p>
+      </div>
+      <div class="lab-services-grid">
+        <div class="lab-service-card reveal">
+          <div class="lab-service-card__icon lab-service-card__icon--teal">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <h3 class="lab-service-card__title">NABL Accredited</h3>
+          <p class="lab-service-card__desc">All our partner labs meet the highest national standards for accuracy and quality assurance.</p>
+        </div>
+        <div class="lab-service-card reveal">
+          <div class="lab-service-card__icon lab-service-card__icon--purple">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3 class="lab-service-card__title">Safe & Hygienic</h3>
+          <p class="lab-service-card__desc">Strict safety protocols with certified phlebotomists and sterile equipment for every collection.</p>
+        </div>
+        <div class="lab-service-card reveal">
+          <div class="lab-service-card__icon lab-service-card__icon--amber">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h3 class="lab-service-card__title">Fast Turnaround</h3>
+          <p class="lab-service-card__desc">Most test results delivered within 24–48 hours. Urgent reports available in as little as 6 hours.</p>
+        </div>
+        <div class="lab-service-card reveal">
+          <div class="lab-service-card__icon lab-service-card__icon--rose">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
+          <h3 class="lab-service-card__title">Digital Reports</h3>
+          <p class="lab-service-card__desc">Secure PDF reports delivered directly to your account. Access, download, or share anytime.</p>
+        </div>
+        <div class="lab-service-card reveal">
+          <div class="lab-service-card__icon lab-service-card__icon--green">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <h3 class="lab-service-card__title">Home Collection</h3>
+          <p class="lab-service-card__desc">Free home sample collection by certified phlebotomists at a time that suits you best.</p>
+        </div>
+        <div class="lab-service-card reveal">
+          <div class="lab-service-card__icon lab-service-card__icon--blue">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+          <h3 class="lab-service-card__title">Expert Reviewed</h3>
+          <p class="lab-service-card__desc">Every report is reviewed by qualified pathologists and specialists before release.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 3: TEST CATEGORIES
+       ═══════════════════════════════════════════════════════ -->
+  <section class="lab-categories section-padding animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Categories</span>
+        <h2 class="section-header__title">Explore Test Categories</h2>
+        <p class="section-header__subtitle">Comprehensive diagnostic categories covering all your health needs</p>
+      </div>
+      <div class="lab-categories__grid" id="lab-categories-grid">
+        <div class="empty-state"><div class="spinner"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 4: SEARCH & FILTER + SECTION 5: FEATURED TESTS
+       ═══════════════════════════════════════════════════════ -->
+  <section id="test-catalog" class="lab-catalog section-padding animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Test Catalog</span>
+        <h2 class="section-header__title">Search & Browse Tests</h2>
+        <p class="section-header__subtitle">Find the right test for your health needs with our powerful search</p>
+      </div>
+
+      <div class="lab-catalog__controls">
+        <div class="lab-catalog__search">
+          <svg class="lab-catalog__search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="lab-search" class="lab-catalog__search-input" placeholder="Search by test name or code...">
+        </div>
+        <div class="lab-catalog__filter">
+          <select id="lab-filter-category" class="lab-catalog__select">
+            <option value="">All Categories</option>
+          </select>
+        </div>
+        <button id="lab-filter-btn" class="lab-catalog__filter-btn btn btn--primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+          Filter
+        </button>
+      </div>
+
+      <div id="lab-tests-count" class="lab-catalog__count"></div>
+      <div id="lab-tests-catalog">
+        <div class="empty-state"><div class="spinner"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 6: TEST DETAILS SHOWCASE (Modal)
+       ═══════════════════════════════════════════════════════ -->
+  <div class="lab-detail-overlay" id="lab-detail-overlay">
+    <div class="lab-detail-modal">
+      <button class="lab-detail-close" onclick="LabTests.closeDetail()">✕</button>
+      <div class="lab-detail-loading" id="lab-detail-loading"><div class="spinner"></div></div>
+      <div class="lab-detail-content" id="lab-detail-content" style="display:none;">
+        <div class="lab-detail-header">
+          <span class="badge badge--info" id="detail-category"></span>
+          <h2 id="detail-name"></h2>
+          <p class="lab-detail-code">Code: <span id="detail-code"></span></p>
+        </div>
+        <div class="lab-detail-body">
+          <div class="lab-detail-section">
+            <h4>📋 Description</h4>
+            <p id="detail-description"></p>
+          </div>
+          <div class="lab-detail-section">
+            <h4>⚠️ Preparation</h4>
+            <p id="detail-preparation"></p>
+          </div>
+          <div class="lab-detail-meta">
+            <div class="lab-detail-meta-item">
+              <span class="lab-detail-meta-icon">⏱</span>
+              <div>
+                <span class="lab-detail-meta-label">Turnaround</span>
+                <span class="lab-detail-meta-value" id="detail-turnaround"></span>
+              </div>
+            </div>
+            <div class="lab-detail-meta-item">
+              <span class="lab-detail-meta-icon">💰</span>
+              <div>
+                <span class="lab-detail-meta-label">Price</span>
+                <span class="lab-detail-meta-value" id="detail-price"></span>
+              </div>
+            </div>
+            <div class="lab-detail-meta-item">
+              <span class="lab-detail-meta-icon">📄</span>
+              <div>
+                <span class="lab-detail-meta-label">Report</span>
+                <span class="lab-detail-meta-value">Digital PDF</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="lab-detail-footer">
+          <button class="btn btn--primary btn--lg btn--block" id="detail-book-btn">Book This Test</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 7: BOOKING PROCESS TIMELINE
+       ═══════════════════════════════════════════════════════ -->
+  <section id="booking-process" class="lab-booking-process section-padding animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">How It Works</span>
+        <h2 class="section-header__title">Simple Booking Process</h2>
+        <p class="section-header__subtitle">Book a lab test in just a few clicks</p>
+      </div>
+      <div class="lab-process-timeline">
+        <div class="lab-process-step reveal">
+          <div class="lab-process-step__number">1</div>
+          <div class="lab-process-step__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <h3 class="lab-process-step__title">Select Test</h3>
+          <p class="lab-process-step__desc">Browse our comprehensive catalog and choose the test you need.</p>
+        </div>
+        <div class="lab-process-connector"></div>
+        <div class="lab-process-step reveal">
+          <div class="lab-process-step__number">2</div>
+          <div class="lab-process-step__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <h3 class="lab-process-step__title">Choose Date</h3>
+          <p class="lab-process-step__desc">Pick a convenient date and time slot for your test or home collection.</p>
+        </div>
+        <div class="lab-process-connector"></div>
+        <div class="lab-process-step reveal">
+          <div class="lab-process-step__number">3</div>
+          <div class="lab-process-step__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <h3 class="lab-process-step__title">Confirm Booking</h3>
+          <p class="lab-process-step__desc">Review details and confirm. You'll receive an instant confirmation.</p>
+        </div>
+        <div class="lab-process-connector"></div>
+        <div class="lab-process-step reveal">
+          <div class="lab-process-step__number">4</div>
+          <div class="lab-process-step__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3 class="lab-process-step__title">Sample Collection</h3>
+          <p class="lab-process-step__desc">Visit the lab or stay home — our phlebotomist will collect your sample.</p>
+        </div>
+        <div class="lab-process-connector"></div>
+        <div class="lab-process-step reveal">
+          <div class="lab-process-step__number">5</div>
+          <div class="lab-process-step__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h3 class="lab-process-step__title">Report Delivery</h3>
+          <p class="lab-process-step__desc">Receive your digital report within 24–48 hours. Share with your doctor instantly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 8: REPORT DELIVERY PROCESS
+       ═══════════════════════════════════════════════════════ -->
+  <section class="lab-report-delivery section-padding animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Reports</span>
+        <h2 class="section-header__title">How Reports Are Delivered</h2>
+        <p class="section-header__subtitle">Fast, secure, and accessible report delivery</p>
+      </div>
+      <div class="lab-delivery-grid">
+        <div class="lab-delivery-card reveal">
+          <div class="lab-delivery-card__icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <h4>Processing & Analysis</h4>
+          <p>Your sample is processed at our NABL-accredited labs using state-of-the-art analyzers for accurate results.</p>
+        </div>
+        <div class="lab-delivery-card reveal">
+          <div class="lab-delivery-card__icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </div>
+          <h4>Quality Check</h4>
+          <p>Every report undergoes a rigorous quality review by senior pathologists before it is released to you.</p>
+        </div>
+        <div class="lab-delivery-card reveal">
+          <div class="lab-delivery-card__icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </div>
+          <h4>Digital Delivery</h4>
+          <p>Reports are uploaded to your secure account as PDF. You'll receive an instant notification when ready.</p>
+        </div>
+        <div class="lab-delivery-card reveal">
+          <div class="lab-delivery-card__icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </div>
+          <h4>Share with Doctor</h4>
+          <p>Easily share your reports with any healthcare provider directly from your MediConnect account.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 9: FAQ
+       ═══════════════════════════════════════════════════════ -->
+  <section class="lab-faq section-padding animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">FAQ</span>
+        <h2 class="section-header__title">Frequently Asked Questions</h2>
+        <p class="section-header__subtitle">Everything you need to know about lab testing on MediConnect</p>
+      </div>
+      <div class="lab-faq-list" id="lab-faq-list">
+        <div class="empty-state"><div class="spinner"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 10: CTA
+       ═══════════════════════════════════════════════════════ -->
+  <section class="lab-cta section-padding--lg animate-on-scroll">
+    <div class="container">
+      <h2>Ready to Take Control of Your Health?</h2>
+      <p>Book a diagnostic test today and get accurate results delivered to your doorstep.</p>
+      <div class="lab-cta__actions">
+        <a href="#test-catalog" class="lab-cta__btn lab-cta__btn--primary">Browse Tests</a>
+        <a href="/signup.html" class="lab-cta__btn lab-cta__btn--outline">Create Account</a>
+      </div>
+    </div>
+  </section>
+
+  <div id="global-footer"></div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       BOOKING MODAL
+       ═══════════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="book-lab-modal">
+    <div class="modal">
+      <div class="modal__header">
+        <h3>Book Test: <span id="book-lab-test-name"></span></h3>
+        <button class="btn btn--ghost btn--icon" onclick="UI.closeModal('book-lab-modal')">✕</button>
+      </div>
+      <div class="modal__body">
+        <form id="book-lab-form">
+          <input type="hidden" id="book-lab-test-id">
+          <div class="form-group">
+            <label class="form-label form-label--required" for="book-lab-date">Preferred Date</label>
+            <input type="date" id="book-lab-date" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="book-lab-time">Preferred Time</label>
+            <input type="time" id="book-lab-time" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="book-lab-notes">Notes</label>
+            <textarea id="book-lab-notes" class="form-textarea" rows="2" placeholder="Any special notes or instructions..."></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary btn--block">Confirm Booking</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/validation.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/global-navbar.js"></script>
+  <script src="/js/global-footer.js"></script>
+  <script src="/js/animations.js"></script>
+  <script src="/js/lab-tests.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      LabTests.init();
+    });
+  </script>
 </body>
 </html>

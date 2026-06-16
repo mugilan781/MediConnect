@@ -3,23 +3,65 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Login to MediConnect – Access your digital clinic dashboard, appointments, and medical records.">
+  <meta name="description" content="Login to MediConnect – Access your digital clinic dashboard, appointments, and medical records securely.">
   <title>Login – MediConnect</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/variables.css">
   <link rel="stylesheet" href="/css/base.css">
   <link rel="stylesheet" href="/css/components.css">
   <link rel="stylesheet" href="/css/forms.css">
   <link rel="stylesheet" href="/css/auth.css">
   <link rel="stylesheet" href="/css/utilities.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <style>
+    .auth-page { padding-top: var(--navbar-height); }
+  </style>
 </head>
 <body>
+  <div id="global-navbar"></div>
   <div class="auth-page">
-    <!-- Left Panel -->
+    <!-- ════════════════════════════════════════════════
+         LEFT PANEL — Brand + Illustration + Stats
+         ════════════════════════════════════════════════ -->
     <div class="auth-panel">
       <div class="auth-panel__content">
+        <div class="auth-panel__illustration">🏥</div>
         <div class="auth-panel__logo">M</div>
         <h1 class="auth-panel__title">MediConnect</h1>
-        <p class="auth-panel__description">Your complete digital clinic management platform. Access appointments, consultations, and medical records securely.</p>
+        <p class="auth-panel__description">Your complete digital clinic management platform. Access appointments, consultations, and medical records securely from anywhere.</p>
+
+        <div class="auth-panel__stats">
+          <div class="auth-panel__stat">
+            <div class="auth-panel__stat-number">50K+</div>
+            <div class="auth-panel__stat-label">Active Patients</div>
+          </div>
+          <div class="auth-panel__stat">
+            <div class="auth-panel__stat-number">2.5K+</div>
+            <div class="auth-panel__stat-label">Healthcare Providers</div>
+          </div>
+          <div class="auth-panel__stat">
+            <div class="auth-panel__stat-number">99.9%</div>
+            <div class="auth-panel__stat-label">Platform Uptime</div>
+          </div>
+          <div class="auth-panel__stat">
+            <div class="auth-panel__stat-number">98%</div>
+            <div class="auth-panel__stat-label">Satisfaction Rate</div>
+          </div>
+        </div>
+
+        <div class="auth-panel__testimonial">
+          <div class="auth-panel__testimonial-text">"MediConnect transformed how we manage our clinic. Appointment scheduling, patient records, and lab reports — all in one place. Our workflow has never been smoother."</div>
+          <div class="auth-panel__testimonial-author">
+            <div class="auth-panel__testimonial-avatar">DR</div>
+            <div>
+              <div class="auth-panel__testimonial-name">Dr. Sarah Reynolds</div>
+              <div class="auth-panel__testimonial-role">Chief Medical Officer, HealthFirst Clinic</div>
+            </div>
+          </div>
+        </div>
+
         <div class="auth-panel__features">
           <div class="auth-panel__feature">
             <div class="auth-panel__feature-icon">✓</div>
@@ -41,18 +83,40 @@
       </div>
     </div>
 
-    <!-- Right Panel -->
+    <!-- ════════════════════════════════════════════════
+         RIGHT PANEL — Glassmorphism Login Form
+         ════════════════════════════════════════════════ -->
     <div class="auth-form-container">
       <div class="auth-form">
-        <div class="auth-form__header">
-          <h2 class="auth-form__title">Welcome Back</h2>
-          <p class="auth-form__subtitle">Sign in to your MediConnect account</p>
+
+        <!-- Quick Role Access -->
+        <div class="auth-form__quick-roles">
+          <a href="/patient-dashboard.html" class="auth-form__role-btn">
+            <span class="role-icon">🩺</span>
+            Patient
+          </a>
+          <a href="/doctor-dashboard.html" class="auth-form__role-btn">
+            <span class="role-icon">👨‍⚕️</span>
+            Doctor
+          </a>
+          <a href="/admin-dashboard.html" class="auth-form__role-btn">
+            <span class="role-icon">⚙️</span>
+            Admin
+          </a>
         </div>
 
-        <!-- Alert Message Area -->
+        <div class="auth-form__divider">or sign in with your account</div>
+
+        <!-- Alert -->
         <div id="login-alert" class="auth-alert"></div>
 
         <form id="login-form">
+          <div class="auth-form__header">
+            <div class="auth-form__header-icon">👋</div>
+            <h2 class="auth-form__title">Welcome Back</h2>
+            <p class="auth-form__subtitle">Sign in to your MediConnect account</p>
+          </div>
+
           <div class="form-group">
             <label class="form-label form-label--required" for="login-email">Email Address</label>
             <input type="email" id="login-email" class="form-input" placeholder="you@example.com" required autocomplete="email">
@@ -82,7 +146,7 @@
           <button type="submit" class="btn btn--primary btn--block btn--lg" id="login-btn">Sign In</button>
         </form>
 
-        <!-- Forgot Password Section -->
+        <!-- Forgot Password -->
         <div id="forgot-section" class="forgot-section">
           <div class="forgot-section__title">Reset Your Password</div>
           <p class="forgot-section__desc">Enter your email address and we'll send you a link to reset your password.</p>
@@ -93,7 +157,7 @@
             </div>
             <div class="forgot-section__actions">
               <button type="submit" class="btn btn--primary" id="forgot-btn">Send Reset Link</button>
-              <button type="button" class="btn btn--ghost" id="forgot-cancel">Cancel</button>
+              <button type="button" class="btn--ghost" id="forgot-cancel">Cancel</button>
             </div>
           </form>
         </div>
@@ -111,6 +175,8 @@
   <script src="/js/validation.js"></script>
   <script src="/js/auth.js"></script>
   <script src="/js/router.js"></script>
+  <script src="/js/global-navbar.js"></script>
+  <script src="/js/animations.js"></script>
   <script>document.addEventListener('DOMContentLoaded', () => Auth.initLoginPage());</script>
 </body>
 </html>

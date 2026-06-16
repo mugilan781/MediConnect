@@ -3,229 +3,300 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Find a Doctor – Search healthcare professionals and book your appointments online on MediConnect.">
+  <meta name="description" content="Find a Doctor – Browse our directory of healthcare specialists, check availability, and book appointments online at MediConnect.">
   <title>Find a Doctor – MediConnect</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/variables.css">
   <link rel="stylesheet" href="/css/base.css">
   <link rel="stylesheet" href="/css/components.css">
   <link rel="stylesheet" href="/css/layout.css">
-  <link rel="stylesheet" href="/css/forms.css">
-  <link rel="stylesheet" href="/css/dashboard.css">
   <link rel="stylesheet" href="/css/utilities.css">
-  <style>
-    .doctor-card {
-      background: white;
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-lg);
-      padding: var(--space-6);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: all var(--transition-base);
-    }
-    .doctor-card:hover {
-      box-shadow: var(--shadow-card-hover);
-      border-color: var(--color-primary);
-      transform: translateY(-2px);
-    }
-    .doctor-card__header {
-      display: flex;
-      gap: var(--space-4);
-      margin-bottom: var(--space-4);
-    }
-    .doctor-card__avatar {
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      background: var(--color-primary-light);
-      color: var(--color-primary-dark);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: var(--font-size-xl);
-      font-weight: var(--font-weight-bold);
-    }
-    .doctor-card__info {
-      flex: 1;
-    }
-    .doctor-card__name {
-      font-size: var(--font-size-lg);
-      font-weight: var(--font-weight-bold);
-      color: var(--color-gray-800);
-      margin-bottom: var(--space-1);
-    }
-    .doctor-card__spec {
-      color: var(--color-primary);
-      font-weight: var(--font-weight-semibold);
-      font-size: var(--font-size-sm);
-      margin-bottom: var(--space-2);
-    }
-    .doctor-card__meta {
-      font-size: var(--font-size-sm);
-      color: var(--color-text-light);
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .doctor-card__footer {
-      border-top: 1px solid var(--color-border);
-      padding-top: var(--space-4);
-      margin-top: var(--space-4);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .doctor-card__fee {
-      font-weight: var(--font-weight-bold);
-      color: var(--color-gray-800);
-    }
-    .doctors-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: var(--space-6);
-      margin-top: var(--space-6);
-    }
-    .slot-btn {
-      min-width: 80px;
-      margin: 4px;
-      font-size: var(--font-size-xs);
-    }
-    .time-slots-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: var(--space-3);
-    }
-    .doctor-detail-header {
-      display: flex;
-      gap: var(--space-4);
-      align-items: center;
-      margin-bottom: var(--space-6);
-      padding-bottom: var(--space-4);
-      border-bottom: 1px solid var(--color-border);
-    }
-    .doctor-detail-avatar {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      background: var(--color-primary-light);
-      color: var(--color-primary-dark);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: var(--font-size-2xl);
-      font-weight: var(--font-weight-bold);
-    }
-  </style>
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/footer.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/doctors.css">
 </head>
-<body>
-  <div class="app">
-    <!-- Sidebar -->
-    <aside class="sidebar" id="sidebar"></aside>
+<body class="public-page">
+  <div id="global-navbar"></div>
 
-    <main class="main">
-      <!-- Topbar -->
-      <header class="topbar" id="topbar"></header>
-
-      <div class="content fade-in">
-        <div class="page-header">
-          <div>
-            <h1 class="page-header__title">Find a Doctor</h1>
-            <p class="page-header__subtitle">Search specialists and book appointments instantly</p>
-          </div>
-          <div class="d-flex gap-3">
-            <input type="text" id="search-doctors" class="form-input" placeholder="Search doctor by name..." style="width:220px;">
-            <select id="filter-specialization" class="form-select" style="width:180px;">
-              <option value="">All Specializations</option>
-              <option value="Cardiology">Cardiology</option>
-              <option value="Dermatology">Dermatology</option>
-              <option value="Pediatrics">Pediatrics</option>
-              <option value="Neurology">Neurology</option>
-              <option value="General Medicine">General Medicine</option>
-              <option value="Orthopedics">Orthopedics</option>
-              <option value="Ophthalmology">Ophthalmology</option>
-              <option value="Gynecology">Gynecology</option>
-            </select>
-          </div>
+  <!-- ════════════════════════════════════════════════════
+       SECTION 1: HERO
+       ════════════════════════════════════════════════════ -->
+  <section class="doctors-hero animate-on-scroll">
+    <div class="container">
+      <h1>Find a <span class="text-gradient">Doctor</span></h1>
+      <p>Browse our network of 200+ certified healthcare specialists. Read profiles, check real-time availability, and book appointments instantly.</p>
+      <div class="doctors-hero-stats" id="doctors-hero-stats">
+        <div class="doctors-hero-stat">
+          <div class="doctors-hero-stat-value" id="hero-stat-doctors">200+</div>
+          <div class="doctors-hero-stat-label">Expert Doctors</div>
         </div>
-
-        <div id="doctors-list-container">
-          <div class="doctors-grid" id="doctors-grid">
-            <div class="empty-state"><div class="spinner"></div></div>
-          </div>
+        <div class="doctors-hero-stat">
+          <div class="doctors-hero-stat-value" id="hero-stat-specializations">15+</div>
+          <div class="doctors-hero-stat-label">Specializations</div>
         </div>
-        <div id="doctors-pagination" style="margin-top: var(--space-6);"></div>
+        <div class="doctors-hero-stat">
+          <div class="doctors-hero-stat-value" id="hero-stat-patients">50K+</div>
+          <div class="doctors-hero-stat-label">Happy Patients</div>
+        </div>
       </div>
-    </main>
-  </div>
+    </div>
+  </section>
 
-  <!-- Book Appointment Modal -->
-  <div class="modal-overlay" id="book-modal">
-    <div class="modal" style="max-width: 600px;">
+  <!-- ════════════════════════════════════════════════════
+       SECTIONS 2-4: SEARCH + FILTER + DOCTOR CARDS
+       ════════════════════════════════════════════════════ -->
+  <section class="directory-section animate-on-scroll">
+    <div class="container">
+      <div class="directory-controls">
+        <div class="directory-search">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-doctors" placeholder="Search doctors by name or specialization...">
+        </div>
+        <div class="filter-group">
+          <select id="filter-specialization" class="filter-select">
+            <option value="">All Specializations</option>
+            <option value="Cardiology">Cardiology</option>
+            <option value="Dermatology">Dermatology</option>
+            <option value="Pediatrics">Pediatrics</option>
+            <option value="Neurology">Neurology</option>
+            <option value="General Medicine">General Medicine</option>
+            <option value="Orthopedics">Orthopedics</option>
+            <option value="Ophthalmology">Ophthalmology</option>
+            <option value="Gynecology">Gynecology</option>
+            <option value="Psychiatry">Psychiatry</option>
+            <option value="ENT">ENT</option>
+          </select>
+          <select id="filter-experience" class="filter-select">
+            <option value="">Any Experience</option>
+            <option value="0-5">0–5 Years</option>
+            <option value="5-10">5–10 Years</option>
+            <option value="10-15">10–15 Years</option>
+            <option value="15+">15+ Years</option>
+          </select>
+          <select id="filter-availability" class="filter-select">
+            <option value="">Any Availability</option>
+            <option value="today">Available Today</option>
+            <option value="week">Available This Week</option>
+          </select>
+        </div>
+      </div>
+      <div class="directory-results-info" id="results-info">
+        Showing <strong id="results-count">0</strong> doctors
+      </div>
+      <div class="doctors-grid" id="doctors-grid">
+        <div class="skeleton skeleton-doc-card"></div>
+        <div class="skeleton skeleton-doc-card"></div>
+        <div class="skeleton skeleton-doc-card"></div>
+      </div>
+      <div id="doctors-pagination" style="margin-top:var(--space-8);display:flex;justify-content:center;gap:var(--space-2);flex-wrap:wrap;"></div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 5: DOCTOR PROFILE MODAL (hidden overlay)
+       ════════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="doctor-profile-overlay">
+    <div class="modal" id="doctor-profile">
       <div class="modal__header">
-        <h3>Doctor Profile & Booking</h3>
-        <button class="btn btn--ghost btn--icon" onclick="UI.closeModal('book-modal')">✕</button>
+        <h3>Doctor Profile</h3>
+        <button class="btn btn--ghost btn--icon" onclick="Doctors.closeProfile()">✕</button>
       </div>
-      <div class="modal__body">
-        <div id="doctor-profile-detail"></div>
-        <form id="booking-form" style="margin-top: var(--space-4);">
-          <input type="hidden" id="booking-doctor-id" value="">
-          <input type="hidden" id="booking-time" value="">
-          
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label form-label--required" for="booking-date">Choose Date</label>
-              <input type="date" id="booking-date" class="form-input" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="booking-type">Consultation Type</label>
-              <select id="booking-type" class="form-select">
-                <option value="in_person">In-Person Visit</option>
-                <option value="teleconsult">Video Teleconsult</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Select Available Time Slot</label>
-            <div class="time-slots-grid" id="booking-slots">
-              <p class="text-muted text-sm">Please select a date to view available time slots.</p>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="booking-reason">Reason for Appointment</label>
-            <textarea id="booking-reason" class="form-textarea" rows="2" placeholder="Briefly describe the symptoms or consultation reason..."></textarea>
-          </div>
-
-          <div class="d-flex justify-content-end gap-3" style="margin-top: var(--space-6);">
-            <button type="button" class="btn btn--secondary" onclick="UI.closeModal('book-modal')">Cancel</button>
-            <button type="submit" class="btn btn--primary">Book Appointment</button>
-          </div>
-        </form>
+      <div class="modal__body" id="doctor-profile-body">
+        <div class="spinner"></div>
       </div>
     </div>
   </div>
 
+  <!-- ════════════════════════════════════════════════════
+       SECTION 6: FEATURED SPECIALISTS
+       ════════════════════════════════════════════════════ -->
+  <section class="featured-section animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Top Rated</span>
+        <h2 class="section-header__title">Featured Specialists</h2>
+        <p class="section-header__subtitle">Our most experienced and highly recommended doctors</p>
+      </div>
+      <div class="featured-grid" id="featured-grid">
+        <div class="skeleton skeleton-doc-card"></div>
+        <div class="skeleton skeleton-doc-card"></div>
+        <div class="skeleton skeleton-doc-card"></div>
+        <div class="skeleton skeleton-doc-card"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 7: POPULAR DEPARTMENTS
+       ════════════════════════════════════════════════════ -->
+  <section class="departments-section animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Departments</span>
+        <h2 class="section-header__title">Browse by Department</h2>
+        <p class="section-header__subtitle">Find the right specialist for your needs</p>
+      </div>
+      <div class="dept-grid" id="dept-grid">
+        <a href="?specialization=Cardiology" class="dept-card" onclick="return Doctors.filterByDept('Cardiology')">
+          <div class="dept-card__icon">❤️</div>
+          <div class="dept-card__name">Cardiology</div>
+          <div class="dept-card__count">Heart Specialists</div>
+        </a>
+        <a href="?specialization=Dermatology" class="dept-card" onclick="return Doctors.filterByDept('Dermatology')">
+          <div class="dept-card__icon">🧴</div>
+          <div class="dept-card__name">Dermatology</div>
+          <div class="dept-card__count">Skin Specialists</div>
+        </a>
+        <a href="?specialization=Pediatrics" class="dept-card" onclick="return Doctors.filterByDept('Pediatrics')">
+          <div class="dept-card__icon">👶</div>
+          <div class="dept-card__name">Pediatrics</div>
+          <div class="dept-card__count">Child Specialists</div>
+        </a>
+        <a href="?specialization=Neurology" class="dept-card" onclick="return Doctors.filterByDept('Neurology')">
+          <div class="dept-card__icon">🧠</div>
+          <div class="dept-card__name">Neurology</div>
+          <div class="dept-card__count">Brain & Nerve</div>
+        </a>
+        <a href="?specialization=Orthopedics" class="dept-card" onclick="return Doctors.filterByDept('Orthopedics')">
+          <div class="dept-card__icon">🦴</div>
+          <div class="dept-card__name">Orthopedics</div>
+          <div class="dept-card__count">Bone & Joint</div>
+        </a>
+        <a href="?specialization=Ophthalmology" class="dept-card" onclick="return Doctors.filterByDept('Ophthalmology')">
+          <div class="dept-card__icon">👁️</div>
+          <div class="dept-card__name">Ophthalmology</div>
+          <div class="dept-card__count">Eye Specialists</div>
+        </a>
+        <a href="?specialization=Gynecology" class="dept-card" onclick="return Doctors.filterByDept('Gynecology')">
+          <div class="dept-card__icon">🌸</div>
+          <div class="dept-card__name">Gynecology</div>
+          <div class="dept-card__count">Women's Health</div>
+        </a>
+        <a href="?specialization=General Medicine" class="dept-card" onclick="return Doctors.filterByDept('General Medicine')">
+          <div class="dept-card__icon">🩺</div>
+          <div class="dept-card__name">General Medicine</div>
+          <div class="dept-card__count">Primary Care</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 8: CONSULTATION PROCESS
+       ════════════════════════════════════════════════════ -->
+  <section class="process-section animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">How It Works</span>
+        <h2 class="section-header__title">Your Consultation Journey</h2>
+        <p class="section-header__subtitle">From finding a doctor to getting treated — in four simple steps</p>
+      </div>
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="process-step__icon">🔍</div>
+          <h3>Find a Doctor</h3>
+          <p>Search by specialization, name, or department. Read profiles and compare experience.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-step__icon">📅</div>
+          <h3>Pick a Slot</h3>
+          <p>View real-time availability and choose a time that fits your schedule.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-step__icon">🏥</div>
+          <h3>Visit or Consult</h3>
+          <p>Visit the clinic in person or consult online from the comfort of your home.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-step__icon">💊</div>
+          <h3>Get Treated</h3>
+          <p>Receive diagnosis, prescriptions, and follow-up care — all in one place.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 9: FAQ
+       ════════════════════════════════════════════════════ -->
+  <section class="doctors-faq animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">FAQ</span>
+        <h2 class="section-header__title">Common Questions</h2>
+        <p class="section-header__subtitle">Everything you need to know about our doctor directory</p>
+      </div>
+      <div class="faq-grid" id="doctors-faq-list">
+        <div class="faq-item">
+          <button class="faq-question" onclick="Doctors.toggleFaq(this)">
+            How do I choose the right doctor?
+            <span class="icon">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Browse by specialization, review doctor qualifications and experience, check ratings and patient feedback, and consider consultation fees. Our directory provides all the information you need to make an informed choice.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="Doctors.toggleFaq(this)">
+            Do I need to sign up to browse doctors?
+            <span class="icon">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">No. You can freely browse our entire doctor directory, view profiles, check availability, and see consultation fees without creating an account. You only need to sign in when you're ready to book an appointment.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="Doctors.toggleFaq(this)">
+            Can I book an online consultation?
+            <span class="icon">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Yes! Many of our doctors offer video consultations. When booking, simply select "Video Teleconsult" as the consultation type and you'll receive a secure video link before your appointment.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="Doctors.toggleFaq(this)">
+            How are consultation fees determined?
+            <span class="icon">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Doctors set their own consultation fees based on their experience, specialization, and practice. All fees are displayed transparently on each doctor's profile card before booking.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="Doctors.toggleFaq(this)">
+            What if I need to cancel or reschedule?
+            <span class="icon">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">You can easily reschedule or cancel appointments from your dashboard. Cancellations made at least 2 hours before the appointment are free of charge. Please check our cancellation policy for more details.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 10: CTA
+       ════════════════════════════════════════════════════ -->
+  <section class="doctors-cta animate-on-scroll">
+    <div class="container">
+      <h2>Are You a Healthcare Professional?</h2>
+      <p>Join 200+ doctors already growing their practice on MediConnect. Reach more patients and streamline your clinic management.</p>
+      <a href="/signup.html" class="btn">Register as a Doctor →</a>
+    </div>
+  </section>
+
+  <div id="global-footer"></div>
+
   <script src="/js/config.js"></script>
   <script src="/js/api.js"></script>
-  <script src="/js/ui.js"></script>
-  <script src="/js/validation.js"></script>
   <script src="/js/auth.js"></script>
-  <script src="/js/sidebar.js"></script>
-  <script src="/js/router.js"></script>
+  <script src="/js/global-navbar.js"></script>
+  <script src="/js/global-footer.js"></script>
+  <script src="/js/animations.js"></script>
   <script src="/js/doctors.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Guard access: only patients are allowed here
-      const user = Auth.getUser();
-      if (!user || user.role !== 'patient') {
-        window.location.href = '/login.html';
-        return;
-      }
-      Sidebar.init('Find a Doctor', 'Home / Find a Doctor');
-      Doctors.init();
-    });
-  </script>
 </body>
 </html>

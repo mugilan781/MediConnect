@@ -1,181 +1,271 @@
 // ============================================================
 // MediConnect – public/js/faq.js
-// Dynamic FAQ content loader, search filter, and accordion widget
+// Premium Help Center: Category tabs, live search,
+// CMS integration, accordion widget
 // ============================================================
 
 const FAQPage = {
-  faqs: [],
-  pageMeta: null,
+  cmsFaqs: [],
 
   async init() {
-    try {
-      // 1. Load Page configurations and SEO settings
-      await this.loadPageConfig();
-
-      // 2. Fetch FAQs from API
-      await this.fetchFaqs();
-
-      // 3. Bind search filter listener
-      this.bindSearch();
-    } catch (error) {
-      console.error('FAQ initialization failed:', error.message);
-      this.renderFallback();
-    }
-  },
-
-  async loadPageConfig() {
-    try {
-      const response = await fetch(`${CONFIG.API_BASE_URL}/cms/page/faq`);
-      if (response.ok) {
-        const result = await response.json();
-        if (result.success && result.data) {
-          this.pageMeta = result.data.page;
-          if (typeof UI !== 'undefined' && UI.injectSEO && this.pageMeta) {
-            UI.injectSEO(this.pageMeta);
-          }
-          
-          // Render hero if dynamic data is present
-          if (this.pageMeta.title) {
-            const heroTitle = document.getElementById('faq-hero-title');
-            if (heroTitle) heroTitle.textContent = this.pageMeta.title;
-          }
-        }
-      }
-    } catch (err) {
-      console.warn('FAQ CMS config load error:', err.message);
-    }
-  },
-
-  async fetchFaqs() {
-    const response = await fetch(`${CONFIG.API_BASE_URL}/cms/faqs`);
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const result = await response.json();
-    if (result.success && result.data) {
-      this.faqs = result.data;
-      this.renderFaqs(this.faqs);
-    } else {
-      throw new Error(result.message || 'Failed to load FAQs.');
-    }
-  },
-
-  renderFaqs(list) {
-    const container = document.getElementById('faq-list-container');
-    const noResults = document.getElementById('faq-no-results');
-    if (!container) return;
-
-    if (list.length === 0) {
-      container.style.display = 'none';
-      if (noResults) noResults.style.display = 'block';
-      return;
-    }
-
-    if (noResults) noResults.style.display = 'none';
-    container.style.display = 'flex';
-
-    container.innerHTML = list.map(item => `
-      <div class="faq-item" data-id="${item.id}">
-        <button class="faq-header">
-          <span>${this.escapeHtml(item.question)}</span>
-          <span class="faq-toggle-icon">▼</span>
-        </button>
-        <div class="faq-content">
-          <div class="faq-content-inner">
-            ${this.escapeHtml(item.answer)}
-          </div>
-        </div>
-      </div>
-    `).join('');
-
     this.bindAccordions();
+    this.bindSearch();
+    this.bindTabs();
+    this.updateCounts();
+    this.bindClearSearch();
+
+    await this.loadCmsFaqs();
   },
 
+  /* ── Accordion ── */
   bindAccordions() {
-    const headers = document.querySelectorAll('.faq-header');
-    headers.forEach(header => {
-      header.addEventListener('click', () => {
-        const content = header.nextElementSibling;
-        const isActive = header.classList.contains('active');
+    document.querySelectorAll('.faq-question').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = this.closest('.faq-item');
+        var isOpen = item.classList.contains('is-open');
 
-        // Close all other accordions for single-expand behavior
-        document.querySelectorAll('.faq-header').forEach(h => {
-          if (h !== header) {
-            h.classList.remove('active');
-            h.nextElementSibling.style.maxHeight = null;
-          }
+        document.querySelectorAll('.faq-item.is-open').forEach(function(openItem) {
+          openItem.classList.remove('is-open');
+          openItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
         });
 
-        // Toggle active accordion
-        if (isActive) {
-          header.classList.remove('active');
-          content.style.maxHeight = null;
-        } else {
-          header.classList.add('active');
-          content.style.maxHeight = content.scrollHeight + 'px';
+        if (!isOpen) {
+          item.classList.add('is-open');
+          item.querySelector('.faq-question').setAttribute('aria-expanded', 'true');
         }
       });
     });
   },
 
-  bindSearch() {
-    const searchInput = document.getElementById('faq-search');
-    if (!searchInput) return;
+  /* ── Category Tabs ── */
+  bindTabs() {
+    var tabs = document.querySelectorAll('.faq-tab');
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        tabs.forEach(function(t) { t.classList.remove('is-active'); });
+        this.classList.add('is-active');
 
-    searchInput.addEventListener('input', (e) => {
-      const query = e.target.value.toLowerCase().trim();
-      if (!query) {
-        this.renderFaqs(this.faqs);
-        return;
-      }
+        var target = this.getAttribute('data-target');
+        var sections = document.querySelectorAll('[data-category]');
+        sections.forEach(function(s) {
+          if (target === 'all' || s.id === target) {
+            s.style.display = '';
+          } else {
+            s.style.display = 'none';
+          }
+        });
 
-      const filtered = this.faqs.filter(faq => 
-        faq.question.toLowerCase().includes(query) || 
-        faq.answer.toLowerCase().includes(query)
-      );
-
-      this.renderFaqs(filtered);
+        FAQPage.updateNoResults();
+      });
     });
   },
 
-  renderFallback() {
-    const container = document.getElementById('faq-list-container');
-    if (container) {
-      container.innerHTML = `
-        <div class="faq-item">
-          <button class="faq-header">
-            <span>How do I book an appointment?</span>
-            <span class="faq-toggle-icon">▼</span>
-          </button>
-          <div class="faq-content">
-            <div class="faq-content-inner">
-              Go to the Patient Dashboard, select the Appointments tab, search for your preferred doctor, select an available date/slot, and click Book Appointment.
-            </div>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-header">
-            <span>What is the refund policy for cancellations?</span>
-            <span class="faq-toggle-icon">▼</span>
-          </button>
-          <div class="faq-content">
-            <div class="faq-content-inner">
-              Cancellations made up to 24 hours before the scheduled time slot receive a full refund. Same-day cancellations may incur a processing fee.
-            </div>
-          </div>
-        </div>
-      `;
-      this.bindAccordions();
+  /* ── Live Search ── */
+  bindSearch() {
+    var input = document.getElementById('faqSearch');
+    if (!input) return;
+
+    input.addEventListener('input', function() {
+      var query = this.value.trim().toLowerCase();
+      var wrapper = document.getElementById('faqSearchWrapper');
+      if (wrapper) {
+        wrapper.classList.toggle('has-value', query.length > 0);
+      }
+
+      FAQPage.filterAll(query);
+    });
+  },
+
+  bindClearSearch() {
+    var btn = document.getElementById('faqSearchClear');
+    if (!btn) return;
+
+    btn.addEventListener('click', function() {
+      var input = document.getElementById('faqSearch');
+      if (input) {
+        input.value = '';
+        input.dispatchEvent(new Event('input'));
+        input.focus();
+      }
+    });
+  },
+
+  filterAll(query) {
+    var sections = document.querySelectorAll('[data-category]');
+    var anyVisible = false;
+
+    sections.forEach(function(section) {
+      var items = section.querySelectorAll('.faq-item');
+      var sectionHasVisible = false;
+
+      items.forEach(function(item) {
+        var questionEl = item.querySelector('.faq-question');
+        var answerEl = item.querySelector('.faq-answer-inner');
+        var text = (questionEl ? questionEl.textContent : '') + ' ' + (answerEl ? answerEl.textContent : '');
+
+        // Also check CMS data attribute
+        var cmsText = item.getAttribute('data-search-text') || '';
+
+        var matches = !query || text.toLowerCase().includes(query) || cmsText.toLowerCase().includes(query);
+
+        if (query) {
+          if (matches) {
+            item.classList.remove('is-hidden');
+            sectionHasVisible = true;
+            anyVisible = true;
+          } else {
+            item.classList.add('is-hidden');
+          }
+        } else {
+          item.classList.remove('is-hidden');
+          sectionHasVisible = true;
+          anyVisible = true;
+        }
+      });
+
+      if (document.querySelector('.faq-tab.is-active').getAttribute('data-target') === 'all') {
+        section.style.display = sectionHasVisible ? '' : 'none';
+      }
+    });
+
+    // Also filter CMS section
+    var cmsSection = document.getElementById('faqCmsSection');
+    if (cmsSection && cmsSection.style.display !== 'none') {
+      var cmsItems = cmsSection.querySelectorAll('.faq-item');
+      var cmsVisible = false;
+      cmsItems.forEach(function(item) {
+        var text = item.getAttribute('data-search-text') || '';
+        var questionEl = item.querySelector('.faq-question');
+        if (questionEl) text += ' ' + questionEl.textContent;
+
+        var matches = !query || text.toLowerCase().includes(query);
+        if (matches) {
+          item.classList.remove('is-hidden');
+          cmsVisible = true;
+          anyVisible = true;
+        } else {
+          item.classList.add('is-hidden');
+        }
+      });
+
+      if (document.querySelector('.faq-tab.is-active').getAttribute('data-target') === 'all') {
+        cmsSection.style.display = cmsVisible ? '' : 'none';
+      }
+    }
+
+    FAQPage.showNoResults(!anyVisible);
+    FAQPage.updateCounts();
+  },
+
+  /* ── No Results ── */
+  showNoResults(show) {
+    var el = document.getElementById('faqNoResults');
+    if (el) {
+      el.classList.toggle('is-visible', show);
     }
   },
 
+  updateNoResults() {
+    var visibleItems = document.querySelectorAll('.faq-item:not(.is-hidden)');
+    this.showNoResults(visibleItems.length === 0);
+  },
+
+  /* ── Update counts per tab ── */
+  updateCounts() {
+    var activeTab = document.querySelector('.faq-tab.is-active');
+    var activeTarget = activeTab ? activeTab.getAttribute('data-target') : 'all';
+
+    var counts = { all: 0 };
+    document.querySelectorAll('[data-category]').forEach(function(section) {
+      var cat = section.getAttribute('data-category');
+      var count = section.querySelectorAll('.faq-item:not(.is-hidden)').length;
+      counts[cat] = count;
+      counts.all += count;
+    });
+
+    // Include CMS section
+    var cmsSection = document.getElementById('faqCmsSection');
+    if (cmsSection && cmsSection.style.display !== 'none') {
+      var cmsCount = cmsSection.querySelectorAll('.faq-item:not(.is-hidden)').length;
+      counts.all += cmsCount;
+    }
+
+    for (var key in counts) {
+      var el = document.getElementById('count' + key.charAt(0).toUpperCase() + key.slice(1));
+      if (el) el.textContent = counts[key];
+    }
+  },
+
+  /* ── CMS Load ── */
+  async loadCmsFaqs() {
+    try {
+      var response = await fetch(CONFIG.API_BASE_URL + '/cms/faqs');
+      if (!response.ok) return;
+      var result = await response.json();
+      if (!result.success || !result.data || result.data.length === 0) return;
+
+      this.cmsFaqs = result.data;
+      this.renderCmsFaqs(this.cmsFaqs);
+    } catch (e) {
+      // CMS unavailable — skip
+    }
+  },
+
+  renderCmsFaqs(list) {
+    var container = document.getElementById('faqCmsList');
+    var section = document.getElementById('faqCmsSection');
+    if (!container || !section) return;
+
+    container.innerHTML = list.map(function(item) {
+      var searchText = (item.question + ' ' + item.answer).toLowerCase();
+      return '<div class="faq-item" data-search-text="' + FAQPage.escapeAttr(searchText) + '">' +
+        '<button class="faq-question" aria-expanded="false">' +
+          '<span>' + FAQPage.escapeHtml(item.question) + '</span>' +
+          '<span class="faq-arrow">▼</span>' +
+        '</button>' +
+        '<div class="faq-answer">' +
+          '<div class="faq-answer-inner">' + FAQPage.escapeHtml(item.answer) + '</div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+
+    section.style.display = '';
+
+    // Bind accordion for new items
+    container.querySelectorAll('.faq-question').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = this.closest('.faq-item');
+        var isOpen = item.classList.contains('is-open');
+
+        container.querySelectorAll('.faq-item.is-open').forEach(function(openItem) {
+          openItem.classList.remove('is-open');
+          openItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+        });
+
+        if (!isOpen) {
+          item.classList.add('is-open');
+          item.querySelector('.faq-question').setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+
+    this.updateCounts();
+  },
+
+  /* ── Helpers ── */
   escapeHtml(str) {
     if (!str) return '';
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
+    var d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+  },
+
+  escapeAttr(str) {
+    if (!str) return '';
+    return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 };
 
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
   FAQPage.init();
 });

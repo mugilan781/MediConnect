@@ -12,8 +12,12 @@
   <link rel="stylesheet" href="/css/forms.css">
   <link rel="stylesheet" href="/css/dashboard.css">
   <link rel="stylesheet" href="/css/utilities.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/footer.css">
 </head>
 <body>
+  <div id="global-navbar"></div>
   <div class="app">
     <!-- Sidebar (rendered by sidebar.js) -->
     <aside class="sidebar" id="sidebar"></aside>
@@ -54,6 +58,7 @@
           <div id="notifications-pagination"></div>
         </div>
       </div>
+      <div id="global-footer"></div>
     </main>
   </div>
 
@@ -64,6 +69,9 @@
   <script src="/js/auth.js"></script>
   <script src="/js/sidebar.js"></script>
   <script src="/js/router.js"></script>
+  <script src="/js/global-navbar.js"></script>
+  <script src="/js/global-footer.js"></script>
+  <script src="/js/animations.js"></script>
   <script src="/js/notifications.js"></script>
   <script>document.addEventListener('DOMContentLoaded', () => { Sidebar.init('Notifications', 'Home / Notifications'); Notifications.init(); });</script>
 </body>

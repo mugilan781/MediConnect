@@ -1,189 +1,378 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="View consultation records – diagnosis, prescriptions, and follow-up dates on MediConnect.">
-  <title>Consultations – MediConnect</title>
-  <link rel="stylesheet" href="/css/variables.css"><link rel="stylesheet" href="/css/base.css"><link rel="stylesheet" href="/css/components.css"><link rel="stylesheet" href="/css/layout.css"><link rel="stylesheet" href="/css/forms.css"><link rel="stylesheet" href="/css/dashboard.css"><link rel="stylesheet" href="/css/utilities.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Online Doctor Consultation – Consult with certified doctors from home via secure video calls on MediConnect.">
+  <title>Online Consultation – MediConnect</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/utilities.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/footer.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/consultations.css">
 </head>
-<body>
-  <div class="app">
-    <!-- Sidebar (rendered by sidebar.js) -->
-    <aside class="sidebar" id="sidebar"></aside>
-    <main class="main">
-      <!-- Topbar (rendered by sidebar.js) -->
-      <header class="topbar" id="topbar"></header>
-      <div class="content fade-in">
-        <div class="page-header">
-          <div><h1 class="page-header__title">Consultations</h1><p class="page-header__subtitle">View consultation requests and clinical notes</p></div>
-          <div class="d-flex gap-3">
-            <select id="filter-consultation-status" class="form-select" style="width:auto;">
-              <option value="">All Status</option>
-              <option value="active">Active Requests</option>
-              <option value="requested">Requested</option>
-              <option value="accepted">Accepted</option>
-              <option value="scheduled">Scheduled</option>
-              <option value="in_progress">In Progress</option>
-              <option value="completed">Completed</option>
-              <option value="rejected">Rejected</option>
-              <option value="cancelled">Cancelled</option>
-            </select>
-            <button id="btn-request-consultation" class="btn btn--primary" style="display:none;" onclick="UI.openModal('request-consultation-modal')">+ Request Consultation</button>
+<body class="public-page">
+  <div id="global-navbar"></div>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 1: HERO
+       ════════════════════════════════════════════════════ -->
+  <section class="consult-hero animate-on-scroll">
+    <div class="container">
+      <div class="consult-hero__content">
+        <div class="consult-hero__badge"><span class="consult-hero__badge-dot"></span> Secure &amp; Private Video Consultations</div>
+        <h1 class="consult-hero__title">Online <span class="text-gradient">Consultation</span></h1>
+        <p class="consult-hero__desc">Consult with certified doctors from the comfort of your home. Secure video calls, digital prescriptions, and follow-up care — all on MediConnect.</p>
+        <div class="consult-hero__actions">
+          <a href="#consult-doctors" class="btn btn--primary">Find a Consultant</a>
+          <a href="#consult-how" class="btn btn--secondary">How It Works</a>
+        </div>
+      </div>
+      <div class="consult-hero__visual">
+        <div class="consult-hero__illustration">💻</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 2: HOW DIGITAL CONSULTATIONS WORK
+       ════════════════════════════════════════════════════ -->
+  <section id="consult-how" class="consult-how animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Process</span>
+        <h2 class="section-header__title">How Digital Consultations Work</h2>
+        <p class="section-header__subtitle">From choosing a doctor to completing your consultation — in 5 simple steps</p>
+      </div>
+      <div class="consult-timeline" id="consult-timeline">
+        <div class="consult-tl-step">
+          <div class="consult-tl-step__num">1</div>
+          <div class="consult-tl-step__content">
+            <h3>Choose Doctor</h3>
+            <p>Browse our list of certified specialists, read their profiles, and select the doctor that best matches your healthcare needs.</p>
           </div>
         </div>
-        <div id="consultations-list"><div class="empty-state"><div class="spinner"></div></div></div>
-        <div id="consultations-pagination"></div>
-      </div>
-    </main>
-  </div>
-
-  <!-- Detail Modal -->
-  <div class="modal-overlay" id="consultation-detail-modal">
-    <div class="modal" style="max-width:700px;">
-      <div class="modal__header">
-        <h3>Consultation Details</h3>
-        <button class="btn btn--ghost btn--icon" onclick="UI.closeModal('consultation-detail-modal')">✕</button>
-      </div>
-      <div class="modal__body" id="consultation-details"></div>
-    </div>
-  </div>
-
-  <!-- Request Consultation Modal (Patient) -->
-  <div class="modal-overlay" id="request-consultation-modal">
-    <div class="modal">
-      <div class="modal__header">
-        <h3>Request Online Consultation</h3>
-        <button class="btn btn--ghost btn--icon" onclick="UI.closeModal('request-consultation-modal')">✕</button>
-      </div>
-      <div class="modal__body">
-        <form id="request-consultation-form">
-          <div class="form-group">
-            <label class="form-label form-label--required" for="request-doctor">Select Doctor</label>
-            <select id="request-doctor" class="form-select" required>
-              <option value="">Loading doctors...</option>
-            </select>
+        <div class="consult-tl-step">
+          <div class="consult-tl-step__num">2</div>
+          <div class="consult-tl-step__content">
+            <h3>Request Consultation</h3>
+            <p>Submit a consultation request with your symptoms and preferred date. Your request will be reviewed by the doctor.</p>
           </div>
-          <div class="form-group">
-            <label class="form-label form-label--required" for="request-date">Preferred Date</label>
-            <input type="date" id="request-date" class="form-input" required>
+        </div>
+        <div class="consult-tl-step">
+          <div class="consult-tl-step__num">3</div>
+          <div class="consult-tl-step__content">
+            <h3>Doctor Review</h3>
+            <p>The doctor reviews your request and symptoms. Once accepted, you'll be notified and can proceed to scheduling.</p>
           </div>
-          <div class="form-group">
-            <label class="form-label form-label--required" for="request-symptoms">Symptoms / Concerns</label>
-            <textarea id="request-symptoms" class="form-textarea" rows="2" placeholder="Describe your symptoms..." required></textarea>
+        </div>
+        <div class="consult-tl-step">
+          <div class="consult-tl-step__num">4</div>
+          <div class="consult-tl-step__content">
+            <h3>Schedule Session</h3>
+            <p>Pick a convenient date and time for your video consultation. You'll receive the consultation link before the session.</p>
           </div>
-          <div class="form-group">
-            <label class="form-label" for="request-concerns">Health Concerns (Optional)</label>
-            <textarea id="request-concerns" class="form-textarea" rows="2" placeholder="E.g. chronic diseases, current medication..."></textarea>
+        </div>
+        <div class="consult-tl-step">
+          <div class="consult-tl-step__num">5</div>
+          <div class="consult-tl-step__content">
+            <h3>Consultation Completed</h3>
+            <p>Connect with your doctor via secure video call. Get diagnosis, prescription, and follow-up recommendations.</p>
           </div>
-          <div class="form-group">
-            <label class="form-label" for="request-notes">Additional Notes</label>
-            <textarea id="request-notes" class="form-textarea" rows="2" placeholder="Any additional notes for the doctor..."></textarea>
-          </div>
-          <div class="d-flex justify-content-end gap-3" style="margin-top: var(--space-6);">
-            <button type="button" class="btn btn--secondary" onclick="UI.closeModal('request-consultation-modal')">Cancel</button>
-            <button type="submit" class="btn btn--primary">Submit Request</button>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- Reject Consultation Modal (Doctor) -->
-  <div class="modal-overlay" id="reject-consultation-modal">
-    <div class="modal">
-      <div class="modal__header">
-        <h3>Decline Consultation Request</h3>
-        <button class="btn btn--ghost btn--icon" onclick="UI.closeModal('reject-consultation-modal')">✕</button>
+  <!-- ════════════════════════════════════════════════════
+       SECTION 3: WHY USE ONLINE CONSULTATION
+       ════════════════════════════════════════════════════ -->
+  <section class="consult-why animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Benefits</span>
+        <h2 class="section-header__title">Why Choose Online Consultation</h2>
+        <p class="section-header__subtitle">Experience the future of healthcare from the comfort of your home</p>
       </div>
-      <div class="modal__body">
-        <form id="reject-consultation-form">
-          <input type="hidden" id="reject-consultation-id" value="">
-          <div class="form-group">
-            <label class="form-label form-label--required" for="reject-reason">Reason for Declining</label>
-            <textarea id="reject-reason" class="form-textarea" rows="3" placeholder="Provide a brief explanation for the patient..." required></textarea>
-          </div>
-          <div class="d-flex justify-content-end gap-3" style="margin-top: var(--space-6);">
-            <button type="button" class="btn btn--secondary" onclick="UI.closeModal('reject-consultation-modal')">Cancel</button>
-            <button type="submit" class="btn btn--danger">Decline Request</button>
-          </div>
-        </form>
+      <div class="consult-why-grid">
+        <div class="consult-why-card">
+          <div class="consult-why-card__icon">⏱️</div>
+          <h3>Save Time</h3>
+          <p>No travel, no waiting rooms. Connect with your doctor in minutes from anywhere using your smartphone or computer.</p>
+        </div>
+        <div class="consult-why-card">
+          <div class="consult-why-card__icon">🏠</div>
+          <h3>Remote Care</h3>
+          <p>Access quality healthcare from the comfort of your home. Perfect for follow-ups, minor illnesses, and routine checkups.</p>
+        </div>
+        <div class="consult-why-card">
+          <div class="consult-why-card__icon">🔐</div>
+          <h3>Secure Communication</h3>
+          <p>All video consultations are encrypted end-to-end. Your medical data and conversations are completely private and secure.</p>
+        </div>
+        <div class="consult-why-card">
+          <div class="consult-why-card__icon">📅</div>
+          <h3>Flexible Scheduling</h3>
+          <p>Book consultations at your convenience, including evenings and weekends. Reschedule easily if your plans change.</p>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- Schedule Consultation Modal (Doctor) -->
-  <div class="modal-overlay" id="schedule-consultation-modal">
-    <div class="modal">
-      <div class="modal__header">
-        <h3>Schedule Online Consultation</h3>
-        <button class="btn btn--ghost btn--icon" onclick="UI.closeModal('schedule-consultation-modal')">✕</button>
+  <!-- ════════════════════════════════════════════════════
+       SECTION 4: CONSULTATION TYPES
+       ════════════════════════════════════════════════════ -->
+  <section class="consult-types animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Services</span>
+        <h2 class="section-header__title">Consultation Types</h2>
+        <p class="section-header__subtitle">Choose the right type of consultation for your needs</p>
       </div>
-      <div class="modal__body">
-        <form id="schedule-consultation-form">
-          <input type="hidden" id="schedule-consultation-id" value="">
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label form-label--required" for="schedule-date">Date</label>
-              <input type="date" id="schedule-date" class="form-input" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label form-label--required" for="schedule-time">Time</label>
-              <input type="time" id="schedule-time" class="form-input" required>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label form-label--required" for="schedule-duration">Duration (Minutes)</label>
-            <input type="number" id="schedule-duration" class="form-input" value="30" min="5" max="240" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="schedule-notes">Notes for Patient</label>
-            <textarea id="schedule-notes" class="form-textarea" rows="2" placeholder="Instructions, video meeting details..."></textarea>
-          </div>
-          <div class="d-flex justify-content-end gap-3" style="margin-top: var(--space-6);">
-            <button type="button" class="btn btn--secondary" onclick="UI.closeModal('schedule-consultation-modal')">Cancel</button>
-            <button type="submit" class="btn btn--primary">Save Schedule</button>
-          </div>
-        </form>
+      <div class="consult-types-grid">
+        <div class="consult-type-card">
+          <div class="consult-type-card__icon">🩺</div>
+          <h3>General Consultation</h3>
+          <p>For common health concerns like fever, cold, headache, or general checkups. Quick access to primary care doctors.</p>
+        </div>
+        <div class="consult-type-card">
+          <div class="consult-type-card__icon">❤️</div>
+          <h3>Specialist Consultation</h3>
+          <p>Connect with specialists in cardiology, neurology, dermatology, and more for expert medical advice.</p>
+        </div>
+        <div class="consult-type-card">
+          <div class="consult-type-card__icon">🔄</div>
+          <h3>Follow-up Consultation</h3>
+          <p>Schedule follow-up visits with your doctor to monitor progress, review test results, and adjust treatment plans.</p>
+        </div>
+        <div class="consult-type-card">
+          <div class="consult-type-card__icon">🛡️</div>
+          <h3>Preventive Care</h3>
+          <p>Proactive health consultations focusing on prevention, lifestyle advice, vaccinations, and regular health screening.</p>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- Complete Consultation Modal (Doctor) -->
-  <div class="modal-overlay" id="complete-consultation-modal">
-    <div class="modal" style="max-width: 650px;">
-      <div class="modal__header">
-        <h3>Complete Consultation & Add Clinical Notes</h3>
-        <button class="btn btn--ghost btn--icon" onclick="UI.closeModal('complete-consultation-modal')">✕</button>
+  <!-- ════════════════════════════════════════════════════
+       SECTION 5: AVAILABLE DOCTORS
+       ════════════════════════════════════════════════════ -->
+  <section id="consult-doctors" class="consult-doctors animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Our Doctors</span>
+        <h2 class="section-header__title">Available for Consultation</h2>
+        <p class="section-header__subtitle">Connect with experienced specialists for your online consultation</p>
       </div>
-      <div class="modal__body">
-        <form id="complete-consultation-form">
-          <input type="hidden" id="complete-consultation-id" value="">
-          <div class="form-group">
-            <label class="form-label form-label--required" for="complete-diagnosis">Diagnosis</label>
-            <textarea id="complete-diagnosis" class="form-textarea" rows="2" placeholder="Primary diagnosis..." required></textarea>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="complete-recommendations">Recommendations</label>
-            <textarea id="complete-recommendations" class="form-textarea" rows="2" placeholder="Medical advice, diets, exercises..."></textarea>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="complete-prescription">Prescription Notes</label>
-            <textarea id="complete-prescription" class="form-textarea" rows="3" placeholder="Drug name, dosage, frequency, duration..."></textarea>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="complete-followup">Follow-up Date (Optional)</label>
-            <input type="date" id="complete-followup" class="form-input">
-          </div>
-          <div class="d-flex justify-content-end gap-3" style="margin-top: var(--space-6);">
-            <button type="button" class="btn btn--secondary" onclick="UI.closeModal('complete-consultation-modal')">Cancel</button>
-            <button type="submit" class="btn btn--primary">Complete Consultation</button>
-          </div>
-        </form>
+      <div class="consult-doctors-grid" id="consult-doctors-grid">
+        <div class="skeleton skeleton-doc-card"></div>
+        <div class="skeleton skeleton-doc-card"></div>
+        <div class="skeleton skeleton-doc-card"></div>
+        <div class="skeleton skeleton-doc-card"></div>
+      </div>
+      <div style="text-align:center;margin-top:var(--space-8)">
+        <a href="/doctors.html" class="btn btn--secondary">View All Doctors →</a>
       </div>
     </div>
-  </div>
+  </section>
 
-  <script src="/js/config.js"></script><script src="/js/api.js"></script><script src="/js/ui.js"></script><script src="/js/validation.js"></script><script src="/js/auth.js"></script><script src="/js/sidebar.js"></script><script src="/js/router.js"></script><script src="/js/consultations.js"></script>
-  <script>document.addEventListener('DOMContentLoaded', () => { Sidebar.init('Consultations', 'Home / Consultations'); Consultations.init(); });</script>
+  <!-- ════════════════════════════════════════════════════
+       SECTION 6: CONSULTATION PROCESS VISUAL
+       ════════════════════════════════════════════════════ -->
+  <section class="consult-process animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Walkthrough</span>
+        <h2 class="section-header__title">Your Consultation Journey</h2>
+        <p class="section-header__subtitle">From request to recovery — a seamless digital experience</p>
+      </div>
+      <div class="consult-process-grid">
+        <div class="consult-process-step">
+          <div class="consult-process-step__icon">📝</div>
+          <h3>Submit Request</h3>
+          <p>Share your symptoms and health concerns with your chosen doctor.</p>
+        </div>
+        <div class="consult-process-step">
+          <div class="consult-process-step__icon">✅</div>
+          <h3>Get Accepted</h3>
+          <p>Doctor reviews and accepts your consultation request promptly.</p>
+        </div>
+        <div class="consult-process-step">
+          <div class="consult-process-step__icon">📅</div>
+          <h3>Schedule Time</h3>
+          <p>Pick a convenient date and time for your video session.</p>
+        </div>
+        <div class="consult-process-step">
+          <div class="consult-process-step__icon">💊</div>
+          <h3>Receive Care</h3>
+          <p>Get diagnosis, prescription, and a personalized treatment plan.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 7: SECURITY & PRIVACY
+       ════════════════════════════════════════════════════ -->
+  <section class="consult-security animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Security</span>
+        <h2 class="section-header__title">Your Privacy Matters</h2>
+        <p class="section-header__subtitle">We use enterprise-grade security to protect your health data</p>
+      </div>
+      <div class="consult-security-grid">
+        <div class="consult-sec-card">
+          <div class="consult-sec-card__icon">🔒</div>
+          <h3>End-to-End Encryption</h3>
+          <p>All video consultations and messages are encrypted end-to-end, ensuring that only you and your doctor can access them.</p>
+        </div>
+        <div class="consult-sec-card">
+          <div class="consult-sec-card__icon">🛡️</div>
+          <h3>HIPAA Compliant</h3>
+          <p>Our platform follows strict healthcare data protection standards, keeping your medical information safe and confidential.</p>
+        </div>
+        <div class="consult-sec-card">
+          <div class="consult-sec-card__icon">🔐</div>
+          <h3>Data Privacy</h3>
+          <p>Your personal health records are stored securely and never shared without your explicit consent. Full control over your data.</p>
+        </div>
+        <div class="consult-sec-card">
+          <div class="consult-sec-card__icon">📋</div>
+          <h3>Secure Records</h3>
+          <p>All consultation notes, prescriptions, and medical records are digitally stored with bank-grade encryption.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 8: PATIENT TESTIMONIALS
+       ════════════════════════════════════════════════════ -->
+  <section class="consult-testimonials animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Testimonials</span>
+        <h2 class="section-header__title">What Patients Say</h2>
+        <p class="section-header__subtitle">Hear from patients who've experienced online consultations</p>
+      </div>
+      <div class="consult-test-grid" id="consult-test-grid">
+        <div class="consult-test-card">
+          <div class="consult-test-card__stars">★★★★★</div>
+          <p class="consult-test-card__text">"I was hesitant about online consultations at first, but the experience was fantastic. The video call was clear, the doctor was thorough, and I got my prescription instantly."</p>
+          <div class="consult-test-card__author">
+            <div class="consult-test-card__avatar">S</div>
+            <div><div class="consult-test-card__name">Sneha Kapoor</div><div class="consult-test-card__role">Patient</div></div>
+          </div>
+        </div>
+        <div class="consult-test-card">
+          <div class="consult-test-card__stars">★★★★★</div>
+          <p class="consult-test-card__text">"As a working professional, online consultations are a lifesaver. I don't need to take time off work. The whole process from booking to consultation took less than an hour."</p>
+          <div class="consult-test-card__author">
+            <div class="consult-test-card__avatar">V</div>
+            <div><div class="consult-test-card__name">Vikram Mehta</div><div class="consult-test-card__role">Working Professional</div></div>
+          </div>
+        </div>
+        <div class="consult-test-card">
+          <div class="consult-test-card__stars">★★★★★</div>
+          <p class="consult-test-card__text">"My elderly mother had a follow-up consultation online. The doctor was patient and explained everything clearly. No need to travel or wait. Highly recommended!"</p>
+          <div class="consult-test-card__author">
+            <div class="consult-test-card__avatar">A</div>
+            <div><div class="consult-test-card__name">Anita Desai</div><div class="consult-test-card__role">Caregiver</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 9: FAQ
+       ════════════════════════════════════════════════════ -->
+  <section class="consult-faq animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">FAQ</span>
+        <h2 class="section-header__title">Common Questions</h2>
+        <p class="section-header__subtitle">Everything you need to know about online consultations</p>
+      </div>
+      <div class="consult-faq-list" id="consult-faq-list">
+        <div class="consult-faq-item">
+          <button class="consult-faq-question" onclick="ConsultPage.toggleFaq(this)">
+            How do online consultations work?
+            <span class="icon">▼</span>
+          </button>
+          <div class="consult-faq-answer">
+            <div class="consult-faq-answer-inner">Choose a doctor, submit a consultation request with your symptoms, and wait for the doctor to accept. Once accepted, you can schedule a video call at a convenient time. The consultation happens via secure video link.</div>
+          </div>
+        </div>
+        <div class="consult-faq-item">
+          <button class="consult-faq-question" onclick="ConsultPage.toggleFaq(this)">
+            Do I need to create an account?
+            <span class="icon">▼</span>
+          </button>
+          <div class="consult-faq-answer">
+            <div class="consult-faq-answer-inner">Yes, you need a free account to request a consultation. However, you can browse doctors, view their profiles, and learn about the process without signing up.</div>
+          </div>
+        </div>
+        <div class="consult-faq-item">
+          <button class="consult-faq-question" onclick="ConsultPage.toggleFaq(this)">
+            What equipment do I need?
+            <span class="icon">▼</span>
+          </button>
+          <div class="consult-faq-answer">
+            <div class="consult-faq-answer-inner">A smartphone, tablet, or computer with a camera, microphone, and a stable internet connection. No special software needed — consultations happen directly in your browser.</div>
+          </div>
+        </div>
+        <div class="consult-faq-item">
+          <button class="consult-faq-question" onclick="ConsultPage.toggleFaq(this)">
+            Can I get a prescription online?
+            <span class="icon">▼</span>
+          </button>
+          <div class="consult-faq-answer">
+            <div class="consult-faq-answer-inner">Yes, doctors can issue digital prescriptions after an online consultation. These prescriptions are valid and can be used at any pharmacy. You'll receive a copy in your account.</div>
+          </div>
+        </div>
+        <div class="consult-faq-item">
+          <button class="consult-faq-question" onclick="ConsultPage.toggleFaq(this)">
+            Is my data secure during video calls?
+            <span class="icon">▼</span>
+          </button>
+          <div class="consult-faq-answer">
+            <div class="consult-faq-answer-inner">Absolutely. All video consultations are encrypted end-to-end. We follow strict healthcare data protection standards and never store video recordings without explicit consent.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 10: CTA
+       ════════════════════════════════════════════════════ -->
+  <section class="consult-cta animate-on-scroll">
+    <div class="container">
+      <h2>Ready for Your Online Consultation?</h2>
+      <p>Join thousands of patients who trust MediConnect for convenient, secure, and professional telemedicine services.</p>
+      <div class="consult-cta__actions">
+        <a href="/doctors.html" class="btn">Find a Doctor →</a>
+        <a href="/signup.html" class="btn btn--outline">Create Free Account</a>
+      </div>
+    </div>
+  </section>
+
+  <div id="global-footer"></div>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/global-navbar.js"></script>
+  <script src="/js/global-footer.js"></script>
+  <script src="/js/animations.js"></script>
+  <script src="/js/online-consultation.js"></script>
 </body>
 </html>

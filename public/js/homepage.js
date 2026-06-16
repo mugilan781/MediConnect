@@ -1,14 +1,6 @@
-// ============================================================
-// MediConnect – public/js/homepage.js
-// Dynamic homepage content loader with graceful fallback
-// ============================================================
-
 const Homepage = {
   data: null,
 
-  /**
-   * Initialize homepage – fetch CMS data and render dynamic sections
-   */
   async init() {
     try {
       const response = await fetch(`${CONFIG.API_BASE_URL}/cms/homepage`);
@@ -23,71 +15,64 @@ const Homepage = {
       }
     } catch (error) {
       console.warn('Homepage CMS: Using static fallback.', error.message);
-      // Static HTML content is already in place – no action needed
-      // Just hide any loading indicators
       this.hideLoadingStates();
     }
+
+    // Always init scroll animations and counters, even without API data
+    this.initScrollAnimations();
   },
 
-  /**
-   * Render all dynamic sections from the API response
-   */
   renderAll() {
     const { sections, doctors, labTests, statistics, contactInfo } = this.data;
 
-    // Update CMS-driven text sections
     if (sections.hero) this.renderHero(sections.hero);
     if (sections.features) this.renderFeatures(sections.features);
     if (sections.cta) this.renderCTA(sections.cta);
-    if (sections.footer) this.renderFooter(sections.footer);
-
-    // Render live data sections
-    if (statistics) this.renderStatistics(statistics, sections.stats);
+    if (statistics) this.renderStatistics(statistics);
     if (doctors && doctors.length > 0) this.renderDoctors(doctors);
     if (labTests && labTests.length > 0) this.renderLabTests(labTests);
     if (contactInfo && Object.keys(contactInfo).length > 0) this.renderContact(contactInfo);
 
-    // Hide loading states
     this.hideLoadingStates();
-
-    // Trigger scroll animations
     this.initScrollAnimations();
   },
 
-  // ── Hero Section ──────────────────────────────────────────
+  // ── Hero ──
   renderHero(hero) {
     const titleEl = document.getElementById('hero-title');
     const subtitleEl = document.getElementById('hero-subtitle');
+    const badgeEl = document.getElementById('hero-badge');
 
     if (titleEl && hero.title) {
-      titleEl.innerHTML = `${this.escapeHtml(hero.title)} <span>${this.escapeHtml(hero.highlight || '')}</span> ${this.escapeHtml(hero.title_suffix || '')}`;
+      titleEl.innerHTML = `${this.escapeHtml(hero.title)} <span class="highlight">${this.escapeHtml(hero.highlight || 'Intelligently')}</span> ${this.escapeHtml(hero.title_suffix || 'Managed')}`;
     }
     if (subtitleEl && hero.subtitle) {
       subtitleEl.textContent = hero.subtitle;
     }
+    if (badgeEl && hero.badge) {
+      badgeEl.textContent = hero.badge;
+    }
   },
 
-  // ── Features Section ──────────────────────────────────────
+  // ── Why Choose (Features) ──
   renderFeatures(features) {
     const titleEl = document.getElementById('features-title');
-    const subtitleEl = document.getElementById('features-subtitle');
-    const gridEl = document.getElementById('features-grid');
+    const gridEl = document.getElementById('why-grid');
 
     if (titleEl && features.title) titleEl.textContent = features.title;
-    if (subtitleEl && features.subtitle) subtitleEl.textContent = features.subtitle;
 
     if (gridEl && features.cards && features.cards.length > 0) {
       gridEl.innerHTML = features.cards.map(card => `
-        <div class="feature-card section-animate">
-          <div class="feature-card__icon">${this.escapeHtml(card.icon)}</div>
-          <h3 class="feature-card__title">${this.escapeHtml(card.title)}</h3>
-          <p class="feature-card__desc">${this.escapeHtml(card.description)}</p>
+        <div class="why-card animate-on-scroll">
+          <div class="why-card__icon">${this.escapeHtml(card.icon || '✨')}</div>
+          <h3 class="why-card__title">${this.escapeHtml(card.title)}</h3>
+          <p class="why-card__desc">${this.escapeHtml(card.description || card.desc)}</p>
         </div>
       `).join('');
     }
   },
 
-  // ── CTA Section ───────────────────────────────────────────
+  // ── CTA ──
   renderCTA(cta) {
     const titleEl = document.getElementById('cta-title');
     const subtitleEl = document.getElementById('cta-subtitle');
@@ -96,239 +81,174 @@ const Homepage = {
     if (titleEl && cta.title) titleEl.textContent = cta.title;
     if (subtitleEl && cta.subtitle) subtitleEl.textContent = cta.subtitle;
     if (btnEl && cta.button_text) {
-      btnEl.textContent = cta.button_text;
+      btnEl.textContent = `Get Started Free ${cta.button_text || '→'}`;
       if (cta.button_link) btnEl.href = cta.button_link;
     }
   },
 
-  // ── Footer Section ────────────────────────────────────────
-  renderFooter(footer) {
-    const brandEl = document.getElementById('footer-brand');
-    const descEl = document.getElementById('footer-desc');
-    const copyEl = document.getElementById('footer-copyright');
+  // ── Statistics (updates existing grid) ──
+  renderStatistics(stats) {
+    const setStat = (id, value) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.setAttribute('data-target', value);
+      el.textContent = '0';
+    };
 
-    if (brandEl && footer.brand_name) brandEl.textContent = footer.brand_name;
-    if (descEl && footer.brand_description) descEl.textContent = footer.brand_description;
-    if (copyEl && footer.copyright_year) {
-      copyEl.innerHTML = `&copy; ${this.escapeHtml(footer.copyright_year)} MediConnect. All rights reserved.`;
-    }
+    if (stats.total_patients) setStat('stat-patients', stats.total_patients);
+    if (stats.total_doctors) setStat('stat-doctors', stats.total_doctors);
+    if (stats.total_appointments) setStat('stat-appointments', stats.total_appointments);
+    if (stats.total_lab_tests) setStat('stat-labtests', stats.total_lab_tests);
   },
 
-  // ── Statistics Section ────────────────────────────────────
-  renderStatistics(stats, sectionConfig) {
-    const container = document.getElementById('stats-section');
-    if (!container) return;
-
-    const title = sectionConfig?.title || 'Trusted by Healthcare Professionals';
-    const subtitle = sectionConfig?.subtitle || 'Our platform powers clinics and hospitals across the country.';
-
-    const statItems = [
-      { icon: '👨‍⚕️', value: stats.total_doctors || 0, label: 'Doctors', suffix: '+' },
-      { icon: '👥', value: stats.total_patients || 0, label: 'Patients', suffix: '+' },
-      { icon: '📅', value: stats.total_appointments || 0, label: 'Appointments', suffix: '+' },
-      { icon: '🔬', value: stats.total_lab_tests || 0, label: 'Lab Tests', suffix: '' },
-    ];
-
-    container.innerHTML = `
-      <h2 class="stats-section__title">${this.escapeHtml(title)}</h2>
-      <p class="stats-section__subtitle">${this.escapeHtml(subtitle)}</p>
-      <div class="stats-grid">
-        ${statItems.map(item => `
-          <div class="stat-card section-animate">
-            <div class="stat-card__icon">${item.icon}</div>
-            <div class="stat-card__number" data-target="${item.value}">0</div>
-            <div class="stat-card__label">${this.escapeHtml(item.label)}</div>
-          </div>
-        `).join('')}
-      </div>
-    `;
-
-    // Animate counters when visible
-    this.observeCounters(container);
-  },
-
-  // ── Doctors Section ───────────────────────────────────────
+  // ── Doctors (renders into #doctors-grid) ──
   renderDoctors(doctors) {
-    const container = document.getElementById('doctors-section');
+    const container = document.getElementById('doctors-grid');
     if (!container) return;
 
-    container.innerHTML = `
-      <div class="doctors-section__header">
-        <h2 class="doctors-section__title">Our Expert Doctors</h2>
-        <p class="doctors-section__subtitle">Experienced healthcare professionals ready to provide you with the best care.</p>
-      </div>
-      <div class="doctors-grid">
-        ${doctors.map(doc => {
-          const initials = this.getInitials(doc.full_name);
-          const avatar = doc.avatar_url
-            ? `<img src="${this.escapeHtml(doc.avatar_url)}" alt="${this.escapeHtml(doc.full_name)}">`
-            : initials;
+    container.innerHTML = doctors.slice(0, 6).map(doc => {
+      const initials = this.getInitials(doc.full_name);
+      const avatar = doc.avatar_url
+        ? `<img src="${this.escapeHtml(doc.avatar_url)}" alt="${this.escapeHtml(doc.full_name)}">`
+        : initials;
 
-          return `
-            <div class="doctor-card section-animate">
-              <div class="doctor-card__avatar">${avatar}</div>
-              <div class="doctor-card__info">
-                <div class="doctor-card__name">${this.escapeHtml(doc.full_name)}</div>
-                <div class="doctor-card__specialization">${this.escapeHtml(doc.specialization)}</div>
-                <div class="doctor-card__meta">
-                  <span>🎓 ${doc.experience_years} yrs exp</span>
-                  <span class="doctor-card__fee">₹${Number(doc.consultation_fee).toLocaleString('en-IN')}</span>
-                </div>
-              </div>
-            </div>
-          `;
-        }).join('')}
-      </div>
-      <div style="text-align: center;">
-        <a href="/signup.html" class="section-view-all">View All Doctors →</a>
-      </div>
-    `;
-  },
-
-  // ── Lab Tests Section ─────────────────────────────────────
-  renderLabTests(labTests) {
-    const container = document.getElementById('lab-tests-section');
-    if (!container) return;
-
-    container.innerHTML = `
-      <div class="lab-tests-section__header">
-        <h2 class="lab-tests-section__title">Popular Lab Tests</h2>
-        <p class="lab-tests-section__subtitle">Book diagnostic tests at affordable prices with quick turnaround times.</p>
-      </div>
-      <div class="lab-tests-grid">
-        ${labTests.map(test => `
-          <div class="lab-test-card section-animate">
-            <div class="lab-test-card__header">
-              <span class="lab-test-card__category">${this.escapeHtml(test.category || 'General')}</span>
-              <span class="lab-test-card__price">₹${Number(test.price).toLocaleString('en-IN')}</span>
-            </div>
-            <h3 class="lab-test-card__name">${this.escapeHtml(test.test_name)}</h3>
-            <p class="lab-test-card__desc">${this.escapeHtml(test.description || '')}</p>
-            <div class="lab-test-card__footer">
-              <span class="lab-test-card__turnaround">⏱️ ${test.turnaround_hours}h results</span>
-              <a href="/signup.html" class="lab-test-card__book-btn">Book Now</a>
+      return `
+        <a href="/doctors.html" class="doctor-card animate-on-scroll">
+          <div class="doctor-card__avatar">${avatar}</div>
+          <div class="doctor-card__info">
+            <div class="doctor-card__name">${this.escapeHtml(doc.full_name)}</div>
+            <div class="doctor-card__specialization">${this.escapeHtml(doc.specialization)}</div>
+            <div class="doctor-card__meta">
+              <span>🎓 ${doc.experience_years || 0} yrs exp</span>
+              <span class="doctor-card__fee">₹${Number(doc.consultation_fee || 0).toLocaleString('en-IN')}</span>
             </div>
           </div>
-        `).join('')}
-      </div>
-      <div style="text-align: center;">
-        <a href="/signup.html" class="section-view-all">View All Lab Tests →</a>
-      </div>
-    `;
+        </a>
+      `;
+    }).join('');
   },
 
-  // ── Contact Section ───────────────────────────────────────
+  // ── Lab Tests (renders into #lab-tests-grid) ──
+  renderLabTests(labTests) {
+    const container = document.getElementById('lab-tests-grid');
+    if (!container) return;
+
+    container.innerHTML = labTests.slice(0, 6).map(test => `
+      <div class="lab-test-card animate-on-scroll">
+        <div class="lab-test-card__header">
+          <span class="lab-test-card__category">${this.escapeHtml(test.category || 'Diagnostic')}</span>
+          <span class="lab-test-card__price">₹${Number(test.price || 0).toLocaleString('en-IN')}</span>
+        </div>
+        <h3 class="lab-test-card__name">${this.escapeHtml(test.test_name)}</h3>
+        <p class="lab-test-card__desc">${this.escapeHtml(test.description || 'Comprehensive diagnostic test')}</p>
+        <div class="lab-test-card__footer">
+          <span>⏱️ ${test.turnaround_hours || 24}h results</span>
+          <a href="/lab-tests.html" class="lab-test-card__book-btn">Book Now</a>
+        </div>
+      </div>
+    `).join('');
+  },
+
+  // ── Contact ──
   renderContact(info) {
     const container = document.getElementById('contact-section');
     if (!container) return;
 
-    const contactItems = [];
+    const items = [];
+    if (info.clinic_name) items.push({ icon: '🏥', label: 'Clinic', value: info.clinic_name });
+    if (info.clinic_phone) items.push({ icon: '📞', label: 'Phone', value: info.clinic_phone });
+    if (info.clinic_email) items.push({ icon: '✉️', label: 'Email', value: info.clinic_email });
+    if (info.clinic_address) items.push({ icon: '📍', label: 'Address', value: info.clinic_address });
 
-    if (info.clinic_name) {
-      contactItems.push({ icon: '🏥', label: 'Clinic', value: info.clinic_name });
-    }
-    if (info.clinic_phone) {
-      contactItems.push({ icon: '📞', label: 'Phone', value: info.clinic_phone });
-    }
-    if (info.clinic_email) {
-      contactItems.push({ icon: '✉️', label: 'Email', value: info.clinic_email });
-    }
-    if (info.clinic_address) {
-      contactItems.push({ icon: '📍', label: 'Address', value: info.clinic_address });
-    }
-
-    if (contactItems.length === 0) return;
+    if (items.length === 0) return;
 
     container.innerHTML = `
-      <div class="contact-section__header">
-        <h2 class="contact-section__title">Get in Touch</h2>
-        <p class="contact-section__subtitle">We're here to help. Reach out to us for appointments, inquiries, or support.</p>
+      <div class="section-header">
+        <span class="section-header__label">Contact</span>
+        <h2 class="section-header__title">Get in Touch</h2>
+        <p class="section-header__subtitle">We're here to help. Reach out to us for appointments, inquiries, or support.</p>
       </div>
-      <div class="contact-grid">
-        ${contactItems.map(item => `
-          <div class="contact-card section-animate">
-            <div class="contact-card__icon">${item.icon}</div>
-            <div class="contact-card__label">${this.escapeHtml(item.label)}</div>
-            <div class="contact-card__value">${this.escapeHtml(item.value)}</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--space-6);margin-top:var(--space-8);">
+        ${items.map(item => `
+          <div style="padding:var(--space-6);border-radius:var(--radius-xl);border:1px solid var(--color-border);text-align:center;">
+            <div style="font-size:2rem;margin-bottom:var(--space-3);">${item.icon}</div>
+            <div style="font-size:var(--font-size-sm);color:var(--color-text-light);margin-bottom:var(--space-1);">${this.escapeHtml(item.label)}</div>
+            <div style="font-size:var(--font-size-base);font-weight:var(--font-weight-semibold);color:var(--color-gray-800);">${this.escapeHtml(item.value)}</div>
           </div>
         `).join('')}
       </div>
     `;
   },
 
-  // ── Animated Number Counters ──────────────────────────────
-  observeCounters(container) {
+  // ── Counter animation for stats section ──
+  observeCounters() {
+    if (this._countersObserved) return;
+    this._countersObserved = true;
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          const counters = container.querySelectorAll('.stat-card__number');
+          const counters = entry.target.querySelectorAll('.stat-card__number');
           counters.forEach(counter => this.animateCounter(counter));
           observer.unobserve(entry.target);
         }
       });
     }, { threshold: 0.3 });
 
-    observer.observe(container);
+    const grid = document.getElementById('stats-grid');
+    if (grid) observer.observe(grid);
   },
 
   animateCounter(el) {
     const target = parseInt(el.getAttribute('data-target'), 10) || 0;
-    if (target === 0) {
-      el.textContent = '0';
-      return;
-    }
+    if (target === 0) { el.textContent = '0'; return; }
 
-    const duration = 1500; // ms
+    const duration = 2000;
     const startTime = performance.now();
 
     const step = (now) => {
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      // Ease out cubic
       const eased = 1 - Math.pow(1 - progress, 3);
       const current = Math.floor(eased * target);
-      el.textContent = current.toLocaleString('en-IN') + '+';
+      el.textContent = current.toLocaleString('en-IN');
       if (progress < 1) {
         requestAnimationFrame(step);
       } else {
-        el.textContent = target.toLocaleString('en-IN') + '+';
+        el.textContent = target.toLocaleString('en-IN');
       }
     };
 
     requestAnimationFrame(step);
   },
 
-  // ── Scroll Animations ─────────────────────────────────────
+  // ── Scroll Animations ──
   initScrollAnimations() {
-    const animElements = document.querySelectorAll('.section-animate');
-    if (!animElements.length) return;
+    const els = document.querySelectorAll('.animate-on-scroll');
+    if (!els.length) return;
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
+          entry.target.classList.add('is-visible');
           observer.unobserve(entry.target);
         }
       });
     }, { threshold: 0.1 });
 
-    animElements.forEach(el => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(20px)';
-      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-      observer.observe(el);
-    });
+    els.forEach(el => observer.observe(el));
+
+    // Also trigger counter animation on stats section
+    this.observeCounters();
   },
 
-  // ── Loading States ────────────────────────────────────────
+  // ── Loading States ──
   hideLoadingStates() {
     document.querySelectorAll('.homepage-loading').forEach(el => {
       el.style.display = 'none';
     });
   },
 
-  // ── Utilities ─────────────────────────────────────────────
+  // ── Utilities ──
   escapeHtml(str) {
     if (!str) return '';
     const div = document.createElement('div');
@@ -347,7 +267,16 @@ const Homepage = {
   },
 };
 
-// Initialize when DOM is ready
+function toggleFaq(btn) {
+  btn.classList.toggle('open');
+  const answer = btn.nextElementSibling;
+  if (answer.style.maxHeight) {
+    answer.style.maxHeight = null;
+  } else {
+    answer.style.maxHeight = answer.scrollHeight + 'px';
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   Homepage.init();
 });

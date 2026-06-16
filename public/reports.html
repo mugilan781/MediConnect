@@ -1,26 +1,558 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="View and manage medical reports – lab results, prescriptions, and imaging reports on MediConnect.">
-  <title>Reports – MediConnect</title>
-  <link rel="stylesheet" href="/css/variables.css"><link rel="stylesheet" href="/css/base.css"><link rel="stylesheet" href="/css/components.css"><link rel="stylesheet" href="/css/layout.css"><link rel="stylesheet" href="/css/forms.css"><link rel="stylesheet" href="/css/dashboard.css"><link rel="stylesheet" href="/css/utilities.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Medical Reports & Records – Securely store, access, and share your medical reports, lab results, prescriptions, and imaging documents on MediConnect.">
+  <title>Medical Reports & Records – MediConnect</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/forms.css">
+  <link rel="stylesheet" href="/css/utilities.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/footer.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/reports.css">
 </head>
-<body>
-  <div class="app">
-    <!-- Sidebar (rendered by sidebar.js) -->
-    <aside class="sidebar" id="sidebar"></aside>
-    <main class="main">
-      <!-- Topbar (rendered by sidebar.js) -->
-      <header class="topbar" id="topbar"></header>
-      <div class="content fade-in">
-        <div class="page-header"><div><h1 class="page-header__title">Medical Reports</h1><p class="page-header__subtitle">View and download your medical reports</p></div></div>
-        <div id="reports-list"><div class="empty-state"><div class="spinner"></div></div></div>
-      </div>
-    </main>
-  </div>
+<body class="public-page">
+  <div id="global-navbar"></div>
 
-  <script src="/js/config.js"></script><script src="/js/api.js"></script><script src="/js/ui.js"></script><script src="/js/validation.js"></script><script src="/js/auth.js"></script><script src="/js/sidebar.js"></script><script src="/js/router.js"></script><script src="/js/reports.js"></script>
-  <script>document.addEventListener('DOMContentLoaded', () => { Sidebar.init('Reports', 'Home / Reports'); Reports.init(); });</script>
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 1: HERO
+       ═══════════════════════════════════════════════════════ -->
+  <section class="rpt-hero">
+    <div class="container">
+      <div class="rpt-hero__grid">
+        <div class="rpt-hero__content">
+          <span class="rpt-hero__badge">Digital Health Records</span>
+          <h1>Your Medical Reports,<br><span class="text-gradient">Always at Hand</span></h1>
+          <p>Securely store, organize, and access all your medical reports in one place. Lab results, prescriptions, imaging scans — everything you need for informed healthcare decisions.</p>
+          <div class="rpt-hero__actions">
+            <a href="#my-reports" class="rpt-hero__btn rpt-hero__btn--primary">View My Reports</a>
+            <a href="#report-lifecycle" class="rpt-hero__btn rpt-hero__btn--ghost">How It Works</a>
+          </div>
+          <div class="rpt-hero__stats">
+            <div class="rpt-hero__stat">
+              <span class="rpt-hero__stat-value"><span class="count-up" data-target="50000">0</span>+</span>
+              <span class="rpt-hero__stat-label">Reports Stored</span>
+            </div>
+            <div class="rpt-hero__stat">
+              <span class="rpt-hero__stat-value"><span class="count-up" data-target="99.9">0</span>%</span>
+              <span class="rpt-hero__stat-label">Uptime</span>
+            </div>
+            <div class="rpt-hero__stat">
+              <span class="rpt-hero__stat-value"><span class="count-up" data-target="15">0</span>K+</span>
+              <span class="rpt-hero__stat-label">Active Users</span>
+            </div>
+          </div>
+        </div>
+        <div class="rpt-hero__visual">
+          <div class="rpt-hero__illustration">
+            <svg viewBox="0 0 240 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Folder -->
+              <path d="M30 60 L105 60 L120 80 L210 80 L210 220 L30 220 L30 60Z" stroke="#4E9A97" stroke-width="2.5" fill="rgba(78,154,151,0.06)" stroke-linejoin="round"/>
+              <!-- Folder tab -->
+              <path d="M30 60 L105 60 L120 80 L40 80 L30 60Z" fill="rgba(78,154,151,0.12)" stroke="#4E9A97" stroke-width="1"/>
+              <!-- Document 1 -->
+              <rect x="55" y="105" width="130" height="18" rx="4" fill="rgba(78,154,151,0.1)" stroke="#4E9A97" stroke-width="1"/>
+              <rect x="55" y="130" width="100" height="10" rx="3" fill="rgba(78,154,151,0.06)" stroke="#4E9A97" stroke-width="0.8"/>
+              <rect x="55" y="144" width="80" height="10" rx="3" fill="rgba(78,154,151,0.06)" stroke="#4E9A97" stroke-width="0.8"/>
+              <!-- Document 2 -->
+              <rect x="55" y="170" width="130" height="18" rx="4" fill="rgba(78,154,151,0.12)" stroke="#4E9A97" stroke-width="1"/>
+              <rect x="55" y="195" width="110" height="10" rx="3" fill="rgba(78,154,151,0.08)" stroke="#4E9A97" stroke-width="0.8"/>
+              <!-- Icons -->
+              <circle cx="185" cy="114" r="10" fill="rgba(78,154,151,0.12)" stroke="#4E9A97" stroke-width="1.5"/>
+              <path d="M183 111 L185 114 L189 109" stroke="#4E9A97" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="185" cy="179" r="10" fill="rgba(78,154,151,0.15)" stroke="#4E9A97" stroke-width="1.5"/>
+              <path d="M181 179 L185 183 L189 176" stroke="#4E9A97" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- Lock -->
+              <rect x="195" y="70" width="14" height="16" rx="3" fill="rgba(78,154,151,0.15)" stroke="#4E9A97" stroke-width="1.2"/>
+              <path d="M198 74 L198 68 C198 64 202 62 206 62 C210 62 214 64 214 68 L214 74" stroke="#4E9A97" stroke-width="1.2" fill="none"/>
+              <circle cx="202" cy="78" r="1.5" fill="#4E9A97"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 2: REPORT MANAGEMENT OVERVIEW
+       ═══════════════════════════════════════════════════════ -->
+  <section class="rpt-overview section-padding animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Overview</span>
+        <h2 class="section-header__title">Complete Report Management</h2>
+        <p class="section-header__subtitle">A centralized hub for all your medical documents with intelligent organization</p>
+      </div>
+      <div class="rpt-overview__grid">
+        <div class="rpt-overview-card reveal">
+          <div class="rpt-overview-card__icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <h3>Auto-Organization</h3>
+          <p>Reports are automatically categorized by type — lab results, prescriptions, imaging, and more — for easy retrieval.</p>
+        </div>
+        <div class="rpt-overview-card reveal">
+          <div class="rpt-overview-card__icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </div>
+          <h3>Instant Access</h3>
+          <p>Download any report with one click. Access your complete medical history from any device, anywhere.</p>
+        </div>
+        <div class="rpt-overview-card reveal">
+          <div class="rpt-overview-card__icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </div>
+          <h3>Share Securely</h3>
+          <p>Share reports instantly with your doctors, specialists, or family members through secure links.</p>
+        </div>
+        <div class="rpt-overview-card reveal">
+          <div class="rpt-overview-card__icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h3>History Tracking</h3>
+          <p>Every report is logged in your health timeline. Track changes in key health markers over time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 3: REPORT CATEGORIES
+       ═══════════════════════════════════════════════════════ -->
+  <section class="rpt-categories section-padding animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Categories</span>
+        <h2 class="section-header__title">Report Categories</h2>
+        <p class="section-header__subtitle">All your medical documents organized by type</p>
+      </div>
+      <div class="rpt-categories__grid" id="rpt-categories-grid">
+        <div class="empty-state"><div class="spinner"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 4: DIGITAL RECORD BENEFITS
+       ═══════════════════════════════════════════════════════ -->
+  <section class="rpt-benefits section-padding animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Benefits</span>
+        <h2 class="section-header__title">Why Go Digital?</h2>
+        <p class="section-header__subtitle">Experience the advantages of digital health records</p>
+      </div>
+      <div class="rpt-benefits__grid">
+        <div class="rpt-benefit-card reveal">
+          <div class="rpt-benefit-card__icon rpt-benefit-card__icon--primary">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h3 class="rpt-benefit-card__title">Secure Access</h3>
+          <p class="rpt-benefit-card__desc">Bank-grade encryption protects your medical records. Access is controlled by you with full audit trail logging.</p>
+        </div>
+        <div class="rpt-benefit-card reveal">
+          <div class="rpt-benefit-card__icon rpt-benefit-card__icon--info">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3 class="rpt-benefit-card__title">Anywhere Access</h3>
+          <p class="rpt-benefit-card__desc">View and download your reports from any device — desktop, tablet, or smartphone. Available 24/7.</p>
+        </div>
+        <div class="rpt-benefit-card reveal">
+          <div class="rpt-benefit-card__icon rpt-benefit-card__icon--success">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </div>
+          <h3 class="rpt-benefit-card__title">Download Reports</h3>
+          <p class="rpt-benefit-card__desc">Download your reports as PDF files anytime. Print, share, or store them offline as needed.</p>
+        </div>
+        <div class="rpt-benefit-card reveal">
+          <div class="rpt-benefit-card__icon rpt-benefit-card__icon--warning">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3 class="rpt-benefit-card__title">Long-Term Storage</h3>
+          <p class="rpt-benefit-card__desc">Your medical history is preserved securely for years. Never lose a report again with cloud backup.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 5: REPORT LIFECYCLE
+       ═══════════════════════════════════════════════════════ -->
+  <section id="report-lifecycle" class="rpt-lifecycle section-padding animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Lifecycle</span>
+        <h2 class="section-header__title">Report Lifecycle</h2>
+        <p class="section-header__subtitle">From appointment to historical record — the complete journey of your medical reports</p>
+      </div>
+      <div class="rpt-lifecycle__timeline">
+        <div class="rpt-lifecycle__step reveal">
+          <div class="rpt-lifecycle__number">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <h3>Appointment</h3>
+          <p>Visit your doctor for a consultation, check-up, or diagnostic test.</p>
+        </div>
+        <div class="rpt-lifecycle__connector"></div>
+        <div class="rpt-lifecycle__step reveal">
+          <div class="rpt-lifecycle__number">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <h3>Consultation</h3>
+          <p>Doctor examines, diagnoses, and prescribes treatment or further tests.</p>
+        </div>
+        <div class="rpt-lifecycle__connector"></div>
+        <div class="rpt-lifecycle__step reveal">
+          <div class="rpt-lifecycle__number">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h3>Report Generation</h3>
+          <p>Lab results, imaging scans, and prescriptions are processed and compiled.</p>
+        </div>
+        <div class="rpt-lifecycle__connector"></div>
+        <div class="rpt-lifecycle__step reveal">
+          <div class="rpt-lifecycle__number">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </div>
+          <h3>Upload</h3>
+          <p>Reports are uploaded to your secure MediConnect account automatically or by your doctor.</p>
+        </div>
+        <div class="rpt-lifecycle__connector"></div>
+        <div class="rpt-lifecycle__step reveal">
+          <div class="rpt-lifecycle__number">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h3>Patient Access</h3>
+          <p>You receive instant notification and can view, download, or share your reports.</p>
+        </div>
+        <div class="rpt-lifecycle__connector"></div>
+        <div class="rpt-lifecycle__step reveal">
+          <div class="rpt-lifecycle__number">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+          <h3>History Integration</h3>
+          <p>Reports are added to your lifelong health timeline for future reference and trend analysis.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 6: REPORT SECURITY
+       ═══════════════════════════════════════════════════════ -->
+  <section class="rpt-security section-padding animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Security</span>
+        <h2 class="section-header__title">Enterprise-Grade Security</h2>
+        <p class="section-header__subtitle">Your medical data is protected by industry-leading security measures</p>
+      </div>
+      <div class="rpt-security__grid">
+        <div class="rpt-security-card reveal-scale">
+          <div class="rpt-security-card__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h4>Encrypted Storage</h4>
+          <p>All files encrypted at rest using AES-256. Data transmitted over TLS 1.3 connections.</p>
+        </div>
+        <div class="rpt-security-card reveal-scale">
+          <div class="rpt-security-card__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h4>Access Control</h4>
+          <p>Role-based access ensures only authorized personnel can view or manage your reports.</p>
+        </div>
+        <div class="rpt-security-card reveal-scale">
+          <div class="rpt-security-card__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h4>Audit Logging</h4>
+          <p>Every access and action is logged with timestamps, user IDs, and IP addresses for full traceability.</p>
+        </div>
+        <div class="rpt-security-card reveal-scale">
+          <div class="rpt-security-card__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg>
+          </div>
+          <h4>HIPAA Compliant</h4>
+          <p>Our infrastructure meets healthcare compliance standards for data privacy and protection.</p>
+        </div>
+        <div class="rpt-security-card reveal-scale">
+          <div class="rpt-security-card__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+          </div>
+          <h4>Secure Sharing</h4>
+          <p>Share reports through encrypted links with expiration controls and access revocation.</p>
+        </div>
+        <div class="rpt-security-card reveal-scale">
+          <div class="rpt-security-card__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <h4>Backup & Redundancy</h4>
+          <p>Automated backups across multiple locations ensure your records are never lost.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 7: PATIENT HISTORY INTEGRATION
+       ═══════════════════════════════════════════════════════ -->
+  <section class="rpt-history section-padding animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">History</span>
+        <h2 class="section-header__title">Integrated Health Timeline</h2>
+        <p class="section-header__subtitle">Every report becomes part of your complete medical history</p>
+      </div>
+      <div class="rpt-history__layout">
+        <div class="rpt-history__visual reveal">
+          <div class="rpt-history__timeline">
+            <div class="rpt-history__event">
+              <div class="rpt-history__dot rpt-history__dot--primary"></div>
+              <div class="rpt-history__card">
+                <span class="rpt-history__event-date">Mar 15, 2026</span>
+                <strong>Annual Health Checkup</strong>
+                <span>Complete blood count & lipid profile</span>
+              </div>
+            </div>
+            <div class="rpt-history__line"></div>
+            <div class="rpt-history__event">
+              <div class="rpt-history__dot rpt-history__dot--success"></div>
+              <div class="rpt-history__card">
+                <span class="rpt-history__event-date">Feb 28, 2026</span>
+                <strong>Thyroid Function Test</strong>
+                <span>TSH, T3, T4 levels — normal range</span>
+              </div>
+            </div>
+            <div class="rpt-history__line"></div>
+            <div class="rpt-history__event">
+              <div class="rpt-history__dot rpt-history__dot--warning"></div>
+              <div class="rpt-history__card">
+                <span class="rpt-history__event-date">Jan 10, 2026</span>
+                <strong>Diabetes Screening</strong>
+                <span>Fasting blood sugar & HbA1c</span>
+              </div>
+            </div>
+            <div class="rpt-history__line"></div>
+            <div class="rpt-history__event">
+              <div class="rpt-history__dot rpt-history__dot--info"></div>
+              <div class="rpt-history__card">
+                <span class="rpt-history__event-date">Dec 5, 2025</span>
+                <strong>Chest X-Ray</strong>
+                <span>Imaging report — Dr. Sharma</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rpt-history__content reveal">
+          <h3>Lifelong Health Records</h3>
+          <p>Your medical reports are automatically integrated into your personal health timeline, creating a comprehensive history that you and your healthcare providers can reference at any time.</p>
+          <ul class="rpt-history__benefits">
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Chronological health event tracking
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Trend analysis for lab markers over time
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Seamless sharing with new healthcare providers
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Automatic categorization and tagging
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 8: DASHBOARD PREVIEW
+       ═══════════════════════════════════════════════════════ -->
+  <section class="rpt-dashboards section-padding animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Dashboards</span>
+        <h2 class="section-header__title">Role-Based Report Views</h2>
+        <p class="section-header__subtitle">Tailored experiences for patients, doctors, and administrators</p>
+      </div>
+      <div class="rpt-dashboards__tabs">
+        <button class="rpt-dashboards__tab active" data-role="patient">Patient View</button>
+        <button class="rpt-dashboards__tab" data-role="doctor">Doctor View</button>
+        <button class="rpt-dashboards__tab" data-role="admin">Admin View</button>
+      </div>
+      <div class="rpt-dashboards__content">
+        <div class="rpt-dashboard-panel active" id="rpt-dash-patient">
+          <div class="rpt-dashboard-panel__mockup">
+            <div class="rpt-mockup-header">
+              <span class="rpt-mockup-title">My Reports</span>
+              <span class="rpt-mockup-badge">12 Reports</span>
+            </div>
+            <div class="rpt-mockup-list">
+              <div class="rpt-mockup-item">
+                <div class="rpt-mockup-item__icon">📄</div>
+                <div><strong>Complete Blood Count</strong><span>Lab Report · Mar 15, 2026</span></div>
+                <span class="badge badge--info">Lab</span>
+                <button class="btn btn--sm btn--primary">Download</button>
+              </div>
+              <div class="rpt-mockup-item">
+                <div class="rpt-mockup-item__icon">📋</div>
+                <div><strong>Thyroid Profile</strong><span>Lab Report · Feb 28, 2026</span></div>
+                <span class="badge badge--info">Lab</span>
+                <button class="btn btn--sm btn--primary">Download</button>
+              </div>
+              <div class="rpt-mockup-item">
+                <div class="rpt-mockup-item__icon">💊</div>
+                <div><strong>Prescription — Metformin</strong><span>Prescription · Feb 28, 2026</span></div>
+                <span class="badge badge--primary">Rx</span>
+                <button class="btn btn--sm btn--primary">Download</button>
+              </div>
+              <div class="rpt-mockup-item">
+                <div class="rpt-mockup-item__icon">🩻</div>
+                <div><strong>Chest X-Ray</strong><span>Imaging · Dec 5, 2025</span></div>
+                <span class="badge badge--warning">Image</span>
+                <button class="btn btn--sm btn--primary">Download</button>
+              </div>
+            </div>
+          </div>
+          <div class="rpt-dashboard-panel__desc">
+            <h4>For Patients</h4>
+            <p>View and download all your medical reports in one place. Filter by type, date, or doctor. Share reports instantly with your healthcare providers.</p>
+            <a href="#my-reports" class="btn btn--primary">View My Reports</a>
+          </div>
+        </div>
+        <div class="rpt-dashboard-panel" id="rpt-dash-doctor">
+          <div class="rpt-dashboard-panel__mockup">
+            <div class="rpt-mockup-header">
+              <span class="rpt-mockup-title">Patient Reports</span>
+              <span class="rpt-mockup-badge">Doctor Access</span>
+            </div>
+            <div class="rpt-mockup-list">
+              <div class="rpt-mockup-item">
+                <div class="rpt-mockup-item__icon">👤</div>
+                <div><strong>Priya Sharma</strong><span>HbA1c Report · Mar 14, 2026</span></div>
+                <button class="btn btn--sm btn--ghost">View</button>
+              </div>
+              <div class="rpt-mockup-item">
+                <div class="rpt-mockup-item__icon">👤</div>
+                <div><strong>Rajesh Kumar</strong><span>Lipid Profile · Mar 12, 2026</span></div>
+                <button class="btn btn--sm btn--ghost">View</button>
+              </div>
+              <div class="rpt-mockup-item">
+                <div class="rpt-mockup-item__icon">👤</div>
+                <div><strong>Anita Desai</strong><span>Thyroid Panel · Mar 10, 2026</span></div>
+                <button class="btn btn--sm btn--ghost">View</button>
+              </div>
+            </div>
+          </div>
+          <div class="rpt-dashboard-panel__desc">
+            <h4>For Doctors</h4>
+            <p>Upload and manage patient reports, track history, and share findings. Full access to reports of patients under your care.</p>
+            <a href="/doctor-dashboard.html" class="btn btn--primary">Go to Dashboard</a>
+          </div>
+        </div>
+        <div class="rpt-dashboard-panel" id="rpt-dash-admin">
+          <div class="rpt-dashboard-panel__mockup">
+            <div class="rpt-mockup-header">
+              <span class="rpt-mockup-title">Report Management</span>
+              <span class="rpt-mockup-badge">Admin</span>
+            </div>
+            <div class="rpt-mockup-stats">
+              <div class="rpt-mockup-stat"><strong>2,450</strong><span>Total Reports</span></div>
+              <div class="rpt-mockup-stat"><strong>1.2 GB</strong><span>Storage Used</span></div>
+              <div class="rpt-mockup-stat"><strong>14</strong><span>Categories</span></div>
+            </div>
+            <div class="rpt-mockup-list">
+              <div class="rpt-mockup-item">
+                <div class="rpt-mockup-item__icon">⚙️</div>
+                <div><strong>Manage Categories</strong><span>14 categories configured</span></div>
+                <button class="btn btn--sm btn--ghost">Edit</button>
+              </div>
+              <div class="rpt-mockup-item">
+                <div class="rpt-mockup-item__icon">📋</div>
+                <div><strong>Audit Logs</strong><span>HIPAA-compliant activity tracking</span></div>
+                <button class="btn btn--sm btn--ghost">View</button>
+              </div>
+            </div>
+          </div>
+          <div class="rpt-dashboard-panel__desc">
+            <h4>For Administrators</h4>
+            <p>Full oversight of all reports, categories, audit logs, and storage. Manage the complete report lifecycle from a single dashboard.</p>
+            <a href="/admin-dashboard.html" class="btn btn--primary">Go to Dashboard</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 9: FAQ
+       ═══════════════════════════════════════════════════════ -->
+  <section class="rpt-faq section-padding animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">FAQ</span>
+        <h2 class="section-header__title">Frequently Asked Questions</h2>
+        <p class="section-header__subtitle">Common questions about medical reports and records</p>
+      </div>
+      <div class="rpt-faq-list" id="rpt-faq-list">
+        <div class="empty-state"><div class="spinner"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 10: CTA + REPORTS LISTING
+       ═══════════════════════════════════════════════════════ -->
+  <section id="my-reports" class="rpt-cta section-padding--lg animate-on-scroll">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Your Reports</span>
+        <h2 class="section-header__title">Access Your Medical Records</h2>
+        <p class="section-header__subtitle">Sign in to view, download, and manage your personal medical reports</p>
+      </div>
+
+      <div class="rpt-reports-area reveal">
+        <div id="reports-list">
+          <div class="rpt-auth-prompt" id="rpt-auth-prompt">
+            <div class="rpt-auth-prompt__icon">🔒</div>
+            <h3>Sign in to View Your Reports</h3>
+            <p>Please log in to access your medical reports and records.</p>
+            <a href="/login.html" class="btn btn--primary btn--lg">Sign In</a>
+            <p class="rpt-auth-prompt__signup">Don't have an account? <a href="/signup.html">Create one</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="global-footer"></div>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/validation.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/router.js"></script>
+  <script src="/js/global-navbar.js"></script>
+  <script src="/js/global-footer.js"></script>
+  <script src="/js/animations.js"></script>
+  <script src="/js/reports.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Reports.init();
+    });
+  </script>
 </body>
 </html>

@@ -1,75 +1,521 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="About MediConnect – Learn about our mission to digitize clinic and healthcare management for everyone.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="About MediConnect – Learn about our mission to make healthcare accessible, digital, and seamless for everyone.">
   <title>About Us – MediConnect</title>
-  <link rel="stylesheet" href="/css/variables.css"><link rel="stylesheet" href="/css/base.css"><link rel="stylesheet" href="/css/components.css"><link rel="stylesheet" href="/css/layout.css"><link rel="stylesheet" href="/css/utilities.css">
-  <style>
-    .about-hero { padding: var(--space-16) var(--space-8); text-align: center; background: linear-gradient(145deg, var(--color-mint-light) 0%, white 100%); }
-    .about-hero h1 { font-size: var(--font-size-3xl); margin-bottom: var(--space-4); }
-    .about-hero p { max-width: 600px; margin: 0 auto; color: var(--color-text-light); font-size: var(--font-size-lg); line-height: var(--line-height-relaxed); }
-    .about-section { max-width: 1000px; margin: 0 auto; padding: var(--space-12) var(--space-8); }
-    .about-section h2 { font-size: var(--font-size-2xl); margin-bottom: var(--space-6); color: var(--color-primary-dark); }
-    .about-section p { color: var(--color-text-light); line-height: var(--line-height-relaxed); margin-bottom: var(--space-4); }
-    .value-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-6); margin-top: var(--space-8); }
-    .value-card { padding: var(--space-6); border: 1px solid var(--color-border); border-radius: var(--radius-lg); text-align: center; transition: all var(--transition-base); }
-    .value-card:hover { border-color: var(--color-primary); box-shadow: var(--shadow-card-hover); transform: translateY(-3px); }
-    .value-card__icon { font-size: 2rem; margin-bottom: var(--space-3); }
-    .value-card__title { font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); margin-bottom: var(--space-2); }
-    .value-card__desc { font-size: var(--font-size-sm); color: var(--color-text-light); }
-  </style>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/utilities.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/footer.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/about.css">
 </head>
 <body class="public-page">
-  <header class="public-header">
-    <a href="/index.html" class="public-header__logo"><div class="sidebar__logo-icon">M</div><span style="font-size:var(--font-size-lg);font-weight:var(--font-weight-bold);color:var(--color-gray-800);">MediConnect</span></a>
-    <nav class="public-header__nav"><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/faq.html">FAQ</a><a href="/login.html" class="btn btn--secondary btn--sm">Login</a><a href="/signup.html" class="btn btn--primary btn--sm">Sign Up</a></nav>
-  </header>
+  <div id="global-navbar"></div>
 
-  <section class="about-hero">
-    <h1 id="about-hero-title">About <span class="text-primary">MediConnect</span></h1>
-    <p id="about-hero-subtitle">We're on a mission to make healthcare accessible, digital, and seamless for everyone — patients, doctors, and clinics alike.</p>
-  </section>
-
-  <section class="about-section">
-    <h2 id="about-main-title">About MediConnect</h2>
-    <p id="about-main-desc">MediConnect is a comprehensive digital clinic and appointment management platform built to modernize the healthcare experience. We believe that managing your health should be as easy as managing your daily tasks.</p>
-    <p id="about-main-desc-secondary">From booking appointments with top doctors to tracking lab results and maintaining complete medical records, MediConnect brings every aspect of clinic management into one unified, secure platform.</p>
-  </section>
-
-  <section class="about-section" style="background: var(--color-gray-50); max-width: 100%; padding: var(--space-12) var(--space-8);">
-    <div style="max-width: 1000px; margin: 0 auto;">
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); margin-bottom: var(--space-10);">
-        <div>
-          <h2 id="about-mission-title">Our Mission</h2>
-          <p id="about-mission-desc">To bridge the gap between clinics, doctors, and patients through a fast, transparent, and unified digital platform.</p>
+  <!-- ════════════════════════════════════════════════════
+       SECTION 1: HERO
+       ════════════════════════════════════════════════════ -->
+  <section class="about-hero animate-on-scroll">
+        <div class="container">
+          <div class="about-hero__label">
+            <span>About Us</span>
+          </div>
+          <h1 id="about-hero-title">We're Building the Future of <span class="text-gradient">Healthcare</span></h1>
+          <p id="about-hero-subtitle">MediConnect is on a mission to make healthcare management accessible, digital, and seamless for everyone — patients, doctors, and clinics alike.</p>
+          <div class="about-hero-stats">
+            <div class="about-hero-stat">
+              <div class="about-hero-stat__value">50K+</div>
+              <div class="about-hero-stat__label">Patients Served</div>
+            </div>
+            <div class="about-hero-stat">
+              <div class="about-hero-stat__value">200+</div>
+              <div class="about-hero-stat__label">Verified Doctors</div>
+            </div>
+            <div class="about-hero-stat">
+              <div class="about-hero-stat__value">150K+</div>
+              <div class="about-hero-stat__label">Appointments</div>
+            </div>
+          </div>
         </div>
-        <div>
-          <h2 id="about-vision-title">Our Vision</h2>
-          <p id="about-vision-desc">To build a global network of connected clinics where medical services are accessible at everyone's fingertips.</p>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════
+           SECTION 2: COMPANY STORY
+           ════════════════════════════════════════════════════ -->
+      <section id="company-story" class="story-section animate-on-scroll">
+        <div class="container">
+          <div class="story-grid">
+            <div class="story-content">
+              <span class="story-content__badge">Our Story</span>
+              <h2 id="about-main-title">A Platform Built for Better Healthcare</h2>
+              <p id="about-main-desc">MediConnect was founded with a simple belief: healthcare management shouldn't be complicated. We started as a small team of developers and healthcare professionals who saw firsthand how disconnected the healthcare ecosystem had become.</p>
+              <p id="about-main-desc-secondary">From booking appointments with top doctors to tracking lab results and maintaining complete medical records, MediConnect brings every aspect of clinic management into one unified, secure platform. Today, we serve thousands of patients and doctors across the country, and we're just getting started.</p>
+            </div>
+            <div class="story-visual">
+              <div class="story-visual__icon">🚀</div>
+              <div class="story-visual__year">2020</div>
+              <div class="story-visual__text">Founded with a vision to transform healthcare</div>
+            </div>
+          </div>
         </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════
+           SECTION 3 & 4: MISSION & VISION
+           ════════════════════════════════════════════════════ -->
+      <section class="mission-vision-section animate-on-scroll">
+        <div class="container">
+          <div class="mv-grid">
+            <div class="mv-card">
+              <div class="mv-card__icon">🎯</div>
+              <h3 id="about-mission-title">Our Mission</h3>
+              <p id="about-mission-desc">To bridge the gap between clinics, doctors, and patients through a fast, transparent, and unified digital platform that makes healthcare accessible to everyone.</p>
+            </div>
+            <div class="mv-card">
+              <div class="mv-card__icon">🔭</div>
+              <h3 id="about-vision-title">Our Vision</h3>
+              <p id="about-vision-desc">To build a global network of connected healthcare ecosystems where medical services are accessible at everyone's fingertips, regardless of location or circumstance.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════
+           SECTION 5: CORE VALUES
+           ════════════════════════════════════════════════════ -->
+      <section id="values-section" class="values-section animate-on-scroll">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-header__label">Core Values</span>
+            <h2 class="section-header__title" id="about-values-title">What Drives Us</h2>
+            <p class="section-header__subtitle">The principles that guide every decision we make</p>
+          </div>
+          <div id="about-values-grid" class="values-grid">
+            <div class="value-card">
+              <div class="value-card__icon">❤️</div>
+              <h3>Patient First</h3>
+              <p>Every feature, every decision, every line of code is designed with the patient experience at the center of everything we do.</p>
+            </div>
+            <div class="value-card">
+              <div class="value-card__icon">🔒</div>
+              <h3>Security & Trust</h3>
+              <p>Your medical data is sacred. We protect it with AES-256 encryption, HIPAA compliance, and industry-leading security practices.</p>
+            </div>
+            <div class="value-card">
+              <div class="value-card__icon">⚡</div>
+              <h3>Innovation</h3>
+              <p>We continuously push the boundaries of what's possible in healthcare technology, leveraging AI and modern tools to improve outcomes.</p>
+            </div>
+            <div class="value-card">
+              <div class="value-card__icon">🌍</div>
+              <h3>Accessibility</h3>
+              <p>Healthcare management should be available to everyone, everywhere, anytime — regardless of technical expertise or background.</p>
+            </div>
+            <div class="value-card">
+              <div class="value-card__icon">🤝</div>
+              <h3>Collaboration</h3>
+              <p>We work hand-in-hand with healthcare providers to build tools that truly serve their needs and improve patient outcomes.</p>
+            </div>
+            <div class="value-card">
+              <div class="value-card__icon">📈</div>
+              <h3>Continuous Improvement</h3>
+              <p>We measure, learn, and iterate. Every month brings new features and refinements based on real user feedback.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════
+           SECTION 6: HEALTHCARE IMPACT
+           ════════════════════════════════════════════════════ -->
+      <section id="impact-section" class="impact-section animate-on-scroll">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-header__label">Healthcare Impact</span>
+            <h2 class="section-header__title">Making a Difference</h2>
+            <p class="section-header__subtitle">Real metrics that reflect our commitment to transforming healthcare access</p>
+          </div>
+          <div class="impact-grid" id="about-impact-grid">
+            <div class="impact-card">
+              <div class="impact-card__icon">👥</div>
+              <div class="impact-card__value">50,000+</div>
+              <div class="impact-card__label">Lives Impacted</div>
+            </div>
+            <div class="impact-card">
+              <div class="impact-card__icon">🏥</div>
+              <div class="impact-card__value">500+</div>
+              <div class="impact-card__label">Clinics Onboarded</div>
+            </div>
+            <div class="impact-card">
+              <div class="impact-card__icon">⏱️</div>
+              <div class="impact-card__value">3M+</div>
+              <div class="impact-card__label">Hours Saved</div>
+            </div>
+            <div class="impact-card">
+              <div class="impact-card__icon">💊</div>
+              <div class="impact-card__value">200K+</div>
+              <div class="impact-card__label">Prescriptions Digital</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════
+           SECTION 7: PLATFORM JOURNEY TIMELINE
+           ════════════════════════════════════════════════════ -->
+      <section id="timeline-section" class="timeline-section animate-on-scroll">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-header__label">Our Journey</span>
+            <h2 class="section-header__title">Platform Evolution Timeline</h2>
+            <p class="section-header__subtitle">Key milestones in our mission to revolutionize healthcare management</p>
+          </div>
+          <div class="timeline" id="about-timeline">
+            <div class="timeline-item">
+              <div class="timeline-item__dot"></div>
+              <div class="timeline-item__date">Q3 2020</div>
+              <h3>Idea & Founding</h3>
+              <p>MediConnect was born from a simple observation: patients and doctors lacked a seamless digital bridge. The founding team set out to build it.</p>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-item__dot"></div>
+              <div class="timeline-item__date">Q1 2021</div>
+              <h3>MVP Launch</h3>
+              <p>First version of the platform launched with core appointment booking, doctor profiles, and patient management features.</p>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-item__dot"></div>
+              <div class="timeline-item__date">Q3 2021</div>
+              <h3>10,000 Patient Milestone</h3>
+              <p>Platform crossed 10,000 registered patients and 50+ doctor partnerships. Online consultation feature added.</p>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-item__dot"></div>
+              <div class="timeline-item__date">Q2 2022</div>
+              <h3>Lab Integration</h3>
+              <p>Integrated lab test booking and digital report delivery. Home sample collection service launched across partner network.</p>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-item__dot"></div>
+              <div class="timeline-item__date">Q4 2022</div>
+              <h3>AI-Powered Recommendations</h3>
+              <p>Introduced AI-driven doctor recommendations and symptom-based search. Platform crossed 50,000 patients.</p>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-item__dot"></div>
+              <div class="timeline-item__date">Q2 2023</div>
+              <h3>Admin Dashboard Launch</h3>
+              <p>Enterprise-grade admin dashboard with real-time analytics, user management, and system configuration tools.</p>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-item__dot"></div>
+              <div class="timeline-item__date">Q1 2024</div>
+              <h3>Mobile App Release</h3>
+              <p>Native mobile applications launched for iOS and Android, bringing full platform capabilities to mobile users.</p>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-item__dot"></div>
+              <div class="timeline-item__date">2025 — Today</div>
+              <h3>Continued Innovation</h3>
+              <p>Expanding features, growing network, and building towards a globally connected healthcare ecosystem.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════
+           SECTION 8: KEY STATISTICS
+           ════════════════════════════════════════════════════ -->
+      <section id="about-stats-section" class="about-stats-section reveal">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-header__label">By the Numbers</span>
+            <h2 class="section-header__title">Trust in Every Metric</h2>
+            <p class="section-header__subtitle">Our growth reflects the trust placed in us by patients and healthcare providers</p>
+          </div>
+          <div class="about-stats-grid" id="about-stats-grid">
+            <div class="about-stat-card">
+              <div class="about-stat-card__icon">👥</div>
+              <div class="about-stat-card__number" id="about-stat-patients" data-target="50000">0</div>
+              <div class="about-stat-card__label">Registered Patients</div>
+            </div>
+            <div class="about-stat-card">
+              <div class="about-stat-card__icon">👨‍⚕️</div>
+              <div class="about-stat-card__number" id="about-stat-doctors" data-target="200">0</div>
+              <div class="about-stat-card__label">Verified Doctors</div>
+            </div>
+            <div class="about-stat-card">
+              <div class="about-stat-card__icon">📋</div>
+              <div class="about-stat-card__number" id="about-stat-appointments" data-target="150000">0</div>
+              <div class="about-stat-card__label">Appointments Completed</div>
+            </div>
+            <div class="about-stat-card">
+              <div class="about-stat-card__icon">🧪</div>
+              <div class="about-stat-card__number" id="about-stat-labtests" data-target="80000">0</div>
+              <div class="about-stat-card__label">Lab Tests Processed</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════
+           SECTION 9: LEADERSHIP
+           ════════════════════════════════════════════════════ -->
+      <section id="leadership-section" class="leadership-section animate-on-scroll">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-header__label">Leadership</span>
+            <h2 class="section-header__title">Meet Our Team</h2>
+            <p class="section-header__subtitle">Passionate people building the future of healthcare technology</p>
+          </div>
+          <div class="leadership-grid" id="about-leadership-grid">
+            <div class="leader-card">
+              <div class="leader-card__avatar">AR</div>
+              <div class="leader-card__name">Dr. Arjun Reddy</div>
+              <div class="leader-card__role">CEO & Co-Founder</div>
+              <div class="leader-card__bio">15+ years in healthcare technology. Former Chief Digital Officer at a leading hospital network. Passionate about bridging the healthcare access gap.</div>
+            </div>
+            <div class="leader-card">
+              <div class="leader-card__avatar">PM</div>
+              <div class="leader-card__name">Priya Mehta</div>
+              <div class="leader-card__role">CTO & Co-Founder</div>
+              <div class="leader-card__bio">Full-stack engineer with expertise in building scalable healthcare platforms. Previously led engineering at a health-tech startup serving 1M+ users.</div>
+            </div>
+            <div class="leader-card">
+              <div class="leader-card__avatar">SK</div>
+              <div class="leader-card__name">Dr. Sanjay Kapoor</div>
+              <div class="leader-card__role">Chief Medical Officer</div>
+              <div class="leader-card__bio">20+ years of clinical practice. Board-certified in internal medicine. Ensures every feature meets real clinical needs and compliance standards.</div>
+            </div>
+            <div class="leader-card">
+              <div class="leader-card__avatar">VN</div>
+              <div class="leader-card__name">Vikram Nair</div>
+              <div class="leader-card__role">VP of Product</div>
+              <div class="leader-card__bio">Product leader with experience at top health-tech companies. Focused on creating intuitive, impactful experiences for patients and providers.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════
+           SECTION 10: TECHNOLOGY STACK
+           ════════════════════════════════════════════════════ -->
+      <section id="tech-section" class="tech-section animate-on-scroll">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-header__label">Technology Stack</span>
+            <h2 class="section-header__title">Built on Modern Tech</h2>
+            <p class="section-header__subtitle">Enterprise-grade infrastructure powering reliable healthcare delivery</p>
+          </div>
+          <div class="tech-grid" id="about-tech-grid">
+            <div class="tech-card"><div class="tech-card__icon">⚛️</div><div class="tech-card__name">Node.js</div></div>
+            <div class="tech-card"><div class="tech-card__icon">🗄️</div><div class="tech-card__name">MySQL</div></div>
+            <div class="tech-card"><div class="tech-card__icon">🔒</div><div class="tech-card__name">AES-256</div></div>
+            <div class="tech-card"><div class="tech-card__icon">☁️</div><div class="tech-card__name">Cloud Hosted</div></div>
+            <div class="tech-card"><div class="tech-card__icon">🎨</div><div class="tech-card__name">Responsive UI</div></div>
+            <div class="tech-card"><div class="tech-card__icon">🤖</div><div class="tech-card__name">AI Engine</div></div>
+            <div class="tech-card"><div class="tech-card__icon">📱</div><div class="tech-card__name">Mobile Ready</div></div>
+            <div class="tech-card"><div class="tech-card__icon">🔔</div><div class="tech-card__name">Real-time</div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════
+           SECTION 11: WHY PATIENTS CHOOSE US
+           ════════════════════════════════════════════════════ -->
+      <section id="why-patients-section" class="why-section-about animate-on-scroll">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-header__label">For Patients</span>
+            <h2 class="section-header__title">Why Patients Choose MediConnect</h2>
+            <p class="section-header__subtitle">Designed around the needs of modern healthcare consumers</p>
+          </div>
+          <div class="why-cards-about" id="about-why-patients">
+            <div class="why-card-about">
+              <div class="why-card-about__icon">📱</div>
+              <div>
+                <h4>Easy Appointment Booking</h4>
+                <p>Book appointments with top specialists in under 30 seconds. Real-time availability, instant confirmation, and smart reminders.</p>
+              </div>
+            </div>
+            <div class="why-card-about">
+              <div class="why-card-about__icon">📄</div>
+              <div>
+                <h4>Digital Health Records</h4>
+                <p>Access your complete medical history, lab reports, and prescriptions anytime, anywhere. No more lost paper records.</p>
+              </div>
+            </div>
+            <div class="why-card-about">
+              <div class="why-card-about__icon">💬</div>
+              <div>
+                <h4>Online Consultations</h4>
+                <p>Connect with doctors via video consultation from the comfort of your home. Safe, convenient, and effective.</p>
+              </div>
+            </div>
+            <div class="why-card-about">
+              <div class="why-card-about__icon">🧪</div>
+              <div>
+                <h4>Home Lab Collection</h4>
+                <p>Schedule lab tests with free home sample collection. Certified phlebotomists, hygienic process, digital reports in 24 hours.</p>
+              </div>
+            </div>
+            <div class="why-card-about">
+              <div class="why-card-about__icon">🔔</div>
+              <div>
+                <h4>Smart Reminders</h4>
+                <p>Never miss an appointment or medication dose. Automated notifications keep you on track with your health journey.</p>
+              </div>
+            </div>
+            <div class="why-card-about">
+              <div class="why-card-about__icon">🔒</div>
+              <div>
+                <h4>Privacy First</h4>
+                <p>Bank-grade encryption and HIPAA-compliant infrastructure ensure your health data remains private and secure.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════
+           SECTION 12: WHY DOCTORS CHOOSE US
+           ════════════════════════════════════════════════════ -->
+      <section id="why-doctors-section" class="why-section-about why-section-about--alt animate-on-scroll">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-header__label">For Doctors</span>
+            <h2 class="section-header__title">Why Doctors Choose MediConnect</h2>
+            <p class="section-header__subtitle">Powerful tools designed to streamline clinical practice</p>
+          </div>
+          <div class="why-cards-about" id="about-why-doctors">
+            <div class="why-card-about">
+              <div class="why-card-about__icon">📊</div>
+              <div>
+                <h4>Smart Dashboard</h4>
+                <p>Comprehensive dashboard with real-time appointment insights, patient analytics, and practice performance metrics.</p>
+              </div>
+            </div>
+            <div class="why-card-about">
+              <div class="why-card-about__icon">💊</div>
+              <div>
+                <h4>Digital Prescriptions</h4>
+                <p>Write and send e-prescriptions directly to pharmacies. Reduce paperwork and eliminate prescription errors.</p>
+              </div>
+            </div>
+            <div class="why-card-about">
+              <div class="why-card-about__icon">📋</div>
+              <div>
+                <h4>Patient History Access</h4>
+                <p>View complete patient medical histories, past prescriptions, lab results, and visit notes instantly.</p>
+              </div>
+            </div>
+            <div class="why-card-about">
+              <div class="why-card-about__icon">📅</div>
+              <div>
+                <h4>Schedule Management</h4>
+                <p>Set availability, manage time slots, and control your calendar in real time. Reduce no-shows with automated reminders.</p>
+              </div>
+            </div>
+            <div class="why-card-about">
+              <div class="why-card-about__icon">📈</div>
+              <div>
+                <h4>Growth Analytics</h4>
+                <p>Track practice growth, patient satisfaction scores, revenue trends, and identify opportunities for expansion.</p>
+              </div>
+            </div>
+            <div class="why-card-about">
+              <div class="why-card-about__icon">🌐</div>
+              <div>
+                <h4>Increased Reach</h4>
+                <p>Expand your patient base beyond geographical limits. Offer online consultations and attract patients from across the region.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════
+           SECTION 13: FUTURE ROADMAP
+           ════════════════════════════════════════════════════ -->
+      <section id="roadmap-section" class="roadmap-section animate-on-scroll">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-header__label">Future Roadmap</span>
+            <h2 class="section-header__title">What's Coming Next</h2>
+            <p class="section-header__subtitle">Exciting features and expansions on the horizon</p>
+          </div>
+          <div class="roadmap-grid" id="about-roadmap-grid">
+            <div class="roadmap-card">
+              <div class="roadmap-card__phase">Q3 2026</div>
+              <div class="roadmap-card__icon">🧠</div>
+              <h4>AI Health Assistant</h4>
+              <ul>
+                <li>Intelligent symptom checker with AI triage</li>
+                <li>Personalized health recommendations</li>
+                <li>Predictive analytics for preventive care</li>
+              </ul>
+            </div>
+            <div class="roadmap-card">
+              <div class="roadmap-card__phase">Q4 2026</div>
+              <div class="roadmap-card__icon">🏪</div>
+              <h4>Pharmacy Integration</h4>
+              <ul>
+                <li>Direct medicine ordering from partner pharmacies</li>
+                <li>Automated prescription refill reminders</li>
+                <li>Medicine delivery tracking</li>
+              </ul>
+            </div>
+            <div class="roadmap-card">
+              <div class="roadmap-card__phase">Q1 2027</div>
+              <div class="roadmap-card__icon">📊</div>
+              <h4>Advanced Analytics</h4>
+              <ul>
+                <li>Population health dashboards for clinics</li>
+                <li>Predictive disease outbreak monitoring</li>
+                <li>Custom report builder for administrators</li>
+              </ul>
+            </div>
+            <div class="roadmap-card">
+              <div class="roadmap-card__phase">Q2 2027</div>
+              <div class="roadmap-card__icon">🌍</div>
+              <h4>Global Expansion</h4>
+              <ul>
+                <li>Multi-language and multi-currency support</li>
+                <li>Regional healthcare compliance frameworks</li>
+                <li>International doctor network onboarding</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    <!-- ════════════════════════════════════════════════════
+         SECTION 14: CTA
+         ════════════════════════════════════════════════════ -->
+    <section class="about-cta animate-on-scroll">
+      <div class="container">
+        <h2 id="about-ready-title">Ready to Be Part of Our Story?</h2>
+        <p id="about-ready-subtitle">Join 50,000+ patients and 200+ doctors on MediConnect. Experience the future of healthcare management today.</p>
+        <a id="about-ready-btn" href="/signup.html" class="btn">Create Free Account →</a>
       </div>
+    </section>
 
-      <h2 id="about-values-title" style="text-align: center;">Our Values</h2>
-      <div id="about-values-grid" class="value-grid">
-        <div class="value-card"><div class="value-card__icon">🏥</div><h3 class="value-card__title">Patient First</h3><p class="value-card__desc">Every feature is designed with the patient experience at the center.</p></div>
-        <div class="value-card"><div class="value-card__icon">🔒</div><h3 class="value-card__title">Security</h3><p class="value-card__desc">Your medical data is encrypted and protected with industry-standard security.</p></div>
-        <div class="value-card"><div class="value-card__icon">⚡</div><h3 class="value-card__title">Innovation</h3><p class="value-card__desc">We leverage the latest technology to continuously improve healthcare delivery.</p></div>
-        <div class="value-card"><div class="value-card__icon">🤝</div><h3 class="value-card__title">Accessibility</h3><p class="value-card__desc">Healthcare management that's available to everyone, everywhere, anytime.</p></div>
-      </div>
-    </div>
-  </section>
+  <div id="global-footer"></div>
 
-  <section class="about-section" style="text-align: center;">
-    <h2 id="about-ready-title">Ready to Get Started?</h2>
-    <p id="about-ready-subtitle" style="max-width: 500px; margin: 0 auto var(--space-6);">Join MediConnect today and experience the future of digital healthcare management.</p>
-    <a href="/signup.html" class="btn btn--primary btn--lg">Create Free Account</a>
-  </section>
-
-  <footer class="public-footer"><div style="text-align:center;"><p>&copy; 2026 MediConnect. All rights reserved.</p></div></footer>
-
-  <script src="/js/config.js"></script><script src="/js/api.js"></script><script src="/js/ui.js"></script><script src="/js/validation.js"></script><script src="/js/auth.js"></script><script src="/js/router.js"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/global-navbar.js"></script>
+  <script src="/js/global-footer.js"></script>
+  <script src="/js/animations.js"></script>
   <script src="/js/about.js"></script>
-  <script>document.addEventListener('DOMContentLoaded', () => { if (typeof Sidebar !== 'undefined' && Sidebar.init) { Sidebar.init('About', 'Home / About'); } });</script>
 </body>
 </html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Medical Reports – Securely upload, store, and access your medical reports and documents on MediConnect.">
+  <title>Medical Reports – MediConnect</title>
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/utilities.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/footer.css">
+  <style>
+    .hero { padding: var(--space-20) var(--space-8); background: var(--gradient-hero); text-align: center; }
+    .hero h1 { font-size: var(--font-size-5xl); font-weight: var(--font-weight-extrabold); margin-bottom: var(--space-4); }
+    .hero p { font-size: var(--font-size-lg); color: var(--color-text-light); max-width: 600px; margin: 0 auto var(--space-8); line-height: var(--line-height-relaxed); }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6); }
+    .feature-card { padding: var(--space-8); background: white; border-radius: var(--radius-xl); border: 1px solid var(--color-border); transition: all var(--transition-base); }
+    .feature-card:hover { border-color: var(--color-primary); box-shadow: 0 12px 24px rgba(78,154,151,0.12); transform: translateY(-4px); }
+    .feature-card__icon { width: 56px; height: 56px; border-radius: var(--radius-xl); background: var(--color-mint-light); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: var(--space-4); }
+    .feature-card h3 { font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); margin-bottom: var(--space-2); }
+    .feature-card p { font-size: var(--font-size-sm); color: var(--color-text-light); line-height: var(--line-height-relaxed); }
+    .cta-section { padding: var(--space-20) 0; background: var(--gradient-cta); text-align: center; color: white; }
+    .cta-section h2 { font-size: var(--font-size-4xl); font-weight: var(--font-weight-extrabold); color: white; margin-bottom: var(--space-4); }
+    .cta-section p { opacity: 0.9; font-size: var(--font-size-lg); margin-bottom: var(--space-8); }
+    .cta-section .btn { background: white; color: var(--color-primary-dark); font-weight: var(--font-weight-semibold); font-size: var(--font-size-md); padding: var(--space-4) var(--space-8); }
+    @media (max-width: 768px) { .hero h1 { font-size: var(--font-size-3xl); } }
+  </style>
+</head>
+<body class="public-page">
+  <div id="global-navbar"></div>
+
+  <section class="hero">
+    <h1 class="anim-fade-in-up">Medical <span class="text-gradient">Reports</span></h1>
+    <p class="anim-fade-in-up anim-delay-200">Securely store, access, and share your medical reports anytime, anywhere. Your health records at your fingertips.</p>
+    <a href="/reports.html" class="btn btn--primary btn--lg anim-fade-in-up anim-delay-400">View My Reports</a>
+  </section>
+
+  <section style="padding: var(--space-20) 0;">
+    <div class="container">
+      <div class="features-grid">
+        <div class="feature-card reveal">
+          <div class="feature-card__icon">🔒</div>
+          <h3>Secure Storage</h3>
+          <p>All medical reports are encrypted and stored securely with HIPAA-compliant infrastructure.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-card__icon">📂</div>
+          <h3>Easy Organization</h3>
+          <p>Categorize reports by type - lab results, prescriptions, imaging, and discharge summaries.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-card__icon">🔄</div>
+          <h3>Share with Doctors</h3>
+          <p>Share your reports instantly with your healthcare providers directly from the platform.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-card__icon">📱</div>
+          <h3>Access Anywhere</h3>
+          <p>View and download your reports from any device - desktop, tablet, or mobile.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-card__icon">📨</div>
+          <h3>Auto-delivery</h3>
+          <p>Lab results are automatically uploaded to your account once they are processed.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-card__icon">📊</div>
+          <h3>Health Timeline</h3>
+          <p>View your complete medical history in a chronological timeline for better health tracking.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2 class="reveal">Start Managing Your Reports</h2>
+      <p class="reveal">Create your free account and start organizing your medical records digitally.</p>
+      <a href="/signup.html" class="btn reveal">Get Started Free</a>
+    </div>
+  </section>
+
+  <div id="global-footer"></div>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/validation.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/router.js"></script>
+  <script src="/js/global-navbar.js"></script>
+  <script src="/js/global-footer.js"></script>
+  <script src="/js/animations.js"></script>
+</body>
+</html>

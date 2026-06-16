@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MediConnect Pricing – Transparent, affordable healthcare SaaS plans for patients, doctors, clinics, and enterprises. Start free, scale with confidence.">
+  <title>Pricing – MediConnect</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/utilities.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/footer.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/pricing.css">
+</head>
+<body class="public-page">
+  <div id="global-navbar"></div>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 1: HERO
+       ════════════════════════════════════════════════════ -->
+  <section class="pricing-hero">
+    <div class="container">
+      <div class="pricing-hero__inner reveal">
+        <h1>Simple Pricing for a <span class="text-gradient">Healthier Practice</span></h1>
+        <p>Choose the plan that fits your needs — from individual patients to large healthcare enterprises. No hidden fees, no surprises.</p>
+        <div class="pricing-hero__actions">
+          <a href="#plans" class="btn btn--primary">View Plans</a>
+          <a href="/contact.html" class="btn btn--secondary">Talk to Sales</a>
+        </div>
+      </div>
+      <div class="pricing-hero__illustration">
+        <div class="pricing-hero__stat reveal">
+          <div class="pricing-hero__stat-number"><span class="count-up" data-target="50000">0</span>+</div>
+          <div class="pricing-hero__stat-label">Active Patients</div>
+        </div>
+        <div class="pricing-hero__stat reveal anim-delay-200">
+          <div class="pricing-hero__stat-number"><span class="count-up" data-target="2500">0</span>+</div>
+          <div class="pricing-hero__stat-label">Healthcare Providers</div>
+        </div>
+        <div class="pricing-hero__stat reveal anim-delay-400">
+          <div class="pricing-hero__stat-number"><span class="count-up" data-target="99">0</span>%</div>
+          <div class="pricing-hero__stat-label">Satisfaction Rate</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 2: WHY MEDICONNECT
+       ════════════════════════════════════════════════════ -->
+  <section class="pricing-why">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label reveal">Why MediConnect</span>
+        <h2 class="section-header__title reveal">Built for Modern Healthcare</h2>
+        <p class="section-header__subtitle reveal">MediConnect is more than software — it's a complete healthcare ecosystem that connects patients, doctors, and clinics.</p>
+      </div>
+      <div class="pricing-why__grid">
+        <div class="pricing-why__card reveal">
+          <div class="pricing-why__icon">🔗</div>
+          <h3>Unified Platform</h3>
+          <p>Appointments, consultations, lab tests, reports — all in one place. No more juggling multiple tools.</p>
+        </div>
+        <div class="pricing-why__card reveal anim-delay-100">
+          <div class="pricing-why__icon">🛡️</div>
+          <h3>HIPAA Compliant</h3>
+          <p>Enterprise-grade security and compliance. Your patient data is encrypted, safe, and always under your control.</p>
+        </div>
+        <div class="pricing-why__card reveal anim-delay-200">
+          <div class="pricing-why__icon">📱</div>
+          <h3>Omnichannel Access</h3>
+          <p>Web, mobile, and tablet — access MediConnect from any device. Patients can book, consult, and access reports anywhere.</p>
+        </div>
+        <div class="pricing-why__card reveal anim-delay-300">
+          <div class="pricing-why__icon">⚡</div>
+          <h3>99.9% Uptime</h3>
+          <p>Reliable infrastructure with automatic backups and disaster recovery. Your practice never stops.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 3: PLANS OVERVIEW
+       ════════════════════════════════════════════════════ -->
+  <section id="plans" class="pricing-plans">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label reveal">Plans & Pricing</span>
+        <h2 class="section-header__title reveal">Choose Your Plan</h2>
+        <p class="section-header__subtitle reveal">Scale from individual patient management to full enterprise healthcare operations.</p>
+      </div>
+
+      <div class="pricing-toggle reveal">
+        <label class="pricing-toggle__label">
+          <span>Monthly</span>
+          <input type="checkbox" id="billingToggle" hidden>
+          <span class="pricing-toggle__switch"></span>
+          <span>Annual <span class="pricing-toggle__badge">Save 20%</span></span>
+        </label>
+      </div>
+
+      <div class="pricing-plans__grid">
+        <!-- Patient Plan -->
+        <div class="pricing-plan reveal">
+          <div class="pricing-plan__header">
+            <div class="pricing-plan__name">Patient</div>
+            <div class="pricing-plan__desc">For individuals managing their healthcare journey</div>
+            <div class="pricing-plan__price">
+              <span class="currency">$</span>0
+              <span class="period">/month</span>
+            </div>
+          </div>
+          <div class="pricing-plan__body">
+            <ul class="pricing-plan__features">
+              <li><span class="icon-check">✓</span> Book appointments with specialists</li>
+              <li><span class="icon-check">✓</span> Online consultations</li>
+              <li><span class="icon-check">✓</span> Lab test booking & results</li>
+              <li><span class="icon-check">✓</span> Basic report storage (500 MB)</li>
+              <li><span class="icon-check">✓</span> Email notifications</li>
+              <li><span class="icon-cross">✕</span> Home sample collection</li>
+              <li><span class="icon-cross">✕</span> Priority support</li>
+              <li><span class="icon-cross">✕</span> Family account sharing</li>
+            </ul>
+          </div>
+          <div class="pricing-plan__footer">
+            <a href="/signup.html" class="btn btn--secondary">Get Started Free</a>
+            <div class="pricing-plan__trial">No credit card required</div>
+          </div>
+        </div>
+
+        <!-- Doctor Plan (Most Popular) -->
+        <div class="pricing-plan pricing-plan--featured reveal anim-delay-200">
+          <div class="pricing-plan__badge">Most Popular</div>
+          <div class="pricing-plan__header">
+            <div class="pricing-plan__name">Doctor</div>
+            <div class="pricing-plan__desc">For individual practitioners and independent doctors</div>
+            <div class="pricing-plan__price monthly-price">
+              <span class="currency">$</span>29<span class="period">/month</span>
+            </div>
+            <div class="pricing-plan__price annual-price" style="display:none">
+              <span class="currency">$</span>279<span class="period">/year</span>
+            </div>
+            <div class="pricing-plan__annual-note annual-note" style="display:none">$23.25/month — Save $69</div>
+          </div>
+          <div class="pricing-plan__body">
+            <ul class="pricing-plan__features">
+              <li><span class="icon-check">✓</span> Everything in Patient</li>
+              <li><span class="icon-check">✓</span> Patient management dashboard</li>
+              <li><span class="icon-check">✓</span> Online consultation scheduling</li>
+              <li><span class="icon-check">✓</span> Digital prescription generation</li>
+              <li><span class="icon-check">✓</span> Unlimited report storage</li>
+              <li><span class="icon-check">✓</span> Appointment calendar sync</li>
+              <li><span class="icon-check">✓</span> Priority email support</li>
+              <li><span class="icon-check">✓</span> Home sample collection requests</li>
+              <li><span class="icon-cross">✕</span> Multi-doctor support</li>
+              <li><span class="icon-cross">✕</span> Custom branding</li>
+            </ul>
+          </div>
+          <div class="pricing-plan__footer">
+            <a href="/signup.html" class="btn btn--primary">Start 14-Day Free Trial</a>
+            <div class="pricing-plan__trial">No credit card required</div>
+          </div>
+        </div>
+
+        <!-- Clinic Plan -->
+        <div class="pricing-plan reveal anim-delay-100">
+          <div class="pricing-plan__header">
+            <div class="pricing-plan__name">Clinic</div>
+            <div class="pricing-plan__desc">For clinics and small healthcare practices</div>
+            <div class="pricing-plan__price monthly-price">
+              <span class="currency">$</span>99<span class="period">/month</span>
+            </div>
+            <div class="pricing-plan__price annual-price" style="display:none">
+              <span class="currency">$</span>949<span class="period">/year</span>
+            </div>
+            <div class="pricing-plan__annual-note annual-note" style="display:none">$79.08/month — Save $239</div>
+          </div>
+          <div class="pricing-plan__body">
+            <ul class="pricing-plan__features">
+              <li><span class="icon-check">✓</span> Everything in Doctor</li>
+              <li><span class="icon-check">✓</span> Multi-doctor support (up to 10)</li>
+              <li><span class="icon-check">✓</span> Clinic management dashboard</li>
+              <li><span class="icon-check">✓</span> Staff account management</li>
+              <li><span class="icon-check">✓</span> Patient history & records</li>
+              <li><span class="icon-check">✓</span> Lab integration</li>
+              <li><span class="icon-check">✓</span> Customizable booking page</li>
+              <li><span class="icon-check">✓</span> SMS & email notifications</li>
+              <li><span class="icon-check">✓</span> 24/7 chat support</li>
+              <li><span class="icon-cross">✕</span> Dedicated account manager</li>
+            </ul>
+          </div>
+          <div class="pricing-plan__footer">
+            <a href="/signup.html" class="btn btn--secondary">Start 14-Day Free Trial</a>
+            <div class="pricing-plan__trial">No credit card required</div>
+          </div>
+        </div>
+
+        <!-- Enterprise Plan -->
+        <div class="pricing-plan reveal anim-delay-300">
+          <div class="pricing-plan__header">
+            <div class="pricing-plan__name">Enterprise</div>
+            <div class="pricing-plan__desc">For hospitals and large healthcare organizations</div>
+            <div class="pricing-plan__price">
+              <span class="currency">$</span>Custom
+            </div>
+            <div class="pricing-plan__annual-note">Tailored to your needs</div>
+          </div>
+          <div class="pricing-plan__body">
+            <ul class="pricing-plan__features">
+              <li><span class="icon-check">✓</span> Everything in Clinic</li>
+              <li><span class="icon-check">✓</span> Unlimited doctors & staff</li>
+              <li><span class="icon-check">✓</span> Multi-branch management</li>
+              <li><span class="icon-check">✓</span> Custom branding & white-label</li>
+              <li><span class="icon-check">✓</span> API & EHR integration</li>
+              <li><span class="icon-check">✓</span> Advanced analytics & reporting</li>
+              <li><span class="icon-check">✓</span> Dedicated account manager</li>
+              <li><span class="icon-check">✓</span> 24/7 phone & priority support</li>
+              <li><span class="icon-check">✓</span> On-premise deployment option</li>
+              <li><span class="icon-check">✓</span> HIPAA compliance audit</li>
+            </ul>
+          </div>
+          <div class="pricing-plan__footer">
+            <a href="/contact.html" class="btn btn--primary">Contact Sales</a>
+            <div class="pricing-plan__trial">Custom demo available</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 4: FEATURE COMPARISON
+       ════════════════════════════════════════════════════ -->
+  <section class="pricing-compare">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label reveal">Comparison</span>
+        <h2 class="section-header__title reveal">Full Feature Breakdown</h2>
+        <p class="section-header__subtitle reveal">See exactly what each plan includes — no surprises, no hidden limitations.</p>
+      </div>
+      <div class="pricing-compare__table-wrapper reveal">
+        <table class="pricing-compare__table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th><span class="plan-name">Patient</span><span class="plan-price">Free</span></th>
+              <th class="featured-col"><span class="plan-name">Doctor</span><span class="plan-price">$29/mo</span></th>
+              <th><span class="plan-name">Clinic</span><span class="plan-price">$99/mo</span></th>
+              <th><span class="plan-name">Enterprise</span><span class="plan-price">Custom</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="category-row"><td colspan="5">Appointments & Consultations</td></tr>
+            <tr><td>Appointment Booking</td><td><span class="check-cell">✓</span></td><td><span class="check-cell">✓</span></td><td><span class="check-cell">✓</span></td><td><span class="check-cell">✓</span></td></tr>
+            <tr><td>Online Consultations</td><td><span class="check-cell">✓</span></td><td><span class="check-cell">✓</span></td><td><span class="check-cell">✓</span></td><td><span class="check-cell">✓</span></td></tr>
+            <tr><td>Calendar Sync</td><td><span class="cross-cell">✕</span></td><td><span class="check-cell">✓</span></td><td><span class="check-cell">✓</span></td><td><span class="check-cell">✓</span></td></tr>
+
+            <tr class="category-row"><td colspan="5">Lab & Diagnostics</td></tr>
+            <tr><td>Lab Test Booking</td><td><span class="check-cell">✓</span></td><td><span class="check-cell">✓</span></td><td><span class="check-cell">✓</span></td><td><span class="check-cell">✓</span></td></tr>
+            <tr><td>Home Sample Collection</td><td><span class="cross-cell">✕</span></td><td><span class="check-cell">✓</span></td><td><span class="check-cell">✓</span></td><td><span class="check-cell">✓</span></td></tr>
+            <tr><td>Lab Integration</td><td><span class="cross-cell">✕</span></td><td><span class="cross-cell">✕</span></td><td><span class="check-cell">✓</span></td><td><span class="check-cell">✓</span></td></tr>
+
+            <tr class="category-row"><td colspan="5">Reports & Records</td></tr>
+            <tr><td>Report Storage</td><td>500 MB</td><td>Unlimited</td><td>Unlimited</td><td>Unlimited</td></tr>
+            <tr><td>Patient History</td><td><span class="cross-cell">✕</span></td><td><span class="check-cell">✓</span></td><td><span class="check-cell">✓</span></td><td><span class="check-cell">✓</span></td></tr>
+            <tr><td>Digital Prescriptions</td><td><span class="cross-cell">✕</span></td><td><span class="check-cell">✓</span></td><td><span class="check-cell">✓</span></td><td><span class="check-cell">✓</span></td></tr>
+
+            <tr class="category-row"><td colspan="5">Management & Admin</td></tr>
+            <tr><td>Patient Dashboard</td><td><span class="cross-cell">✕</span></td><td><span class="check-cell">✓</span></td><td><span class="check-cell">✓</span></td><td><span class="check-cell">✓</span></td></tr>
+            <tr><td>Multi-Doctor Support</td><td><span class="cross-cell">✕</span></td><td><span class="cross-cell">✕</span></td><td>Up to 10</td><td>Unlimited</td></tr>
+            <tr><td>Staff Accounts</td><td><span class="cross-cell">✕</span></td><td><span class="cross-cell">✕</span></td><td><span class="check-cell">✓</span></td><td><span class="check-cell">✓</span></td></tr>
+            <tr><td>Multi-Branch Management</td><td><span class="cross-cell">✕</span></td><td><span class="cross-cell">✕</span></td><td><span class="cross-cell">✕</span></td><td><span class="check-cell">✓</span></td></tr>
+            <tr><td>Custom Branding</td><td><span class="cross-cell">✕</span></td><td><span class="cross-cell">✕</span></td><td><span class="check-cell">✓</span></td><td><span class="check-cell">✓</span></td></tr>
+
+            <tr class="category-row"><td colspan="5">Integrations & Extras</td></tr>
+            <tr><td>API & EHR Integration</td><td><span class="cross-cell">✕</span></td><td><span class="cross-cell">✕</span></td><td><span class="cross-cell">✕</span></td><td><span class="check-cell">✓</span></td></tr>
+            <tr><td>Advanced Analytics</td><td><span class="cross-cell">✕</span></td><td><span class="cross-cell">✕</span></td><td><span class="cross-cell">✕</span></td><td><span class="check-cell">✓</span></td></tr>
+            <tr><td>On-Premise Deployment</td><td><span class="cross-cell">✕</span></td><td><span class="cross-cell">✕</span></td><td><span class="cross-cell">✕</span></td><td><span class="check-cell">✓</span></td></tr>
+
+            <tr class="category-row"><td colspan="5">Support</td></tr>
+            <tr><td>Email Support</td><td><span class="check-cell">✓</span></td><td>Priority</td><td>Priority</td><td>Priority</td></tr>
+            <tr><td>Chat Support</td><td><span class="cross-cell">✕</span></td><td><span class="cross-cell">✕</span></td><td><span class="check-cell">✓</span></td><td><span class="check-cell">✓</span></td></tr>
+            <tr><td>Phone Support</td><td><span class="cross-cell">✕</span></td><td><span class="cross-cell">✕</span></td><td><span class="cross-cell">✕</span></td><td><span class="check-cell">✓</span></td></tr>
+            <tr><td>Dedicated Account Manager</td><td><span class="cross-cell">✕</span></td><td><span class="cross-cell">✕</span></td><td><span class="cross-cell">✕</span></td><td><span class="check-cell">✓</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 5: INCLUDED FEATURES
+       ════════════════════════════════════════════════════ -->
+  <section class="pricing-features">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label reveal">All Plans Include</span>
+        <h2 class="section-header__title reveal">Core Platform Features</h2>
+        <p class="section-header__subtitle reveal">Every plan comes with access to MediConnect's core healthcare platform features.</p>
+      </div>
+      <div class="pricing-features__grid">
+        <div class="pricing-features__card reveal">
+          <div class="pricing-features__icon">📅</div>
+          <div class="pricing-features__content">
+            <h4>Appointment System</h4>
+            <p>Real-time scheduling, automated reminders, and calendar sync. Patients book in seconds.</p>
+          </div>
+        </div>
+        <div class="pricing-features__card reveal anim-delay-100">
+          <div class="pricing-features__icon">🩺</div>
+          <div class="pricing-features__content">
+            <h4>Online Consultations</h4>
+            <p>Secure video calls with integrated EMR. Consult with patients remotely, anytime.</p>
+          </div>
+        </div>
+        <div class="pricing-features__card reveal anim-delay-200">
+          <div class="pricing-features__icon">🔬</div>
+          <div class="pricing-features__content">
+            <h4>Lab Management</h4>
+            <p>Order tests, track samples, and receive results digitally. Full lab lifecycle management.</p>
+          </div>
+        </div>
+        <div class="pricing-features__card reveal anim-delay-300">
+          <div class="pricing-features__icon">📄</div>
+          <div class="pricing-features__content">
+            <h4>Medical Reports</h4>
+            <p>Upload, organize, and share reports. Patients access their medical records anytime.</p>
+          </div>
+        </div>
+        <div class="pricing-features__card reveal anim-delay-400">
+          <div class="pricing-features__icon">📋</div>
+          <div class="pricing-features__content">
+            <h4>Patient History</h4>
+            <p>Complete longitudinal patient records. Track diagnoses, medications, and treatment history.</p>
+          </div>
+        </div>
+        <div class="pricing-features__card reveal anim-delay-500">
+          <div class="pricing-features__icon">🔔</div>
+          <div class="pricing-features__content">
+            <h4>Smart Notifications</h4>
+            <p>SMS, email, and in-app alerts for appointments, results, and important updates.</p>
+          </div>
+        </div>
+        <div class="pricing-features__card reveal anim-delay-600">
+          <div class="pricing-features__icon">📝</div>
+          <div class="pricing-features__content">
+            <h4>Content Management</h4>
+            <p>Built-in CMS for managing FAQs, blog posts, service pages, and patient resources.</p>
+          </div>
+        </div>
+        <div class="pricing-features__card reveal anim-delay-700">
+          <div class="pricing-features__icon">📊</div>
+          <div class="pricing-features__content">
+            <h4>Analytics Dashboard</h4>
+            <p>Track appointments, revenue, patient growth, and operational metrics in real time.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 6: ROI SECTION
+       ════════════════════════════════════════════════════ -->
+  <section class="pricing-roi">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label reveal">Return on Investment</span>
+        <h2 class="section-header__title reveal">Maximum Value, Minimal Cost</h2>
+        <p class="section-header__subtitle reveal">MediConnect delivers measurable results for practices of all sizes.</p>
+      </div>
+      <div class="pricing-roi__grid">
+        <div class="pricing-roi__card reveal">
+          <div class="pricing-roi__number"><span class="count-up" data-target="40">0</span><span class="percent">%</span></div>
+          <h4>Reduced No-Shows</h4>
+          <p>Automated reminders and easy rescheduling cut appointment no-shows by an average of 40%.</p>
+        </div>
+        <div class="pricing-roi__card reveal anim-delay-150">
+          <div class="pricing-roi__number"><span class="count-up" data-target="60">0</span><span class="percent">%</span></div>
+          <h4>Faster Check-Ins</h4>
+          <p>Digital check-in and pre-appointment forms reduce patient wait times by up to 60%.</p>
+        </div>
+        <div class="pricing-roi__card reveal anim-delay-300">
+          <div class="pricing-roi__number"><span class="count-up" data-target="50">0</span><span class="percent">%</span></div>
+          <h4>Lower Admin Costs</h4>
+          <p>Automated scheduling, billing, and record-keeping cut administrative overhead in half.</p>
+        </div>
+        <div class="pricing-roi__card reveal anim-delay-450">
+          <div class="pricing-roi__number">3.5<span class="percent">x</span></div>
+          <h4>Patient Retention</h4>
+          <p>Practices using MediConnect see 3.5x better patient retention through engagement tools.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 7: CLINIC BENEFITS
+       ════════════════════════════════════════════════════ -->
+  <section class="pricing-clinic">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label reveal">For Clinics</span>
+        <h2 class="section-header__title reveal">Built to Grow Your Practice</h2>
+        <p class="section-header__subtitle reveal">From solo practitioners to multi-doctor clinics — MediConnect scales with you.</p>
+      </div>
+      <div class="pricing-clinic__grid">
+        <div class="pricing-clinic__card reveal">
+          <div class="pricing-clinic__icon">👥</div>
+          <h4>Multi-Doctor Management</h4>
+          <p>Manage schedules, availability, and patient assignments across your entire team. Each doctor gets their own profile and calendar.</p>
+        </div>
+        <div class="pricing-clinic__card reveal anim-delay-100">
+          <div class="pricing-clinic__icon">💳</div>
+          <h4>Integrated Billing</h4>
+          <p>Generate invoices, track payments, and manage insurance claims directly from the platform. Reduce paperwork by 80%.</p>
+        </div>
+        <div class="pricing-clinic__card reveal anim-delay-200">
+          <div class="pricing-clinic__icon">📈</div>
+          <h4>Performance Analytics</h4>
+          <p>Track patient volume, revenue trends, appointment conversion rates, and staff performance with real-time dashboards.</p>
+        </div>
+        <div class="pricing-clinic__card reveal anim-delay-300">
+          <div class="pricing-clinic__icon">🏪</div>
+          <h4>Custom Booking Page</h4>
+          <p>White-label booking page that matches your clinic's brand. Patients book directly without third-party platforms.</p>
+        </div>
+        <div class="pricing-clinic__card reveal anim-delay-400">
+          <div class="pricing-clinic__icon">📱</div>
+          <h4>Patient Engagement</h4>
+          <p>Automated appointment reminders, follow-up messages, and health tips keep patients engaged with your practice.</p>
+        </div>
+        <div class="pricing-clinic__card reveal anim-delay-500">
+          <div class="pricing-clinic__icon">🔄</div>
+          <h4>Seamless Lab Integration</h4>
+          <p>Connect with partner labs for automatic test ordering and result delivery. No more manual data entry.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 8: ENTERPRISE FEATURES
+       ════════════════════════════════════════════════════ -->
+  <section class="pricing-enterprise">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label reveal">Enterprise</span>
+        <h2 class="section-header__title reveal">Enterprise-Grade Capabilities</h2>
+        <p class="section-header__subtitle reveal">Designed for hospitals, healthcare chains, and large-scale medical organizations.</p>
+      </div>
+      <div class="pricing-enterprise__grid">
+        <div class="pricing-enterprise__card reveal">
+          <div class="pricing-enterprise__icon">🏗️</div>
+          <div class="pricing-enterprise__content">
+            <h4>Multi-Branch Orchestration</h4>
+            <p>Centrally manage multiple clinic and hospital locations. Unified dashboard with per-branch analytics and control.</p>
+          </div>
+        </div>
+        <div class="pricing-enterprise__card reveal anim-delay-100">
+          <div class="pricing-enterprise__icon">🔗</div>
+          <div class="pricing-enterprise__content">
+            <h4>API-First Architecture</h4>
+            <p>RESTful APIs for seamless integration with existing EHR systems, billing software, and third-party healthcare tools.</p>
+          </div>
+        </div>
+        <div class="pricing-enterprise__card reveal anim-delay-200">
+          <div class="pricing-enterprise__icon">🎨</div>
+          <div class="pricing-enterprise__content">
+            <h4>Full White-Label Customization</h4>
+            <p>Complete branding control — custom domain, logo, colors, email templates, and patient-facing portal.</p>
+          </div>
+        </div>
+        <div class="pricing-enterprise__card reveal anim-delay-300">
+          <div class="pricing-enterprise__icon">📊</div>
+          <div class="pricing-enterprise__content">
+            <h4>Advanced Analytics Suite</h4>
+            <p>Customizable reports, predictive analytics, population health insights, and executive dashboards.</p>
+          </div>
+        </div>
+        <div class="pricing-enterprise__card reveal anim-delay-400">
+          <div class="pricing-enterprise__icon">🛡️</div>
+          <div class="pricing-enterprise__content">
+            <h4>Enterprise Security & Compliance</h4>
+            <p>HIPAA compliance audit, SOC 2 certification, end-to-end encryption, and role-based access control.</p>
+          </div>
+        </div>
+        <div class="pricing-enterprise__card reveal anim-delay-500">
+          <div class="pricing-enterprise__icon">☁️</div>
+          <div class="pricing-enterprise__content">
+            <h4>Flexible Deployment</h4>
+            <p>Cloud-hosted or on-premise deployment options. Dedicated infrastructure with 99.99% uptime SLA.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 9: FAQ
+       ════════════════════════════════════════════════════ -->
+  <section class="pricing-faq">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label reveal">FAQ</span>
+        <h2 class="section-header__title reveal">Pricing FAQs</h2>
+        <p class="section-header__subtitle reveal">Have questions about pricing, plans, or billing? We've got answers.</p>
+      </div>
+      <div class="pricing-faq__list">
+        <div class="pricing-faq__item reveal">
+          <button class="pricing-faq__question" aria-expanded="false">
+            Can I switch plans at any time?
+            <span class="faq-icon">▼</span>
+          </button>
+          <div class="pricing-faq__answer">
+            <div class="pricing-faq__answer-inner">Yes, you can upgrade or downgrade your plan at any time. Upgrades take effect immediately with prorated billing. Downgrades apply at the start of the next billing cycle. Your data is always preserved.</div>
+          </div>
+        </div>
+        <div class="pricing-faq__item reveal anim-delay-100">
+          <button class="pricing-faq__question" aria-expanded="false">
+            Is there a free trial?
+            <span class="faq-icon">▼</span>
+          </button>
+          <div class="pricing-faq__answer">
+            <div class="pricing-faq__answer-inner">Absolutely. We offer a 14-day free trial on all paid plans — Doctor, Clinic, and Enterprise. No credit card is required to start. You get full access to all features during the trial period.</div>
+          </div>
+        </div>
+        <div class="pricing-faq__item reveal anim-delay-200">
+          <button class="pricing-faq__question" aria-expanded="false">
+            What payment methods do you accept?
+            <span class="faq-icon">▼</span>
+          </button>
+          <div class="pricing-faq__answer">
+            <div class="pricing-faq__answer-inner">We accept all major credit cards (Visa, MasterCard, American Express), debit cards, UPI, net banking, and popular digital wallets. Enterprise plans can be invoiced monthly or annually.</div>
+          </div>
+        </div>
+        <div class="pricing-faq__item reveal anim-delay-300">
+          <button class="pricing-faq__question" aria-expanded="false">
+            Can I cancel my subscription?
+            <span class="faq-icon">▼</span>
+          </button>
+          <div class="pricing-faq__answer">
+            <div class="pricing-faq__answer-inner">Yes, you can cancel anytime from your account settings. Your access continues until the end of the current billing period. We'll provide a full data export so nothing is lost.</div>
+          </div>
+        </div>
+        <div class="pricing-faq__item reveal anim-delay-400">
+          <button class="pricing-faq__question" aria-expanded="false">
+            Is my patient data secure?
+            <span class="faq-icon">▼</span>
+          </button>
+          <div class="pricing-faq__answer">
+            <div class="pricing-faq__answer-inner">Absolutely. MediConnect is HIPAA compliant with end-to-end encryption, regular security audits, and role-based access control. Your patient data is encrypted at rest and in transit.</div>
+          </div>
+        </div>
+        <div class="pricing-faq__item reveal anim-delay-500">
+          <button class="pricing-faq__question" aria-expanded="false">
+            Do you offer custom enterprise plans?
+            <span class="faq-icon">▼</span>
+          </button>
+          <div class="pricing-faq__answer">
+            <div class="pricing-faq__answer-inner">Yes! Our Enterprise plan is fully customizable to your organization's needs. Contact our sales team for a personalized quote, tailored features, and dedicated support infrastructure.</div>
+          </div>
+        </div>
+        <div class="pricing-faq__item reveal anim-delay-600">
+          <button class="pricing-faq__question" aria-expanded="false">
+            What happens if I exceed plan limits?
+            <span class="faq-icon">▼</span>
+          </button>
+          <div class="pricing-faq__answer">
+            <div class="pricing-faq__answer-inner">We'll notify you before you hit any limits. You can easily upgrade to the next tier or purchase add-ons. There are no surprise overage charges — we believe in transparent pricing.</div>
+          </div>
+        </div>
+        <div class="pricing-faq__item reveal anim-delay-700">
+          <button class="pricing-faq__question" aria-expanded="false">
+            Can I migrate data from another platform?
+            <span class="faq-icon">▼</span>
+          </button>
+          <div class="pricing-faq__answer">
+            <div class="pricing-faq__answer-inner">Yes, we offer free data migration assistance for Clinic and Enterprise plans. Our team will help you transfer patient records, appointment history, and other data seamlessly.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SECTION 10: CTA
+       ════════════════════════════════════════════════════ -->
+  <section class="pricing-cta">
+    <div class="container">
+      <h2 class="reveal">Ready to Transform Your Practice?</h2>
+      <p class="reveal anim-delay-200">Join thousands of healthcare providers who trust MediConnect. Start your 14-day free trial today — no credit card required.</p>
+      <div class="pricing-cta__actions">
+        <a href="/signup.html" class="btn btn--primary reveal anim-delay-400">Start Free Trial</a>
+        <a href="/contact.html" class="btn btn--secondary reveal anim-delay-600">Schedule a Demo</a>
+      </div>
+    </div>
+  </section>
+
+  <div id="global-footer"></div>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/validation.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/global-navbar.js"></script>
+  <script src="/js/global-footer.js"></script>
+  <script src="/js/animations.js"></script>
+  <script>
+    /* ── FAQ Accordion ── */
+    document.querySelectorAll('.pricing-faq__question').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = this.closest('.pricing-faq__item');
+        var isOpen = item.classList.contains('is-open');
+        document.querySelectorAll('.pricing-faq__item.is-open').forEach(function(openItem) {
+          openItem.classList.remove('is-open');
+          openItem.querySelector('.pricing-faq__question').setAttribute('aria-expanded', 'false');
+        });
+        if (!isOpen) {
+          item.classList.add('is-open');
+          item.querySelector('.pricing-faq__question').setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+
+    /* ── Billing Toggle ── */
+    document.getElementById('billingToggle').addEventListener('change', function() {
+      var isAnnual = this.checked;
+      document.querySelectorAll('.monthly-price').forEach(function(el) {
+        el.style.display = isAnnual ? 'none' : '';
+      });
+      document.querySelectorAll('.annual-price').forEach(function(el) {
+        el.style.display = isAnnual ? '' : 'none';
+      });
+      document.querySelectorAll('.annual-note').forEach(function(el) {
+        el.style.display = isAnnual ? '' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>

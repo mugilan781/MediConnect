@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Home Sample Collection – MediConnect offers safe and hygienic home sample collection services for lab tests.">
+  <title>Home Sample Collection – MediConnect</title>
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/utilities.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/footer.css">
+  <style>
+    .hero { padding: var(--space-20) var(--space-8); background: var(--gradient-hero); text-align: center; }
+    .hero h1 { font-size: var(--font-size-5xl); font-weight: var(--font-weight-extrabold); margin-bottom: var(--space-4); }
+    .hero p { font-size: var(--font-size-lg); color: var(--color-text-light); max-width: 600px; margin: 0 auto var(--space-8); line-height: var(--line-height-relaxed); }
+    .content-section { padding: var(--space-20) 0; }
+    .content-section:nth-child(even) { background: var(--color-gray-50); }
+    .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-6); }
+    .benefit-card { padding: var(--space-8); background: white; border-radius: var(--radius-xl); border: 1px solid var(--color-border); text-align: center; transition: all var(--transition-base); }
+    .benefit-card:hover { border-color: var(--color-primary); box-shadow: 0 12px 24px rgba(78,154,151,0.12); transform: translateY(-4px); }
+    .benefit-card__icon { width: 64px; height: 64px; margin: 0 auto var(--space-4); border-radius: var(--radius-xl); background: var(--color-mint-light); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; }
+    .benefit-card h3 { font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); margin-bottom: var(--space-2); }
+    .benefit-card p { font-size: var(--font-size-sm); color: var(--color-text-light); line-height: var(--line-height-relaxed); }
+    .cta-section { padding: var(--space-20) 0; background: var(--gradient-cta); text-align: center; color: white; }
+    .cta-section h2 { font-size: var(--font-size-4xl); font-weight: var(--font-weight-extrabold); color: white; margin-bottom: var(--space-4); }
+    .cta-section p { opacity: 0.9; font-size: var(--font-size-lg); margin-bottom: var(--space-8); }
+    .cta-section .btn { background: white; color: var(--color-primary-dark); font-weight: var(--font-weight-semibold); font-size: var(--font-size-md); padding: var(--space-4) var(--space-8); }
+    @media (max-width: 768px) { .hero h1 { font-size: var(--font-size-3xl); } .hero { padding: var(--space-12) var(--space-4); } }
+  </style>
+</head>
+<body class="public-page">
+  <div id="global-navbar"></div>
+
+  <section class="hero">
+    <h1 class="anim-fade-in-up">Home <span class="text-gradient">Sample Collection</span></h1>
+    <p class="anim-fade-in-up anim-delay-200">Safe, hygienic, and convenient sample collection from the comfort of your home. Trained phlebotomists at your doorstep.</p>
+    <a href="/sample-collection.html" class="btn btn--primary btn--lg anim-fade-in-up anim-delay-400">Request Collection</a>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label reveal">Benefits</span>
+        <h2 class="section-header__title reveal">Why Choose Home Collection?</h2>
+      </div>
+      <div class="benefits-grid">
+        <div class="benefit-card reveal">
+          <div class="benefit-card__icon">🏠</div>
+          <h3>Convenience</h3>
+          <p>No need to visit a lab. We collect samples from your home at your preferred time.</p>
+        </div>
+        <div class="benefit-card reveal">
+          <div class="benefit-card__icon">🧤</div>
+          <h3>Safe & Hygienic</h3>
+          <p>All equipment is sterilized and phlebotomists follow strict safety protocols.</p>
+        </div>
+        <div class="benefit-card reveal">
+          <div class="benefit-card__icon">⏰</div>
+          <h3>Flexible Timing</h3>
+          <p>Schedule collection at a time that works best for you, including early mornings.</p>
+        </div>
+        <div class="benefit-card reveal">
+          <div class="benefit-card__icon">📱</div>
+          <h3>Real-time Tracking</h3>
+          <p>Track your sample status from collection to report delivery on your phone.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2 class="reveal">Ready for a Home Visit?</h2>
+      <p class="reveal">Schedule a home sample collection at your convenience. Safe, simple, and stress-free.</p>
+      <a href="/sample-collection.html" class="btn reveal">Request Free Pickup</a>
+    </div>
+  </section>
+
+  <div id="global-footer"></div>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/validation.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/router.js"></script>
+  <script src="/js/global-navbar.js"></script>
+  <script src="/js/global-footer.js"></script>
+  <script src="/js/animations.js"></script>
+</body>
+</html>

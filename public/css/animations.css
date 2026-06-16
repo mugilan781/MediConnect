@@ -1,0 +1,304 @@
+/* ============================================================
+   MediConnect – animations.css
+   Scroll reveal, fade, slide, hover effects
+   ============================================================ */
+
+/* ── Keyframes ── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.05); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes countUp {
+  from { opacity: 0; transform: scale(0.5); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Utility Animation Classes ── */
+.anim-fade-in {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+.anim-fade-in-up {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.anim-fade-in-down {
+  animation: fadeInDown 0.6s ease forwards;
+}
+
+.anim-fade-in-left {
+  animation: fadeInLeft 0.6s ease forwards;
+}
+
+.anim-fade-in-right {
+  animation: fadeInRight 0.6s ease forwards;
+}
+
+.anim-scale-in {
+  animation: scaleIn 0.5s ease forwards;
+}
+
+.anim-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.anim-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ── Delay Classes ── */
+.anim-delay-100  { animation-delay: 0.1s; opacity: 0; }
+.anim-delay-200  { animation-delay: 0.2s; opacity: 0; }
+.anim-delay-300  { animation-delay: 0.3s; opacity: 0; }
+.anim-delay-400  { animation-delay: 0.4s; opacity: 0; }
+.anim-delay-500  { animation-delay: 0.5s; opacity: 0; }
+.anim-delay-600  { animation-delay: 0.6s; opacity: 0; }
+.anim-delay-700  { animation-delay: 0.7s; opacity: 0; }
+.anim-delay-800  { animation-delay: 0.8s; opacity: 0; }
+.anim-delay-900  { animation-delay: 0.9s; opacity: 0; }
+.anim-delay-1000 { animation-delay: 1s; opacity: 0; }
+
+/* ── Scroll Reveal Initial State ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.reveal-left.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.reveal-right.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.reveal-scale.revealed {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ── Hover Effects ── */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(78, 154, 151, 0.15);
+}
+
+.hover-glow {
+  transition: all 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(78, 154, 151, 0.3);
+  border-color: var(--color-primary);
+}
+
+.hover-scale {
+  transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+/* ── Gradient Text ── */
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-primary) 0%, #2D6B68 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Section Styles with Animation ── */
+.section-header {
+  text-align: center;
+  margin-bottom: var(--space-12);
+}
+
+.section-header__label {
+  display: inline-block;
+  padding: var(--space-1) var(--space-4);
+  background: var(--color-mint-light);
+  color: var(--color-primary-dark);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-4);
+}
+
+.section-header__title {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--color-gray-800);
+  margin-bottom: var(--space-4);
+  line-height: 1.2;
+}
+
+@media (max-width: 768px) {
+  .section-header__title {
+    font-size: var(--font-size-2xl);
+  }
+}
+
+.section-header__subtitle {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-light);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: var(--line-height-relaxed);
+}
+
+/* ── Container ── */
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+.container--narrow {
+  max-width: var(--container-narrow);
+}
+
+/* ── Section Spacing ── */
+.section-padding {
+  padding: var(--space-20) 0;
+}
+
+.section-padding--sm {
+  padding: var(--space-12) 0;
+}
+
+.section-padding--lg {
+  padding: var(--space-32) 0;
+}
+
+@media (max-width: 768px) {
+  .section-padding {
+    padding: var(--space-12) 0;
+  }
+  .section-padding--lg {
+    padding: var(--space-16) 0;
+  }
+  .container {
+    padding: 0 var(--space-4);
+  }
+}
+
+@media (max-width: 425px) {
+  .section-padding {
+    padding: var(--space-10) 0;
+  }
+  .section-padding--lg {
+    padding: var(--space-12) 0;
+  }
+  .section-header__title {
+    font-size: var(--font-size-xl);
+  }
+  .section-header__subtitle {
+    font-size: var(--font-size-base);
+  }
+}
+
+@media (max-width: 320px) {
+  .section-padding {
+    padding: var(--space-8) 0;
+  }
+  .container {
+    padding: 0 var(--space-3);
+  }
+  .section-header__title {
+    font-size: var(--font-size-lg);
+  }
+}
