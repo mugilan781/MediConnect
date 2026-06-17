@@ -1,4 +1,9 @@
-// ============================================================
+const fs = require('fs');
+const path = require('path');
+
+const sidebarPath = path.join('c:', 'MUGILAN', 'MR Coderz Hub', 'Project 7', 'MediConnect', 'public', 'js', 'sidebar.js');
+
+const newSidebarJs = `// ============================================================
 // MediConnect - public/js/sidebar.js
 // Dynamic sidebar and topbar renderer
 // ============================================================
@@ -21,7 +26,7 @@ const SidebarIcons = {
   settings: '<path d="M12 15.5A3.5 3.5 0 1 0 12 8a3.5 3.5 0 0 0 0 7.5z"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1-1.55 1.7 1.7 0 0 0-1.88.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.55-1H3a2 2 0 1 1 0-4h.09a1.7 1.7 0 0 0 1.55-1 1.7 1.7 0 0 0-.34-1.88l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.55V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.88-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9c.67.22 1.55.86 1.55 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.51 1z"/>',
 };
 
-const sideIcon = name => `<svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${SidebarIcons[name]}</svg>`;
+const sideIcon = name => \`<svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">\${SidebarIcons[name]}</svg>\`;
 
 const Sidebar = {
   navItems: {
@@ -102,7 +107,7 @@ const Sidebar = {
 
     let navHtml = '';
     sections.forEach(section => {
-      navHtml += `<div class="sidebar__section-title">${section.section}</div>`;
+      navHtml += \`<div class="sidebar__section-title">\${section.section}</div>\`;
       section.items.forEach(item => {
         let href = item.href;
         let classes = 'sidebar__link';
@@ -112,50 +117,50 @@ const Sidebar = {
         if (item.dataTab) {
           if (currentPath === item.dashboardPath) {
             href = 'javascript:void(0);';
-            // Do NOT add 'tab-btn' class, as it introduces horizontal tab styling overrides!
-            extraAttrs = ` data-tab="${item.dataTab}"`;
+            classes += ' tab-btn';
+            extraAttrs = \` data-tab="\${item.dataTab}"\`;
             
             const urlParams = new URLSearchParams(window.location.search);
             const currentTab = urlParams.get('tab') || 'overview';
             if (currentTab === item.dataTab) isActive = ' active';
           } else {
-            href = `${item.dashboardPath}?tab=${item.dataTab}`;
+            href = \`\${item.dashboardPath}?tab=\${item.dataTab}\`;
           }
         } else {
           isActive = currentPath === item.href ? ' active' : '';
         }
 
-        navHtml += `<a href="${href}" class="${classes}${isActive}"${extraAttrs}><span class="sidebar__link-icon">${sideIcon(item.icon)}</span> ${item.label}</a>`;
+        navHtml += \`<a href="\${href}" class="\${classes}\${isActive}"\${extraAttrs}><span class="sidebar__link-icon">\${sideIcon(item.icon)}</span> \${item.label}</a>\`;
       });
     });
 
-    container.innerHTML = `
+    container.innerHTML = \`
       <div class="sidebar__logo">
         <div class="sidebar__logo-icon">M</div>
         <span class="sidebar__logo-text">MediConnect</span>
       </div>
-      <nav class="sidebar__nav">${navHtml}</nav>
+      <nav class="sidebar__nav">\${navHtml}</nav>
       <div class="sidebar__footer">
-        <a href="#" class="sidebar__link" id="logout-btn"><span class="sidebar__link-icon">${sideIcon('logout')}</span> Logout</a>
+        <a href="#" class="sidebar__link" id="logout-btn"><span class="sidebar__link-icon">\${sideIcon('logout')}</span> Logout</a>
       </div>
-    `;
+    \`;
   },
 
   renderTopbar(title, breadcrumb) {
     const container = document.getElementById('topbar');
     if (!container) return;
 
-    container.innerHTML = `
+    container.innerHTML = \`
       <div class="topbar__left">
-        <button class="topbar__toggle" id="sidebar-toggle" type="button" aria-label="Toggle sidebar">${sideIcon('menu')}</button>
+        <button class="topbar__toggle" id="sidebar-toggle" type="button" aria-label="Toggle sidebar">\${sideIcon('menu')}</button>
         <div>
-          <div class="topbar__title">${title}</div>
-          <div class="topbar__breadcrumb">${breadcrumb}</div>
+          <div class="topbar__title">\${title}</div>
+          <div class="topbar__breadcrumb">\${breadcrumb}</div>
         </div>
       </div>
       <div class="topbar__right">
         <button class="topbar__notification" onclick="Router.navigate('/notifications.html')" type="button" aria-label="Notifications">
-          ${sideIcon('bell')}<span class="topbar__notification-badge" id="notification-badge" style="display:none;">0</span>
+          \${sideIcon('bell')}<span class="topbar__notification-badge" id="notification-badge" style="display:none;">0</span>
         </button>
         <div class="topbar__user">
           <div class="avatar avatar-placeholder" id="topbar-user-avatar">P</div>
@@ -165,7 +170,7 @@ const Sidebar = {
           </div>
         </div>
       </div>
-    `;
+    \`;
   },
 
   init(title, breadcrumb) {
@@ -173,3 +178,7 @@ const Sidebar = {
     this.renderTopbar(title || 'Dashboard', breadcrumb || 'Home');
   },
 };
+`;
+
+fs.writeFileSync(sidebarPath, newSidebarJs, 'utf8');
+console.log('Successfully patched sidebar.js');

@@ -63,7 +63,7 @@ const AdminDashboard = {
     const initialTab = urlParams.get('tab') || 'overview';
     
     // Bind Tab click events
-    document.querySelectorAll('.tab-btn').forEach(btn => {
+    document.querySelectorAll('.sidebar__link[data-tab]').forEach(btn => {
       btn.addEventListener('click', () => {
         const tabId = btn.getAttribute('data-tab');
         this.switchTab(tabId);
@@ -87,7 +87,7 @@ const AdminDashboard = {
     this.currentTab = tabId;
 
     // Update Tab Buttons UI
-    document.querySelectorAll('.tab-btn').forEach(btn => {
+    document.querySelectorAll('.sidebar__link[data-tab]').forEach(btn => {
       if (btn.getAttribute('data-tab') === tabId) {
         btn.classList.add('active');
       } else {

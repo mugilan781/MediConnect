@@ -44,7 +44,7 @@ const DoctorDashboard = {
   },
 
   setupTabs() {
-    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabButtons = document.querySelectorAll('.sidebar__link[data-tab]');
     tabButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         const tab = btn.dataset.tab;
@@ -63,7 +63,7 @@ const DoctorDashboard = {
 
   switchTab(tabName) {
     // Update active tab buttons
-    document.querySelectorAll('.tab-btn').forEach(btn => {
+    document.querySelectorAll('.sidebar__link[data-tab]').forEach(btn => {
       if (btn.dataset.tab === tabName) btn.classList.add('active');
       else btn.classList.remove('active');
     });
