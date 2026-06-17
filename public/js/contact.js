@@ -6,30 +6,9 @@
 
 const Contact = {
   async init() {
-    this.bindFaqAccordion();
     this.bindForm();
     await this.loadContactCMS();
     this.handleHashScroll();
-  },
-
-  /* ── FAQ Accordion ── */
-  bindFaqAccordion() {
-    document.querySelectorAll('.contact-faq-question').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        var item = this.closest('.contact-faq-item');
-        var isOpen = item.classList.contains('is-open');
-
-        document.querySelectorAll('.contact-faq-item.is-open').forEach(function(openItem) {
-          openItem.classList.remove('is-open');
-          openItem.querySelector('.contact-faq-question').setAttribute('aria-expanded', 'false');
-        });
-
-        if (!isOpen) {
-          item.classList.add('is-open');
-          item.querySelector('.contact-faq-question').setAttribute('aria-expanded', 'true');
-        }
-      });
-    });
   },
 
   /* ── Form Handling ── */
@@ -195,7 +174,7 @@ const Contact = {
       var hoursVal = document.getElementById('contactHoursValue');
 
       if (heroTitle && contactData.title) {
-        heroTitle.innerHTML = contactData.title;
+        heroTitle.innerHTML = this.escapeHtml(contactData.title).replace('Touch', '<span class="text-gradient">Touch</span>');
       }
       if (heroSubtitle && contactData.subtitle) {
         heroSubtitle.textContent = contactData.subtitle;

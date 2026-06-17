@@ -142,7 +142,7 @@ const Consultations = {
       if (!container || !response.success) return;
 
       if (response.data.length === 0) {
-        container.innerHTML = UI.emptyState('📋', 'No Consultations', 'No consultation records or requests found.');
+        container.innerHTML = UI.emptyState('clipboard', 'No Consultations', 'No consultation records or requests found.');
         const pagContainer = document.getElementById('consultations-pagination');
         if (pagContainer) pagContainer.innerHTML = '';
         return;
@@ -423,7 +423,7 @@ const Consultations = {
       if (detailsEl) {
         let scheduleInfo = 'Not Scheduled';
         if (c.consultation_date) {
-          scheduleInfo = `📅 ${UI.formatDate(c.consultation_date)} at ${UI.formatTime(c.consultation_time)} (${c.duration} mins)`;
+          scheduleInfo = `${MediIcons.icon('calendar')} ${UI.formatDate(c.consultation_date)} at ${UI.formatTime(c.consultation_time)} (${c.duration} mins)`;
         }
 
         detailsEl.innerHTML = `

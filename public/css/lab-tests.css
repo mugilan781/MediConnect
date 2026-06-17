@@ -7,7 +7,7 @@
 /* ── Section 1: Hero ── */
 .lab-hero {
   padding: var(--space-20) 0 var(--space-16);
-  background: var(--gradient-hero);
+  background: var(--gradient-hero); color: white;
   position: relative;
   overflow: hidden;
   min-height: 600px;
@@ -18,15 +18,17 @@
   content: ''; position: absolute;
   top: -20%; right: -10%;
   width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(78,154,151,0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(var(--color-accent-rgb), 0.12) 0%, transparent 70%);
   border-radius: 50%;
+  pointer-events: none;
 }
 .lab-hero::after {
   content: ''; position: absolute;
   bottom: -30%; left: -5%;
   width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(78,154,151,0.05) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(var(--color-primary-rgb), 0.08) 0%, transparent 70%);
   border-radius: 50%;
+  pointer-events: none;
 }
 .lab-hero__grid {
   display: grid;
@@ -41,8 +43,8 @@
   align-items: center;
   gap: var(--space-2);
   padding: var(--space-1) var(--space-4);
-  background: rgba(78,154,151,0.1);
-  color: var(--color-primary-dark);
+  background: rgba(255,255,255,0.12);
+  color: #67E8F9;
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semibold);
   border-radius: var(--radius-full);
@@ -59,14 +61,20 @@
 .lab-hero__content h1 {
   font-size: var(--font-size-5xl);
   font-weight: var(--font-weight-extrabold);
-  color: var(--color-gray-800);
+  color: white;
   line-height: 1.15;
   margin-bottom: var(--space-4);
   letter-spacing: -0.02em;
 }
+.lab-hero__content h1 .text-gradient {
+  background: linear-gradient(135deg, #67E8F9 0%, #A5F3FC 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 .lab-hero__content > p {
   font-size: var(--font-size-lg);
-  color: var(--color-text-light);
+  color: rgba(255,255,255,0.85);
   line-height: var(--line-height-relaxed);
   max-width: 540px;
   margin-bottom: var(--space-8);
@@ -99,7 +107,7 @@
 }
 .lab-hero__btn--ghost {
   background: transparent;
-  color: var(--color-gray-700);
+  color: rgba(255,255,255,0.75);
   border: 1px solid var(--color-border);
 }
 .lab-hero__btn--ghost:hover {
@@ -115,17 +123,17 @@
   display: block;
   font-size: var(--font-size-3xl);
   font-weight: var(--font-weight-extrabold);
-  color: var(--color-primary);
+  color: white;
   line-height: 1;
   margin-bottom: var(--space-1);
-}
+ color: #67E8F9; }
 .lab-hero__stat-label {
   font-size: var(--font-size-xs);
-  color: var(--color-text-muted);
+  color: rgba(255,255,255,0.7);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-weight: var(--font-weight-medium);
-}
+ color: rgba(255, 255, 255, 0.8); }
 .lab-hero__visual {
   display: flex;
   align-items: center;
@@ -203,11 +211,11 @@
   transform: scale(1.1);
 }
 .lab-service-card__icon--teal { background: #E8F4F1; color: #4E9A97; }
-.lab-service-card__icon--purple { background: #F3E8FF; color: #7C3AED; }
+.lab-service-card__icon--purple { background: var(--surface-primary-soft); color: var(--color-primary); }
 .lab-service-card__icon--amber { background: #FEF3C7; color: #D97706; }
 .lab-service-card__icon--rose { background: #FFE4E6; color: #E11D48; }
 .lab-service-card__icon--green { background: #D1FAE5; color: #059669; }
-.lab-service-card__icon--blue { background: #DBEAFE; color: #2563EB; }
+.lab-service-card__icon--blue { background: #E8EEF4; color: #5D7895; }
 .lab-service-card__title {
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-semibold);
@@ -225,8 +233,9 @@
   background: var(--color-gray-50);
 }
 .lab-categories__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  display: flex; flex-wrap: wrap; justify-content: center;
+  
+.lab-categories__grid > * { flex: 0 1 280px; max-width: 364px; }
   gap: var(--space-5);
 }
 .lab-category-card {
@@ -422,6 +431,7 @@
   flex: 1;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -590,7 +600,7 @@
   align-items: flex-start;
   justify-content: center;
   gap: 0;
-  max-width: 1000px;
+  /* max-width removed for full-width layout */
   margin: var(--space-10) auto 0;
 }
 .lab-process-step {
@@ -711,87 +721,7 @@
   line-height: var(--line-height-relaxed);
 }
 
-/* ── Section 9: FAQ ── */
-.lab-faq {
-  background: var(--color-gray-50);
-}
-.lab-faq-list {
-  max-width: 720px;
-  margin: var(--space-8) auto 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-}
-.lab-faq-item {
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  background: var(--color-white);
-  transition: all var(--transition-base);
-}
-.lab-faq-item:hover {
-  border-color: var(--color-primary-light);
-  box-shadow: 0 4px 16px rgba(78,154,151,0.06);
-}
-.lab-faq-item.open {
-  border-color: var(--color-primary-light);
-  box-shadow: 0 4px 16px rgba(78,154,151,0.1);
-}
-.lab-faq-question {
-  width: 100%;
-  padding: var(--space-5) var(--space-6);
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-gray-800);
-  text-align: left;
-  font-family: var(--font-family);
-  transition: all var(--transition-fast);
-  gap: var(--space-4);
-}
-.lab-faq-question:hover {
-  color: var(--color-primary);
-}
-.lab-faq-question .lab-faq-toggle {
-  flex-shrink: 0;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: var(--color-gray-100);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all var(--transition-base);
-}
-.lab-faq-question .lab-faq-toggle svg {
-  transition: transform var(--transition-base);
-}
-.lab-faq-item.open .lab-faq-question .lab-faq-toggle {
-  background: var(--color-mint-light);
-}
-.lab-faq-item.open .lab-faq-question .lab-faq-toggle svg {
-  transform: rotate(180deg);
-  color: var(--color-primary);
-}
-.lab-faq-answer {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.35s ease;
-}
-.lab-faq-item.open .lab-faq-answer {
-  max-height: 500px;
-}
-.lab-faq-answer-inner {
-  padding: 0 var(--space-6) var(--space-5);
-  font-size: var(--font-size-sm);
-  color: var(--color-text-light);
-  line-height: var(--line-height-relaxed);
-}
+
 
 /* ── Section 10: CTA ── */
 .lab-cta {
@@ -878,9 +808,9 @@
 /* ── Category Badge Colors ── */
 .lab-cat-badge--Blood { background: #FEE2E2; color: #B91C1C; }
 .lab-cat-badge--Diabetes { background: #FEF3C7; color: #B45309; }
-.lab-cat-badge--Thyroid { background: #DBEAFE; color: #1E40AF; }
+.lab-cat-badge--Thyroid { background: #E8EEF4; color: #5D7895; }
 .lab-cat-badge--Liver { background: #D1FAE5; color: #065F46; }
-.lab-cat-badge--Vitamin { background: #F3E8FF; color: #6B21A8; }
+.lab-cat-badge--Vitamin { background: var(--surface-primary-soft); color: #6B21A8; }
 .lab-cat-badge--Preventive { background: #E0E7FF; color: #3730A3; }
 
 /* ── Loading Skeleton ── */
@@ -950,7 +880,7 @@
   .lab-hero__content > p { font-size: var(--font-size-base); }
   .lab-hero__actions { flex-direction: column; }
   .lab-hero__stats { gap: var(--space-6); }
-  .lab-hero__stat-value { font-size: var(--font-size-2xl); }
+  .lab-hero__stat-value { font-size: var(--font-size-2xl);  color: #67E8F9; }
   .lab-services-grid { grid-template-columns: 1fr; }
   .lab-tests-grid { grid-template-columns: 1fr; }
   .lab-catalog__controls { flex-direction: column; }
@@ -967,7 +897,7 @@
   .lab-cta h2 { font-size: var(--font-size-2xl); }
   .lab-cta__actions { flex-direction: column; }
   .lab-hero__stats { flex-wrap: wrap; gap: var(--space-4); }
-  .lab-hero__stat-value { font-size: var(--font-size-xl); }
+  .lab-hero__stat-value { font-size: var(--font-size-xl);  color: #67E8F9; }
   .lab-service-card { padding: var(--space-6); }
 }
 

@@ -97,10 +97,10 @@ INSERT IGNORE INTO cms_content (section_key, section_data, is_active, updated_by
   'vision_title', 'Our Vision',
   'vision_desc', 'To build a global network of connected clinics where medical services are accessible at everyone\'s fingertips.',
   'values', JSON_ARRAY(
-    JSON_OBJECT('icon', '🏥', 'title', 'Patient First', 'description', 'Every feature is designed with the patient experience at the center.'),
-    JSON_OBJECT('icon', '🔒', 'title', 'Security', 'description', 'Your medical data is encrypted and protected with industry-standard security.'),
-    JSON_OBJECT('icon', '⚡', 'title', 'Innovation', 'description', 'We leverage the latest technology to continuously improve healthcare delivery.'),
-    JSON_OBJECT('icon', '🤝', 'title', 'Accessibility', 'description', 'Healthcare management that\'s available to everyone, everywhere, anytime.')
+    JSON_OBJECT('icon', 'hospital', 'title', 'Patient First', 'description', 'Every feature is designed with the patient experience at the center.'),
+    JSON_OBJECT('icon', 'lock', 'title', 'Security', 'description', 'Your medical data is encrypted and protected with industry-standard security.'),
+    JSON_OBJECT('icon', 'zap', 'title', 'Innovation', 'description', 'We leverage the latest technology to continuously improve healthcare delivery.'),
+    JSON_OBJECT('icon', 'users', 'title', 'Accessibility', 'description', 'Healthcare management that\'s available to everyone, everywhere, anytime.')
   )
 ), 1, 1),
 ('contact', JSON_OBJECT(

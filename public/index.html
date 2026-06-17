@@ -6,7 +6,7 @@
   <title>MediConnect – Smart Healthcare Platform</title>
   <meta name="description" content="MediConnect is a comprehensive healthcare management platform connecting patients with top doctors. Book appointments, access lab reports, online consultations and more.">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/variables.css">
   <link rel="stylesheet" href="/css/base.css">
   <link rel="stylesheet" href="/css/layout.css">
@@ -14,560 +14,1040 @@
   <link rel="stylesheet" href="/css/footer.css">
   <link rel="stylesheet" href="/css/animations.css">
   <link rel="stylesheet" href="/css/homepage.css">
+  <style>
+    /* Scroll Progress Bar */
+    #scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      width: 0%;
+      background: var(--surface-primary);
+      z-index: 9999;
+      transition: width 0.1s linear;
+      border-radius: 0 2px 2px 0;
+      box-shadow: 0 0 10px rgba(47,125,126,0.42);
+    }
+    /* Page cursor glow (desktop only) */
+    @media (pointer: fine) {
+      .cursor-dot {
+        width: 8px; height: 8px;
+        background: var(--color-primary);
+        border-radius: 50%;
+        position: fixed;
+        pointer-events: none;
+        z-index: 10000;
+        transform: translate(-50%,-50%);
+        transition: transform 0.1s ease, opacity 0.3s ease;
+        mix-blend-mode: multiply;
+      }
+    }
+  </style>
 </head>
 <body class="public-page">
+  <div id="scroll-progress"></div>
   <div id="global-navbar"></div>
 
   <main>
-      <!-- ════════════════════════════════════════════════════
-           SECTION 1: HERO
-           ════════════════════════════════════════════════════ -->
-      <section id="hero" class="home-hero">
-        <div class="container">
-          <div class="home-hero__content">
-            <div class="home-hero__badge">
-              <span class="home-hero__badge-dot"></span>
-              <span id="hero-badge">Now Serving 50,000+ Patients</span>
+    <!-- ════════════════════════════════════════════════════
+         SECTION 1: HERO
+         ════════════════════════════════════════════════════ -->
+    <section id="hero" class="home-hero">
+      <!-- Background Elements -->
+      <div class="home-hero__orb-1"></div>
+      <div class="home-hero__orb-2"></div>
+      <div class="home-hero__grid"></div>
+
+      <div class="container">
+        <div class="home-hero__content">
+          <div class="home-hero__badge">
+            <span class="home-hero__badge-dot"></span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+            </svg>
+            <span id="hero-badge">Now Serving 50,000+ Patients</span>
+          </div>
+
+          <h1 id="hero-title" class="home-hero__title">
+            Your Health,&nbsp;<span class="highlight">Intelligently</span><br>Managed
+          </h1>
+
+          <p id="hero-subtitle" class="home-hero__desc">
+            MediConnect brings together top doctors, seamless lab services, and your complete medical history — all in one platform.
+          </p>
+
+          <div class="home-hero__actions">
+            <a href="/doctors.html" class="btn btn--primary" id="hero-cta-primary">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+              </svg>
+              Find a Doctor
+            </a>
+            <a href="/signup.html" class="btn btn-secondary" id="hero-cta-secondary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/>
+              </svg>
+              Get Started Free
+            </a>
+          </div>
+
+          <div class="home-hero__stats">
+            <div class="home-hero__stat">
+              <div class="home-hero__stat-value">50K+</div>
+              <div class="home-hero__stat-label">Active Patients</div>
             </div>
-            <h1 id="hero-title" class="home-hero__title">
-              Your Health, <span class="highlight">Intelligently</span> Managed
-            </h1>
-            <p id="hero-subtitle" class="home-hero__desc">
-              MediConnect brings together top doctors, seamless lab services, and your complete medical history — all in one platform.
-            </p>
-            <div class="home-hero__actions">
-              <a href="/doctors.html" class="btn btn--primary">
-                <i class="icon">👨‍⚕️</i> Find a Doctor
-              </a>
-              <a href="/signup.html" class="btn btn-secondary">Get Started Free</a>
+            <div class="home-hero__stat">
+              <div class="home-hero__stat-value">200+</div>
+              <div class="home-hero__stat-label">Expert Doctors</div>
             </div>
-            <div class="home-hero__stats">
-              <div class="home-hero__stat">
-                <div class="home-hero__stat-value">50K+</div>
-                <div class="home-hero__stat-label">Active Patients</div>
+            <div class="home-hero__stat">
+              <div class="home-hero__stat-value">98%</div>
+              <div class="home-hero__stat-label">Satisfaction Rate</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Visual -->
+        <div class="home-hero__visual">
+          <div class="home-hero__visual-card">
+            <div class="home-hero__visual-inner">
+              <!-- Medical cross SVG illustration -->
+              <svg class="home-hero__visual-svg" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Healthcare platform illustration">
+                <!-- Background circle -->
+                <circle cx="60" cy="60" r="58" fill="url(#heroGrad1)" opacity="0.12"/>
+                <!-- Outer ring -->
+                <circle cx="60" cy="60" r="50" stroke="url(#heroGrad1)" stroke-width="1.5" fill="none" stroke-dasharray="4 3" opacity="0.4"/>
+                <!-- Heart with pulse -->
+                <path d="M60 84C60 84 34 68 34 50C34 41 41 35 48 35C52 35 56 37 60 41C64 37 68 35 72 35C79 35 86 41 86 50C86 68 60 84 60 84Z" fill="url(#heroGrad1)" opacity="0.9"/>
+                <!-- Cross overlay -->
+                <rect x="54" y="44" width="12" height="30" rx="3" fill="white" opacity="0.9"/>
+                <rect x="44" y="54" width="32" height="12" rx="3" fill="white" opacity="0.9"/>
+                <!-- ECG dots -->
+                <circle cx="35" cy="88" r="3" fill="#312E81" opacity="0.7"/>
+                <circle cx="50" cy="92" r="2" fill="#06B6D4" opacity="0.6"/>
+                <circle cx="85" cy="88" r="3" fill="#10B981" opacity="0.7"/>
+                <circle cx="70" cy="92" r="2" fill="#312E81" opacity="0.5"/>
+                <!-- Stethoscope head -->
+                <circle cx="88" cy="30" r="10" fill="white" stroke="#312E81" stroke-width="2"/>
+                <path d="M88 26 L88 34 M84 30 L92 30" stroke="#312E81" stroke-width="2" stroke-linecap="round"/>
+                <defs>
+                  <linearGradient id="heroGrad1" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#312E81"/>
+                    <stop offset="100%" stop-color="#06B6D4"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+
+              <div class="home-hero__visual-title">Complete Care Platform</div>
+              <div class="home-hero__visual-desc">Appointments · Lab Reports · Consultations · Health Records</div>
+            </div>
+            <!-- ECG line at bottom -->
+            <div class="home-hero__ecg">
+              <svg viewBox="0 0 400 40" preserveAspectRatio="none">
+                <path d="M0,20 L60,20 L75,5 L90,35 L105,5 L115,20 L150,20 L165,5 L180,35 L195,5 L205,20 L260,20 L275,5 L290,35 L305,5 L315,20 L360,20 L375,5 L390,35 L400,20"
+                  stroke="#312E81" stroke-width="2" fill="none" stroke-dasharray="400"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Floating Widget 1 -->
+          <div class="hero-widget hero-widget--1">
+            <span class="hero-widget__icon" style="background:#EBF8FF;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#312E81" stroke-width="2" aria-hidden="true">
+                <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+            </span>
+            <div class="hero-widget__status">
+              <span class="hero-widget__status-label">Next Appointment</span>
+              <span style="font-weight:700;color:#1E293B;">Today — 3:00 PM</span>
+            </div>
+          </div>
+
+          <!-- Floating Widget 2 -->
+          <div class="hero-widget hero-widget--2">
+            <span class="hero-widget__icon" style="background:#E0F2FE;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#06B6D4" stroke-width="2" aria-hidden="true">
+                <path d="M9 17H5a2 2 0 0 0-2 2"/><path d="M21 17h-4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4v14z"/><path d="M9 17V5a2 2 0 0 1 2-2h4"/><path d="M3 21h18"/>
+              </svg>
+            </span>
+            <div class="hero-widget__status">
+              <span class="hero-widget__status-label">Lab Reports</span>
+              <span style="font-weight:700;color:#1E293B;">3 New Ready</span>
+            </div>
+          </div>
+
+          <!-- Floating Widget 3 -->
+          <div class="hero-widget hero-widget--3">
+            <span class="hero-widget__icon" style="background:#EEF2FF;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#312E81" stroke-width="2" aria-hidden="true">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </span>
+            <div class="hero-widget__status">
+              <span class="hero-widget__status-label">Doctor Chat</span>
+              <span style="font-weight:700;color:#1E293B;">Available Now</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════
+         SECTION 2: TRUSTED BY
+         ════════════════════════════════════════════════════ -->
+    <section class="trusted-section animate-on-scroll">
+      <div class="container">
+        <p class="trusted-section__label">Trusted by leading healthcare providers nationwide</p>
+        <div class="trusted-track-wrapper">
+          <div class="trusted-grid" id="trusted-grid">
+            <!-- Original items -->
+            <div class="trusted-item">
+              <span class="trusted-item__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </span>
+              City Hospital
+            </div>
+            <div class="trusted-item">
+              <span class="trusted-item__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              </span>
+              MedLife Clinics
+            </div>
+            <div class="trusted-item">
+              <span class="trusted-item__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+              </span>
+              HealthFirst Group
+            </div>
+            <div class="trusted-item">
+              <span class="trusted-item__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              </span>
+              PrimeCare Network
+            </div>
+            <div class="trusted-item">
+              <span class="trusted-item__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </span>
+              GreenValley Health
+            </div>
+            <div class="trusted-item">
+              <span class="trusted-item__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              </span>
+              Apollo Allied
+            </div>
+            <!-- Duplicated for seamless loop -->
+            <div class="trusted-item">
+              <span class="trusted-item__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </span>
+              City Hospital
+            </div>
+            <div class="trusted-item">
+              <span class="trusted-item__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              </span>
+              MedLife Clinics
+            </div>
+            <div class="trusted-item">
+              <span class="trusted-item__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+              </span>
+              HealthFirst Group
+            </div>
+            <div class="trusted-item">
+              <span class="trusted-item__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              </span>
+              PrimeCare Network
+            </div>
+            <div class="trusted-item">
+              <span class="trusted-item__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </span>
+              GreenValley Health
+            </div>
+            <div class="trusted-item">
+              <span class="trusted-item__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              </span>
+              Apollo Allied
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════
+         SECTION 3: STATISTICS
+         ════════════════════════════════════════════════════ -->
+    <section id="stats-section" class="stats-section animate-on-scroll">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-header__label">
+            <span class="section-header__label-dot"></span>
+            By the Numbers
+          </span>
+          <h2 class="section-header__title">Growing Trust Every Day</h2>
+          <p class="section-header__subtitle">Thousands rely on MediConnect for their healthcare journey</p>
+        </div>
+        <div class="stats-grid" id="stats-grid">
+          <div class="stat-card">
+            <div class="stat-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <div class="stat-card__number" id="stat-patients" data-target="50000">0</div>
+            <div class="stat-card__label">Registered Patients</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+              </svg>
+            </div>
+            <div class="stat-card__number" id="stat-doctors" data-target="200">0</div>
+            <div class="stat-card__label">Verified Doctors</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+                <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/>
+              </svg>
+            </div>
+            <div class="stat-card__number" id="stat-appointments" data-target="150000">0</div>
+            <div class="stat-card__label">Appointments Completed</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v11m0 0H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4m0-6h10a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H9m0-6v6"/>
+              </svg>
+            </div>
+            <div class="stat-card__number" id="stat-labtests" data-target="80000">0</div>
+            <div class="stat-card__label">Lab Tests Processed</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════
+         SECTION 4: WHY CHOOSE
+         ════════════════════════════════════════════════════ -->
+    <section id="why-choose" class="why-section animate-on-scroll">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-header__label">
+            <span class="section-header__label-dot"></span>
+            Why MediConnect
+          </span>
+          <h2 id="features-title" class="section-header__title">Built for Better Healthcare</h2>
+          <p class="section-header__subtitle">Everything you need, nothing you don't</p>
+        </div>
+        <div class="why-grid" id="why-grid">
+          <div class="why-card">
+            <div class="why-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+            </div>
+            <h3 class="why-card__title">Secure &amp; Private</h3>
+            <p class="why-card__desc">Your health data is encrypted end-to-end. HIPAA-compliant infrastructure with bank-grade security protocols.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+            </div>
+            <h3 class="why-card__title">Lightning Fast</h3>
+            <p class="why-card__desc">Book appointments in under 30 seconds. Get lab reports delivered instantly. No waiting, no delays.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+              </svg>
+            </div>
+            <h3 class="why-card__title">AI-Powered Insights</h3>
+            <p class="why-card__desc">Smart doctor recommendations based on your symptoms. Intelligent health predictions and reminders.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                <line x1="12" y1="18" x2="12" y2="18"/>
+              </svg>
+            </div>
+            <h3 class="why-card__title">Omnichannel Access</h3>
+            <p class="why-card__desc">Seamlessly switch between web and mobile. Access your health records anytime, anywhere.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </div>
+            <h3 class="why-card__title">24/7 Support</h3>
+            <p class="why-card__desc">Round-the-clock customer support. Chat with our team anytime you need assistance.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <polyline points="17 1 21 5 17 9"/>
+                <path d="M3 11V9a4 4 0 0 1 4-4h14"/>
+                <polyline points="7 23 3 19 7 15"/>
+                <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
+              </svg>
+            </div>
+            <h3 class="why-card__title">Integrated Ecosystem</h3>
+            <p class="why-card__desc">Connect with pharmacies, labs, and specialists in one unified healthcare network.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════
+         SECTION 5: SERVICES OVERVIEW
+         ════════════════════════════════════════════════════ -->
+    <section id="services-section" class="services-section animate-on-scroll">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-header__label">
+            <span class="section-header__label-dot"></span>
+            Our Services
+          </span>
+          <h2 class="section-header__title">Comprehensive Healthcare Solutions</h2>
+          <p class="section-header__subtitle">From appointments to lab tests — we've got you covered</p>
+        </div>
+        <div class="services-grid" id="services-grid">
+          <a href="/doctors.html" class="service-card">
+            <div class="service-card__shine"></div>
+            <div class="service-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <h3 class="service-card__title">Doctor Appointments</h3>
+            <p class="service-card__desc">Book appointments with top specialists in your area. Real-time availability and instant confirmation.</p>
+            <span class="service-card__link">
+              Browse Doctors
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </a>
+
+          <a href="/consultations.html" class="service-card">
+            <div class="service-card__shine"></div>
+            <div class="service-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <polygon points="23 7 16 12 23 17 23 7"/>
+                <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+              </svg>
+            </div>
+            <h3 class="service-card__title">Online Consultation</h3>
+            <p class="service-card__desc">Video consultations with certified doctors from the comfort of your home.</p>
+            <span class="service-card__link">
+              Consult Now
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </a>
+
+          <a href="/lab-tests.html" class="service-card">
+            <div class="service-card__shine"></div>
+            <div class="service-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v11m0 0H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4m0-6h10a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H9m0-6v6"/>
+              </svg>
+            </div>
+            <h3 class="service-card__title">Lab Tests</h3>
+            <p class="service-card__desc">Schedule lab tests with free home sample collection. Get digital reports in 24 hours.</p>
+            <span class="service-card__link">
+              Book a Test
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </a>
+
+          <a href="/home-sample-collection.html" class="service-card">
+            <div class="service-card__shine"></div>
+            <div class="service-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+            </div>
+            <h3 class="service-card__title">Home Sample Collection</h3>
+            <p class="service-card__desc">Certified phlebotomists visit your home for safe and hygienic sample collection.</p>
+            <span class="service-card__link">
+              Schedule Pickup
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </a>
+
+          <a href="/medical-reports.html" class="service-card">
+            <div class="service-card__shine"></div>
+            <div class="service-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+                <polyline points="10 9 9 9 8 9"/>
+              </svg>
+            </div>
+            <h3 class="service-card__title">Medical Reports</h3>
+            <p class="service-card__desc">Access your test reports, prescriptions, and medical history in one secure place.</p>
+            <span class="service-card__link">
+              View Reports
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </a>
+
+          <a href="/pricing.html" class="service-card">
+            <div class="service-card__shine"></div>
+            <div class="service-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            </div>
+            <h3 class="service-card__title">Premium Plans</h3>
+            <p class="service-card__desc">Choose from flexible pricing plans designed for individuals, families, and enterprises.</p>
+            <span class="service-card__link">
+              View Pricing
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════
+         SECTION 6: PATIENT EXPERIENCE
+         ════════════════════════════════════════════════════ -->
+    <section id="patient-experience" class="experience-section animate-on-scroll">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-header__label">
+            <span class="section-header__label-dot"></span>
+            For Patients
+          </span>
+          <h2 class="section-header__title">Your Care Journey, Simplified</h2>
+          <p class="section-header__subtitle">From finding the right doctor to follow-up care — we guide you every step</p>
+        </div>
+        <div class="experience-grid">
+          <div class="experience-visual">
+            <!-- Patient SVG illustration -->
+            <svg class="experience-visual__svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Patient dashboard illustration">
+              <circle cx="50" cy="50" r="48" fill="url(#patGrad)" opacity="0.08"/>
+              <circle cx="50" cy="30" r="14" fill="url(#patGrad)" opacity="0.9"/>
+              <path d="M20 90C20 73 33 60 50 60C67 60 80 73 80 90" stroke="url(#patGrad)" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <rect x="36" y="68" width="28" height="20" rx="4" fill="white" opacity="0.8"/>
+              <line x1="41" y1="74" x2="59" y2="74" stroke="#312E81" stroke-width="2" stroke-linecap="round"/>
+              <line x1="41" y1="79" x2="54" y2="79" stroke="#312E81" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="75" cy="25" r="12" fill="white" stroke="url(#patGrad)" stroke-width="2"/>
+              <path d="M70 25 L74 29 L80 21" stroke="#312E81" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <defs>
+                <linearGradient id="patGrad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#312E81"/>
+                  <stop offset="100%" stop-color="#06B6D4"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <div class="experience-visual__title">Patient Dashboard</div>
+            <div class="experience-visual__desc">Manage appointments, view reports, track health metrics, and communicate with your care team.</div>
+          </div>
+          <div class="experience-steps">
+            <div class="experience-step">
+              <div class="experience-step__num">1</div>
+              <div>
+                <div class="experience-step__title">Find the Right Doctor</div>
+                <div class="experience-step__desc">Search by specialization, location, or symptoms. Read reviews and check availability.</div>
               </div>
-              <div class="home-hero__stat">
-                <div class="home-hero__stat-value">200+</div>
-                <div class="home-hero__stat-label">Expert Doctors</div>
-              </div>
-              <div class="home-hero__stat">
-                <div class="home-hero__stat-value">98%</div>
-                <div class="home-hero__stat-label">Satisfaction Rate</div>
-              </div>
             </div>
-          </div>
-          <div class="home-hero__visual">
-            <div class="home-hero__visual-card floating">
-              <div class="home-hero__visual-inner">
-                <div class="home-hero__visual-icon">🏥</div>
-                <div class="home-hero__visual-title">Complete Care Platform</div>
-                <div class="home-hero__visual-desc">Appointments • Lab Reports • Consultations • Health Records</div>
+            <div class="experience-step">
+              <div class="experience-step__num">2</div>
+              <div>
+                <div class="experience-step__title">Book in Seconds</div>
+                <div class="experience-step__desc">Choose your preferred time slot and get instant confirmation. No phone calls needed.</div>
               </div>
             </div>
-            <div class="hero-widget hero-widget--1 floating floating-delay-1">
-              <span class="hero-widget__icon" style="background:#E8F4F1;">📋</span>
-              <span>Next Appt: Today 3PM</span>
+            <div class="experience-step">
+              <div class="experience-step__num">3</div>
+              <div>
+                <div class="experience-step__title">Get Treated</div>
+                <div class="experience-step__desc">Visit the clinic or connect via video. Receive prescriptions and care instructions.</div>
+              </div>
             </div>
-            <div class="hero-widget hero-widget--2 floating floating-delay-2">
-              <span class="hero-widget__icon" style="background:#FFF5E6;">📊</span>
-              <span>Reports Ready: 3 New</span>
-            </div>
-            <div class="hero-widget hero-widget--3 floating" style="animation-delay:1.5s;">
-              <span class="hero-widget__icon" style="background:#E0F0FF;">💬</span>
-              <span>Chat with Doctor</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ════════════════════════════════════════════════════
-           SECTION 2: TRUSTED BY
-           ════════════════════════════════════════════════════ -->
-      <section class="trusted-section animate-on-scroll">
-        <div class="container">
-          <p class="trusted-section__label">Trusted by healthcare providers nationwide</p>
-          <div class="trusted-grid">
-            <div class="trusted-item"><span class="trusted-item__icon">🏛️</span> City Hospital</div>
-            <div class="trusted-item"><span class="trusted-item__icon">🏥</span> MedLife Clinics</div>
-            <div class="trusted-item"><span class="trusted-item__icon">🏪</span> HealthFirst Group</div>
-            <div class="trusted-item"><span class="trusted-item__icon">🏨</span> PrimeCare Network</div>
-            <div class="trusted-item"><span class="trusted-item__icon">🏫</span> GreenValley Health</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ════════════════════════════════════════════════════
-           SECTION 3: STATISTICS
-           ════════════════════════════════════════════════════ -->
-      <section id="stats-section" class="stats-section animate-on-scroll">
-        <div class="container">
-          <div class="section-header">
-            <span class="section-header__label">By the Numbers</span>
-            <h2 class="section-header__title">Growing Trust Every Day</h2>
-            <p class="section-header__subtitle">Thousands rely on MediConnect for their healthcare journey</p>
-          </div>
-          <div class="stats-grid" id="stats-grid">
-            <div class="stat-card">
-              <div class="stat-card__icon">👥</div>
-              <div class="stat-card__number" id="stat-patients" data-target="50000">0</div>
-              <div class="stat-card__label">Registered Patients</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-card__icon">👨‍⚕️</div>
-              <div class="stat-card__number" id="stat-doctors" data-target="200">0</div>
-              <div class="stat-card__label">Verified Doctors</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-card__icon">📋</div>
-              <div class="stat-card__number" id="stat-appointments" data-target="150000">0</div>
-              <div class="stat-card__label">Appointments Completed</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-card__icon">🧪</div>
-              <div class="stat-card__number" id="stat-labtests" data-target="80000">0</div>
-              <div class="stat-card__label">Lab Tests Processed</div>
+            <div class="experience-step">
+              <div class="experience-step__num">4</div>
+              <div>
+                <div class="experience-step__title">Follow Up Digitally</div>
+                <div class="experience-step__desc">Access reports online, get medication reminders, and schedule follow-ups with one click.</div>
+              </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- ════════════════════════════════════════════════════
-           SECTION 4: WHY CHOOSE
-           ════════════════════════════════════════════════════ -->
-      <section id="why-choose" class="why-section animate-on-scroll">
-        <div class="container">
-          <div class="section-header">
-            <span class="section-header__label">Why MediConnect</span>
-            <h2 id="features-title" class="section-header__title">Built for Better Healthcare</h2>
-            <p class="section-header__subtitle">Everything you need, nothing you don't</p>
-          </div>
-          <div class="why-grid" id="why-grid">
-            <div class="why-card">
-              <div class="why-card__icon">🔒</div>
-              <h3 class="why-card__title">Secure & Private</h3>
-              <p class="why-card__desc">Your health data is encrypted end-to-end. HIPAA-compliant infrastructure with bank-grade security protocols.</p>
-            </div>
-            <div class="why-card">
-              <div class="why-card__icon">⚡</div>
-              <h3 class="why-card__title">Lightning Fast</h3>
-              <p class="why-card__desc">Book appointments in under 30 seconds. Get lab reports delivered instantly. No waiting, no delays.</p>
-            </div>
-            <div class="why-card">
-              <div class="why-card__icon">🎯</div>
-              <h3 class="why-card__title">AI-Powered Insights</h3>
-              <p class="why-card__desc">Smart doctor recommendations based on your symptoms. Intelligent health predictions and reminders.</p>
-            </div>
-            <div class="why-card">
-              <div class="why-card__icon">📱</div>
-              <h3 class="why-card__title">Omnichannel Access</h3>
-              <p class="why-card__desc">Seamlessly switch between web and mobile. Access your health records anytime, anywhere.</p>
-            </div>
-            <div class="why-card">
-              <div class="why-card__icon">💬</div>
-              <h3 class="why-card__title">24/7 Support</h3>
-              <p class="why-card__desc">Round-the-clock customer support. Chat with our team anytime you need assistance.</p>
-            </div>
-            <div class="why-card">
-              <div class="why-card__icon">🔄</div>
-              <h3 class="why-card__title">Integrated Ecosystem</h3>
-              <p class="why-card__desc">Connect with pharmacies, labs, and specialists in one unified healthcare network.</p>
-            </div>
-          </div>
+    <!-- ════════════════════════════════════════════════════
+         SECTION 7: DOCTOR EXPERIENCE
+         ════════════════════════════════════════════════════ -->
+    <section id="doctor-experience" class="experience-section experience-section--alt animate-on-scroll">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-header__label">
+            <span class="section-header__label-dot"></span>
+            For Doctors
+          </span>
+          <h2 class="section-header__title">Practice Management, Reimagined</h2>
+          <p class="section-header__subtitle">Streamline your practice with powerful tools designed for healthcare professionals</p>
         </div>
-      </section>
-
-      <!-- ════════════════════════════════════════════════════
-           SECTION 5: SERVICES OVERVIEW
-           ════════════════════════════════════════════════════ -->
-      <section id="services-section" class="services-section animate-on-scroll">
-        <div class="container">
-          <div class="section-header">
-            <span class="section-header__label">Our Services</span>
-            <h2 class="section-header__title">Comprehensive Healthcare Solutions</h2>
-            <p class="section-header__subtitle">From appointments to lab tests — we've got you covered</p>
+        <div class="experience-grid" style="direction:rtl;">
+          <div class="experience-visual" style="direction:ltr;">
+            <svg class="experience-visual__svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Doctor dashboard illustration">
+              <circle cx="50" cy="50" r="48" fill="url(#docGrad)" opacity="0.08"/>
+              <!-- Stethoscope -->
+              <circle cx="50" cy="28" r="12" fill="white" stroke="url(#docGrad)" stroke-width="2.5"/>
+              <!-- Cross -->
+              <rect x="45" y="21" width="10" height="14" rx="2" fill="url(#docGrad)" opacity="0.8"/>
+              <rect x="43" y="25" width="14" height="6" rx="2" fill="url(#docGrad)" opacity="0.8"/>
+              <!-- Stethoscope tube -->
+              <path d="M38 40 Q25 55 30 70 Q35 82 50 82 Q65 82 70 70 Q75 55 62 40" stroke="url(#docGrad)" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <circle cx="50" cy="82" r="8" fill="url(#docGrad)" opacity="0.9"/>
+              <!-- Clipboard -->
+              <rect x="62" y="45" width="26" height="32" rx="3" fill="white" stroke="url(#docGrad)" stroke-width="1.5"/>
+              <rect x="66" y="40" width="18" height="7" rx="2" fill="url(#docGrad)" opacity="0.7"/>
+              <line x1="66" y1="56" x2="84" y2="56" stroke="#312E81" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="66" y1="61" x2="80" y2="61" stroke="#312E81" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="66" y1="66" x2="82" y2="66" stroke="#312E81" stroke-width="1.5" stroke-linecap="round"/>
+              <defs>
+                <linearGradient id="docGrad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#312E81"/>
+                  <stop offset="100%" stop-color="#06B6D4"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <div class="experience-visual__title">Doctor Dashboard</div>
+            <div class="experience-visual__desc">Manage your schedule, view patient histories, write digital prescriptions, and track clinic performance.</div>
           </div>
-          <div class="services-grid" id="services-grid">
-            <a href="/doctors.html" class="service-card">
-              <div class="service-card__icon">👨‍⚕️</div>
-              <h3 class="service-card__title">Doctor Appointments</h3>
-              <p class="service-card__desc">Book appointments with top specialists in your area. Real-time availability and instant confirmation.</p>
-              <span class="service-card__link">Browse Doctors <span>→</span></span>
-            </a>
-            <a href="/consultations.html" class="service-card">
-              <div class="service-card__icon">💻</div>
-              <h3 class="service-card__title">Online Consultation</h3>
-              <p class="service-card__desc">Video consultations with certified doctors from the comfort of your home.</p>
-              <span class="service-card__link">Consult Now <span>→</span></span>
-            </a>
-            <a href="/lab-tests.html" class="service-card">
-              <div class="service-card__icon">🧪</div>
-              <h3 class="service-card__title">Lab Tests</h3>
-              <p class="service-card__desc">Schedule lab tests with free home sample collection. Get digital reports in 24 hours.</p>
-              <span class="service-card__link">Book a Test <span>→</span></span>
-            </a>
-            <a href="/home-sample-collection.html" class="service-card">
-              <div class="service-card__icon">🏠</div>
-              <h3 class="service-card__title">Home Sample Collection</h3>
-              <p class="service-card__desc">Certified phlebotomists visit your home for safe and hygienic sample collection.</p>
-              <span class="service-card__link">Schedule Pickup <span>→</span></span>
-            </a>
-            <a href="/medical-reports.html" class="service-card">
-              <div class="service-card__icon">📄</div>
-              <h3 class="service-card__title">Medical Reports</h3>
-              <p class="service-card__desc">Access your test reports, prescriptions, and medical history in one secure place.</p>
-              <span class="service-card__link">View Reports <span>→</span></span>
-            </a>
-            <a href="/pricing.html" class="service-card">
-              <div class="service-card__icon">💎</div>
-              <h3 class="service-card__title">Premium Plans</h3>
-              <p class="service-card__desc">Choose from flexible pricing plans designed for individuals, families, and enterprises.</p>
-              <span class="service-card__link">View Pricing <span>→</span></span>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- ════════════════════════════════════════════════════
-           SECTION 6: PATIENT EXPERIENCE
-           ════════════════════════════════════════════════════ -->
-      <section id="patient-experience" class="experience-section animate-on-scroll">
-        <div class="container">
-          <div class="section-header">
-            <span class="section-header__label">For Patients</span>
-            <h2 class="section-header__title">Your Care Journey, Simplified</h2>
-            <p class="section-header__subtitle">From finding the right doctor to follow-up care — we guide you every step</p>
-          </div>
-          <div class="experience-grid">
-            <div class="experience-visual">
-              <div class="experience-visual__icon">👤</div>
-              <div class="experience-visual__title">Patient Dashboard</div>
-              <div class="experience-visual__desc">Manage appointments, view reports, track health metrics, and communicate with your care team.</div>
-            </div>
+          <div style="direction:ltr;">
             <div class="experience-steps">
               <div class="experience-step">
                 <div class="experience-step__num">1</div>
                 <div>
-                  <div class="experience-step__title">Find the Right Doctor</div>
-                  <div class="experience-step__desc">Search by specialization, location, or symptoms. Read reviews and check availability.</div>
+                  <div class="experience-step__title">Manage Your Schedule</div>
+                  <div class="experience-step__desc">Set availability, manage time slots, and control your appointment calendar in real time.</div>
                 </div>
               </div>
               <div class="experience-step">
                 <div class="experience-step__num">2</div>
                 <div>
-                  <div class="experience-step__title">Book in Seconds</div>
-                  <div class="experience-step__desc">Choose your preferred time slot and get instant confirmation. No phone calls needed.</div>
+                  <div class="experience-step__title">Digital Prescriptions</div>
+                  <div class="experience-step__desc">Write and send e-prescriptions directly to pharmacies. No more paper clutter.</div>
                 </div>
               </div>
               <div class="experience-step">
                 <div class="experience-step__num">3</div>
                 <div>
-                  <div class="experience-step__title">Get Treated</div>
-                  <div class="experience-step__desc">Visit the clinic or connect via video. Receive prescriptions and care instructions.</div>
+                  <div class="experience-step__title">Patient History at a Glance</div>
+                  <div class="experience-step__desc">Access complete medical histories, past prescriptions, and lab results instantly.</div>
                 </div>
               </div>
               <div class="experience-step">
                 <div class="experience-step__num">4</div>
                 <div>
-                  <div class="experience-step__title">Follow Up Digitally</div>
-                  <div class="experience-step__desc">Access reports online, get medication reminders, and schedule follow-ups with one click.</div>
+                  <div class="experience-step__title">Analytics &amp; Insights</div>
+                  <div class="experience-step__desc">Track practice growth, patient satisfaction, and revenue with detailed analytics.</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- ════════════════════════════════════════════════════
-           SECTION 7: DOCTOR EXPERIENCE
-           ════════════════════════════════════════════════════ -->
-      <section id="doctor-experience" class="experience-section experience-section--alt animate-on-scroll">
-        <div class="container">
-          <div class="section-header">
-            <span class="section-header__label">For Doctors</span>
-            <h2 class="section-header__title">Practice Management, Reimagined</h2>
-            <p class="section-header__subtitle">Streamline your practice with powerful tools designed for healthcare professionals</p>
-          </div>
-          <div class="experience-grid" style="direction:rtl;">
-            <div class="experience-visual" style="direction:ltr;">
-              <div class="experience-visual__icon">👨‍⚕️</div>
-              <div class="experience-visual__title">Doctor Dashboard</div>
-              <div class="experience-visual__desc">Manage your schedule, view patient histories, write digital prescriptions, and track clinic performance.</div>
+    <!-- ════════════════════════════════════════════════════
+         SECTION 8: ADMIN CONTROL
+         ════════════════════════════════════════════════════ -->
+    <section id="admin-control" class="admin-section animate-on-scroll">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-header__label">
+            <span class="section-header__label-dot"></span>
+            Admin Control Center
+          </span>
+          <h2 class="section-header__title">Enterprise-Grade Management</h2>
+          <p class="section-header__subtitle">Full oversight of your healthcare platform with powerful admin tools</p>
+        </div>
+        <div class="admin-features">
+          <div class="admin-feature">
+            <div class="admin-feature__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <line x1="18" y1="20" x2="18" y2="10"/>
+                <line x1="12" y1="20" x2="12" y2="4"/>
+                <line x1="6" y1="20" x2="6" y2="14"/>
+              </svg>
             </div>
-            <div style="direction:ltr;">
-              <div class="experience-steps">
-                <div class="experience-step">
-                  <div class="experience-step__num">1</div>
-                  <div>
-                    <div class="experience-step__title">Manage Your Schedule</div>
-                    <div class="experience-step__desc">Set availability, manage time slots, and control your appointment calendar in real time.</div>
-                  </div>
-                </div>
-                <div class="experience-step">
-                  <div class="experience-step__num">2</div>
-                  <div>
-                    <div class="experience-step__title">Digital Prescriptions</div>
-                    <div class="experience-step__desc">Write and send e-prescriptions directly to pharmacies. No more paper clutter.</div>
-                  </div>
-                </div>
-                <div class="experience-step">
-                  <div class="experience-step__num">3</div>
-                  <div>
-                    <div class="experience-step__title">Patient History at a Glance</div>
-                    <div class="experience-step__desc">Access complete medical histories, past prescriptions, and lab results instantly.</div>
-                  </div>
-                </div>
-                <div class="experience-step">
-                  <div class="experience-step__num">4</div>
-                  <div>
-                    <div class="experience-step__title">Analytics & Insights</div>
-                    <div class="experience-step__desc">Track practice growth, patient satisfaction, and revenue with detailed analytics.</div>
-                  </div>
-                </div>
+            <div class="admin-feature__title">Real-Time Dashboard</div>
+            <div class="admin-feature__desc">Live metrics on patients, doctors, appointments and revenue. Make data-driven decisions.</div>
+          </div>
+          <div class="admin-feature">
+            <div class="admin-feature__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <div class="admin-feature__title">User Management</div>
+            <div class="admin-feature__desc">Manage patients, doctors, and staff accounts with role-based access control.</div>
+          </div>
+          <div class="admin-feature">
+            <div class="admin-feature__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+              </svg>
+            </div>
+            <div class="admin-feature__title">System Configuration</div>
+            <div class="admin-feature__desc">Configure platform settings, fee structures, specializations, and service categories.</div>
+          </div>
+          <div class="admin-feature">
+            <div class="admin-feature__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                <line x1="8" y1="21" x2="16" y2="21"/>
+                <line x1="12" y1="17" x2="12" y2="21"/>
+              </svg>
+            </div>
+            <div class="admin-feature__title">Content Management</div>
+            <div class="admin-feature__desc">Update homepage content, banners, and notifications without touching code.</div>
+          </div>
+          <div class="admin-feature">
+            <div class="admin-feature__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <line x1="12" y1="1" x2="12" y2="23"/>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+            </div>
+            <div class="admin-feature__title">Billing &amp; Reports</div>
+            <div class="admin-feature__desc">Track payments, generate invoices, and export financial reports with ease.</div>
+          </div>
+          <div class="admin-feature">
+            <div class="admin-feature__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+              </svg>
+            </div>
+            <div class="admin-feature__title">Notification Engine</div>
+            <div class="admin-feature__desc">Send automated reminders, alerts, and broadcast messages to users.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════
+         SECTION 9: TESTIMONIALS
+         ════════════════════════════════════════════════════ -->
+    <section id="testimonials" class="testimonials-section animate-on-scroll">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-header__label">
+            <span class="section-header__label-dot"></span>
+            Success Stories
+          </span>
+          <h2 class="section-header__title">What Our Users Say</h2>
+          <p class="section-header__subtitle">Real stories from patients, doctors, and healthcare administrators</p>
+        </div>
+        <div class="testimonials-grid" id="testimonials-grid">
+          <div class="testimonial-card">
+            <div class="testimonial-card__stars">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <p class="testimonial-card__text">"MediConnect transformed how I manage my health. Booking appointments and accessing reports has never been easier. The AI doctor recommendations are incredibly accurate."</p>
+            <div class="testimonial-card__author">
+              <div class="testimonial-card__avatar">S</div>
+              <div>
+                <div class="testimonial-card__name">Sarah Johnson</div>
+                <div class="testimonial-card__role">Patient, 3 years on MediConnect</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-card__stars">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <p class="testimonial-card__text">"As a busy practitioner, MediConnect's doctor dashboard saves me hours every week. Digital prescriptions and instant patient history access are game-changers."</p>
+            <div class="testimonial-card__author">
+              <div class="testimonial-card__avatar">D</div>
+              <div>
+                <div class="testimonial-card__name">Dr. Michael Chen</div>
+                <div class="testimonial-card__role">Cardiologist, MediConnect Partner</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-card__stars">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <p class="testimonial-card__text">"Managing a network of 50+ clinics was a challenge until MediConnect. The admin dashboard gives us complete visibility and control over operations across all locations."</p>
+            <div class="testimonial-card__author">
+              <div class="testimonial-card__avatar">R</div>
+              <div>
+                <div class="testimonial-card__name">Raj Patel</div>
+                <div class="testimonial-card__role">Operations Director, PrimeCare Network</div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- ════════════════════════════════════════════════════
-           SECTION 8: ADMIN CONTROL
-           ════════════════════════════════════════════════════ -->
-      <section id="admin-control" class="admin-section animate-on-scroll">
-        <div class="container">
-          <div class="section-header">
-            <span class="section-header__label">Admin Control Center</span>
-            <h2 class="section-header__title">Enterprise-Grade Management</h2>
-            <p class="section-header__subtitle">Full oversight of your healthcare platform with powerful admin tools</p>
+    <!-- ════════════════════════════════════════════════════
+         SECTION 10: PLATFORM PREVIEW
+         ════════════════════════════════════════════════════ -->
+    <section id="screenshots" class="screenshots-section animate-on-scroll">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-header__label">
+            <span class="section-header__label-dot"></span>
+            Platform Preview
+          </span>
+          <h2 class="section-header__title">See MediConnect in Action</h2>
+          <p class="section-header__subtitle">Intuitive interfaces built for every healthcare role</p>
+        </div>
+        <div class="screenshots-grid">
+          <div class="screenshot-card">
+            <div class="screenshot-card__preview screenshot-card__preview--patient">
+              <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="12" y="8" width="56" height="64" rx="6" fill="currentColor" opacity="0.15"/>
+                <rect x="18" y="16" width="44" height="8" rx="3" fill="currentColor" opacity="0.4"/>
+                <circle cx="30" cy="40" r="8" fill="currentColor" opacity="0.6"/>
+                <rect x="42" y="35" width="18" height="3" rx="1.5" fill="currentColor" opacity="0.5"/>
+                <rect x="42" y="41" width="12" height="3" rx="1.5" fill="currentColor" opacity="0.4"/>
+                <rect x="18" y="56" width="44" height="3" rx="1.5" fill="currentColor" opacity="0.3"/>
+                <rect x="18" y="62" width="30" height="3" rx="1.5" fill="currentColor" opacity="0.2"/>
+              </svg>
+              <div class="screenshot-card__preview-decoration"></div>
+            </div>
+            <div class="screenshot-card__body">
+              <div class="screenshot-card__title">Patient Portal</div>
+              <div class="screenshot-card__desc">Book appointments, view reports, and manage your health journey from one dashboard.</div>
+            </div>
           </div>
-          <div class="admin-features">
-            <div class="admin-feature">
-              <div class="admin-feature__icon">📊</div>
-              <div class="admin-feature__title">Real-Time Dashboard</div>
-              <div class="admin-feature__desc">Live metrics on patients, doctors, appointments and revenue. Make data-driven decisions.</div>
+
+          <div class="screenshot-card">
+            <div class="screenshot-card__preview screenshot-card__preview--doctor">
+              <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="8" y="10" width="64" height="60" rx="6" fill="currentColor" opacity="0.12"/>
+                <rect x="8" y="10" width="20" height="60" rx="6" fill="currentColor" opacity="0.2"/>
+                <circle cx="18" cy="26" r="5" fill="currentColor" opacity="0.5"/>
+                <rect x="13" y="36" width="10" height="2" rx="1" fill="currentColor" opacity="0.4"/>
+                <rect x="13" y="41" width="10" height="2" rx="1" fill="currentColor" opacity="0.3"/>
+                <rect x="13" y="46" width="10" height="2" rx="1" fill="currentColor" opacity="0.25"/>
+                <rect x="34" y="18" width="32" height="16" rx="3" fill="currentColor" opacity="0.3"/>
+                <rect x="34" y="40" width="14" height="14" rx="3" fill="currentColor" opacity="0.25"/>
+                <rect x="52" y="40" width="14" height="14" rx="3" fill="currentColor" opacity="0.2"/>
+              </svg>
+              <div class="screenshot-card__preview-decoration"></div>
             </div>
-            <div class="admin-feature">
-              <div class="admin-feature__icon">👥</div>
-              <div class="admin-feature__title">User Management</div>
-              <div class="admin-feature__desc">Manage patients, doctors, and staff accounts with role-based access control.</div>
+            <div class="screenshot-card__body">
+              <div class="screenshot-card__title">Doctor Workspace</div>
+              <div class="screenshot-card__desc">Manage patients, write digital prescriptions, and access medical histories instantly.</div>
             </div>
-            <div class="admin-feature">
-              <div class="admin-feature__icon">⚙️</div>
-              <div class="admin-feature__title">System Configuration</div>
-              <div class="admin-feature__desc">Configure platform settings, fee structures, specializations, and service categories.</div>
+          </div>
+
+          <div class="screenshot-card">
+            <div class="screenshot-card__preview screenshot-card__preview--admin">
+              <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="8" y="8" width="64" height="64" rx="6" fill="currentColor" opacity="0.1"/>
+                <rect x="8" y="8" width="64" height="16" rx="6" fill="currentColor" opacity="0.25"/>
+                <rect x="14" y="32" width="14" height="28" rx="2" fill="currentColor" opacity="0.5"/>
+                <rect x="33" y="22" width="14" height="38" rx="2" fill="currentColor" opacity="0.4"/>
+                <rect x="52" y="38" width="14" height="22" rx="2" fill="currentColor" opacity="0.3"/>
+                <path d="M17 32 L24 22 L40 28 L47 12 L59 38" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6" fill="none"/>
+              </svg>
+              <div class="screenshot-card__preview-decoration"></div>
             </div>
-            <div class="admin-feature">
-              <div class="admin-feature__icon">📱</div>
-              <div class="admin-feature__title">Content Management</div>
-              <div class="admin-feature__desc">Update homepage content, banners, and notifications without touching code.</div>
-            </div>
-            <div class="admin-feature">
-              <div class="admin-feature__icon">🧾</div>
-              <div class="admin-feature__title">Billing & Reports</div>
-              <div class="admin-feature__desc">Track payments, generate invoices, and export financial reports with ease.</div>
-            </div>
-            <div class="admin-feature">
-              <div class="admin-feature__icon">🔔</div>
-              <div class="admin-feature__title">Notification Engine</div>
-              <div class="admin-feature__desc">Send automated reminders, alerts, and broadcast messages to users.</div>
+            <div class="screenshot-card__body">
+              <div class="screenshot-card__title">Admin Console</div>
+              <div class="screenshot-card__desc">Complete platform oversight with real-time analytics, user management, and system config.</div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- ════════════════════════════════════════════════════
-           SECTION 9: TESTIMONIALS
-           ════════════════════════════════════════════════════ -->
-      <section id="testimonials" class="testimonials-section animate-on-scroll">
-        <div class="container">
-          <div class="section-header">
-            <span class="section-header__label">Success Stories</span>
-            <h2 class="section-header__title">What Our Users Say</h2>
-            <p class="section-header__subtitle">Real stories from patients, doctors, and healthcare administrators</p>
+    <!-- ════════════════════════════════════════════════════
+         SECTION 11: FAQ PREVIEW
+         ════════════════════════════════════════════════════ -->
+    <section id="faq-preview" class="faq-preview-section animate-on-scroll">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-header__label">
+            <span class="section-header__label-dot"></span>
+            FAQ
+          </span>
+          <h2 class="section-header__title">Frequently Asked Questions</h2>
+          <p class="section-header__subtitle">Quick answers to common questions about our platform</p>
+        </div>
+        <div class="faq-preview-list" id="faq-preview-list">
+          <div class="faq-preview-item">
+            <button class="faq-preview-question" onclick="toggleFaq(this)">
+              How do I book an appointment?
+              <span class="faq-chevron">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </button>
+            <div class="faq-preview-answer">
+              <div class="faq-preview-answer-inner">Simply browse our directory of doctors, choose your preferred specialist, select an available time slot, and confirm your booking. You'll receive an instant confirmation via email and SMS.</div>
+            </div>
           </div>
-          <div class="testimonials-grid" id="testimonials-grid">
-            <div class="testimonial-card">
-              <div class="testimonial-card__stars">★★★★★</div>
-              <p class="testimonial-card__text">"MediConnect transformed how I manage my health. Booking appointments and accessing reports has never been easier. The AI doctor recommendations are incredibly accurate."</p>
-              <div class="testimonial-card__author">
-                <div class="testimonial-card__avatar">S</div>
-                <div>
-                  <div class="testimonial-card__name">Sarah Johnson</div>
-                  <div class="testimonial-card__role">Patient, 3 years on MediConnect</div>
-                </div>
-              </div>
+          <div class="faq-preview-item">
+            <button class="faq-preview-question" onclick="toggleFaq(this)">
+              Are online consultations available?
+              <span class="faq-chevron">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </button>
+            <div class="faq-preview-answer">
+              <div class="faq-preview-answer-inner">Yes! Many of our doctors offer video consultations. You can filter by "Online Consultation" when searching for doctors. Simply book a slot and join the video call at the scheduled time.</div>
             </div>
-            <div class="testimonial-card">
-              <div class="testimonial-card__stars">★★★★★</div>
-              <p class="testimonial-card__text">"As a busy practitioner, MediConnect's doctor dashboard saves me hours every week. Digital prescriptions and instant patient history access are game-changers."</p>
-              <div class="testimonial-card__author">
-                <div class="testimonial-card__avatar">D</div>
-                <div>
-                  <div class="testimonial-card__name">Dr. Michael Chen</div>
-                  <div class="testimonial-card__role">Cardiologist, MediConnect Partner</div>
-                </div>
-              </div>
+          </div>
+          <div class="faq-preview-item">
+            <button class="faq-preview-question" onclick="toggleFaq(this)">
+              How do I get my lab test results?
+              <span class="faq-chevron">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </button>
+            <div class="faq-preview-answer">
+              <div class="faq-preview-answer-inner">Lab test results are uploaded to your account within 24–48 hours. You'll receive a notification when they're ready. You can view, download, and share reports directly from your patient dashboard.</div>
             </div>
-            <div class="testimonial-card">
-              <div class="testimonial-card__stars">★★★★★</div>
-              <p class="testimonial-card__text">"Managing a network of 50+ clinics was a challenge until MediConnect. The admin dashboard gives us complete visibility and control over operations across all locations."</p>
-              <div class="testimonial-card__author">
-                <div class="testimonial-card__avatar">R</div>
-                <div>
-                  <div class="testimonial-card__name">Raj Patel</div>
-                  <div class="testimonial-card__role">Operations Director, PrimeCare Network</div>
-                </div>
-              </div>
+          </div>
+          <div class="faq-preview-item">
+            <button class="faq-preview-question" onclick="toggleFaq(this)">
+              Is my health data secure?
+              <span class="faq-chevron">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </button>
+            <div class="faq-preview-answer">
+              <div class="faq-preview-answer-inner">Absolutely. We use bank-grade encryption (AES-256) for all data. Our platform is HIPAA-compliant and undergoes regular security audits. Your health information is accessible only to you and your authorized healthcare providers.</div>
+            </div>
+          </div>
+          <div class="faq-preview-item">
+            <button class="faq-preview-question" onclick="toggleFaq(this)">
+              Can I cancel or reschedule an appointment?
+              <span class="faq-chevron">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </button>
+            <div class="faq-preview-answer">
+              <div class="faq-preview-answer-inner">Yes, you can cancel or reschedule appointments up to 2 hours before the scheduled time at no charge. Simply go to your appointments section and select the booking you'd like to modify.</div>
             </div>
           </div>
         </div>
-      </section>
-
-      <!-- ════════════════════════════════════════════════════
-           SECTION 10: SCREENSHOTS
-           ════════════════════════════════════════════════════ -->
-      <section id="screenshots" class="screenshots-section animate-on-scroll">
-        <div class="container">
-          <div class="section-header">
-            <span class="section-header__label">Platform Preview</span>
-            <h2 class="section-header__title">See MediConnect in Action</h2>
-            <p class="section-header__subtitle">Intuitive interfaces built for every healthcare role</p>
-          </div>
-          <div class="screenshots-grid">
-            <div class="screenshot-card">
-              <div class="screenshot-card__preview screenshot-card__preview--patient">📱</div>
-              <div class="screenshot-card__body">
-                <div class="screenshot-card__title">Patient Portal</div>
-                <div class="screenshot-card__desc">Book appointments, view reports, and manage your health journey from one dashboard.</div>
-              </div>
-            </div>
-            <div class="screenshot-card">
-              <div class="screenshot-card__preview screenshot-card__preview--doctor">💻</div>
-              <div class="screenshot-card__body">
-                <div class="screenshot-card__title">Doctor Workspace</div>
-                <div class="screenshot-card__desc">Manage patients, write digital prescriptions, and access medical histories instantly.</div>
-              </div>
-            </div>
-            <div class="screenshot-card">
-              <div class="screenshot-card__preview screenshot-card__preview--admin">📊</div>
-              <div class="screenshot-card__body">
-                <div class="screenshot-card__title">Admin Console</div>
-                <div class="screenshot-card__desc">Complete platform oversight with real-time analytics, user management, and system config.</div>
-              </div>
-            </div>
-          </div>
+        <div class="faq-preview-footer">
+          <a href="/faq.html" class="btn-secondary faq-preview-more-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            View All FAQs
+          </a>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- ════════════════════════════════════════════════════
-           SECTION 11: FAQ PREVIEW
-           ════════════════════════════════════════════════════ -->
-      <section id="faq-preview" class="faq-preview-section animate-on-scroll">
-        <div class="container">
-          <div class="section-header">
-            <span class="section-header__label">FAQ</span>
-            <h2 class="section-header__title">Frequently Asked Questions</h2>
-            <p class="section-header__subtitle">Quick answers to common questions about our platform</p>
-          </div>
-          <div class="faq-preview-list" id="faq-preview-list">
-            <div class="faq-preview-item">
-              <button class="faq-preview-question" onclick="toggleFaq(this)">
-                How do I book an appointment?
-                <span class="icon">▼</span>
-              </button>
-              <div class="faq-preview-answer">
-                <div class="faq-preview-answer-inner">Simply browse our directory of doctors, choose your preferred specialist, select an available time slot, and confirm your booking. You'll receive an instant confirmation via email and SMS.</div>
-              </div>
-            </div>
-            <div class="faq-preview-item">
-              <button class="faq-preview-question" onclick="toggleFaq(this)">
-                Are online consultations available?
-                <span class="icon">▼</span>
-              </button>
-              <div class="faq-preview-answer">
-                <div class="faq-preview-answer-inner">Yes! Many of our doctors offer video consultations. You can filter by "Online Consultation" when searching for doctors. Simply book a slot and join the video call at the scheduled time.</div>
-              </div>
-            </div>
-            <div class="faq-preview-item">
-              <button class="faq-preview-question" onclick="toggleFaq(this)">
-                How do I get my lab test results?
-                <span class="icon">▼</span>
-              </button>
-              <div class="faq-preview-answer">
-                <div class="faq-preview-answer-inner">Lab test results are uploaded to your account within 24-48 hours. You'll receive a notification when they're ready. You can view, download, and share reports directly from your patient dashboard.</div>
-              </div>
-            </div>
-            <div class="faq-preview-item">
-              <button class="faq-preview-question" onclick="toggleFaq(this)">
-                Is my health data secure?
-                <span class="icon">▼</span>
-              </button>
-              <div class="faq-preview-answer">
-                <div class="faq-preview-answer-inner">Absolutely. We use bank-grade encryption (AES-256) for all data. Our platform is HIPAA-compliant and undergoes regular security audits. Your health information is accessible only to you and your authorized healthcare providers.</div>
-              </div>
-            </div>
-            <div class="faq-preview-item">
-              <button class="faq-preview-question" onclick="toggleFaq(this)">
-                Can I cancel or reschedule an appointment?
-                <span class="icon">▼</span>
-              </button>
-              <div class="faq-preview-answer">
-                <div class="faq-preview-answer-inner">Yes, you can cancel or reschedule appointments up to 2 hours before the scheduled time at no charge. Simply go to your appointments section and select the booking you'd like to modify.</div>
-              </div>
-            </div>
-          </div>
-          <div style="text-align:center;margin-top:var(--space-8);">
-            <a href="/faq.html" class="btn btn-secondary">View All FAQs</a>
-          </div>
+    <!-- ════════════════════════════════════════════════════
+         SECTION 12: CTA
+         ════════════════════════════════════════════════════ -->
+    <section class="cta-section animate-on-scroll">
+      <div class="container">
+        <h2 id="cta-title">Ready to Transform Your<br>Healthcare Experience?</h2>
+        <p id="cta-subtitle">Join 50,000+ patients and 200+ doctors who trust MediConnect for smarter healthcare management.</p>
+        <div class="cta-actions">
+          <a id="cta-button" href="/signup.html" class="btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+            Get Started Free
+          </a>
+          <a href="/doctors.html" class="btn btn-outline">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            Find a Doctor
+          </a>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- ════════════════════════════════════════════════════
-           SECTION 12: CTA
-           ════════════════════════════════════════════════════ -->
-      <section class="cta-section animate-on-scroll">
-        <div class="container">
-          <h2 id="cta-title">Ready to Transform Your Healthcare Experience?</h2>
-          <p id="cta-subtitle">Join 50,000+ patients and 200+ doctors who trust MediConnect for smarter healthcare management.</p>
-          <a id="cta-button" href="/signup.html" class="btn">Get Started Free →</a>
+    <!-- ════════════════════════════════════════════════════
+         DYNAMIC: DOCTORS (loaded from API)
+         ════════════════════════════════════════════════════ -->
+    <section id="doctors-section" class="doctors-section animate-on-scroll">
+      <div class="container">
+        <div class="doctors-section__header">
+          <h2 class="doctors-section__title">Our Top Doctors</h2>
+          <p class="doctors-section__subtitle">Meet our verified specialists across multiple disciplines</p>
         </div>
-      </section>
+        <div id="doctors-grid" class="doctors-grid">
+          <!-- Populated by homepage.js -->
+        </div>
+        <div style="text-align:center;">
+          <a href="/doctors.html" class="section-view-all">
+            View All Doctors
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
 
-      <!-- ════════════════════════════════════════════════════
-           DYNAMIC: DOCTORS (loaded from API)
-           ════════════════════════════════════════════════════ -->
-      <section id="doctors-section" class="doctors-section animate-on-scroll">
-        <div class="container">
-          <div class="doctors-section__header">
-            <h2 class="doctors-section__title">Our Top Doctors</h2>
-            <p class="doctors-section__subtitle">Meet our verified specialists across multiple disciplines</p>
-          </div>
-          <div id="doctors-grid" class="doctors-grid">
-            <!-- Populated by homepage.js -->
-          </div>
-          <div style="text-align:center;">
-            <a href="/doctors.html" class="section-view-all">View All Doctors →</a>
-          </div>
+    <!-- ════════════════════════════════════════════════════
+         DYNAMIC: LAB TESTS (loaded from API)
+         ════════════════════════════════════════════════════ -->
+    <section id="lab-tests-section" class="lab-tests-section animate-on-scroll">
+      <div class="container">
+        <div class="lab-tests-section__header">
+          <h2 class="lab-tests-section__title">Popular Lab Tests</h2>
+          <p class="lab-tests-section__subtitle">Comprehensive diagnostic tests with home collection available</p>
         </div>
-      </section>
-
-      <!-- ════════════════════════════════════════════════════
-           DYNAMIC: LAB TESTS (loaded from API)
-           ════════════════════════════════════════════════════ -->
-      <section id="lab-tests-section" class="lab-tests-section animate-on-scroll">
-        <div class="container">
-          <div class="lab-tests-section__header">
-            <h2 class="lab-tests-section__title">Popular Lab Tests</h2>
-            <p class="lab-tests-section__subtitle">Comprehensive diagnostic tests with home collection available</p>
-          </div>
-          <div id="lab-tests-grid" class="lab-tests-grid">
-            <!-- Populated by homepage.js -->
-          </div>
-          <div style="text-align:center;">
-            <a href="/lab-tests.html" class="section-view-all">View All Tests →</a>
-          </div>
+        <div id="lab-tests-grid" class="lab-tests-grid">
+          <!-- Populated by homepage.js -->
         </div>
-      </section>
-    </main>
+        <div style="text-align:center;">
+          <a href="/lab-tests.html" class="section-view-all">
+            View All Tests
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <div id="global-footer"></div>
 
@@ -579,5 +1059,28 @@
   <script src="/js/global-footer.js"></script>
   <script src="/js/animations.js"></script>
   <script src="/js/homepage.js"></script>
+
+  <!-- Inline: Scroll progress, FAQ toggle & mouse-glow on why-cards -->
+  <script>
+    // Scroll progress bar
+    const progressBar = document.getElementById('scroll-progress');
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight * 100).toFixed(1) : 0;
+      progressBar.style.width = progress + '%';
+    }, { passive: true });
+
+    // Mouse spotlight on why-cards
+    document.querySelectorAll('.why-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width * 100).toFixed(1);
+        const y = ((e.clientY - rect.top) / rect.height * 100).toFixed(1);
+        card.style.setProperty('--mouse-x', x + '%');
+        card.style.setProperty('--mouse-y', y + '%');
+      });
+    });
+  </script>
 </body>
 </html>

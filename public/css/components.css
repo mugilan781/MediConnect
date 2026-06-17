@@ -9,56 +9,87 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  padding: var(--space-2) var(--space-5);
+  padding: var(--space-3) var(--space-6);
   font-family: var(--font-family);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-normal);
   border: 1px solid transparent;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-button);
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: transform var(--transition-spring), box-shadow var(--transition-base), background var(--transition-base), border-color var(--transition-base), color var(--transition-base);
   text-decoration: none;
   white-space: nowrap;
+  position: relative;
+  overflow: hidden;
 }
 
 .btn:active { transform: scale(0.97); }
 .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
-.btn--primary {
-  background: var(--color-primary);
-  color: var(--color-white);
-  border-color: var(--color-primary);
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.28), transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.6s ease;
+  pointer-events: none;
 }
-.btn--primary:hover { background: var(--color-primary-dark); border-color: var(--color-primary-dark); }
+
+.btn:hover::after {
+  transform: translateX(120%);
+}
+
+.btn--primary {
+  background: var(--gradient-button);
+  color: var(--color-white);
+  border-color: transparent;
+  box-shadow: var(--shadow-primary);
+}
+.btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-primary-lg);
+  filter: brightness(1.1);
+}
 
 .btn--secondary {
   background: var(--color-white);
-  color: var(--color-primary);
-  border-color: var(--color-primary);
+  color: var(--color-primary-light);
+  border-color: var(--color-primary-light);
 }
-.btn--secondary:hover { background: var(--color-mint-light); }
+.btn--secondary:hover {
+  background: var(--color-gray-50);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
 
 .btn--danger {
   background: var(--color-danger);
   color: var(--color-white);
   border-color: var(--color-danger);
 }
-.btn--danger:hover { background: #C53030; }
+.btn--danger:hover { filter: brightness(1.1); transform: translateY(-2px); box-shadow: var(--shadow-md); }
 
 .btn--ghost {
   background: transparent;
   color: var(--color-text);
   border-color: transparent;
 }
-.btn--ghost:hover { background: var(--color-gray-100); }
+.btn--ghost:hover { 
+  background: var(--color-primary-glow); 
+  color: var(--color-primary-light);
+}
 
 .btn--outline {
   background: transparent;
-  color: var(--color-primary);
-  border-color: var(--color-primary);
+  color: var(--color-primary-light);
+  border-color: var(--color-primary-light);
 }
-.btn--outline:hover { background: var(--color-mint-light); }
+.btn--outline:hover { 
+  background: var(--color-gray-50); 
+  transform: translateY(-2px);
+}
 
 .btn--sm { padding: var(--space-1) var(--space-3); font-size: var(--font-size-sm); }
 .btn--lg { padding: var(--space-3) var(--space-8); font-size: var(--font-size-md); }
@@ -68,15 +99,18 @@
 /* ── Cards ── */
 .card {
   background: var(--bg-card);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-card);
   overflow: hidden;
-  transition: box-shadow var(--transition-base), transform var(--transition-base);
+  transition: box-shadow var(--transition-base), transform var(--transition-spring), border-color var(--transition-base);
+  position: relative;
 }
 
 .card:hover {
   box-shadow: var(--shadow-card-hover);
+  border-color: var(--color-border-input);
+  transform: translateY(-6px);
 }
 
 .card__header {
@@ -105,10 +139,10 @@
 /* ── Stat Card ── */
 .stat-card {
   background: var(--bg-card);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-card);
   padding: var(--space-6);
   box-shadow: var(--shadow-card);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-card);
   display: flex;
   align-items: flex-start;
   gap: var(--space-4);
@@ -116,8 +150,9 @@
 }
 
 .stat-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-6px);
   box-shadow: var(--shadow-card-hover);
+  border-color: var(--color-border-input);
 }
 
 .stat-card__icon {
@@ -289,6 +324,37 @@
 .toast--warning { border-color: var(--color-warning); }
 .toast--info    { border-color: var(--color-info); }
 
+.toast__icon {
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  background: var(--color-gray-50);
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.toast__close {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  color: var(--color-gray-400);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.toast__close:hover {
+  background: var(--color-gray-100);
+  color: var(--color-gray-700);
+}
+
 @keyframes slideInRight {
   from { transform: translateX(100%); opacity: 0; }
   to   { transform: translateX(0); opacity: 1; }
@@ -327,7 +393,8 @@
 .empty-state__icon {
   font-size: 3rem;
   margin-bottom: var(--space-4);
-  opacity: 0.4;
+  opacity: 1;
+  color: var(--color-primary);
 }
 
 .empty-state__title {
@@ -383,3 +450,180 @@
 .pagination__btn:hover { background: var(--color-mint-light); border-color: var(--color-primary); }
 .pagination__btn.active { background: var(--color-primary); color: var(--color-white); border-color: var(--color-primary); }
 .pagination__btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Public page polish applied across feature pages */
+.public-page main > section:first-child:not(.home-hero) {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(var(--color-primary-rgb), 0.13), transparent 32%),
+    radial-gradient(circle at 82% 10%, rgba(var(--color-accent-rgb), 0.12), transparent 30%),
+    linear-gradient(145deg, #FAF5FF 0%, #ffffff 48%, #EDE9FE 100%);
+}
+
+.public-page main > section:first-child:not(.home-hero)::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(var(--color-primary-rgb), 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--color-accent-rgb), 0.04) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: linear-gradient(to bottom, black, transparent 72%);
+}
+
+.public-page main > section:first-child:not(.home-hero) > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.public-page .section-header__label {
+  box-shadow: 0 6px 18px rgba(var(--color-primary-rgb), 0.08);
+}
+
+.public-page .section-header__title {
+  letter-spacing: 0;
+}
+
+.public-page .service-cta,
+.public-page .section-view-all,
+.public-page .btn-secondary {
+  position: relative;
+  overflow: hidden;
+}
+
+.public-page .cat-card,
+.public-page .dept-card,
+.public-page .spec-card,
+.public-page .benefit-card,
+.public-page .service-card,
+.public-page .screenshot-card,
+.public-page .faq-item,
+.public-page .services-faq-item,
+.public-page .appt-faq-item,
+.public-page .faq-preview-item {
+  border-color: rgba(var(--color-primary-rgb), 0.14);
+  box-shadow: var(--shadow-card);
+}
+
+/* ── Shared FAQ Component (Standardized from Home Page FAQ) ── */
+.faq-preview-section {
+  padding: var(--space-24) 0;
+  background: var(--color-white);
+}
+
+.faq-preview-list {
+  max-width: 760px;
+  margin: var(--space-10) auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.faq-preview-item {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition: all var(--transition-base);
+}
+
+.faq-preview-item:hover {
+  border-color: var(--color-primary-light);
+  box-shadow: 0 8px 24px rgba(var(--color-primary-rgb), 0.08);
+  transform: translateY(-3px);
+}
+
+.faq-preview-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--space-5) var(--space-6);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-gray-800);
+  text-align: left;
+  gap: var(--space-4);
+  transition: color var(--transition-fast);
+}
+
+.faq-preview-question:hover { color: var(--color-primary); }
+
+.faq-chevron {
+  flex-shrink: 0;
+  width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform var(--transition-base);
+  color: var(--color-text-muted);
+}
+
+.faq-chevron svg { width: 18px; height: 18px; }
+
+.faq-preview-question.open .faq-chevron {
+  transform: rotate(180deg);
+  color: var(--color-primary);
+}
+.faq-preview-question.open { color: var(--color-primary); }
+
+.faq-preview-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.faq-preview-answer-inner {
+  padding: 0 var(--space-6) var(--space-5);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  line-height: var(--line-height-relaxed);
+}
+
+/* Responsive FAQ overrides */
+@media (max-width: 768px) {
+  .faq-preview-list {
+    margin-top: var(--space-8);
+    gap: var(--space-3);
+  }
+  .faq-preview-question {
+    padding: var(--space-5);
+    font-size: var(--font-size-base);
+    align-items: flex-start;
+  }
+  .faq-chevron { margin-top: 2px; }
+  .faq-preview-answer-inner {
+    padding: 0 var(--space-5) var(--space-5);
+    font-size: var(--font-size-sm);
+  }
+}
+
+@media (max-width: 425px) {
+  .faq-preview-question {
+    padding: var(--space-4);
+    font-size: var(--font-size-sm);
+  }
+  .faq-preview-answer-inner {
+    padding: 0 var(--space-4) var(--space-4);
+    font-size: var(--font-size-sm);
+  }
+}
+
+@media (max-width: 320px) {
+  .faq-preview-list {
+    gap: var(--space-2);
+  }
+  .faq-preview-question {
+    padding: var(--space-4);
+    font-size: var(--font-size-sm);
+  }
+  .faq-preview-answer-inner {
+    padding: 0 var(--space-4) var(--space-4);
+    font-size: var(--font-size-sm);
+  }
+}
+

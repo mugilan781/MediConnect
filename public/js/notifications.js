@@ -40,7 +40,7 @@ const Notifications = {
       if (!container || !response.success) return;
 
       if (response.data.length === 0) {
-        container.innerHTML = UI.emptyState('🔔', 'No Notifications', 'You\'re all caught up!');
+        container.innerHTML = UI.emptyState('bell', 'No Notifications', 'You\'re all caught up!');
         const pagContainer = document.getElementById('notifications-pagination');
         if (pagContainer) pagContainer.innerHTML = '';
         return;
@@ -49,7 +49,7 @@ const Notifications = {
       container.innerHTML = response.data.map(n => `
         <div class="appointment-item ${n.is_read ? '' : 'notif-unread'}" style="cursor: pointer;" onclick="Notifications.markAndNavigate(${n.id}, '${n.link || ''}')">
           <div class="appointment-item__time" style="background: ${n.is_read ? 'var(--color-gray-50, #f9fafb)' : 'var(--color-mint-light)'};">
-            <div style="font-size: 1.5rem;">${this.getIcon(n.type)}</div>
+            <div style="font-size: 1.5rem;">${MediIcons.icon(this.getIcon(n.type))}</div>
           </div>
           <div class="appointment-item__info">
             <div class="appointment-item__name">${n.title}</div>
@@ -58,7 +58,7 @@ const Notifications = {
           </div>
           <div class="d-flex gap-2 items-center">
             ${!n.is_read ? '<span class="badge badge--primary">New</span>' : ''}
-            ${!n.is_read ? `<button class="btn btn--sm btn--ghost" onclick="event.stopPropagation(); Notifications.markSingleRead(${n.id})" title="Mark as read">✓</button>` : ''}
+            ${!n.is_read ? `<button class="btn btn--sm btn--ghost" onclick="event.stopPropagation(); Notifications.markSingleRead(${n.id})" title="Mark as read">${MediIcons.icon('check')}</button>` : ''}
           </div>
         </div>
       `).join('');
@@ -101,8 +101,8 @@ const Notifications = {
   },
 
   getIcon(type) {
-    const icons = { appointment: '📅', lab: '🔬', report: '📄', system: '⚙️', reminder: '⏰' };
-    return icons[type] || '🔔';
+    const icons = { appointment: 'calendar', lab: 'microscope', report: 'file', system: 'settings', reminder: 'clock' };
+    return icons[type] || 'bell';
   },
 
   timeAgo(dateStr) {

@@ -1,8 +1,23 @@
 // ============================================================
-// MediConnect – public/js/global-navbar.js
-// Premium healthcare SaaS global navigation component
-// Self-contained, renders into #global-navbar element
+// MediConnect - public/js/global-navbar.js
+// Global navigation component
 // ============================================================
+
+const NavbarIcons = {
+  globe: '<circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 0 20"/><path d="M12 2a15.3 15.3 0 0 0 0 20"/>',
+  user: '<path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="7" r="4"/>',
+  chart: '<path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="5" rx="1"/><rect x="12" y="8" width="3" height="9" rx="1"/><rect x="17" y="5" width="3" height="12" rx="1"/>',
+  stethoscope: '<path d="M4 4v6a4 4 0 0 0 8 0V4"/><path d="M8 14v2a4 4 0 0 0 8 0v-3"/><circle cx="19" cy="10" r="3"/><path d="M6 4H4M12 4h-2"/>',
+  doctor: '<path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/><path d="M4 22a8 8 0 0 1 16 0"/><path d="M15 18h4M17 16v4"/>',
+  settings: '<path d="M12 15.5A3.5 3.5 0 1 0 12 8a3.5 3.5 0 0 0 0 7.5z"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1-1.55 1.7 1.7 0 0 0-1.88.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.55-1H3a2 2 0 1 1 0-4h.09a1.7 1.7 0 0 0 1.55-1 1.7 1.7 0 0 0-.34-1.88l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.55V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.88-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9c.67.22 1.55.86 1.55 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.51 1z"/>',
+  logout: '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/>',
+  lock: '<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+  edit: '<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
+  menu: '<path d="M4 6h16M4 12h16M4 18h16"/>',
+  chevron: '<path d="m6 9 6 6 6-6"/>',
+};
+
+const navIcon = name => `<svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${NavbarIcons[name] || NavbarIcons.user}</svg>`;
 
 const GlobalNavbar = {
   navLinks: [
@@ -16,18 +31,7 @@ const GlobalNavbar = {
     { href: '/contact.html', label: 'Contact' },
   ],
 
-  languages: [
-    { code: 'en', label: 'English', flag: '🇺🇸' },
-    { code: 'hi', label: 'हिंदी', flag: '🇮🇳' },
-    { code: 'bn', label: 'বাংলা', flag: '🇧🇩' },
-    { code: 'te', label: 'తెలుగు', flag: '🇮🇳' },
-  ],
 
-  currentLang: 'en',
-
-  /**
-   * Initialize navbar
-   */
   init(containerId = 'global-navbar') {
     const container = document.getElementById(containerId);
     if (!container) return;
@@ -35,12 +39,8 @@ const GlobalNavbar = {
     this.render(container);
     this.initEventListeners(container);
     this.handleScroll();
-    this.updateAuthState();
   },
 
-  /**
-   * Render navbar HTML
-   */
   render(container) {
     const currentPath = window.location.pathname;
     const user = Auth.getUser();
@@ -50,12 +50,9 @@ const GlobalNavbar = {
       return `<a href="${link.href}" class="global-navbar__link${isActive ? ' active' : ''}">${link.label}</a>`;
     }).join('');
 
-    const profileMenuHtml = this.getProfileMenuHTML(user);
-
     container.innerHTML = `
       <nav class="global-navbar" id="global-navbar-inner">
         <div class="global-navbar__inner">
-          <!-- Left: Logo + Brand -->
           <div class="global-navbar__left">
             <a href="/index.html" class="global-navbar__logo-link">
               <div class="global-navbar__logo-icon">M</div>
@@ -66,47 +63,23 @@ const GlobalNavbar = {
             </a>
           </div>
 
-          <!-- Center: Navigation -->
-          <div class="global-navbar__center">
-            ${centerLinks}
-          </div>
+          <div class="global-navbar__center">${centerLinks}</div>
 
-          <!-- Right: Actions -->
           <div class="global-navbar__right">
-            <!-- Language Switcher -->
-            <div class="global-navbar__lang" id="global-navbar-lang">
-              <button class="global-navbar__lang-btn" id="global-navbar-lang-btn">
-                <span>🌐</span>
-                <span id="global-navbar-lang-label">EN</span>
-                <svg width="10" height="6" viewBox="0 0 10 6" fill="currentColor"><path d="M5 6L0 0h10z"/></svg>
-              </button>
-              <div class="global-navbar__lang-menu" id="global-navbar-lang-menu">
-                ${this.languages.map(lang => `
-                  <button class="global-navbar__lang-option${lang.code === this.currentLang ? ' active' : ''}" data-lang="${lang.code}">
-                    <span>${lang.flag}</span> ${lang.label}
-                  </button>
-                `).join('')}
-              </div>
-            </div>
-
-            <!-- Profile Dropdown -->
             <div class="global-navbar__profile" id="global-navbar-profile">
-              <button class="global-navbar__profile-btn" id="global-navbar-profile-btn">
-                <div class="avatar-circle">${user ? user.full_name.charAt(0).toUpperCase() : '👤'}</div>
-                <span>${user ? user.full_name.split(' ')[0] : 'Account'}</span>
-                <svg width="10" height="6" viewBox="0 0 10 6" fill="currentColor"><path d="M5 6L0 0h10z"/></svg>
+              <button class="global-navbar__profile-btn" id="global-navbar-profile-btn" type="button">
+                ${navIcon('user')}
+                ${navIcon('chevron')}
               </button>
-              ${profileMenuHtml}
+              ${this.getProfileMenuHTML(user)}
             </div>
 
-            <!-- Mobile Toggle -->
-            <button class="global-navbar__mobile-toggle" id="global-navbar-mobile-toggle" aria-label="Toggle menu">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M3 5h14v2H3zm0 4h14v2H3zm0 4h14v2H3z"/></svg>
+            <button class="global-navbar__mobile-toggle" id="global-navbar-mobile-toggle" type="button" aria-label="Toggle menu">
+              ${navIcon('menu')}
             </button>
           </div>
         </div>
 
-        <!-- Mobile Menu -->
         <div class="global-navbar__mobile-menu" id="global-navbar-mobile-menu">
           ${this.navLinks.map(link => {
             const isActive = currentPath === link.href;
@@ -129,9 +102,6 @@ const GlobalNavbar = {
     `;
   },
 
-  /**
-   * Get profile dropdown menu HTML
-   */
   getProfileMenuHTML(user) {
     let html = '<div class="global-navbar__profile-menu" id="global-navbar-profile-menu">';
 
@@ -145,162 +115,104 @@ const GlobalNavbar = {
           </div>
         </div>
         <div class="global-navbar__menu-section">Dashboard</div>
-        <a href="${CONFIG.DASHBOARD_ROUTES[user.role] || '/patient-dashboard.html'}" class="global-navbar__menu-item">
-          <span class="menu-icon">📊</span> My Dashboard
-        </a>
-        <a href="/profile.html" class="global-navbar__menu-item">
-          <span class="menu-icon">👤</span> Profile Settings
-        </a>
+        <a href="${CONFIG.DASHBOARD_ROUTES[user.role] || '/patient-dashboard.html'}" class="global-navbar__menu-item"><span class="menu-icon">${navIcon('chart')}</span> My Dashboard</a>
+        <a href="/profile.html" class="global-navbar__menu-item"><span class="menu-icon">${navIcon('user')}</span> Profile Settings</a>
         <div class="global-navbar__menu-section">Demo Access</div>
-        <a href="/patient-dashboard.html" class="global-navbar__menu-item">
-          <span class="menu-icon">🩺</span> Patient Dashboard
-        </a>
-        <a href="/doctor-dashboard.html" class="global-navbar__menu-item">
-          <span class="menu-icon">👨‍⚕️</span> Doctor Dashboard
-        </a>
-        <a href="/admin-dashboard.html" class="global-navbar__menu-item">
-          <span class="menu-icon">⚙️</span> Admin Dashboard
-        </a>
+        <a href="/patient-dashboard.html" class="global-navbar__menu-item"><span class="menu-icon">${navIcon('stethoscope')}</span> Patient Dashboard</a>
+        <a href="/doctor-dashboard.html" class="global-navbar__menu-item"><span class="menu-icon">${navIcon('doctor')}</span> Doctor Dashboard</a>
+        <a href="/admin-dashboard.html" class="global-navbar__menu-item"><span class="menu-icon">${navIcon('settings')}</span> Admin Dashboard</a>
         <div class="global-navbar__menu-section">Account</div>
-        <button class="global-navbar__menu-item" id="global-navbar-logout-btn">
-          <span class="menu-icon">🚪</span> Logout
-        </button>
+        <button class="global-navbar__menu-item" id="global-navbar-logout-btn" type="button"><span class="menu-icon">${navIcon('logout')}</span> Logout</button>
       `;
     } else {
       html += `
         <div class="global-navbar__menu-section">Account</div>
-        <a href="/login.html" class="global-navbar__menu-item">
-          <span class="menu-icon">🔑</span> Login
-        </a>
-        <a href="/signup.html" class="global-navbar__menu-item">
-          <span class="menu-icon">📝</span> Sign Up
-        </a>
+        <a href="/login.html" class="global-navbar__menu-item"><span class="menu-icon">${navIcon('lock')}</span> Login</a>
+        <a href="/signup.html" class="global-navbar__menu-item"><span class="menu-icon">${navIcon('edit')}</span> Sign Up</a>
         <div class="global-navbar__menu-section">Dashboards</div>
-        <a href="/patient-dashboard.html" class="global-navbar__menu-item">
-          <span class="menu-icon">🩺</span> Patient Dashboard
-        </a>
-        <a href="/doctor-dashboard.html" class="global-navbar__menu-item">
-          <span class="menu-icon">👨‍⚕️</span> Doctor Dashboard
-        </a>
-        <a href="/admin-dashboard.html" class="global-navbar__menu-item">
-          <span class="menu-icon">⚙️</span> Admin Dashboard
-        </a>
+        <a href="/patient-dashboard.html" class="global-navbar__menu-item"><span class="menu-icon">${navIcon('stethoscope')}</span> Patient Dashboard</a>
+        <a href="/doctor-dashboard.html" class="global-navbar__menu-item"><span class="menu-icon">${navIcon('doctor')}</span> Doctor Dashboard</a>
+        <a href="/admin-dashboard.html" class="global-navbar__menu-item"><span class="menu-icon">${navIcon('settings')}</span> Admin Dashboard</a>
       `;
     }
 
-    html += '</div>';
-    return html;
+    return `${html}</div>`;
   },
 
-  /**
-   * Initialize event listeners
-   */
   initEventListeners(container) {
-    // Profile dropdown toggle
     const profileBtn = document.getElementById('global-navbar-profile-btn');
     const profileMenu = document.getElementById('global-navbar-profile-menu');
+
     if (profileBtn && profileMenu) {
-      profileBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
+      profileBtn.addEventListener('click', event => {
+        event.stopPropagation();
         profileMenu.classList.toggle('open');
-        // Close language menu
-        const langMenu = document.getElementById('global-navbar-lang-menu');
-        if (langMenu) langMenu.classList.remove('open');
       });
     }
 
-    // Language switcher toggle
-    const langBtn = document.getElementById('global-navbar-lang-btn');
-    const langMenu = document.getElementById('global-navbar-lang-menu');
-    if (langBtn && langMenu) {
-      langBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        langMenu.classList.toggle('open');
-        // Close profile menu
-        if (profileMenu) profileMenu.classList.remove('open');
-      });
-    }
-
-    // Language options
-    container.querySelectorAll('.global-navbar__lang-option').forEach(opt => {
-      opt.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const lang = opt.dataset.lang;
-        this.currentLang = lang;
-        const label = document.getElementById('global-navbar-lang-label');
-        if (label) label.textContent = lang.toUpperCase();
-        langMenu.classList.remove('open');
-        container.querySelectorAll('.global-navbar__lang-option').forEach(o => o.classList.remove('active'));
-        opt.classList.add('active');
-        UI.showToast(`Language switched to ${opt.textContent.trim()}`, 'success');
-      });
-    });
-
-    // Mobile toggle
     const mobileToggle = document.getElementById('global-navbar-mobile-toggle');
     const mobileMenu = document.getElementById('global-navbar-mobile-menu');
     if (mobileToggle && mobileMenu) {
-      mobileToggle.addEventListener('click', (e) => {
-        e.stopPropagation();
+      mobileToggle.addEventListener('click', event => {
+        event.stopPropagation();
         mobileMenu.classList.toggle('open');
       });
     }
 
-    // Close dropdowns when clicking outside
     document.addEventListener('click', () => {
       if (profileMenu) profileMenu.classList.remove('open');
-      if (langMenu) langMenu.classList.remove('open');
-      // Don't close mobile menu on outside click - user needs explicit close
     });
 
-    // Logout button
     const logoutBtn = document.getElementById('global-navbar-logout-btn');
-    if (logoutBtn) {
-      logoutBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        Auth.logout();
-      });
-    }
+    if (logoutBtn) logoutBtn.addEventListener('click', event => {
+      event.preventDefault();
+      Auth.logout();
+    });
 
-    // Mobile logout
     const mobileLogout = document.getElementById('global-navbar-mobile-logout');
-    if (mobileLogout) {
-      mobileLogout.addEventListener('click', (e) => {
-        e.preventDefault();
-        Auth.logout();
-      });
-    }
+    if (mobileLogout) mobileLogout.addEventListener('click', event => {
+      event.preventDefault();
+      Auth.logout();
+    });
   },
 
-  /**
-   * Handle scroll event for navbar shadow
-   */
   handleScroll() {
     const navbar = document.getElementById('global-navbar-inner');
     if (!navbar) return;
 
-    const onScroll = () => {
-      if (window.scrollY > 10) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
-      }
-    };
-
+    const onScroll = () => navbar.classList.toggle('scrolled', window.scrollY > 10);
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
   },
-
-  /**
-   * Update auth state in navbar
-   */
-  updateAuthState() {
-    // This method updates the profile button/name when auth state changes
-    // Currently handled by re-render on page load
-  },
 };
 
-// Auto-initialize
 document.addEventListener('DOMContentLoaded', () => {
   GlobalNavbar.init();
 });
+
+if (typeof window.toggleFaq === 'undefined') {
+  window.toggleFaq = function(btn) {
+    const item = btn.closest('.faq-preview-item');
+    if (!item) return;
+    const answer = item.querySelector('.faq-preview-answer');
+    const isOpen = btn.classList.contains('open');
+
+    // Close all other open FAQs
+    document.querySelectorAll('.faq-preview-question.open').forEach(q => {
+      if (q !== btn) {
+        q.classList.remove('open');
+        const ans = q.closest('.faq-preview-item').querySelector('.faq-preview-answer');
+        if (ans) ans.style.maxHeight = null;
+      }
+    });
+
+    if (isOpen) {
+      btn.classList.remove('open');
+      if (answer) answer.style.maxHeight = null;
+    } else {
+      btn.classList.add('open');
+      if (answer) answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+  };
+}
+

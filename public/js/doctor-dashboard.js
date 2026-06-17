@@ -304,7 +304,7 @@ const DoctorDashboard = {
       if (!container || !response.success) return;
 
       if (response.data.length === 0) {
-        container.innerHTML = UI.emptyState('📅', 'No Appointments', 'No appointments match your criteria.');
+        container.innerHTML = UI.emptyState('calendar', 'No Appointments', 'No appointments match your criteria.');
         return;
       }
 
@@ -403,7 +403,7 @@ const DoctorDashboard = {
       if (!container || !response.success) return;
 
       if (response.data.length === 0) {
-        container.innerHTML = UI.emptyState('🩺', 'No Consultations', 'No consultation records found.');
+        container.innerHTML = UI.emptyState('stethoscope', 'No Consultations', 'No consultation records found.');
         return;
       }
 
@@ -529,7 +529,7 @@ const DoctorDashboard = {
       if (!container || !response.success) return;
 
       if (response.data.length === 0) {
-        container.innerHTML = UI.emptyState('👤', 'No Associated Patients', 'You have no associated patients in your history.');
+        container.innerHTML = UI.emptyState('user', 'No Associated Patients', 'You have no associated patients in your history.');
         return;
       }
 
@@ -765,7 +765,7 @@ const DoctorDashboard = {
       if (!container || !response.success) return;
 
       if (response.data.length === 0) {
-        container.innerHTML = UI.emptyState('⏰', 'No Custom Slots', 'No custom slots defined. You follow your weekly default hours.');
+        container.innerHTML = UI.emptyState('clock', 'No Custom Slots', 'No custom slots defined. You follow your weekly default hours.');
         return;
       }
 
@@ -856,7 +856,7 @@ const DoctorDashboard = {
       if (!container || !res.success) return;
 
       if (res.data.length === 0) {
-        container.innerHTML = UI.emptyState('🏖️', 'No Absence / Leaves', 'You have no leaves requested or scheduled.');
+        container.innerHTML = UI.emptyState('calendar', 'No Absence / Leaves', 'You have no leaves requested or scheduled.');
         return;
       }
 
@@ -925,7 +925,7 @@ const DoctorDashboard = {
       if (!container || !response.success) return;
 
       if (response.data.length === 0) {
-        container.innerHTML = UI.emptyState('📄', 'No Reports', 'You have not uploaded any medical reports yet.');
+        container.innerHTML = UI.emptyState('file', 'No Reports', 'You have not uploaded any medical reports yet.');
         return;
       }
 
@@ -1162,7 +1162,7 @@ const DoctorDashboard = {
       if (!container || !res.success) return;
 
       if (res.data.length === 0) {
-        container.innerHTML = UI.emptyState('🔔', 'No Notifications', 'No notifications match search and filter.');
+        container.innerHTML = UI.emptyState('bell', 'No Notifications', 'No notifications match search and filter.');
         return;
       }
 

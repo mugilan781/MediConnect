@@ -7,7 +7,7 @@
 /* ── Section 1: Hero ── */
 .pricing-hero {
   padding: var(--space-20) 0 var(--space-16);
-  background: var(--gradient-hero);
+  background: var(--gradient-hero); color: white;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -17,7 +17,7 @@
   position: absolute;
   top: -30%; left: -10%;
   width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(78,154,151,0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(var(--color-accent-rgb), 0.12) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -26,7 +26,7 @@
   position: absolute;
   bottom: -20%; right: -15%;
   width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(78,154,151,0.05) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(var(--color-primary-rgb), 0.08) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -38,13 +38,19 @@
 .pricing-hero h1 {
   font-size: 3.5rem;
   font-weight: var(--font-weight-extrabold);
-  color: var(--color-gray-800);
+  color: white;
   margin-bottom: var(--space-4);
   line-height: 1.15;
 }
+.pricing-hero h1 .text-gradient {
+  background: linear-gradient(135deg, #67E8F9 0%, #A5F3FC 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 .pricing-hero p {
   font-size: var(--font-size-lg);
-  color: var(--color-text-light);
+  color: white;
   max-width: 600px;
   margin: 0 auto var(--space-8);
   line-height: var(--line-height-relaxed);
@@ -80,7 +86,7 @@
 }
 .pricing-hero__stat-label {
   font-size: var(--font-size-xs);
-  color: var(--color-text-light);
+  color: var(--color-text-muted);
   margin-top: var(--space-1);
 }
 
@@ -151,7 +157,7 @@
 }
 .pricing-why__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: var(--space-6);
   margin-top: var(--space-8);
 }
@@ -197,7 +203,7 @@
 }
 .pricing-plans__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: var(--space-6);
   margin-top: var(--space-8);
 }
@@ -478,7 +484,7 @@
 }
 .pricing-roi__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: var(--space-6);
   margin-top: var(--space-8);
 }
@@ -522,14 +528,12 @@
   background: linear-gradient(135deg, var(--color-gray-900) 0%, #1A202C 100%);
   color: white;
 }
-.pricing-clinic .section-header__label {
-  color: var(--color-primary-light);
-}
+.pricing-clinic .section-header__label { color: #67E8F9; background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
 .pricing-clinic .section-header__title {
   color: white;
 }
 .pricing-clinic .section-header__subtitle {
-  color: var(--color-gray-400);
+  color: rgba(255,255,255,0.75);
 }
 .pricing-clinic__grid {
   display: grid;
@@ -561,7 +565,7 @@
 }
 .pricing-clinic__card p {
   font-size: var(--font-size-sm);
-  color: var(--color-gray-400);
+  color: rgba(255,255,255,0.7);
   line-height: var(--line-height-relaxed);
 }
 
@@ -614,72 +618,6 @@
   line-height: var(--line-height-relaxed);
 }
 
-/* ── Section 9: FAQ ── */
-.pricing-faq {
-  padding: var(--space-20) 0;
-  background: var(--color-gray-50);
-}
-.pricing-faq__list {
-  max-width: 700px;
-  margin: var(--space-8) auto 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-}
-.pricing-faq__item {
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  background: white;
-  transition: all var(--transition-base);
-}
-.pricing-faq__item:hover {
-  border-color: var(--color-primary-light);
-  box-shadow: 0 4px 16px rgba(78,154,151,0.06);
-}
-.pricing-faq__question {
-  width: 100%;
-  padding: var(--space-5) var(--space-6);
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-gray-800);
-  text-align: left;
-  font-family: var(--font-family);
-  transition: color var(--transition-fast);
-}
-.pricing-faq__question:hover {
-  color: var(--color-primary);
-}
-.pricing-faq__question .faq-icon {
-  transition: transform var(--transition-base);
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
-  flex-shrink: 0;
-}
-.pricing-faq__item.is-open .pricing-faq__question .faq-icon {
-  transform: rotate(180deg);
-  color: var(--color-primary);
-}
-.pricing-faq__answer {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
-}
-.pricing-faq__item.is-open .pricing-faq__answer {
-  max-height: 300px;
-}
-.pricing-faq__answer-inner {
-  padding: 0 var(--space-6) var(--space-5);
-  font-size: var(--font-size-sm);
-  color: var(--color-text-light);
-  line-height: var(--line-height-relaxed);
-}
 
 /* ── Section 10: CTA ── */
 .pricing-cta {
@@ -761,7 +699,7 @@
   }
 }
 @media (max-width: 768px) {
-  .pricing-hero h1 { font-size: 2.5rem; }
+  .pricing-hero h1 { font-size: 2.5rem;  color: white; }
   .pricing-hero { padding: var(--space-12) 0 var(--space-10); }
   .pricing-plans__grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
   .pricing-compare__table {
@@ -784,12 +722,12 @@
   .pricing-cta h2 { font-size: var(--font-size-2xl); }
 }
 @media (max-width: 480px) {
-  .pricing-hero h1 { font-size: 2rem; }
+  .pricing-hero h1 { font-size: 2rem;  color: white; }
   .pricing-hero__stat { min-width: 120px; padding: var(--space-4); }
   .pricing-hero__stat-number { font-size: var(--font-size-2xl); }
 }
 @media (max-width: 425px) {
-  .pricing-hero h1 { font-size: 1.75rem; }
+  .pricing-hero h1 { font-size: 1.75rem;  color: white; }
   .pricing-cta h2 { font-size: var(--font-size-2xl); }
   .pricing-plan__price { font-size: 2.25rem; }
   .pricing-why__card { padding: var(--space-5); }
@@ -799,7 +737,15 @@
   .pricing-compare__table td { padding: var(--space-1) var(--space-2); }
 }
 @media (max-width: 320px) {
-  .pricing-hero h1 { font-size: 1.5rem; }
+  .pricing-hero h1 { font-size: 1.5rem;  color: white; }
   .pricing-hero__stat { min-width: 100px; padding: var(--space-3); }
   .pricing-plan__header { padding: var(--space-5) var(--space-4); }
+}
+
+/* ── Align Incomplete Final Rows ── */
+@media (min-width: 1024px) {
+  .pricing-clinic__card:nth-child(5),
+  .pricing-enterprise__card:nth-child(5) {
+    grid-column-start: 2;
+  }
 }

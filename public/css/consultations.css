@@ -13,7 +13,7 @@
 .consult-hero::before {
   content: ''; position: absolute; top: -20%; right: -10%;
   width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(78,154,151,0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(var(--color-accent-rgb), 0.12) 0%, transparent 70%);
   border-radius: 50%; pointer-events: none;
 }
 .consult-hero .container { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-12); align-items: center; position: relative; z-index: 1; }
@@ -21,15 +21,15 @@
 .consult-hero__badge {
   display: inline-flex; align-items: center; gap: var(--space-2);
   padding: var(--space-1) var(--space-4) var(--space-1) var(--space-2);
-  background: rgba(78,154,151,0.1); border: 1px solid rgba(78,154,151,0.2);
+  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
   border-radius: var(--radius-full); font-size: var(--font-size-sm);
-  color: var(--color-primary-dark); font-weight: var(--font-weight-medium);
+  color: #67E8F9; font-weight: var(--font-weight-medium);
   margin-bottom: var(--space-5);
 }
 .consult-hero__badge-dot { width: 8px; height: 8px; background: var(--color-success); border-radius: 50%; display: inline-block; margin-right: var(--space-1); }
-.consult-hero__title { font-size: 3.5rem; font-weight: var(--font-weight-extrabold); color: var(--color-gray-800); line-height: 1.1; letter-spacing: -0.03em; margin-bottom: var(--space-5); }
-.consult-hero__title .text-gradient { background: linear-gradient(135deg, var(--color-primary) 0%, #2D6B68 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.consult-hero__desc { font-size: var(--font-size-lg); color: var(--color-text-light); line-height: var(--line-height-relaxed); margin-bottom: var(--space-7); max-width: 520px; }
+.consult-hero__title { font-size: 3.5rem; font-weight: var(--font-weight-extrabold); color: white; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: var(--space-5); }
+.consult-hero__title .text-gradient { background: linear-gradient(135deg, #67E8F9 0%, #A5F3FC 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.consult-hero__desc { font-size: var(--font-size-lg); color: rgba(255,255,255,0.85); line-height: var(--line-height-relaxed); margin-bottom: var(--space-7); max-width: 520px; }
 .consult-hero__actions { display: flex; gap: var(--space-4); flex-wrap: wrap; }
 .consult-hero__visual { display: flex; justify-content: center; align-items: center; }
 .consult-hero__illustration {
@@ -69,8 +69,13 @@
 .consult-tl-step__content p { font-size: var(--font-size-sm); color: var(--color-text-light); line-height: var(--line-height-relaxed); max-width: 400px; }
 
 /* ── Section 3: Why Use ── */
-.consult-why { padding: var(--space-16) 0; background: var(--color-gray-50); }
-.consult-why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-6); margin-top: var(--space-8); }
+.consult-why { padding: var(--space-16) 0; background: var(--color-gray-50); }.consult-why-grid { display: flex;
+  flex-wrap: wrap;
+  justify-content: center;  gap: var(--space-6); margin-top: var(--space-8); }
+.consult-why-grid > * {
+  flex: 0 1 280px;
+  max-width: 420px;
+}
 .consult-why-card { background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: var(--space-6); text-align: center; transition: all 0.3s; }
 .consult-why-card:hover { box-shadow: var(--shadow-card-hover); border-color: var(--color-primary); transform: translateY(-4px); }
 .consult-why-card__icon { font-size: 2.5rem; margin-bottom: var(--space-4); }
@@ -78,8 +83,13 @@
 .consult-why-card p { font-size: var(--font-size-sm); color: var(--color-text-light); line-height: var(--line-height-relaxed); }
 
 /* ── Section 4: Consultation Types ── */
-.consult-types { padding: var(--space-16) 0; background: var(--color-white); }
-.consult-types-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-6); margin-top: var(--space-8); }
+.consult-types { padding: var(--space-16) 0; background: var(--color-white); }.consult-types-grid { display: flex;
+  flex-wrap: wrap;
+  justify-content: center;  gap: var(--space-6); margin-top: var(--space-8); }
+.consult-types-grid > * {
+  flex: 0 1 280px;
+  max-width: 420px;
+}
 .consult-type-card { background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: var(--space-6); transition: all 0.3s; }
 .consult-type-card:hover { box-shadow: var(--shadow-card-hover); border-color: var(--color-primary); transform: translateY(-3px); }
 .consult-type-card__icon { width: 56px; height: 56px; background: linear-gradient(135deg, var(--color-primary-light), #D4EDEC); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: var(--space-4); }
@@ -88,7 +98,8 @@
 
 /* ── Section 5: Available Doctors ── */
 .consult-doctors { padding: var(--space-16) 0; background: var(--color-gray-50); }
-.consult-doctors-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--space-6); margin-top: var(--space-8); }
+.consult-doctors-grid { display: flex; flex-wrap: wrap; justify-content: center; 
+.consult-doctors-grid > * { flex: 0 1 280px; max-width: 364px; } gap: var(--space-6); margin-top: var(--space-8); }
 .consult-doc-card { background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: var(--space-5); transition: all 0.3s; }
 .consult-doc-card:hover { box-shadow: var(--shadow-card-hover); border-color: var(--color-primary); transform: translateY(-3px); }
 .consult-doc-card__top { display: flex; gap: var(--space-3); margin-bottom: var(--space-3); align-items: center; }
@@ -100,8 +111,13 @@
 .consult-doc-card__meta span { display: flex; align-items: center; gap: 4px; }
 
 /* ── Section 6: Process Visual ── */
-.consult-process { padding: var(--space-16) 0; background: linear-gradient(135deg, var(--color-gray-50) 0%, var(--color-white) 100%); }
-.consult-process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-6); margin-top: var(--space-8); }
+.consult-process { padding: var(--space-16) 0; background: linear-gradient(135deg, var(--color-gray-50) 0%, var(--color-white) 100%); }.consult-process-grid { display: flex;
+  flex-wrap: wrap;
+  justify-content: center;  gap: var(--space-6); margin-top: var(--space-8); }
+.consult-process-grid > * {
+  flex: 0 1 280px;
+  max-width: 420px;
+}
 .consult-process-step { text-align: center; padding: var(--space-6); position: relative; }
 .consult-process-step:not(:last-child)::after { content: '→'; position: absolute; right: -1em; top: 50%; transform: translateY(-50%); font-size: 1.5rem; color: var(--color-primary); opacity: 0.3; }
 .consult-process-step__icon { width: 72px; height: 72px; margin: 0 auto var(--space-4); background: linear-gradient(135deg, var(--color-primary-light), #D4EDEC); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; }
@@ -109,8 +125,13 @@
 .consult-process-step p { font-size: var(--font-size-sm); color: var(--color-text-light); max-width: 200px; margin: 0 auto; line-height: var(--line-height-relaxed); }
 
 /* ── Section 7: Security & Privacy ── */
-.consult-security { padding: var(--space-16) 0; background: var(--color-white); }
-.consult-security-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-6); margin-top: var(--space-8); }
+.consult-security { padding: var(--space-16) 0; background: var(--color-white); }.consult-security-grid { display: flex;
+  flex-wrap: wrap;
+  justify-content: center;  gap: var(--space-6); margin-top: var(--space-8); }
+.consult-security-grid > * {
+  flex: 0 1 280px;
+  max-width: 420px;
+}
 .consult-sec-card { border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: var(--space-6); text-align: center; transition: all 0.3s; }
 .consult-sec-card:hover { box-shadow: var(--shadow-card-hover); border-color: var(--color-primary); }
 .consult-sec-card__icon { font-size: 2.5rem; margin-bottom: var(--space-3); }
@@ -118,11 +139,16 @@
 .consult-sec-card p { font-size: var(--font-size-sm); color: var(--color-text-light); line-height: var(--line-height-relaxed); }
 
 /* ── Section 8: Testimonials ── */
-.consult-testimonials { padding: var(--space-16) 0; background: var(--color-gray-50); }
-.consult-test-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-6); margin-top: var(--space-8); }
+.consult-testimonials { padding: var(--space-16) 0; background: var(--color-gray-50); }.consult-test-grid { display: flex;
+  flex-wrap: wrap;
+  justify-content: center;  gap: var(--space-6); margin-top: var(--space-8); }
+.consult-test-grid > * {
+  flex: 0 1 300px;
+  max-width: 420px;
+}
 .consult-test-card { background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: var(--space-6); transition: all 0.3s; }
 .consult-test-card:hover { box-shadow: var(--shadow-card-hover); border-color: var(--color-primary); }
-.consult-test-card__stars { color: #F59E0B; font-size: var(--font-size-base); margin-bottom: var(--space-3); letter-spacing: 2px; }
+.consult-test-card__stars { color: var(--color-accent); font-size: var(--font-size-base); margin-bottom: var(--space-3); letter-spacing: 2px; }
 .consult-test-card__text { font-size: var(--font-size-sm); color: var(--color-text-light); line-height: var(--line-height-relaxed); margin-bottom: var(--space-4); font-style: italic; }
 .consult-test-card__author { display: flex; align-items: center; gap: var(--space-3); }
 .consult-test-card__avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-primary-light); color: var(--color-primary-dark); display: flex; align-items: center; justify-content: center; font-weight: var(--font-weight-bold); font-size: var(--font-size-sm); }

@@ -417,7 +417,7 @@ const AdminDashboard = {
       const container = document.getElementById('overview-activity-list');
       if (activityRes.success && activityRes.data) {
         if (activityRes.data.length === 0) {
-          container.innerHTML = UI.emptyState('📢', 'No Platform Log', 'System activity is clear.');
+          container.innerHTML = UI.emptyState('bell', 'No Platform Log', 'System activity is clear.');
           return;
         }
 
@@ -460,7 +460,7 @@ const AdminDashboard = {
       const res = await Api.get(`/admin/patients?search=${encodeURIComponent(searchVal)}&page=${page}&limit=10`);
       if (res.success && res.data) {
         if (res.data.length === 0) {
-          container.innerHTML = UI.emptyState('👥', 'No Patients Found', 'No registered patients match this search.');
+          container.innerHTML = UI.emptyState('users', 'No Patients Found', 'No registered patients match this search.');
           pagContainer.innerHTML = '';
           return;
         }
@@ -473,9 +473,9 @@ const AdminDashboard = {
             <td><span class="badge ${p.is_active ? 'badge--success' : 'badge--danger'}">${p.is_active ? 'Active' : 'Inactive'}</span></td>
             <td>
               <div class="d-flex gap-2">
-                <button class="btn btn--secondary btn--xs" onclick="AdminDashboard.viewPatientDetails(${p.id})">🔍 Details</button>
-                <button class="btn btn--primary btn--xs" onclick="AdminDashboard.openEditPatientModal(${p.id})">⚙️ Edit</button>
-                <button class="btn btn--danger btn--xs" onclick="AdminDashboard.handleDeletePatient(${p.id})">🗑️ Delete</button>
+                <button class="btn btn--secondary btn--xs" onclick="AdminDashboard.viewPatientDetails(${p.id})">${MediIcons.icon('search')} Details</button>
+                <button class="btn btn--primary btn--xs" onclick="AdminDashboard.openEditPatientModal(${p.id})">${MediIcons.icon('settings')} Edit</button>
+                <button class="btn btn--danger btn--xs" onclick="AdminDashboard.handleDeletePatient(${p.id})">${MediIcons.icon('x')} Delete</button>
               </div>
             </td>
           </tr>
@@ -517,7 +517,7 @@ const AdminDashboard = {
       const res = await Api.get(`/admin/doctors?search=${encodeURIComponent(searchVal)}&page=${page}&limit=10`);
       if (res.success && res.data) {
         if (res.data.length === 0) {
-          container.innerHTML = UI.emptyState('🩺', 'No Doctors Found', 'No registered doctors match this search.');
+          container.innerHTML = UI.emptyState('stethoscope', 'No Doctors Found', 'No registered doctors match this search.');
           pagContainer.innerHTML = '';
           return;
         }
@@ -535,9 +535,9 @@ const AdminDashboard = {
             <td><span class="badge ${d.is_available ? 'badge--success' : 'badge--warning'}">${d.is_available ? 'Available' : 'Unavailable'}</span></td>
             <td>
               <div class="d-flex gap-2">
-                <button class="btn btn--secondary btn--xs" onclick="AdminDashboard.viewDoctorDetails(${d.id})">📅 Schedule/Leaves</button>
-                <button class="btn btn--primary btn--xs" onclick="AdminDashboard.openEditDoctorModal(${d.id})">⚙️ Edit</button>
-                <button class="btn btn--danger btn--xs" onclick="AdminDashboard.handleDeleteDoctor(${d.id})">🗑️ Delete</button>
+                <button class="btn btn--secondary btn--xs" onclick="AdminDashboard.viewDoctorDetails(${d.id})">${MediIcons.icon('calendar')} Schedule/Leaves</button>
+                <button class="btn btn--primary btn--xs" onclick="AdminDashboard.openEditDoctorModal(${d.id})">${MediIcons.icon('settings')} Edit</button>
+                <button class="btn btn--danger btn--xs" onclick="AdminDashboard.handleDeleteDoctor(${d.id})">${MediIcons.icon('x')} Delete</button>
               </div>
             </td>
           </tr>
@@ -585,7 +585,7 @@ const AdminDashboard = {
       const res = await Api.get(url);
       if (res.success && res.data) {
         if (res.data.length === 0) {
-          container.innerHTML = UI.emptyState('📅', 'No Appointments Found', 'No appointments recorded.');
+          container.innerHTML = UI.emptyState('calendar', 'No Appointments Found', 'No appointments recorded.');
           pagContainer.innerHTML = '';
           return;
         }
@@ -601,10 +601,10 @@ const AdminDashboard = {
               <td>${UI.statusBadge(a.status)}</td>
               <td>
                 <div class="d-flex gap-2">
-                  ${isConfirmable ? `<button class="btn btn--success btn--xs" onclick="AdminDashboard.handleConfirmAppointment(${a.id})">✓ Confirm</button>` : ''}
-                  ${isCancelable ? `<button class="btn btn--primary btn--xs" onclick="AdminDashboard.openRescheduleModal(${a.id}, '${a.appointment_date}', '${a.appointment_time}')">⏰ Reschedule</button>` : ''}
-                  ${isCancelable ? `<button class="btn btn--danger btn--xs" onclick="AdminDashboard.handleCancelAppointment(${a.id})">✕ Cancel</button>` : ''}
-                  <button class="btn btn--ghost btn--xs" onclick="AdminDashboard.handleDeleteAppointment(${a.id})">🗑️ Delete</button>
+                  ${isConfirmable ? `<button class="btn btn--success btn--xs" onclick="AdminDashboard.handleConfirmAppointment(${a.id})">${MediIcons.icon('check')} Confirm</button>` : ''}
+                  ${isCancelable ? `<button class="btn btn--primary btn--xs" onclick="AdminDashboard.openRescheduleModal(${a.id}, '${a.appointment_date}', '${a.appointment_time}')">${MediIcons.icon('clock')} Reschedule</button>` : ''}
+                  ${isCancelable ? `<button class="btn btn--danger btn--xs" onclick="AdminDashboard.handleCancelAppointment(${a.id})">${MediIcons.icon('x')} Cancel</button>` : ''}
+                  <button class="btn btn--ghost btn--xs" onclick="AdminDashboard.handleDeleteAppointment(${a.id})">${MediIcons.icon('x')} Delete</button>
                 </div>
               </td>
             </tr>
@@ -647,7 +647,7 @@ const AdminDashboard = {
       const res = await Api.get(`/consultations?search=${encodeURIComponent(searchVal)}&page=${page}&limit=10`);
       if (res.success && res.data) {
         if (res.data.length === 0) {
-          container.innerHTML = UI.emptyState('💬', 'No Consultations Found', 'No consultation records available.');
+          container.innerHTML = UI.emptyState('message', 'No Consultations Found', 'No consultation records available.');
           pagContainer.innerHTML = '';
           return;
         }
@@ -696,7 +696,7 @@ const AdminDashboard = {
       const res = await Api.get('/lab-tests');
       if (res.success && res.data) {
         if (res.data.length === 0) {
-          container.innerHTML = UI.emptyState('🔬', 'Lab Catalog Empty', 'No lab tests available.');
+          container.innerHTML = UI.emptyState('microscope', 'Lab Catalog Empty', 'No lab tests available.');
           return;
         }
 
@@ -709,7 +709,7 @@ const AdminDashboard = {
             <td><span class="badge ${t.is_active ? 'badge--success' : 'badge--gray'}">${t.is_active ? 'Active' : 'Inactive'}</span></td>
             <td>
               <div class="d-flex gap-2">
-                <button class="btn btn--primary btn--xs" onclick="AdminDashboard.openEditLabTestModal(${JSON.stringify(t).replace(/"/g, '&quot;')})">⚙️ Edit</button>
+                <button class="btn btn--primary btn--xs" onclick="AdminDashboard.openEditLabTestModal(${JSON.stringify(t).replace(/"/g, '&quot;')})">${MediIcons.icon('settings')} Edit</button>
                 <button class="btn btn--danger btn--xs" onclick="AdminDashboard.handleDeactivateLabTest(${t.id})">${t.is_active ? 'Deactivate' : 'Activate'}</button>
               </div>
             </td>
@@ -755,7 +755,7 @@ const AdminDashboard = {
       const res = await Api.get(url);
       if (res.success && res.data) {
         if (res.data.length === 0) {
-          container.innerHTML = UI.emptyState('🔬', 'No Lab Bookings', 'No lab test bookings match filter.');
+          container.innerHTML = UI.emptyState('microscope', 'No Lab Bookings', 'No lab test bookings match filter.');
           pagContainer.innerHTML = '';
           return;
         }
@@ -774,7 +774,7 @@ const AdminDashboard = {
               <td>${UI.formatDate(b.booking_date)} ${b.preferred_time ? 'at ' + UI.formatTime(b.preferred_time) : ''}</td>
               <td>${UI.statusBadge(b.status)}</td>
               <td>
-                ${b.result_file_url ? `<a href="${b.result_file_url}" target="_blank" class="btn btn--ghost btn--xs">📂 View Result</a>` : '—'}
+                ${b.result_file_url ? `<a href="${b.result_file_url}" target="_blank" class="btn btn--ghost btn--xs">${MediIcons.icon('file')} View Result</a>` : '—'}
               </td>
               <td>
                 <div class="d-flex gap-2">
@@ -831,7 +831,7 @@ const AdminDashboard = {
       const res = await Api.get(url);
       if (res.success && res.data) {
         if (res.data.length === 0) {
-          container.innerHTML = UI.emptyState('🏠', 'No Sample Collections', 'No collection requests found.');
+          container.innerHTML = UI.emptyState('home', 'No Sample Collections', 'No collection requests found.');
           pagContainer.innerHTML = '';
           return;
         }
@@ -839,7 +839,7 @@ const AdminDashboard = {
         const rows = res.data.map(s => {
           let actionButtons = '';
           if (s.status === 'requested') {
-            actionButtons += `<button class="btn btn--primary btn--xs" onclick="AdminDashboard.openAssignCollectorModal(${s.id})">👤 Assign</button>`;
+            actionButtons += `<button class="btn btn--primary btn--xs" onclick="AdminDashboard.openAssignCollectorModal(${s.id})">${MediIcons.icon('user')} Assign</button>`;
             actionButtons += `<button class="btn btn--danger btn--xs" onclick="AdminDashboard.handleUpdateSampleStatus(${s.id}, 'cancelled')">Cancel</button>`;
           } else if (s.status === 'assigned') {
             actionButtons += `<button class="btn btn--info btn--xs" onclick="AdminDashboard.handleUpdateSampleStatus(${s.id}, 'scheduled')">Schedule</button>`;
@@ -924,7 +924,7 @@ const AdminDashboard = {
       const res = await Api.get(`/reports?search=${encodeURIComponent(searchVal)}&page=${page}&limit=10`);
       if (res.success && res.data) {
         if (res.data.length === 0) {
-          container.innerHTML = UI.emptyState('📄', 'No Reports Found', 'No reports match search query.');
+          container.innerHTML = UI.emptyState('file', 'No Reports Found', 'No reports match search query.');
           pagContainer.innerHTML = '';
           return;
         }
@@ -939,12 +939,12 @@ const AdminDashboard = {
             <td><span class="text-xs text-muted">${Utils.formatBytes(r.file_size)}</span></td>
             <td>
               <div class="d-flex gap-2">
-                <a href="${r.file_url}" target="_blank" class="btn btn--ghost btn--xs">👁️ View</a>
-                <button onclick="AdminDashboard.downloadReport(${r.id}, '${r.original_filename || 'medical-report.pdf'}')" class="btn btn--secondary btn--xs">💾 Download</button>
+                <a href="${r.file_url}" target="_blank" class="btn btn--ghost btn--xs">${MediIcons.icon('eye')} View</a>
+                <button onclick="AdminDashboard.downloadReport(${r.id}, '${r.original_filename || 'medical-report.pdf'}')" class="btn btn--secondary btn--xs">${MediIcons.icon('database')} Download</button>
               </div>
             </td>
             <td>
-              <button class="btn btn--danger btn--xs" onclick="AdminDashboard.handleDeleteReport(${r.id})">🗑️ Delete</button>
+              <button class="btn btn--danger btn--xs" onclick="AdminDashboard.handleDeleteReport(${r.id})">${MediIcons.icon('x')} Delete</button>
             </td>
           </tr>
         `).join('');
@@ -1014,7 +1014,7 @@ const AdminDashboard = {
       const res = await Api.get('/reports/categories');
       if (res.success && res.data) {
         if (res.data.length === 0) {
-          container.innerHTML = UI.emptyState('🏷️', 'No Categories', 'No custom report categories found.');
+          container.innerHTML = UI.emptyState('tag', 'No Categories', 'No custom report categories found.');
           return;
         }
 
@@ -1025,8 +1025,8 @@ const AdminDashboard = {
             <td>${UI.formatDate(c.created_at)}</td>
             <td>
               <div class="d-flex gap-2">
-                <button class="btn btn--secondary btn--xs" onclick="AdminDashboard.openEditCategoryModal(${c.id}, '${c.category_name.replace(/'/g, "\\'")}', ${c.is_active})">⚙️ Edit</button>
-                <button class="btn btn--danger btn--xs" onclick="AdminDashboard.handleDeleteCategory(${c.id})">🗑️ Delete</button>
+                <button class="btn btn--secondary btn--xs" onclick="AdminDashboard.openEditCategoryModal(${c.id}, '${c.category_name.replace(/'/g, "\\'")}', ${c.is_active})">${MediIcons.icon('settings')} Edit</button>
+                <button class="btn btn--danger btn--xs" onclick="AdminDashboard.handleDeleteCategory(${c.id})">${MediIcons.icon('x')} Delete</button>
               </div>
             </td>
           </tr>
@@ -1059,7 +1059,7 @@ const AdminDashboard = {
       const res = await Api.get('/reports/logs');
       if (res.success && res.data) {
         if (res.data.length === 0) {
-          container.innerHTML = UI.emptyState('🔒', 'No HIPAA logs', 'No report security activity log entries.');
+          container.innerHTML = UI.emptyState('lock', 'No HIPAA logs', 'No report security activity log entries.');
           return;
         }
 
@@ -1167,7 +1167,7 @@ const AdminDashboard = {
       const res = await Api.get(`/admin/notifications?page=${page}&limit=10`);
       if (res.success && res.data) {
         if (res.data.length === 0) {
-          container.innerHTML = UI.emptyState('🔔', 'No Broadcast logs', 'Notification logs are clear.');
+          container.innerHTML = UI.emptyState('bell', 'No Broadcast logs', 'Notification logs are clear.');
           pagContainer.innerHTML = '';
           return;
         }
@@ -1688,7 +1688,7 @@ const AdminDashboard = {
           const isImg = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg', 'image/gif', 'image/svg+xml'].includes(media.mime_type);
           const preview = isImg 
             ? `<img src="${media.file_path}" style="width:100%;height:100px;object-fit:cover;border-radius:var(--radius-md);" alt="${Utils.escapeHtml(media.original_name)}">`
-            : `<div style="height:100px;display:flex;align-items:center;justify-content:center;background:var(--color-gray-100);font-size:2rem;border-radius:var(--radius-md);">📄</div>`;
+            : `<div style="height:100px;display:flex;align-items:center;justify-content:center;background:var(--color-gray-100);font-size:2rem;border-radius:var(--radius-md);">${MediIcons.icon('file')}</div>`;
           
           return `
             <div class="card p-2" style="display:flex;flex-direction:column;gap:5px;align-items:stretch;">
@@ -2005,7 +2005,7 @@ const AdminDashboard = {
             <td>${Utils.escapeHtml(r.title)}</td>
             <td><span class="badge badge--info">${r.report_type}</span></td>
             <td>${UI.formatDate(r.created_at)}</td>
-            <td><a href="${r.file_url}" target="_blank" class="btn btn--secondary btn--xs">📂 Open</a></td>
+            <td><a href="${r.file_url}" target="_blank" class="btn btn--secondary btn--xs">${MediIcons.icon('file')} Open</a></td>
           </tr>
         `).join('');
         repDiv.innerHTML = `
@@ -2644,10 +2644,10 @@ const AdminDashboard = {
         vision_title: document.getElementById('about-vision-title-input').value.trim(),
         vision_desc: document.getElementById('about-vision-desc-input').value.trim(),
         values: this.aboutValuesCache || [
-          { icon: '🏥', title: 'Patient First', description: 'Every feature is designed with the patient experience at the center.' },
-          { icon: '🔒', title: 'Security', description: 'Your medical data is encrypted and protected with industry-standard security.' },
-          { icon: '⚡', title: 'Innovation', description: 'We leverage the latest technology to continuously improve healthcare delivery.' },
-          { icon: '🤝', title: 'Accessibility', description: 'Healthcare management that\'s available to everyone, everywhere, anytime.' }
+          { icon: 'hospital', title: 'Patient First', description: 'Every feature is designed with the patient experience at the center.' },
+          { icon: 'lock', title: 'Security', description: 'Your medical data is encrypted and protected with industry-standard security.' },
+          { icon: 'zap', title: 'Innovation', description: 'We leverage the latest technology to continuously improve healthcare delivery.' },
+          { icon: 'users', title: 'Accessibility', description: 'Healthcare management that\'s available to everyone, everywhere, anytime.' }
         ]
       };
       const res = await Api.put('/cms/sections/about', { section_data: payload });

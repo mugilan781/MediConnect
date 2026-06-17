@@ -46,13 +46,15 @@ const AppointmentsPage = {
       const list = document.getElementById('appt-faq-list');
       if (list) {
         list.innerHTML = sections.faq.map(item => `
-          <div class="appt-faq-item">
-            <button class="appt-faq-question" onclick="AppointmentsPage.toggleFaq(this)">
+          <div class="faq-preview-item">
+            <button class="faq-preview-question" onclick="toggleFaq(this)">
               ${this.escapeHtml(item.question || '')}
-              <span class="icon">▼</span>
+              <span class="faq-chevron">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
             </button>
-            <div class="appt-faq-answer">
-              <div class="appt-faq-answer-inner">${this.escapeHtml(item.answer || '')}</div>
+            <div class="faq-preview-answer">
+              <div class="faq-preview-answer-inner">${this.escapeHtml(item.answer || '')}</div>
             </div>
           </div>
         `).join('');
@@ -115,9 +117,9 @@ const AppointmentsPage = {
               </div>
             </div>
             <div class="appt-doctor-card__meta">
-              <span>🎓 ${doc.qualification}</span>
-              <span>💼 ${doc.experience_years} yrs</span>
-              <span>💰 ₹${fee}</span>
+              <span>${MediIcons.icon('clipboard')} ${doc.qualification}</span>
+              <span>${MediIcons.icon('file')} ${doc.experience_years} yrs</span>
+              <span>${MediIcons.icon('chart')} ₹${fee}</span>
             </div>
           </div>
         `;
@@ -127,13 +129,6 @@ const AppointmentsPage = {
     }
   },
 
-  // ── FAQ ──
-  toggleFaq(btn) {
-    const item = btn.closest('.appt-faq-item');
-    const isOpen = item.classList.contains('is-open');
-    document.querySelectorAll('.appt-faq-item.is-open').forEach(el => el.classList.remove('is-open'));
-    if (!isOpen) item.classList.add('is-open');
-  },
 
   // ── SCROLL ANIMATIONS ──
   initScrollAnimations() {

@@ -14,7 +14,6 @@
   <link rel="stylesheet" href="/css/utilities.css">
   <link rel="stylesheet" href="/css/navbar.css">
   <link rel="stylesheet" href="/css/animations.css">
-  <link rel="stylesheet" href="/css/footer.css">
 </head>
 <body>
   <div id="global-navbar"></div>
@@ -30,18 +29,18 @@
 
         <!-- ═══ TAB BAR ═══ -->
         <div class="tab-bar">
-          <button class="tab-btn active" data-tab="overview">📊 Overview</button>
-          <button class="tab-btn" data-tab="patients">👥 Patients</button>
-          <button class="tab-btn" data-tab="doctors">🩺 Doctors</button>
-          <button class="tab-btn" data-tab="appointments">📅 Appointments</button>
-          <button class="tab-btn" data-tab="consultations">💬 Consultations</button>
-          <button class="tab-btn" data-tab="lab-tests">🔬 Lab Tests</button>
-          <button class="tab-btn" data-tab="samples">🏠 Samples</button>
-          <button class="tab-btn" data-tab="reports">📄 Reports</button>
-          <button class="tab-btn" data-tab="notifications">🔔 Notifications</button>
-          <button class="tab-btn" data-tab="analytics">📈 Analytics</button>
-          <button class="tab-btn" data-tab="cms">🌐 CMS Content</button>
-          <button class="tab-btn" data-tab="settings">⚙️ Settings</button>
+          <button class="tab-btn active" data-tab="overview"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="5" rx="1"/><rect x="12" y="8" width="3" height="9" rx="1"/><rect x="17" y="5" width="3" height="12" rx="1"/></svg> Overview</button>
+          <button class="tab-btn" data-tab="patients"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Patients</button>
+          <button class="tab-btn" data-tab="doctors"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 4v6a4 4 0 0 0 8 0V4"/><path d="M8 14v2a4 4 0 0 0 8 0v-3"/><circle cx="19" cy="10" r="3"/><path d="M6 4H4M12 4h-2"/></svg> Doctors</button>
+          <button class="tab-btn" data-tab="appointments"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Appointments</button>
+          <button class="tab-btn" data-tab="consultations"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21 15a4 4 0 0 1-4 4H7l-4 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg> Consultations</button>
+          <button class="tab-btn" data-tab="lab-tests"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 18h8"/><path d="M3 22h18"/><path d="M14 22a7 7 0 0 0 0-14h-1"/><path d="M9 14h2"/><path d="M9 2h4v6H9z"/><path d="M6 10l3-2"/></svg> Lab Tests</button>
+          <button class="tab-btn" data-tab="samples"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg> Samples</button>
+          <button class="tab-btn" data-tab="reports"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h6"/></svg> Reports</button>
+          <button class="tab-btn" data-tab="notifications"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg> Notifications</button>
+          <button class="tab-btn" data-tab="analytics"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="5" rx="1"/><rect x="12" y="8" width="3" height="9" rx="1"/><rect x="17" y="5" width="3" height="12" rx="1"/></svg> Analytics</button>
+          <button class="tab-btn" data-tab="cms"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 0 20"/><path d="M12 2a15.3 15.3 0 0 0 0 20"/></svg> CMS Content</button>
+          <button class="tab-btn" data-tab="settings"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 15.5A3.5 3.5 0 1 0 12 8a3.5 3.5 0 0 0 0 7.5z"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1-1.55 1.7 1.7 0 0 0-1.88.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.55-1H3a2 2 0 1 1 0-4h.09a1.7 1.7 0 0 0 1.55-1 1.7 1.7 0 0 0-.34-1.88l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.55V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.88-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9c.67.22 1.55.86 1.55 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.51 1z"/></svg> Settings</button>
         </div>
 
         <!-- ════════════════════════════════════════════════════
@@ -50,7 +49,7 @@
         <div id="tab-overview" class="tab-content">
 
           <!-- SECTION 1 – Executive Overview -->
-          <div class="welcome-banner" style="background:linear-gradient(135deg,#1e293b 0%,#0f172a 100%);margin-bottom:var(--space-6);">
+          <div class="welcome-banner" style="background:var(--surface-dark);margin-bottom:var(--space-6);">
             <div class="welcome-banner__content">
               <div class="welcome-banner__greeting">Admin Control Center</div>
               <div class="welcome-banner__name">MediConnect Enterprise</div>
@@ -67,63 +66,63 @@
             <div class="doc-section__body" style="padding-bottom:var(--space-6);">
               <div class="doc-analytics-grid" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr));">
                 <div class="doc-analytics-card">
-                  <div class="doc-analytics-card__icon" style="background:#e0f2fe;color:#0284c7;">👥</div>
+                  <div class="doc-analytics-card__icon" style="background:#e0f2fe;color:#0284c7;"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
                   <div class="doc-analytics-card__content">
                     <div class="doc-analytics-card__label">Total Users</div>
                     <div class="doc-analytics-card__value" id="stat-total-users">0</div>
                   </div>
                 </div>
                 <div class="doc-analytics-card">
-                  <div class="doc-analytics-card__icon" style="background:#f0fdf4;color:#16a34a;">🏥</div>
+                  <div class="doc-analytics-card__icon" style="background:#E5F1E6;color:#6F9E75;"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 21V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16"/><path d="M9 21v-6h6v6"/><path d="M12 7v5M9.5 9.5h5"/></svg></div>
                   <div class="doc-analytics-card__content">
                     <div class="doc-analytics-card__label">Patients</div>
                     <div class="doc-analytics-card__value" id="stat-total-patients">0</div>
                   </div>
                 </div>
                 <div class="doc-analytics-card">
-                  <div class="doc-analytics-card__icon" style="background:#dbeafe;color:#2563eb;">🩺</div>
+                  <div class="doc-analytics-card__icon" style="background:#e8eef4;color:#5d7895;"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 4v6a4 4 0 0 0 8 0V4"/><path d="M8 14v2a4 4 0 0 0 8 0v-3"/><circle cx="19" cy="10" r="3"/><path d="M6 4H4M12 4h-2"/></svg></div>
                   <div class="doc-analytics-card__content">
                     <div class="doc-analytics-card__label">Doctors</div>
                     <div class="doc-analytics-card__value" id="stat-total-doctors">0</div>
                   </div>
                 </div>
                 <div class="doc-analytics-card">
-                  <div class="doc-analytics-card__icon" style="background:#fef3c7;color:#d97706;">📅</div>
+                  <div class="doc-analytics-card__icon" style="background:#F7E9CC;color:#C58A2B;"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
                   <div class="doc-analytics-card__content">
                     <div class="doc-analytics-card__label">Today's Appointments</div>
                     <div class="doc-analytics-card__value" id="stat-today-appts">0</div>
                   </div>
                 </div>
                 <div class="doc-analytics-card">
-                  <div class="doc-analytics-card__icon" style="background:#f3e8ff;color:#9333ea;">📊</div>
+                  <div class="doc-analytics-card__icon" style="background:#f3e8ff;color:#9333ea;"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="5" rx="1"/><rect x="12" y="8" width="3" height="9" rx="1"/><rect x="17" y="5" width="3" height="12" rx="1"/></svg></div>
                   <div class="doc-analytics-card__content">
                     <div class="doc-analytics-card__label">Total Appointments</div>
                     <div class="doc-analytics-card__value" id="stat-total-appts">0</div>
                   </div>
                 </div>
                 <div class="doc-analytics-card">
-                  <div class="doc-analytics-card__icon" style="background:#fce4ec;color:#e11d48;">🔬</div>
+                  <div class="doc-analytics-card__icon" style="background:#F7DFE2;color:#B85C68;"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 18h8"/><path d="M3 22h18"/><path d="M14 22a7 7 0 0 0 0-14h-1"/><path d="M9 14h2"/><path d="M9 2h4v6H9z"/><path d="M6 10l3-2"/></svg></div>
                   <div class="doc-analytics-card__content">
                     <div class="doc-analytics-card__label">Pending Lab Bookings</div>
                     <div class="doc-analytics-card__value" id="stat-pending-labs">0</div>
                   </div>
                 </div>
                 <div class="doc-analytics-card">
-                  <div class="doc-analytics-card__icon" style="background:#e0f2fe;color:#0284c7;">📄</div>
+                  <div class="doc-analytics-card__icon" style="background:#e0f2fe;color:#0284c7;"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h6"/></svg></div>
                   <div class="doc-analytics-card__content">
                     <div class="doc-analytics-card__label">Medical Reports</div>
                     <div class="doc-analytics-card__value" id="stat-total-reports">0</div>
                   </div>
                 </div>
                 <div class="doc-analytics-card">
-                  <div class="doc-analytics-card__icon" style="background:#f0fdf4;color:#16a34a;">💾</div>
+                  <div class="doc-analytics-card__icon" style="background:#E5F1E6;color:#6F9E75;"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></div>
                   <div class="doc-analytics-card__content">
                     <div class="doc-analytics-card__label">Storage Used</div>
                     <div class="doc-analytics-card__value" id="stat-reports-storage">0 KB</div>
                   </div>
                 </div>
                 <div class="doc-analytics-card">
-                  <div class="doc-analytics-card__icon" style="background:#fef3c7;color:#d97706;">📜</div>
+                  <div class="doc-analytics-card__icon" style="background:#F7E9CC;color:#C58A2B;"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M8 12h8M8 16h5"/></svg></div>
                   <div class="doc-analytics-card__content">
                     <div class="doc-analytics-card__label">System History Events</div>
                     <div class="doc-analytics-card__value" id="stat-total-history">0</div>
@@ -150,19 +149,19 @@
               <div class="doc-section__body">
                 <div class="quick-actions">
                   <a href="#" class="quick-action" onclick="AdminDashboard.switchTab('appointments')">
-                    <div class="quick-action__icon">📅</div>
+                    <div class="quick-action__icon"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
                     <div class="quick-action__label">Override Appointments</div>
                   </a>
                   <a href="#" class="quick-action" onclick="AdminDashboard.switchTab('doctors')">
-                    <div class="quick-action__icon">🩺</div>
+                    <div class="quick-action__icon"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 4v6a4 4 0 0 0 8 0V4"/><path d="M8 14v2a4 4 0 0 0 8 0v-3"/><circle cx="19" cy="10" r="3"/><path d="M6 4H4M12 4h-2"/></svg></div>
                     <div class="quick-action__label">Register New Doctor</div>
                   </a>
                   <a href="#" class="quick-action" onclick="AdminDashboard.switchTab('notifications')">
-                    <div class="quick-action__icon">🔔</div>
+                    <div class="quick-action__icon"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
                     <div class="quick-action__label">Broadcast Notification</div>
                   </a>
                   <a href="#" class="quick-action" onclick="AdminDashboard.switchTab('cms')">
-                    <div class="quick-action__icon">🌐</div>
+                    <div class="quick-action__icon"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 0 20"/><path d="M12 2a15.3 15.3 0 0 0 0 20"/></svg></div>
                     <div class="quick-action__label">Edit Website CMS</div>
                   </a>
                 </div>
@@ -245,8 +244,8 @@
              ════════════════════════════════════════════════════ -->
         <div id="tab-lab-tests" class="tab-content" style="display:none;">
           <div class="nested-tabs" style="margin-bottom:var(--space-5);">
-            <button class="nested-tab-btn active" data-nested-tab="lab-tests-list">🔬 Lab Tests Catalog</button>
-            <button class="nested-tab-btn" data-nested-tab="lab-bookings-list">📅 Lab Booking Requests</button>
+            <button class="nested-tab-btn active" data-nested-tab="lab-tests-list"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 18h8"/><path d="M3 22h18"/><path d="M14 22a7 7 0 0 0 0-14h-1"/><path d="M9 14h2"/><path d="M9 2h4v6H9z"/><path d="M6 10l3-2"/></svg> Lab Tests Catalog</button>
+            <button class="nested-tab-btn" data-nested-tab="lab-bookings-list"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Lab Booking Requests</button>
           </div>
 
           <div id="nested-lab-tests-list" class="nested-tab-content">
@@ -285,21 +284,21 @@
           <!-- KPI cards for sample collection -->
           <div class="doc-analytics-grid" style="margin-bottom:var(--space-5);grid-template-columns:repeat(auto-fit,minmax(180px,1fr));">
             <div class="doc-analytics-card">
-              <div class="doc-analytics-card__icon" style="background:#fef3c7;color:#d97706;">📋</div>
+              <div class="doc-analytics-card__icon" style="background:#F7E9CC;color:#C58A2B;"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M8 12h8M8 16h5"/></svg></div>
               <div class="doc-analytics-card__content">
                 <div class="doc-analytics-card__label">Pending Collections</div>
                 <div class="doc-analytics-card__value" id="stat-col-pending">0</div>
               </div>
             </div>
             <div class="doc-analytics-card">
-              <div class="doc-analytics-card__icon" style="background:#dbeafe;color:#2563eb;">👤</div>
+              <div class="doc-analytics-card__icon" style="background:#e8eef4;color:#5d7895;"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="7" r="4"/></svg></div>
               <div class="doc-analytics-card__content">
                 <div class="doc-analytics-card__label">Assigned Collections</div>
                 <div class="doc-analytics-card__value" id="stat-col-assigned">0</div>
               </div>
             </div>
             <div class="doc-analytics-card">
-              <div class="doc-analytics-card__icon" style="background:#f0fdf4;color:#16a34a;">✅</div>
+              <div class="doc-analytics-card__icon" style="background:#E5F1E6;color:#6F9E75;"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg></div>
               <div class="doc-analytics-card__content">
                 <div class="doc-analytics-card__label">Completed Collections</div>
                 <div class="doc-analytics-card__value" id="stat-col-completed">0</div>
@@ -333,9 +332,9 @@
              ════════════════════════════════════════════════════ -->
         <div id="tab-reports" class="tab-content" style="display:none;">
           <div class="nested-tabs" style="margin-bottom:var(--space-5);">
-            <button class="nested-tab-btn active" data-nested-tab="reports-list-tab">📄 Uploaded Reports</button>
-            <button class="nested-tab-btn" data-nested-tab="reports-categories-tab">🏷️ Manage Categories</button>
-            <button class="nested-tab-btn" data-nested-tab="reports-logs-tab">🔒 HIPAA Audit Logs</button>
+            <button class="nested-tab-btn active" data-nested-tab="reports-list-tab"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h6"/></svg> Uploaded Reports</button>
+            <button class="nested-tab-btn" data-nested-tab="reports-categories-tab"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r=".5"/></svg> Manage Categories</button>
+            <button class="nested-tab-btn" data-nested-tab="reports-logs-tab"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> HIPAA Audit Logs</button>
           </div>
 
           <div id="nested-reports-list-tab" class="nested-tab-content">
@@ -376,21 +375,21 @@
           <!-- KPI Row -->
           <div class="doc-analytics-grid" style="margin-bottom:var(--space-5);grid-template-columns:repeat(auto-fit,minmax(180px,1fr));">
             <div class="doc-analytics-card">
-              <div class="doc-analytics-card__icon" style="background:var(--color-mint-light);color:var(--color-primary);">🔔</div>
+              <div class="doc-analytics-card__icon" style="background:var(--color-mint-light);color:var(--color-primary);"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
               <div class="doc-analytics-card__content">
                 <div class="doc-analytics-card__label">Total Sent</div>
                 <div class="doc-analytics-card__value" id="stat-notif-sent">0</div>
               </div>
             </div>
             <div class="doc-analytics-card">
-              <div class="doc-analytics-card__icon" style="background:#fef3c7;color:#d97706;">⏳</div>
+              <div class="doc-analytics-card__icon" style="background:#F7E9CC;color:#C58A2B;"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
               <div class="doc-analytics-card__content">
                 <div class="doc-analytics-card__label">Pending Scheduled</div>
                 <div class="doc-analytics-card__value" id="stat-notif-scheduled">0</div>
               </div>
             </div>
             <div class="doc-analytics-card">
-              <div class="doc-analytics-card__icon" style="background:#fce4ec;color:#e11d48;">🔇</div>
+              <div class="doc-analytics-card__icon" style="background:#F7DFE2;color:#B85C68;"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 7-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><path d="m1 1 22 22"/></svg></div>
               <div class="doc-analytics-card__content">
                 <div class="doc-analytics-card__label">Muted Preferences</div>
                 <div class="doc-analytics-card__value" id="stat-notif-muted">0</div>
@@ -425,10 +424,10 @@
                     <div class="form-group">
                       <label class="form-label" for="notif-type">Notification Type</label>
                       <select id="notif-type" class="form-select">
-                        <option value="system">🔧 System Update</option>
-                        <option value="info">ℹ️ Information</option>
-                        <option value="warning">⚠️ Warning Alert</option>
-                        <option value="success">✅ Announcement</option>
+                        <option value="system"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 15.5A3.5 3.5 0 1 0 12 8a3.5 3.5 0 0 0 0 7.5z"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1-1.55 1.7 1.7 0 0 0-1.88.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.55-1H3a2 2 0 1 1 0-4h.09a1.7 1.7 0 0 0 1.55-1 1.7 1.7 0 0 0-.34-1.88l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.55V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.88-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9c.67.22 1.55.86 1.55 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.51 1z"/></svg> System Update</option>
+                        <option value="info"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>️ Information</option>
+                        <option value="warning"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg> Warning Alert</option>
+                        <option value="success"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg> Announcement</option>
                       </select>
                     </div>
                     <div class="form-group">
@@ -509,13 +508,13 @@
              ════════════════════════════════════════════════════ -->
         <div id="tab-cms" class="tab-content" style="display:none;">
           <div class="nested-tabs" style="margin-bottom:var(--space-5);">
-            <button class="nested-tab-btn active" data-nested-tab="cms-pages">📄 Pages</button>
-            <button class="nested-tab-btn" data-nested-tab="cms-home-sections">🏠 Home Sections</button>
-            <button class="nested-tab-btn" data-nested-tab="cms-about-contact">🏢 About & Contact</button>
-            <button class="nested-tab-btn" data-nested-tab="cms-faqs">❓ FAQs</button>
-            <button class="nested-tab-btn" data-nested-tab="cms-socials">🔗 Social Links</button>
-            <button class="nested-tab-btn" data-nested-tab="cms-media">🖼️ Media Library</button>
-            <button class="nested-tab-btn" data-nested-tab="cms-seo">🔍 SEO Settings</button>
+            <button class="nested-tab-btn active" data-nested-tab="cms-pages"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h6"/></svg> Pages</button>
+            <button class="nested-tab-btn" data-nested-tab="cms-home-sections"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg> Home Sections</button>
+            <button class="nested-tab-btn" data-nested-tab="cms-about-contact"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 21V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16"/><path d="M9 21v-6h6v6"/><path d="M12 7v5M9.5 9.5h5"/></svg> About & Contact</button>
+            <button class="nested-tab-btn" data-nested-tab="cms-faqs"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg> FAQs</button>
+            <button class="nested-tab-btn" data-nested-tab="cms-socials"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l1.1-1.1"/></svg> Social Links</button>
+            <button class="nested-tab-btn" data-nested-tab="cms-media"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg> Media Library</button>
+            <button class="nested-tab-btn" data-nested-tab="cms-seo"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg> SEO Settings</button>
           </div>
 
           <div id="nested-cms-pages" class="nested-tab-content">
@@ -868,9 +867,9 @@
       <div class="modal__header"><h3>Doctor Schedule & Leaves Panel</h3><button class="btn btn--ghost btn--icon" onclick="UI.closeModal('doctor-details-modal')">✕</button></div>
       <div class="modal__body">
         <div class="nested-tabs" style="margin-bottom:var(--space-4);">
-          <button class="nested-tab-btn active" data-nested-tab="doc-sched-view">📅 Weekly Schedule</button>
-          <button class="nested-tab-btn" data-nested-tab="doc-slots-view">⏰ Custom Availability Slots</button>
-          <button class="nested-tab-btn" data-nested-tab="doc-leaves-view">🏖️ Leaves Log</button>
+          <button class="nested-tab-btn active" data-nested-tab="doc-sched-view"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Weekly Schedule</button>
+          <button class="nested-tab-btn" data-nested-tab="doc-slots-view"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Custom Availability Slots</button>
+          <button class="nested-tab-btn" data-nested-tab="doc-leaves-view"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Leaves Log</button>
         </div>
         <div id="nested-doc-sched-view" class="nested-tab-content">
           <div id="doc-schedule-render"></div>
@@ -939,12 +938,12 @@
       <div class="modal__header"><h3>Patient Complete Records</h3><button class="btn btn--ghost btn--icon" onclick="UI.closeModal('patient-details-modal')">✕</button></div>
       <div class="modal__body">
         <div class="nested-tabs" style="margin-bottom:var(--space-4);">
-          <button class="nested-tab-btn active" data-nested-tab="pat-info-profile">👤 Profile Details</button>
-          <button class="nested-tab-btn" data-nested-tab="pat-info-history">📜 History Log</button>
-          <button class="nested-tab-btn" data-nested-tab="pat-info-appts">📅 Appointments</button>
-          <button class="nested-tab-btn" data-nested-tab="pat-info-consults">🩺 Consultations</button>
-          <button class="nested-tab-btn" data-nested-tab="pat-info-reports">📄 Reports</button>
-          <button class="nested-tab-btn" data-nested-tab="pat-info-labtests">🔬 Lab Bookings</button>
+          <button class="nested-tab-btn active" data-nested-tab="pat-info-profile"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="7" r="4"/></svg> Profile Details</button>
+          <button class="nested-tab-btn" data-nested-tab="pat-info-history"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M8 12h8M8 16h5"/></svg> History Log</button>
+          <button class="nested-tab-btn" data-nested-tab="pat-info-appts"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Appointments</button>
+          <button class="nested-tab-btn" data-nested-tab="pat-info-consults"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 4v6a4 4 0 0 0 8 0V4"/><path d="M8 14v2a4 4 0 0 0 8 0v-3"/><circle cx="19" cy="10" r="3"/><path d="M6 4H4M12 4h-2"/></svg> Consultations</button>
+          <button class="nested-tab-btn" data-nested-tab="pat-info-reports"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h6"/></svg> Reports</button>
+          <button class="nested-tab-btn" data-nested-tab="pat-info-labtests"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 18h8"/><path d="M3 22h18"/><path d="M14 22a7 7 0 0 0 0-14h-1"/><path d="M9 14h2"/><path d="M9 2h4v6H9z"/><path d="M6 10l3-2"/></svg> Lab Bookings</button>
         </div>
         <div id="nested-pat-info-profile" class="nested-tab-content">
           <div id="pat-profile-render"></div>
@@ -1103,7 +1102,6 @@
     </div>
   </div>
 
-  <div id="global-footer"></div>
   </main>
   </div>
 
@@ -1116,7 +1114,6 @@
   <script src="/js/sidebar.js"></script>
   <script src="/js/router.js"></script>
   <script src="/js/global-navbar.js"></script>
-  <script src="/js/global-footer.js"></script>
   <script src="/js/animations.js"></script>
   <script src="/js/admin-dashboard.js"></script>
   <script>

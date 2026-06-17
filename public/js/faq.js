@@ -8,33 +8,12 @@ const FAQPage = {
   cmsFaqs: [],
 
   async init() {
-    this.bindAccordions();
     this.bindSearch();
     this.bindTabs();
     this.updateCounts();
     this.bindClearSearch();
 
     await this.loadCmsFaqs();
-  },
-
-  /* ── Accordion ── */
-  bindAccordions() {
-    document.querySelectorAll('.faq-question').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        var item = this.closest('.faq-item');
-        var isOpen = item.classList.contains('is-open');
-
-        document.querySelectorAll('.faq-item.is-open').forEach(function(openItem) {
-          openItem.classList.remove('is-open');
-          openItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
-        });
-
-        if (!isOpen) {
-          item.classList.add('is-open');
-          item.querySelector('.faq-question').setAttribute('aria-expanded', 'true');
-        }
-      });
-    });
   },
 
   /* ── Category Tabs ── */
@@ -95,12 +74,12 @@ const FAQPage = {
     var anyVisible = false;
 
     sections.forEach(function(section) {
-      var items = section.querySelectorAll('.faq-item');
+      var items = section.querySelectorAll('.faq-preview-item');
       var sectionHasVisible = false;
 
       items.forEach(function(item) {
-        var questionEl = item.querySelector('.faq-question');
-        var answerEl = item.querySelector('.faq-answer-inner');
+        var questionEl = item.querySelector('.faq-preview-question');
+        var answerEl = item.querySelector('.faq-preview-answer-inner');
         var text = (questionEl ? questionEl.textContent : '') + ' ' + (answerEl ? answerEl.textContent : '');
 
         // Also check CMS data attribute
@@ -131,11 +110,11 @@ const FAQPage = {
     // Also filter CMS section
     var cmsSection = document.getElementById('faqCmsSection');
     if (cmsSection && cmsSection.style.display !== 'none') {
-      var cmsItems = cmsSection.querySelectorAll('.faq-item');
+      var cmsItems = cmsSection.querySelectorAll('.faq-preview-item');
       var cmsVisible = false;
       cmsItems.forEach(function(item) {
         var text = item.getAttribute('data-search-text') || '';
-        var questionEl = item.querySelector('.faq-question');
+        var questionEl = item.querySelector('.faq-preview-question');
         if (questionEl) text += ' ' + questionEl.textContent;
 
         var matches = !query || text.toLowerCase().includes(query);
@@ -166,7 +145,7 @@ const FAQPage = {
   },
 
   updateNoResults() {
-    var visibleItems = document.querySelectorAll('.faq-item:not(.is-hidden)');
+    var visibleItems = document.querySelectorAll('.faq-preview-item:not(.is-hidden)');
     this.showNoResults(visibleItems.length === 0);
   },
 
@@ -178,7 +157,7 @@ const FAQPage = {
     var counts = { all: 0 };
     document.querySelectorAll('[data-category]').forEach(function(section) {
       var cat = section.getAttribute('data-category');
-      var count = section.querySelectorAll('.faq-item:not(.is-hidden)').length;
+      var count = section.querySelectorAll('.faq-preview-item:not(.is-hidden)').length;
       counts[cat] = count;
       counts.all += count;
     });
@@ -186,7 +165,7 @@ const FAQPage = {
     // Include CMS section
     var cmsSection = document.getElementById('faqCmsSection');
     if (cmsSection && cmsSection.style.display !== 'none') {
-      var cmsCount = cmsSection.querySelectorAll('.faq-item:not(.is-hidden)').length;
+      var cmsCount = cmsSection.querySelectorAll('.faq-preview-item:not(.is-hidden)').length;
       counts.all += cmsCount;
     }
 
@@ -218,37 +197,20 @@ const FAQPage = {
 
     container.innerHTML = list.map(function(item) {
       var searchText = (item.question + ' ' + item.answer).toLowerCase();
-      return '<div class="faq-item" data-search-text="' + FAQPage.escapeAttr(searchText) + '">' +
-        '<button class="faq-question" aria-expanded="false">' +
+      return '<div class="faq-preview-item" data-search-text="' + FAQPage.escapeAttr(searchText) + '">' +
+        '<button class="faq-preview-question" onclick="toggleFaq(this)">' +
           '<span>' + FAQPage.escapeHtml(item.question) + '</span>' +
-          '<span class="faq-arrow">▼</span>' +
+          '<span class="faq-chevron">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>' +
+          '</span>' +
         '</button>' +
-        '<div class="faq-answer">' +
-          '<div class="faq-answer-inner">' + FAQPage.escapeHtml(item.answer) + '</div>' +
+        '<div class="faq-preview-answer">' +
+          '<div class="faq-preview-answer-inner">' + FAQPage.escapeHtml(item.answer) + '</div>' +
         '</div>' +
       '</div>';
     }).join('');
 
     section.style.display = '';
-
-    // Bind accordion for new items
-    container.querySelectorAll('.faq-question').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        var item = this.closest('.faq-item');
-        var isOpen = item.classList.contains('is-open');
-
-        container.querySelectorAll('.faq-item.is-open').forEach(function(openItem) {
-          openItem.classList.remove('is-open');
-          openItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
-        });
-
-        if (!isOpen) {
-          item.classList.add('is-open');
-          item.querySelector('.faq-question').setAttribute('aria-expanded', 'true');
-        }
-      });
-    });
-
     this.updateCounts();
   },
 

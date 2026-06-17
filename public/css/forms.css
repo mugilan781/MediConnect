@@ -26,9 +26,10 @@
 .form-select,
 .form-textarea {
   width: 100%;
+  min-height: 52px;
   padding: var(--space-3) var(--space-4);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-input);
+  border-radius: var(--radius-input);
   font-family: var(--font-family);
   font-size: var(--font-size-base);
   color: var(--color-text);
@@ -40,8 +41,8 @@
 .form-select:focus,
 .form-textarea:focus {
   outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(78, 154, 151, 0.15);
+  border-color: var(--color-border-focus);
+  box-shadow: 0 0 0 3px rgba(var(--color-accent-rgb), 0.24);
 }
 
 .form-input::placeholder,
@@ -72,7 +73,7 @@
 
 .form-input--error:focus,
 .form-select--error:focus {
-  box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.15);
+  box-shadow: 0 0 0 3px rgba(184, 92, 104, 0.15);
 }
 
 .form-input--success {
@@ -196,4 +197,64 @@
 
 .search-bar .form-input {
   padding-left: var(--space-10);
+}
+
+/* Premium form surfaces */
+.form-group {
+  position: relative;
+}
+
+.form-label {
+  letter-spacing: 0;
+}
+
+.form-input,
+.form-select,
+.form-textarea,
+.filter-select,
+textarea,
+select,
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]) {
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.85) inset;
+}
+
+.form-input:hover,
+.form-select:hover,
+.form-textarea:hover,
+.filter-select:hover,
+textarea:hover,
+select:hover,
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):hover {
+  border-color: rgba(var(--color-primary-rgb), 0.34);
+}
+
+.form-check input[type="checkbox"],
+.form-check input[type="radio"] {
+  filter: drop-shadow(0 2px 5px rgba(var(--color-primary-rgb), 0.14));
+}
+
+.form-file__label {
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.95), rgba(234,244,239,0.72));
+  border-color: rgba(var(--color-primary-rgb), 0.22);
+}
+
+.search-bar::after,
+.directory-search::after,
+.topbar__search::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(var(--color-primary-rgb),0.22), rgba(var(--color-accent-rgb),0.16), rgba(121,168,137,0.2));
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  z-index: -1;
+}
+
+.search-bar:focus-within::after,
+.directory-search:focus-within::after,
+.topbar__search:focus-within::after {
+  opacity: 1;
 }

@@ -55,10 +55,6 @@ const LabTests = {
         const name = bookBtn.dataset.testName;
         this.openBookModal(id, name);
       }
-      const faqBtn = e.target.closest('[data-faq-toggle]');
-      if (faqBtn) {
-        this.toggleFaq(faqBtn);
-      }
     });
 
     document.addEventListener('keydown', (e) => {
@@ -346,15 +342,15 @@ const LabTests = {
       const response = await Api.get('/cms/faqs');
       if (response.success && response.data.length > 0) {
         container.innerHTML = response.data.map(faq => `
-          <div class="lab-faq-item">
-            <button class="lab-faq-question" data-faq-toggle>
-              <span>${this.escapeHtml(faq.question)}</span>
-              <span class="lab-faq-toggle">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          <div class="faq-preview-item">
+            <button class="faq-preview-question" onclick="toggleFaq(this)">
+              ${this.escapeHtml(faq.question)}
+              <span class="faq-chevron">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
               </span>
             </button>
-            <div class="lab-faq-answer">
-              <div class="lab-faq-answer-inner">${this.escapeHtml(faq.answer)}</div>
+            <div class="faq-preview-answer">
+              <div class="faq-preview-answer-inner">${this.escapeHtml(faq.answer)}</div>
             </div>
           </div>
         `).join('');
@@ -379,31 +375,18 @@ const LabTests = {
       { q: 'How do I prepare for a blood test?', a: 'Preparation depends on the test. Common instructions include fasting for 8–12 hours, staying hydrated, and avoiding alcohol. Specific instructions are shown on the test details page.' },
     ];
     return faqs.map(faq => `
-      <div class="lab-faq-item">
-        <button class="lab-faq-question" data-faq-toggle>
-          <span>${this.escapeHtml(faq.q)}</span>
-          <span class="lab-faq-toggle">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      <div class="faq-preview-item">
+        <button class="faq-preview-question" onclick="toggleFaq(this)">
+          ${this.escapeHtml(faq.q)}
+          <span class="faq-chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
           </span>
         </button>
-        <div class="lab-faq-answer">
-          <div class="lab-faq-answer-inner">${this.escapeHtml(faq.a)}</div>
+        <div class="faq-preview-answer">
+          <div class="faq-preview-answer-inner">${this.escapeHtml(faq.a)}</div>
         </div>
       </div>
     `).join('');
-  },
-
-  toggleFaq(btn) {
-    const item = btn.closest('.lab-faq-item');
-    if (!item) return;
-
-    const isOpen = item.classList.contains('open');
-
-    document.querySelectorAll('.lab-faq-item.open').forEach(el => {
-      if (el !== item) el.classList.remove('open');
-    });
-
-    item.classList.toggle('open', !isOpen);
   },
 
   // ── Count-Up Animation ──

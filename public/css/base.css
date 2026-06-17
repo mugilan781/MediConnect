@@ -25,33 +25,45 @@ body {
   font-weight: var(--font-weight-normal);
   line-height: var(--line-height-normal);
   color: var(--color-text);
-  background-color: var(--bg-body);
+  background: var(--surface-page);
   min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--surface-canvas);
+  background-size: 44px 44px;
+  opacity: 0.38;
 }
 
 /* ── Headings ── */
 h1, h2, h3, h4, h5, h6 {
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-section);
   line-height: var(--line-height-tight);
-  color: var(--color-gray-800);
+  color: var(--color-gray-900);
 }
 
-h1 { font-size: var(--font-size-3xl); }
-h2 { font-size: var(--font-size-2xl); }
-h3 { font-size: var(--font-size-xl);  }
-h4 { font-size: var(--font-size-lg);  }
-h5 { font-size: var(--font-size-md);  }
+h1 { font-size: var(--font-size-4xl); font-weight: var(--font-weight-hero); }
+h2 { font-size: var(--font-size-3xl); }
+h3 { font-size: var(--font-size-2xl); }
+h4 { font-size: var(--font-size-xl);  }
+h5 { font-size: var(--font-size-lg);  }
 h6 { font-size: var(--font-size-base); }
 
 /* ── Links ── */
 a {
-  color: var(--color-primary);
+  color: var(--color-primary-light);
   text-decoration: none;
   transition: color var(--transition-fast);
 }
 
 a:hover {
-  color: var(--color-primary-dark);
+  color: var(--color-accent);
 }
 
 /* ── Images ── */
@@ -59,6 +71,36 @@ img {
   max-width: 100%;
   height: auto;
   display: block;
+}
+
+svg {
+  flex-shrink: 0;
+}
+
+.mc-icon {
+  width: 1.05em;
+  height: 1.05em;
+  display: inline-block;
+  vertical-align: -0.18em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.mc-icon + .mc-icon {
+  margin-left: 2px;
+}
+
+.empty-state__icon .mc-icon,
+[class$="__icon"] .mc-icon,
+.menu-icon .mc-icon,
+.role-icon .mc-icon,
+.search-icon .mc-icon,
+.icon .mc-icon {
+  width: 1.2em;
+  height: 1.2em;
 }
 
 /* ── Lists ── */
@@ -74,8 +116,8 @@ table {
 
 /* ── Scrollbar ── */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
 }
 
 ::-webkit-scrollbar-track {
@@ -83,24 +125,35 @@ table {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-gray-300);
+  background: var(--color-primary);
   border-radius: var(--radius-full);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-gray-400);
+  background: var(--color-accent);
 }
 
 /* ── Selection ── */
 ::selection {
-  background: var(--color-mint);
-  color: var(--color-gray-800);
+  background: rgba(var(--color-accent-rgb), 0.24);
+  color: var(--color-primary-dark);
 }
 
 /* ── Focus Visible ── */
 :focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* ── Utility Classes ── */

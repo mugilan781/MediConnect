@@ -7,7 +7,7 @@
 /* ── Section 1: Hero ── */
 .rpt-hero {
   padding: var(--space-20) 0 var(--space-16);
-  background: var(--gradient-hero);
+  background: var(--gradient-hero); color: white;
   position: relative;
   overflow: hidden;
   min-height: 580px;
@@ -18,15 +18,17 @@
   content: ''; position: absolute;
   top: -25%; right: -8%;
   width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(78,154,151,0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(var(--color-accent-rgb), 0.12) 0%, transparent 70%);
   border-radius: 50%;
+  pointer-events: none;
 }
 .rpt-hero::after {
   content: ''; position: absolute;
   bottom: -25%; left: -5%;
   width: 350px; height: 350px;
-  background: radial-gradient(circle, rgba(78,154,151,0.04) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(var(--color-primary-rgb), 0.08) 0%, transparent 70%);
   border-radius: 50%;
+  pointer-events: none;
 }
 .rpt-hero__grid {
   display: grid;
@@ -41,8 +43,8 @@
   align-items: center;
   gap: var(--space-2);
   padding: var(--space-1) var(--space-4);
-  background: rgba(78,154,151,0.1);
-  color: var(--color-primary-dark);
+  background: rgba(255,255,255,0.12);
+  color: #67E8F9;
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semibold);
   border-radius: var(--radius-full);
@@ -59,10 +61,16 @@
 .rpt-hero__content h1 {
   font-size: var(--font-size-5xl);
   font-weight: var(--font-weight-extrabold);
-  color: var(--color-gray-800);
+  color: white;
   line-height: 1.15;
   margin-bottom: var(--space-4);
   letter-spacing: -0.02em;
+}
+.rpt-hero__content h1 .text-gradient {
+  background: linear-gradient(135deg, #67E8F9 0%, #A5F3FC 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 .rpt-hero__content > p {
   font-size: var(--font-size-lg);
@@ -115,17 +123,17 @@
   display: block;
   font-size: var(--font-size-3xl);
   font-weight: var(--font-weight-extrabold);
-  color: var(--color-primary);
+  color: white;
   line-height: 1;
   margin-bottom: var(--space-1);
-}
+ color: #67E8F9; }
 .rpt-hero__stat-label {
   font-size: var(--font-size-xs);
-  color: var(--color-text-muted);
+  color: rgba(255,255,255,0.7);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-weight: var(--font-weight-medium);
-}
+ color: rgba(255, 255, 255, 0.8); }
 .rpt-hero__visual {
   display: flex;
   align-items: center;
@@ -190,8 +198,9 @@
   background: var(--color-gray-50);
 }
 .rpt-categories__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  display: flex; flex-wrap: wrap; justify-content: center;
+  
+.rpt-categories__grid > * { flex: 0 1 280px; max-width: 364px; }
   gap: var(--space-5);
 }
 .rpt-category-card {
@@ -267,7 +276,7 @@
   transform: scale(1.1) rotate(-5deg);
 }
 .rpt-benefit-card__icon--primary { background: #E8F4F1; color: #4E9A97; }
-.rpt-benefit-card__icon--info { background: #DBEAFE; color: #2563EB; }
+.rpt-benefit-card__icon--info { background: #E8EEF4; color: #5D7895; }
 .rpt-benefit-card__icon--success { background: #D1FAE5; color: #059669; }
 .rpt-benefit-card__icon--warning { background: #FEF3C7; color: #D97706; }
 .rpt-benefit-card__title {
@@ -291,7 +300,7 @@
   align-items: flex-start;
   justify-content: center;
   gap: 0;
-  max-width: 1100px;
+  /* max-width removed for full-width layout */
   margin: var(--space-10) auto 0;
 }
 .rpt-lifecycle__step {
@@ -833,7 +842,7 @@
   .rpt-hero__content > p { font-size: var(--font-size-base); }
   .rpt-hero__actions { flex-direction: column; }
   .rpt-hero__stats { gap: var(--space-6); flex-wrap: wrap; }
-  .rpt-hero__stat-value { font-size: var(--font-size-2xl); }
+  .rpt-hero__stat-value { font-size: var(--font-size-2xl);  color: #67E8F9; }
   .rpt-overview__grid { grid-template-columns: 1fr; }
   .rpt-benefits__grid { grid-template-columns: 1fr; }
   .rpt-security__grid { grid-template-columns: 1fr; }
@@ -844,7 +853,7 @@
 @media (max-width: 425px) {
   .rpt-hero__content h1 { font-size: var(--font-size-2xl); }
   .rpt-hero__stats { flex-wrap: wrap; gap: var(--space-4); }
-  .rpt-hero__stat-value { font-size: var(--font-size-xl); }
+  .rpt-hero__stat-value { font-size: var(--font-size-xl);  color: #67E8F9; }
   .rpt-overview__grid { gap: var(--space-4); }
   .rpt-auth-prompt { padding: var(--space-10) var(--space-4); }
   .rpt-reports-table { font-size: var(--font-size-xs); }

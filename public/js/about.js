@@ -79,7 +79,7 @@ const AboutPage = {
     if (valuesGrid && about.values && about.values.length > 0) {
       valuesGrid.innerHTML = about.values.map(v => `
         <div class="value-card">
-          <div class="value-card__icon">${this.escapeHtml(v.icon || '🏥')}</div>
+          <div class="value-card__icon">${MediIcons.getIconHtml(v.icon || 'hospital')}</div>
           <h3>${this.escapeHtml(v.title || '')}</h3>
           <p>${this.escapeHtml(v.description || '')}</p>
         </div>
@@ -93,7 +93,7 @@ const AboutPage = {
     if (!grid || !impact.length) return;
     grid.innerHTML = impact.map(item => `
       <div class="impact-card">
-        <div class="impact-card__icon">${this.escapeHtml(item.icon || '📊')}</div>
+        <div class="impact-card__icon">${MediIcons.getIconHtml(item.icon || 'chart')}</div>
         <div class="impact-card__value">${this.escapeHtml(item.value || '0')}</div>
         <div class="impact-card__label">${this.escapeHtml(item.label || '')}</div>
       </div>
@@ -137,7 +137,7 @@ const AboutPage = {
     if (!grid || !tech.length) return;
     grid.innerHTML = tech.map(t => `
       <div class="tech-card">
-        <div class="tech-card__icon">${this.escapeHtml(t.icon || '💻')}</div>
+        <div class="tech-card__icon">${MediIcons.getIconHtml(t.icon || 'video')}</div>
         <div class="tech-card__name">${this.escapeHtml(t.name || '')}</div>
       </div>
     `).join('');
@@ -149,7 +149,7 @@ const AboutPage = {
     if (!container || !items.length) return;
     container.innerHTML = items.map(item => `
       <div class="why-card-about">
-        <div class="why-card-about__icon">${this.escapeHtml(item.icon || '✨')}</div>
+        <div class="why-card-about__icon">${MediIcons.getIconHtml(item.icon || 'star')}</div>
         <div>
           <h4>${this.escapeHtml(item.title || '')}</h4>
           <p>${this.escapeHtml(item.description || '')}</p>
@@ -164,7 +164,7 @@ const AboutPage = {
     if (!container || !items.length) return;
     container.innerHTML = items.map(item => `
       <div class="why-card-about">
-        <div class="why-card-about__icon">${this.escapeHtml(item.icon || '✨')}</div>
+        <div class="why-card-about__icon">${MediIcons.getIconHtml(item.icon || 'star')}</div>
         <div>
           <h4>${this.escapeHtml(item.title || '')}</h4>
           <p>${this.escapeHtml(item.description || '')}</p>
@@ -180,7 +180,7 @@ const AboutPage = {
     grid.innerHTML = roadmap.map(item => `
       <div class="roadmap-card">
         <div class="roadmap-card__phase">${this.escapeHtml(item.phase || '')}</div>
-        <div class="roadmap-card__icon">${this.escapeHtml(item.icon || '🚀')}</div>
+        <div class="roadmap-card__icon">${MediIcons.getIconHtml(item.icon || 'rocket')}</div>
         <h4>${this.escapeHtml(item.title || '')}</h4>
         <ul>
           ${(item.features || []).map(f => `<li>${this.escapeHtml(f)}</li>`).join('')}

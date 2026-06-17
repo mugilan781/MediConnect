@@ -128,6 +128,9 @@
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  width: max-content;
+  max-width: 100%;
+  margin: 0 auto;
 }
 .faq-tabs__inner::-webkit-scrollbar {
   display: none;

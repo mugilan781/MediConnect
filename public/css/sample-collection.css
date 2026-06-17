@@ -7,7 +7,7 @@
 /* ── Section 1: Hero ── */
 .sc-hero {
   padding: var(--space-20) 0 var(--space-16);
-  background: var(--gradient-hero);
+  background: var(--gradient-hero); color: white;
   position: relative;
   overflow: hidden;
   min-height: 580px;
@@ -18,15 +18,17 @@
   content: ''; position: absolute;
   top: -20%; left: -10%;
   width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(78,154,151,0.07) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(var(--color-accent-rgb), 0.12) 0%, transparent 70%);
   border-radius: 50%;
+  pointer-events: none;
 }
 .sc-hero::after {
   content: ''; position: absolute;
   bottom: -20%; right: -5%;
   width: 350px; height: 350px;
-  background: radial-gradient(circle, rgba(78,154,151,0.05) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(var(--color-primary-rgb), 0.08) 0%, transparent 70%);
   border-radius: 50%;
+  pointer-events: none;
 }
 .sc-hero__grid {
   display: grid;
@@ -41,8 +43,8 @@
   align-items: center;
   gap: var(--space-2);
   padding: var(--space-1) var(--space-4);
-  background: rgba(78,154,151,0.1);
-  color: var(--color-primary-dark);
+  background: rgba(255,255,255,0.12);
+  color: #67E8F9;
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semibold);
   border-radius: var(--radius-full);
@@ -53,20 +55,26 @@
 .sc-hero__badge::before {
   content: '';
   width: 6px; height: 6px;
-  background: var(--color-primary);
+  background: #67E8F9;
   border-radius: 50%;
 }
 .sc-hero__content h1 {
   font-size: var(--font-size-5xl);
   font-weight: var(--font-weight-extrabold);
-  color: var(--color-gray-800);
+  color: white;
   line-height: 1.15;
   margin-bottom: var(--space-4);
   letter-spacing: -0.02em;
 }
+.sc-hero__content h1 .text-gradient {
+  background: linear-gradient(135deg, #67E8F9 0%, #A5F3FC 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 .sc-hero__content > p {
   font-size: var(--font-size-lg);
-  color: var(--color-text-light);
+  color: rgba(255,255,255,0.85);
   line-height: var(--line-height-relaxed);
   max-width: 540px;
   margin-bottom: var(--space-8);
@@ -99,7 +107,7 @@
 }
 .sc-hero__btn--ghost {
   background: transparent;
-  color: var(--color-gray-700);
+  color: rgba(255,255,255,0.75);
   border: 1px solid var(--color-border);
 }
 .sc-hero__btn--ghost:hover {
@@ -115,21 +123,21 @@
   display: block;
   font-size: var(--font-size-3xl);
   font-weight: var(--font-weight-extrabold);
-  color: var(--color-primary);
+  color: white;
   line-height: 1;
   margin-bottom: var(--space-1);
-}
+ color: #67E8F9; }
 .sc-hero__stat-value .text-lg {
   font-size: var(--font-size-lg);
   margin-left: 2px;
 }
 .sc-hero__stat-label {
   font-size: var(--font-size-xs);
-  color: var(--color-text-muted);
+  color: rgba(255,255,255,0.7);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-weight: var(--font-weight-medium);
-}
+ color: rgba(255, 255, 255, 0.8); }
 .sc-hero__visual {
   display: flex;
   align-items: center;
@@ -150,7 +158,7 @@
   align-items: flex-start;
   justify-content: center;
   gap: 0;
-  max-width: 1100px;
+  /* max-width removed for full-width layout */
   margin: var(--space-10) auto 0;
 }
 .sc-timeline__step {
@@ -259,8 +267,8 @@
   transform: scale(1.1) rotate(-5deg);
 }
 .sc-benefit-card__icon--teal { background: #E8F4F1; color: #4E9A97; }
-.sc-benefit-card__icon--blue { background: #DBEAFE; color: #2563EB; }
-.sc-benefit-card__icon--purple { background: #F3E8FF; color: #7C3AED; }
+.sc-benefit-card__icon--blue { background: #E8EEF4; color: #5D7895; }
+.sc-benefit-card__icon--purple { background: var(--surface-primary-soft); color: var(--color-primary); }
 .sc-benefit-card__icon--amber { background: #FEF3C7; color: #D97706; }
 .sc-benefit-card__title {
   font-size: var(--font-size-md);
@@ -641,7 +649,7 @@
   transform: translateY(-3px);
 }
 .sc-story-card__stars {
-  color: #F59E0B;
+  color: var(--color-accent);
   font-size: var(--font-size-md);
   margin-bottom: var(--space-4);
 }
@@ -882,7 +890,7 @@
   .sc-hero__content > p { font-size: var(--font-size-base); }
   .sc-hero__actions { flex-direction: column; }
   .sc-hero__stats { gap: var(--space-6); }
-  .sc-hero__stat-value { font-size: var(--font-size-2xl); }
+  .sc-hero__stat-value { font-size: var(--font-size-2xl);  color: #67E8F9; }
   .sc-benefits__grid { grid-template-columns: 1fr; }
   .sc-process-grid { grid-template-columns: 1fr; }
   .sc-safety__grid { grid-template-columns: 1fr; }
@@ -900,7 +908,7 @@
   .sc-cta h2 { font-size: var(--font-size-2xl); }
   .sc-cta__actions { flex-direction: column; }
   .sc-hero__stats { flex-wrap: wrap; gap: var(--space-4); }
-  .sc-hero__stat-value { font-size: var(--font-size-xl); }
+  .sc-hero__stat-value { font-size: var(--font-size-xl);  color: #67E8F9; }
   .sc-coverage__areas { gap: var(--space-3); }
   .sc-coverage__area { padding: var(--space-2) var(--space-3); }
 }

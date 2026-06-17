@@ -468,7 +468,12 @@ const Auth = {
       return;
     }
 
-    const icons = { success: '✓', error: '✕', warning: '⚠', info: 'ℹ' };
+    const icons = {
+      success: typeof MediIcons !== 'undefined' ? MediIcons.icon('check') : '\u2713',
+      error: typeof MediIcons !== 'undefined' ? MediIcons.icon('x') : '\u2715',
+      warning: typeof MediIcons !== 'undefined' ? MediIcons.icon('alert') : '\u26A0',
+      info: typeof MediIcons !== 'undefined' ? MediIcons.icon('info') : '\u2139'
+    };
     alert.className = `auth-alert auth-alert--${type} visible`;
     alert.innerHTML = `<span>${icons[type] || icons.info}</span> <span>${message}</span>`;
 

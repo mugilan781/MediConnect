@@ -64,7 +64,7 @@ const Homepage = {
     if (gridEl && features.cards && features.cards.length > 0) {
       gridEl.innerHTML = features.cards.map(card => `
         <div class="why-card animate-on-scroll">
-          <div class="why-card__icon">${this.escapeHtml(card.icon || '✨')}</div>
+          <div class="why-card__icon">${MediIcons.getIconHtml(card.icon || 'star')}</div>
           <h3 class="why-card__title">${this.escapeHtml(card.title)}</h3>
           <p class="why-card__desc">${this.escapeHtml(card.description || card.desc)}</p>
         </div>
@@ -119,7 +119,7 @@ const Homepage = {
             <div class="doctor-card__name">${this.escapeHtml(doc.full_name)}</div>
             <div class="doctor-card__specialization">${this.escapeHtml(doc.specialization)}</div>
             <div class="doctor-card__meta">
-              <span>🎓 ${doc.experience_years || 0} yrs exp</span>
+              <span>${MediIcons.icon('clipboard')} ${doc.experience_years || 0} yrs exp</span>
               <span class="doctor-card__fee">₹${Number(doc.consultation_fee || 0).toLocaleString('en-IN')}</span>
             </div>
           </div>
@@ -142,7 +142,7 @@ const Homepage = {
         <h3 class="lab-test-card__name">${this.escapeHtml(test.test_name)}</h3>
         <p class="lab-test-card__desc">${this.escapeHtml(test.description || 'Comprehensive diagnostic test')}</p>
         <div class="lab-test-card__footer">
-          <span>⏱️ ${test.turnaround_hours || 24}h results</span>
+          <span>${MediIcons.icon('clock')} ${test.turnaround_hours || 24}h results</span>
           <a href="/lab-tests.html" class="lab-test-card__book-btn">Book Now</a>
         </div>
       </div>
@@ -155,10 +155,10 @@ const Homepage = {
     if (!container) return;
 
     const items = [];
-    if (info.clinic_name) items.push({ icon: '🏥', label: 'Clinic', value: info.clinic_name });
-    if (info.clinic_phone) items.push({ icon: '📞', label: 'Phone', value: info.clinic_phone });
-    if (info.clinic_email) items.push({ icon: '✉️', label: 'Email', value: info.clinic_email });
-    if (info.clinic_address) items.push({ icon: '📍', label: 'Address', value: info.clinic_address });
+    if (info.clinic_name) items.push({ icon: 'hospital', label: 'Clinic', value: info.clinic_name });
+    if (info.clinic_phone) items.push({ icon: 'phone', label: 'Phone', value: info.clinic_phone });
+    if (info.clinic_email) items.push({ icon: 'mail', label: 'Email', value: info.clinic_email });
+    if (info.clinic_address) items.push({ icon: 'pin', label: 'Address', value: info.clinic_address });
 
     if (items.length === 0) return;
 
@@ -171,7 +171,7 @@ const Homepage = {
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--space-6);margin-top:var(--space-8);">
         ${items.map(item => `
           <div style="padding:var(--space-6);border-radius:var(--radius-xl);border:1px solid var(--color-border);text-align:center;">
-            <div style="font-size:2rem;margin-bottom:var(--space-3);">${item.icon}</div>
+            <div style="font-size:2rem;margin-bottom:var(--space-3);height:1em;display:flex;justify-content:center;align-items:center;">${MediIcons.icon(item.icon)}</div>
             <div style="font-size:var(--font-size-sm);color:var(--color-text-light);margin-bottom:var(--space-1);">${this.escapeHtml(item.label)}</div>
             <div style="font-size:var(--font-size-base);font-weight:var(--font-weight-semibold);color:var(--color-gray-800);">${this.escapeHtml(item.value)}</div>
           </div>
@@ -268,12 +268,25 @@ const Homepage = {
 };
 
 function toggleFaq(btn) {
-  btn.classList.toggle('open');
-  const answer = btn.nextElementSibling;
-  if (answer.style.maxHeight) {
-    answer.style.maxHeight = null;
+  const item = btn.closest('.faq-preview-item');
+  const answer = item.querySelector('.faq-preview-answer');
+  const isOpen = btn.classList.contains('open');
+
+  // Close all other open FAQs
+  document.querySelectorAll('.faq-preview-question.open').forEach(q => {
+    if (q !== btn) {
+      q.classList.remove('open');
+      const ans = q.closest('.faq-preview-item').querySelector('.faq-preview-answer');
+      if (ans) ans.style.maxHeight = null;
+    }
+  });
+
+  if (isOpen) {
+    btn.classList.remove('open');
+    if (answer) answer.style.maxHeight = null;
   } else {
-    answer.style.maxHeight = answer.scrollHeight + 'px';
+    btn.classList.add('open');
+    if (answer) answer.style.maxHeight = answer.scrollHeight + 'px';
   }
 }
 

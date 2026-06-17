@@ -28,11 +28,11 @@ const History = {
         <!-- Filter bar -->
         <div class="filter-bar mb-4" style="display: flex; gap: 8px; flex-wrap: wrap;">
           <button class="btn btn--sm btn--primary filter-btn" data-module="" style="border-radius: 20px;">All Activities</button>
-          <button class="btn btn--sm btn--secondary filter-btn" data-module="appointments" style="border-radius: 20px;">📅 Appointments</button>
-          <button class="btn btn--sm btn--secondary filter-btn" data-module="consultations" style="border-radius: 20px;">🩺 Consultations</button>
-          <button class="btn btn--sm btn--secondary filter-btn" data-module="lab_bookings" style="border-radius: 20px;">🔬 Lab Tests</button>
-          <button class="btn btn--sm btn--secondary filter-btn" data-module="sample_collections" style="border-radius: 20px;">🏠 Collections</button>
-          <button class="btn btn--sm btn--secondary filter-btn" data-module="reports" style="border-radius: 20px;">📄 Reports</button>
+          <button class="btn btn--sm btn--secondary filter-btn" data-module="appointments" style="border-radius: 20px;">${MediIcons.icon('calendar')} Appointments</button>
+          <button class="btn btn--sm btn--secondary filter-btn" data-module="consultations" style="border-radius: 20px;">${MediIcons.icon('stethoscope')} Consultations</button>
+          <button class="btn btn--sm btn--secondary filter-btn" data-module="lab_bookings" style="border-radius: 20px;">${MediIcons.icon('microscope')} Lab Tests</button>
+          <button class="btn btn--sm btn--secondary filter-btn" data-module="sample_collections" style="border-radius: 20px;">${MediIcons.icon('home')} Collections</button>
+          <button class="btn btn--sm btn--secondary filter-btn" data-module="reports" style="border-radius: 20px;">${MediIcons.icon('file')} Reports</button>
         </div>
 
         <!-- Timeline container -->
@@ -103,28 +103,28 @@ const History = {
       if (!response.success) return;
 
       if (response.data.length === 0) {
-        listContainer.innerHTML = UI.emptyState('📜', 'No History Events', 'No medical history records match your filters.');
+        listContainer.innerHTML = UI.emptyState('clipboard', 'No History Events', 'No medical history records match your filters.');
         return;
       }
 
       const eventIcons = {
-        appointments: '📅',
-        consultations: '🩺',
-        lab_bookings: '🔬',
-        sample_collections: '🏠',
-        reports: '📄'
+        appointments: 'calendar',
+        consultations: 'stethoscope',
+        lab_bookings: 'microscope',
+        sample_collections: 'home',
+        reports: 'file'
       };
 
       const eventColors = {
         appointments: '#e0f2fe',
-        consultations: '#f0fdf4',
+        consultations: '#E5F1E6',
         lab_bookings: '#faf5ff',
         sample_collections: '#fff7ed',
         reports: '#f1f5f9'
       };
 
       const listHtml = response.data.map(entry => {
-        const icon = eventIcons[entry.source_module] || '📋';
+        const icon = eventIcons[entry.source_module] || 'clipboard';
         const color = eventColors[entry.source_module] || '#f3f4f6';
         const dateStr = UI.formatDate(entry.event_date);
         const timeStr = new Date(entry.event_date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
@@ -133,7 +133,7 @@ const History = {
           <li class="activity-item" style="cursor: pointer; padding: 16px; border-radius: 8px; margin-bottom: 12px; background: #fff; border: 1px solid var(--border-color); transition: all 0.2s;" onclick="History.showDetails(${entry.id})">
             <div style="display: flex; gap: 12px; align-items: flex-start;">
               <span class="activity-item__icon" style="background: ${color}; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 1.2rem;">
-                ${icon}
+                ${MediIcons.icon(icon)}
               </span>
               <div style="flex: 1;">
                 <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;">
@@ -203,7 +203,7 @@ const History = {
             <div class="detail-group"><div class="detail-label">Consulting Doctor</div><div class="detail-value">Dr. ${meta.doctor_name || 'System'}</div></div>
             <div class="detail-group"><div class="detail-label">Scheduled Date</div><div class="detail-value">${meta.consultation_date ? UI.formatDate(meta.consultation_date) + ' at ' + meta.consultation_time : 'Not Scheduled'}</div></div>
             <div class="detail-group"><div class="detail-label">Clinical Diagnosis</div><div class="detail-value" style="background:#fffbeb; padding:8px; border-radius:4px; border-left:3px solid #f59e0b; font-weight:500;">${meta.diagnosis || 'Diagnosis pending'}</div></div>
-            <div class="detail-group"><div class="detail-label">Prescribed Medication</div><div class="detail-value" style="background:#f0fdf4; padding:8px; border-radius:4px; border-left:3px solid #22c55e;">${meta.prescription || 'No prescription written'}</div></div>
+            <div class="detail-group"><div class="detail-label">Prescribed Medication</div><div class="detail-value" style="background:#E5F1E6; padding:8px; border-radius:4px; border-left:3px solid #6F9E75;">${meta.prescription || 'No prescription written'}</div></div>
             ${meta.follow_up_date ? `<div class="detail-group"><div class="detail-label">Follow-up Date</div><div class="detail-value">${UI.formatDate(meta.follow_up_date)}</div></div>` : ''}
           `;
         } else if (entry.source_module === 'lab_bookings') {
@@ -261,7 +261,7 @@ const History = {
         <div class="modal" style="max-width: 500px; width: 90%;">
           <div class="modal__header">
             <h3>Medical Journey Entry Details</h3>
-            <button class="btn btn--ghost btn--icon" onclick="UI.closeModal('history-details-modal')">✕</button>
+            <button class="btn btn--ghost btn--icon" onclick="UI.closeModal('history-details-modal')">${MediIcons.icon('x')}</button>
           </div>
           <div class="modal__body" id="history-details-body">
             <!-- Dynamically populated -->

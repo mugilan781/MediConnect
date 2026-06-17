@@ -7,7 +7,7 @@
 /* ── Section 1: Hero ── */
 .about-hero {
   padding: var(--space-20) 0 var(--space-16);
-  background: var(--gradient-hero);
+  background: var(--gradient-hero); color: white;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -31,37 +31,37 @@
 .about-hero__label {
   display: inline-flex; align-items: center; gap: var(--space-2);
   padding: var(--space-1) var(--space-4) var(--space-1) var(--space-2);
-  background: rgba(78,154,151,0.1); border: 1px solid rgba(78,154,151,0.2);
+  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
   border-radius: var(--radius-full);
-  font-size: var(--font-size-sm); color: var(--color-primary-dark);
+  font-size: var(--font-size-sm); color: #67E8F9;
   font-weight: var(--font-weight-medium);
   margin-bottom: var(--space-5);
 }
 .about-hero h1 {
   font-size: 3.5rem;
   font-weight: var(--font-weight-extrabold);
-  color: var(--color-gray-800);
+  color: white;
   line-height: 1.1;
   margin-bottom: var(--space-4);
   letter-spacing: -0.03em;
 }
 .about-hero h1 .text-gradient {
-  background: linear-gradient(135deg, var(--color-primary) 0%, #2D6B68 100%);
+  background: linear-gradient(135deg, #67E8F9 0%, #A5F3FC 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 .about-hero p {
   max-width: 600px; margin: 0 auto var(--space-8);
-  color: var(--color-text-light);
+  color: rgba(255,255,255,0.85);
   font-size: var(--font-size-lg);
   line-height: var(--line-height-relaxed);
-}
+ color: white; opacity: 0.9; }
 .about-hero-stats {
   display: flex; justify-content: center; gap: var(--space-10);
   flex-wrap: wrap; margin-top: var(--space-8);
   padding-top: var(--space-8);
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid rgba(255,255,255,0.15);
   max-width: 700px; margin-left: auto; margin-right: auto;
 }
 .about-hero-stat {
@@ -70,13 +70,13 @@
 .about-hero-stat__value {
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-extrabold);
-  color: var(--color-primary);
+  color: white;
   line-height: 1;
   margin-bottom: var(--space-1);
 }
 .about-hero-stat__label {
   font-size: var(--font-size-sm);
-  color: var(--color-text-light);
+  color: rgba(255,255,255,0.7);
 }
 
 /* ── Section 2: Company Story ── */
@@ -177,11 +177,16 @@
 .values-section {
   padding: var(--space-24) 0;
   background: var(--color-white);
-}
-.values-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}.values-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  
   gap: var(--space-6);
+}
+.values-grid > * {
+  flex: 0 1 280px;
+  max-width: 420px;
 }
 .value-card {
   padding: var(--space-8);
@@ -226,14 +231,19 @@
   background: linear-gradient(135deg, var(--color-gray-900) 0%, #1A202C 100%);
   color: white;
 }
-.impact-section .section-header__label { background: rgba(78,154,151,0.2); color: var(--color-primary-light); }
+.impact-section .section-header__label { color: #67E8F9; background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
 .impact-section .section-header__title { color: white; }
-.impact-section .section-header__subtitle { color: var(--color-gray-400); }
-.impact-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+.impact-section .section-header__subtitle { color: rgba(255,255,255,0.75); }.impact-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  
   gap: var(--space-6);
   margin-top: var(--space-10);
+}
+.impact-grid > * {
+  flex: 0 1 280px;
+  max-width: 420px;
 }
 .impact-card {
   padding: var(--space-8);
@@ -249,8 +259,8 @@
   transform: translateY(-3px);
 }
 .impact-card__icon { font-size: 2.5rem; margin-bottom: var(--space-3); }
-.impact-card__value { font-size: var(--font-size-3xl); font-weight: var(--font-weight-extrabold); color: var(--color-primary-light); margin-bottom: var(--space-1); font-variant-numeric: tabular-nums; }
-.impact-card__label { font-size: var(--font-size-sm); color: var(--color-gray-400); }
+.impact-card__value { font-size: var(--font-size-3xl); font-weight: var(--font-weight-extrabold); color: white; margin-bottom: var(--space-1); font-variant-numeric: tabular-nums; }
+.impact-card__label { font-size: var(--font-size-sm); color: rgba(255,255,255,0.75); }
 
 /* ── Section 7: Platform Journey Timeline ── */
 .timeline-section {
@@ -304,13 +314,18 @@
 .about-stats-section {
   padding: var(--space-20) 0;
   background: linear-gradient(135deg, var(--color-gray-50) 0%, var(--color-mint-light) 100%);
-}
-.about-stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}.about-stats-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  
   gap: var(--space-6);
-  max-width: 1000px;
+  /* max-width removed for full-width layout */
   margin: 0 auto;
+}
+.about-stats-grid > * {
+  flex: 0 1 280px;
+  max-width: 420px;
 }
 .about-stat-card {
   text-align: center;
@@ -350,12 +365,17 @@
 .leadership-section {
   padding: var(--space-24) 0;
   background: var(--color-white);
-}
-.leadership-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}.leadership-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  
   gap: var(--space-6);
   margin-top: var(--space-10);
+}
+.leadership-grid > * {
+  flex: 0 1 280px;
+  max-width: 420px;
 }
 .leader-card {
   padding: var(--space-8);
@@ -387,12 +407,17 @@
 .tech-section {
   padding: var(--space-24) 0;
   background: var(--color-gray-50);
-}
-.tech-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}.tech-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  
   gap: var(--space-5);
   margin-top: var(--space-10);
+}
+.tech-grid > * {
+  flex: 0 1 280px;
+  max-width: 420px;
 }
 .tech-card {
   padding: var(--space-6) var(--space-4);
@@ -415,12 +440,17 @@
   padding: var(--space-20) 0;
 }
 .why-section-about--alt { background: var(--color-gray-50); }
-.why-section-about:not(.why-section-about--alt) { background: var(--color-white); }
-.why-cards-about {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+.why-section-about:not(.why-section-about--alt) { background: var(--color-white); }.why-cards-about {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  
   gap: var(--space-6);
   margin-top: var(--space-8);
+}
+.why-cards-about > * {
+  flex: 0 1 300px;
+  max-width: 420px;
 }
 .why-card-about {
   display: flex;
@@ -456,14 +486,19 @@
   background: linear-gradient(135deg, var(--color-gray-900) 0%, #1A202C 100%);
   color: white;
 }
-.roadmap-section .section-header__label { background: rgba(78,154,151,0.2); color: var(--color-primary-light); }
+.roadmap-section .section-header__label { color: #67E8F9; background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
 .roadmap-section .section-header__title { color: white; }
-.roadmap-section .section-header__subtitle { color: var(--color-gray-400); }
-.roadmap-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+.roadmap-section .section-header__subtitle { color: rgba(255,255,255,0.75); }.roadmap-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  
   gap: var(--space-6);
   margin-top: var(--space-10);
+}
+.roadmap-grid > * {
+  flex: 0 1 280px;
+  max-width: 420px;
 }
 .roadmap-card {
   padding: var(--space-7);
@@ -478,7 +513,7 @@
   display: inline-block;
   padding: var(--space-1) var(--space-3);
   background: rgba(78,154,151,0.2);
-  color: var(--color-primary-light);
+  color: #67E8F9;
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semibold);
   border-radius: var(--radius-full);
@@ -489,8 +524,8 @@
 .roadmap-card__icon { font-size: 2rem; margin-bottom: var(--space-3); }
 .roadmap-card h4 { font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); color: white; margin-bottom: var(--space-3); }
 .roadmap-card ul { list-style: none; padding: 0; margin: 0; }
-.roadmap-card ul li { position: relative; padding-left: var(--space-5); margin-bottom: var(--space-2); font-size: var(--font-size-sm); color: var(--color-gray-400); line-height: var(--line-height-relaxed); }
-.roadmap-card ul li::before { content: '→'; position: absolute; left: 0; color: var(--color-primary-light); }
+.roadmap-card ul li { position: relative; padding-left: var(--space-5); margin-bottom: var(--space-2); font-size: var(--font-size-sm); color: rgba(255,255,255,0.7); line-height: var(--line-height-relaxed); }
+.roadmap-card ul li::before { content: '→'; position: absolute; left: 0; color: #67E8F9; }
 
 /* ── Section 14: CTA ── */
 .about-cta {
@@ -518,7 +553,7 @@
   .story-grid { grid-template-columns: 1fr; gap: var(--space-8); }
 }
 @media (max-width: 768px) {
-  .about-hero h1 { font-size: 2.5rem; }
+  .about-hero h1 { font-size: 2.5rem;  color: white; }
   .about-hero { padding: var(--space-12) 0 var(--space-10); }
   .mv-grid { grid-template-columns: 1fr; }
   .about-stats-grid { grid-template-columns: repeat(2, 1fr); }
@@ -531,12 +566,12 @@
   .about-hero-stats { gap: var(--space-6); }
 }
 @media (max-width: 480px) {
-  .about-hero h1 { font-size: 2rem; }
+  .about-hero h1 { font-size: 2rem;  color: white; }
   .about-stats-grid { grid-template-columns: 1fr; }
   .about-hero-stats { flex-direction: column; align-items: center; gap: var(--space-4); }
 }
 @media (max-width: 425px) {
-  .about-hero h1 { font-size: 1.75rem; }
+  .about-hero h1 { font-size: 1.75rem;  color: white; }
   .about-hero-stats { gap: var(--space-3); }
   .story-content h2 { font-size: var(--font-size-2xl); }
   .mv-card { padding: var(--space-6); }
@@ -546,7 +581,7 @@
   .roadmap-card { padding: var(--space-5); }
 }
 @media (max-width: 320px) {
-  .about-hero h1 { font-size: 1.5rem; }
+  .about-hero h1 { font-size: 1.5rem;  color: white; }
   .about-hero-stat__value { font-size: var(--font-size-xl); }
   .value-card { padding: var(--space-6); }
   .why-card-about { flex-direction: column; }

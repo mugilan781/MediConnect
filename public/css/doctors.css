@@ -21,13 +21,13 @@
   border-radius: 50%; pointer-events: none;
 }
 .doctors-hero .container { position: relative; z-index: 1; text-align: center; }
-.doctors-hero h1 { font-size: 3.5rem; font-weight: var(--font-weight-extrabold); color: var(--color-gray-800); margin-bottom: var(--space-4); letter-spacing: -0.03em; }
-.doctors-hero h1 .text-gradient { background: linear-gradient(135deg, var(--color-primary) 0%, #2D6B68 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.doctors-hero p { font-size: var(--font-size-lg); color: var(--color-text-light); max-width: 600px; margin: 0 auto var(--space-8); }
+.doctors-hero h1 { font-size: 3.5rem; font-weight: var(--font-weight-extrabold); color: white; margin-bottom: var(--space-4); letter-spacing: -0.03em; }
+.doctors-hero h1 .text-gradient { background: linear-gradient(135deg, #67E8F9 0%, #A5F3FC 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.doctors-hero p { font-size: var(--font-size-lg); color: rgba(255,255,255,0.85); max-width: 600px; margin: 0 auto var(--space-8); }
 .doctors-hero-stats { display: flex; justify-content: center; gap: var(--space-10); flex-wrap: wrap; }
 .doctors-hero-stat { text-align: center; }
-.doctors-hero-stat-value { font-size: var(--font-size-3xl); font-weight: var(--font-weight-bold); color: var(--color-primary); }
-.doctors-hero-stat-label { font-size: var(--font-size-sm); color: var(--color-text-light); }
+.doctors-hero-stat-value { font-size: var(--font-size-3xl); font-weight: var(--font-weight-bold); color: white; }
+.doctors-hero-stat-label { font-size: var(--font-size-sm); color: rgba(255,255,255,0.7); }
 
 /* ── SECTION 2–4: SEARCH, FILTER & GRID ── */
 .directory-section { padding: var(--space-12) 0; }
@@ -61,7 +61,8 @@
 
 /* ── DOCTOR CARDS ── */
 .doctors-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  display: flex; flex-wrap: wrap; justify-content: center; 
+.doctors-grid > * { flex: 0 1 320px; max-width: 416px; }
   gap: var(--space-6);
 }
 .doc-card {
@@ -85,7 +86,7 @@
 .doc-card__spec { font-size: var(--font-size-sm); color: var(--color-primary); font-weight: var(--font-weight-semibold); margin-bottom: var(--space-1); }
 .doc-card__dept { font-size: var(--font-size-xs); color: var(--color-text-light); }
 .doc-card__rating { display: flex; align-items: center; gap: var(--space-1); margin-top: var(--space-1); }
-.doc-card__stars { color: #F59E0B; font-size: var(--font-size-sm); letter-spacing: 1px; }
+.doc-card__stars { color: var(--color-accent); font-size: var(--font-size-sm); letter-spacing: 1px; }
 .doc-card__rating-text { font-size: var(--font-size-xs); color: var(--color-text-light); }
 .doc-card__body { flex: 1; }
 .doc-card__meta { display: flex; flex-direction: column; gap: 6px; font-size: var(--font-size-sm); color: var(--color-text-light); margin-bottom: var(--space-4); }
@@ -94,7 +95,7 @@
 .doc-card__badges { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-4); }
 .badge-availability { display: inline-flex; align-items: center; gap: 4px; padding: 2px var(--space-2); border-radius: var(--radius-full); font-size: var(--font-size-xs); font-weight: var(--font-weight-medium); }
 .badge-availability--today { background: #D1FAE5; color: #065F46; }
-.badge-availability--week { background: #DBEAFE; color: #1E40AF; }
+.badge-availability--week { background: #E8EEF4; color: #5D7895; }
 .badge-availability--unavailable { background: #FEE2E2; color: #991B1B; }
 .badge-fee {
   display: inline-flex; align-items: center; gap: 4px;
@@ -141,14 +142,15 @@
 
 /* ── SECTION 6: FEATURED SPECIALISTS ── */
 .featured-section { padding: var(--space-12) 0; }
-.featured-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--space-6); }
+.featured-grid { display: flex; flex-wrap: wrap; justify-content: center; 
+.featured-grid > * { flex: 0 1 280px; max-width: 364px; } gap: var(--space-6); }
 .featured-card { background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: var(--space-6); text-align: center; transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
 .featured-card:hover { box-shadow: var(--shadow-card-hover); border-color: var(--color-primary); transform: translateY(-4px); }
 .featured-card__avatar { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--color-primary-light), #D4EDEC); color: var(--color-primary-dark); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-2xl); font-weight: var(--font-weight-bold); margin: 0 auto var(--space-4); }
 .featured-card__name { font-weight: var(--font-weight-bold); color: var(--color-gray-800); margin-bottom: 2px; }
 .featured-card__spec { font-size: var(--font-size-sm); color: var(--color-primary); margin-bottom: var(--space-1); }
 .featured-card__exp { font-size: var(--font-size-xs); color: var(--color-text-light); margin-bottom: var(--space-3); }
-.featured-card__rating { margin-bottom: var(--space-4); color: #F59E0B; font-size: var(--font-size-sm); letter-spacing: 1px; }
+.featured-card__rating { margin-bottom: var(--space-4); color: var(--color-accent); font-size: var(--font-size-sm); letter-spacing: 1px; }
 .featured-card .btn { width: 100%; }
 
 /* ── SECTION 7: POPULAR DEPARTMENTS ── */
@@ -156,7 +158,8 @@
   padding: var(--space-12) 0;
   background: linear-gradient(135deg, var(--color-gray-50) 0%, var(--color-white) 100%);
 }
-.dept-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: var(--space-4); }
+.dept-grid { display: flex; flex-wrap: wrap; justify-content: center; 
+.dept-grid > * { flex: 0 1 280px; max-width: 364px; } gap: var(--space-4); }
 .dept-card {
   background: var(--color-white); border: 1px solid var(--color-border);
   border-radius: var(--radius-xl); padding: var(--space-5); text-align: center;
@@ -169,8 +172,13 @@
 .dept-card__count { font-size: var(--font-size-xs); color: var(--color-text-light); }
 
 /* ── SECTION 8: CONSULTATION PROCESS ── */
-.process-section { padding: var(--space-12) 0; }
-.process-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-6); counter-reset: step; }
+.process-section { padding: var(--space-12) 0; }.process-steps { display: flex;
+  flex-wrap: wrap;
+  justify-content: center;  gap: var(--space-6); counter-reset: step; }
+.process-steps > * {
+  flex: 0 1 280px;
+  max-width: 420px;
+}
 .process-step { text-align: center; position: relative; padding: var(--space-6); }
 .process-step::before { counter-increment: step; content: counter(step); position: absolute; top: var(--space-2); left: var(--space-2); width: 32px; height: 32px; background: var(--color-primary); color: var(--color-white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); }
 .process-step__icon { font-size: 2.5rem; margin-bottom: var(--space-4); }
@@ -178,17 +186,7 @@
 .process-step p { font-size: var(--font-size-sm); color: var(--color-text-light); max-width: 280px; margin: 0 auto; }
 .process-step:not(:last-child)::after { content: '→'; position: absolute; right: -1em; top: 50%; transform: translateY(-50%); font-size: 1.5rem; color: var(--color-primary); opacity: 0.4; }
 
-/* ── SECTION 9: FAQ ── */
-.doctors-faq { padding: var(--space-12) 0; }
-.doctors-faq .faq-grid { max-width: 720px; margin: 0 auto; }
-.doctors-faq .faq-item { border: 1px solid var(--color-border); border-radius: var(--radius-lg); margin-bottom: var(--space-3); overflow: hidden; transition: all var(--transition-base); }
-.doctors-faq .faq-item:hover { border-color: var(--color-primary-light); }
-.doctors-faq .faq-question { width: 100%; padding: var(--space-4) var(--space-5); background: none; border: none; text-align: left; font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--color-gray-800); cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); }
-.doctors-faq .faq-question .icon { font-size: var(--font-size-xs); color: var(--color-text-light); transition: transform 0.3s; }
-.doctors-faq .faq-item.is-open .faq-question .icon { transform: rotate(180deg); }
-.doctors-faq .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-.doctors-faq .faq-item.is-open .faq-answer { max-height: 300px; }
-.doctors-faq .faq-answer-inner { padding: 0 var(--space-5) var(--space-4); font-size: var(--font-size-sm); color: var(--color-text-light); line-height: var(--line-height-relaxed); }
+
 
 /* ── SECTION 10: CTA ── */
 .doctors-cta {

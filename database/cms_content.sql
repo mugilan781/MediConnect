@@ -45,12 +45,12 @@ INSERT INTO cms_content (section_key, section_data, is_active, updated_by) VALUE
   'title', 'Everything You Need',
   'subtitle', 'A complete digital clinic management solution for patients, doctors, and administrators.',
   'cards', JSON_ARRAY(
-    JSON_OBJECT('icon', '📅', 'title', 'Smart Appointments', 'description', 'Book, reschedule, or cancel appointments with real-time doctor availability and slot management.'),
-    JSON_OBJECT('icon', '🩺', 'title', 'Digital Consultations', 'description', 'Complete consultation records with diagnosis, prescriptions, and follow-up tracking in one place.'),
-    JSON_OBJECT('icon', '🔬', 'title', 'Lab Test Booking', 'description', 'Browse, book lab tests, and get results delivered digitally. Home sample collection available.'),
-    JSON_OBJECT('icon', '📄', 'title', 'Medical Reports', 'description', 'Securely upload, store, and access all your medical reports and documents anytime.'),
-    JSON_OBJECT('icon', '📜', 'title', 'Health History', 'description', 'Complete timeline of your medical journey - appointments, tests, prescriptions, and notes.'),
-    JSON_OBJECT('icon', '🔔', 'title', 'Smart Notifications', 'description', 'Never miss an appointment or lab result with real-time in-app and email notifications.')
+    JSON_OBJECT('icon', 'calendar', 'title', 'Smart Appointments', 'description', 'Book, reschedule, or cancel appointments with real-time doctor availability and slot management.'),
+    JSON_OBJECT('icon', 'stethoscope', 'title', 'Digital Consultations', 'description', 'Complete consultation records with diagnosis, prescriptions, and follow-up tracking in one place.'),
+    JSON_OBJECT('icon', 'microscope', 'title', 'Lab Test Booking', 'description', 'Browse, book lab tests, and get results delivered digitally. Home sample collection available.'),
+    JSON_OBJECT('icon', 'file', 'title', 'Medical Reports', 'description', 'Securely upload, store, and access all your medical reports and documents anytime.'),
+    JSON_OBJECT('icon', 'clipboard', 'title', 'Health History', 'description', 'Complete timeline of your medical journey - appointments, tests, prescriptions, and notes.'),
+    JSON_OBJECT('icon', 'bell', 'title', 'Smart Notifications', 'description', 'Never miss an appointment or lab result with real-time in-app and email notifications.')
   )
 ), 1, 1),
 

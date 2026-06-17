@@ -54,13 +54,15 @@ const Doctors = {
       const list = document.getElementById('doctors-faq-list');
       if (list) {
         list.innerHTML = sections.faq.map((item, i) => `
-          <div class="faq-item">
-            <button class="faq-question" onclick="Doctors.toggleFaq(this)">
+          <div class="faq-preview-item">
+            <button class="faq-preview-question" onclick="toggleFaq(this)">
               ${item.question}
-              <span class="icon">▼</span>
+              <span class="faq-chevron">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
             </button>
-            <div class="faq-answer">
-              <div class="faq-answer-inner">${item.answer}</div>
+            <div class="faq-preview-answer">
+              <div class="faq-preview-answer-inner">${item.answer}</div>
             </div>
           </div>
         `).join('');
@@ -71,7 +73,7 @@ const Doctors = {
       if (container) {
         container.innerHTML = sections.process.map((step, i) => `
           <div class="process-step">
-            <div class="process-step__icon">${step.icon || '✨'}</div>
+            <div class="process-step__icon">${MediIcons.getIconHtml(step.icon || 'star')}</div>
             <h3>${step.title || ''}</h3>
             <p>${step.description || ''}</p>
           </div>
@@ -122,7 +124,7 @@ const Doctors = {
 
       const response = await Api.get(url);
       if (!response.success) {
-        grid.innerHTML = '<div class="doctors-empty"><div class="doctors-empty__icon">🔍</div><h3>Failed to Load</h3><p>Could not fetch doctor data. Please try again.</p></div>';
+        grid.innerHTML = `<div class="doctors-empty"><div class="doctors-empty__icon">${MediIcons.icon('search')}</div><h3>Failed to Load</h3><p>Could not fetch doctor data. Please try again.</p></div>`;
         return;
       }
 
@@ -150,7 +152,7 @@ const Doctors = {
       if (countEl) countEl.textContent = doctors.length;
 
       if (!doctors.length) {
-        grid.innerHTML = '<div class="doctors-empty"><div class="doctors-empty__icon">🔍</div><h3>No Doctors Found</h3><p>Try expanding your search or selecting a different specialization.</p><button class="btn btn--secondary" onclick="Doctors.resetFilters()">Clear Filters</button></div>';
+        grid.innerHTML = `<div class="doctors-empty"><div class="doctors-empty__icon">${MediIcons.icon('search')}</div><h3>No Doctors Found</h3><p>Try expanding your search or selecting a different specialization.</p><button class="btn btn--secondary" onclick="Doctors.resetFilters()">Clear Filters</button></div>`;
         document.getElementById('doctors-pagination').innerHTML = '';
         return;
       }
@@ -179,7 +181,7 @@ const Doctors = {
     } catch (e) {
       console.error('Failed to load doctors:', e);
       const grid = document.getElementById('doctors-grid');
-      if (grid) grid.innerHTML = '<div class="doctors-empty"><div class="doctors-empty__icon">⚠️</div><h3>Error</h3><p>Something went wrong. Please refresh the page.</p></div>';
+      if (grid) grid.innerHTML = `<div class="doctors-empty"><div class="doctors-empty__icon">${MediIcons.icon('alert')}</div><h3>Error</h3><p>Something went wrong. Please refresh the page.</p></div>`;
     }
   },
 
@@ -206,9 +208,9 @@ const Doctors = {
         </div>
         <div class="doc-card__body">
           <div class="doc-card__meta">
-            <div class="doc-card__meta-row"><span class="icon">🎓</span> ${doc.qualification}</div>
-            <div class="doc-card__meta-row"><span class="icon">💼</span> ${doc.experience_years} years experience</div>
-            <div class="doc-card__meta-row"><span class="icon">📋</span> License: ${doc.license_number || 'Verified'}</div>
+            <div class="doc-card__meta-row"><span class="icon">${MediIcons.icon('clipboard')}</span> ${doc.qualification}</div>
+            <div class="doc-card__meta-row"><span class="icon">${MediIcons.icon('file')}</span> ${doc.experience_years} years experience</div>
+            <div class="doc-card__meta-row"><span class="icon">${MediIcons.icon('clipboard')}</span> License: ${doc.license_number || 'Verified'}</div>
           </div>
           <div class="doc-card__badges">
             <span class="badge-availability badge-availability--${avail.class}">${avail.label}</span>
@@ -301,7 +303,7 @@ const Doctors = {
       } else {
         bookingHTML = `
           <div class="doc-profile-auth-prompt">
-            <p style="font-size:var(--font-size-lg);margin-bottom:var(--space-2)">🔒 Sign in to book an appointment</p>
+            <p style="font-size:var(--font-size-lg);margin-bottom:var(--space-2)">${MediIcons.icon('lock')} Sign in to book an appointment</p>
             <p>Create an account or log in to view available time slots and schedule your visit.</p>
             <div style="display:flex;gap:var(--space-3);justify-content:center;margin-top:var(--space-4)">
               <a href="/login.html" class="btn btn--primary">Sign In</a>
@@ -499,13 +501,6 @@ const Doctors = {
     document.querySelector('.directory-section')?.scrollIntoView({ behavior: 'smooth' });
   },
 
-  // ── FAQ ──
-  toggleFaq(btn) {
-    const item = btn.closest('.faq-item');
-    const isOpen = item.classList.contains('is-open');
-    document.querySelectorAll('.faq-item.is-open').forEach(el => el.classList.remove('is-open'));
-    if (!isOpen) item.classList.add('is-open');
-  },
 
   // ── SCROLL ANIMATIONS ──
   initScrollAnimations() {

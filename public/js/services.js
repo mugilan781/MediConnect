@@ -44,7 +44,13 @@ const ServicesPage = {
   renderHero(hero) {
     const h1 = document.querySelector('.services-hero h1');
     if (h1 && hero.title) {
-      h1.innerHTML = this.escapeHtml(hero.title).replace('Services', '<span class="text-gradient">Services</span>');
+      let titleText = hero.title;
+      if (titleText.endsWith(',')) {
+        titleText = titleText.slice(0, -1);
+      }
+      h1.innerHTML = this.escapeHtml(titleText)
+        .replace('Health', '<span class="text-gradient">Health</span>')
+        .replace('Services', '<span class="text-gradient">Services</span>');
     }
     const p = document.querySelector('.services-hero p');
     if (p && hero.subtitle) p.textContent = hero.subtitle;
@@ -55,7 +61,7 @@ const ServicesPage = {
     if (!grid || !categories.length) return;
     grid.innerHTML = categories.map(cat => `
       <a href="${this.escapeHtml(cat.link || '#')}" class="cat-card">
-        <div class="cat-card__icon">${this.escapeHtml(cat.icon || '✨')}</div>
+        <div class="cat-card__icon">${MediIcons.getIconHtml(cat.icon || 'star')}</div>
         <div class="cat-card__title">${this.escapeHtml(cat.title || '')}</div>
       </a>
     `).join('');
@@ -86,16 +92,18 @@ const ServicesPage = {
   },
 
   renderFAQ(faq) {
-    const list = document.querySelector('.services-faq-list');
+    const list = document.getElementById('services-faq-list') || document.querySelector('.faq-preview-list');
     if (!list || !faq.length) return;
     list.innerHTML = faq.map((item, i) => `
-      <div class="services-faq-item">
-        <button class="services-faq-question" onclick="toggleServiceFaq(this)">
+      <div class="faq-preview-item">
+        <button class="faq-preview-question" onclick="toggleFaq(this)">
           ${this.escapeHtml(item.question || '')}
-          <span class="icon">▼</span>
+          <span class="faq-chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
         </button>
-        <div class="services-faq-answer">
-          <div class="services-faq-answer-inner">${this.escapeHtml(item.answer || '')}</div>
+        <div class="faq-preview-answer">
+          <div class="faq-preview-answer-inner">${this.escapeHtml(item.answer || '')}</div>
         </div>
       </div>
     `).join('');
@@ -135,13 +143,6 @@ const ServicesPage = {
     return div.innerHTML;
   },
 };
-
-function toggleServiceFaq(btn) {
-  const item = btn.closest('.services-faq-item');
-  const isOpen = item.classList.contains('is-open');
-  document.querySelectorAll('.services-faq-item.is-open').forEach(el => el.classList.remove('is-open'));
-  if (!isOpen) item.classList.add('is-open');
-}
 
 document.addEventListener('DOMContentLoaded', () => {
   ServicesPage.init();

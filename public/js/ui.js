@@ -4,6 +4,14 @@
 // ============================================================
 
 const UI = {
+  icons: {
+    success: '<svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>',
+    error: '<svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>',
+    warning: '<svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>',
+    info: '<svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>',
+    close: '<svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>',
+  },
+
   /**
    * Toggle sidebar on mobile
    */
@@ -31,13 +39,12 @@ const UI = {
       document.body.appendChild(container);
     }
 
-    const icons = { success: '✓', error: '✕', warning: '⚠', info: 'ℹ' };
     const toast = document.createElement('div');
     toast.className = `toast toast--${type}`;
     toast.innerHTML = `
-      <span style="font-size: 1.1rem;">${icons[type] || icons.info}</span>
+      <span class="toast__icon">${this.icons[type] || this.icons.info}</span>
       <span style="flex: 1;">${message}</span>
-      <button onclick="this.parentElement.remove()" style="background:none;border:none;cursor:pointer;font-size:1rem;color:var(--color-gray-400);">✕</button>
+      <button class="toast__close" onclick="this.parentElement.remove()" aria-label="Dismiss notification">${this.icons.close}</button>
     `;
 
     container.appendChild(toast);
@@ -177,11 +184,12 @@ const UI = {
    * Render an empty state
    */
   emptyState(icon, title, message) {
+    const iconHtml = (typeof MediIcons !== 'undefined') ? MediIcons.getIconHtml(icon) : icon;
     return `
       <div class="empty-state">
-        <div class="empty-state__icon">${icon}</div>
-        <div class="empty-state__title">${title}</div>
-        <p>${message}</p>
+        <div class="empty-state__icon">${iconHtml}</div>
+        <h3 class="empty-state__title">${title}</h3>
+        <p class="empty-state__message">${message}</p>
       </div>
     `;
   },

@@ -21,15 +21,15 @@
 .appt-hero__badge {
   display: inline-flex; align-items: center; gap: var(--space-2);
   padding: var(--space-1) var(--space-4) var(--space-1) var(--space-2);
-  background: rgba(78,154,151,0.1); border: 1px solid rgba(78,154,151,0.2);
+  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
   border-radius: var(--radius-full); font-size: var(--font-size-sm);
-  color: var(--color-primary-dark); font-weight: var(--font-weight-medium);
+  color: #67E8F9; font-weight: var(--font-weight-medium);
   margin-bottom: var(--space-5);
 }
 .appt-hero__badge-dot { width: 8px; height: 8px; background: var(--color-success); border-radius: 50%; display: inline-block; margin-right: var(--space-1); }
-.appt-hero__title { font-size: 3.5rem; font-weight: var(--font-weight-extrabold); color: var(--color-gray-800); line-height: 1.1; letter-spacing: -0.03em; margin-bottom: var(--space-5); }
-.appt-hero__title .text-gradient { background: linear-gradient(135deg, var(--color-primary) 0%, #2D6B68 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.appt-hero__desc { font-size: var(--font-size-lg); color: var(--color-text-light); line-height: var(--line-height-relaxed); margin-bottom: var(--space-7); max-width: 520px; }
+.appt-hero__title { font-size: 3.5rem; font-weight: var(--font-weight-extrabold); color: white; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: var(--space-5); }
+.appt-hero__title .text-gradient { background: linear-gradient(135deg, #67E8F9 0%, #A5F3FC 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.appt-hero__desc { font-size: var(--font-size-lg); color: rgba(255,255,255,0.85); line-height: var(--line-height-relaxed); margin-bottom: var(--space-7); max-width: 520px; }
 .appt-hero__actions { display: flex; gap: var(--space-4); flex-wrap: wrap; }
 .appt-hero__visual { display: flex; justify-content: center; align-items: center; }
 .appt-hero__illustration {
@@ -69,8 +69,13 @@
 .timeline-step__content p { font-size: var(--font-size-sm); color: var(--color-text-light); line-height: var(--line-height-relaxed); max-width: 440px; }
 
 /* ── Section 3: Benefits ── */
-.appt-benefits { padding: var(--space-16) 0; background: var(--color-gray-50); }
-.appt-benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-6); margin-top: var(--space-8); }
+.appt-benefits { padding: var(--space-16) 0; background: var(--color-gray-50); }.appt-benefits-grid { display: flex;
+  flex-wrap: wrap;
+  justify-content: center;  gap: var(--space-6); margin-top: var(--space-8); }
+.appt-benefits-grid > * {
+  flex: 0 1 280px;
+  max-width: 420px;
+}
 .benefit-card { background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: var(--space-6); text-align: center; transition: all 0.3s; }
 .benefit-card:hover { box-shadow: var(--shadow-card-hover); border-color: var(--color-primary); transform: translateY(-4px); }
 .benefit-card__icon { font-size: 2.5rem; margin-bottom: var(--space-4); }
@@ -78,8 +83,13 @@
 .benefit-card p { font-size: var(--font-size-sm); color: var(--color-text-light); line-height: var(--line-height-relaxed); }
 
 /* ── Section 4: Specialization Directory ── */
-.appt-specs { padding: var(--space-16) 0; background: var(--color-white); }
-.spec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4); margin-top: var(--space-8); }
+.appt-specs { padding: var(--space-16) 0; background: var(--color-white); }.spec-grid { display: flex;
+  flex-wrap: wrap;
+  justify-content: center;  gap: var(--space-4); margin-top: var(--space-8); }
+.spec-grid > * {
+  flex: 0 1 280px;
+  max-width: 420px;
+}
 .spec-card { background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: var(--space-5); text-align: center; transition: all 0.3s; cursor: pointer; text-decoration: none; display: block; }
 .spec-card:hover { box-shadow: var(--shadow-card-hover); border-color: var(--color-primary); transform: translateY(-2px); }
 .spec-card__icon { font-size: 2.5rem; margin-bottom: var(--space-3); }
@@ -88,7 +98,8 @@
 
 /* ── Section 5: Available Doctors Preview ── */
 .appt-doctors { padding: var(--space-16) 0; background: var(--color-gray-50); }
-.appt-doctors-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--space-6); margin-top: var(--space-8); }
+.appt-doctors-grid { display: flex; flex-wrap: wrap; justify-content: center; 
+.appt-doctors-grid > * { flex: 0 1 280px; max-width: 364px; } gap: var(--space-6); margin-top: var(--space-8); }
 .appt-doctor-card { background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: var(--space-5); transition: all 0.3s; }
 .appt-doctor-card:hover { box-shadow: var(--shadow-card-hover); border-color: var(--color-primary); transform: translateY(-3px); }
 .appt-doctor-card__top { display: flex; gap: var(--space-3); margin-bottom: var(--space-3); align-items: center; }
@@ -100,8 +111,13 @@
 .appt-doctor-card__meta span { display: flex; align-items: center; gap: 4px; }
 
 /* ── Section 6: Booking Showcase ── */
-.appt-showcase { padding: var(--space-16) 0; background: linear-gradient(135deg, var(--color-gray-50) 0%, var(--color-white) 100%); }
-.showcase-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-6); margin-top: var(--space-8); }
+.appt-showcase { padding: var(--space-16) 0; background: linear-gradient(135deg, var(--color-gray-50) 0%, var(--color-white) 100%); }.showcase-steps { display: flex;
+  flex-wrap: wrap;
+  justify-content: center;  gap: var(--space-6); margin-top: var(--space-8); }
+.showcase-steps > * {
+  flex: 0 1 280px;
+  max-width: 420px;
+}
 .showcase-step { text-align: center; padding: var(--space-6); position: relative; }
 .showcase-step:not(:last-child)::after { content: '→'; position: absolute; right: -1em; top: 50%; transform: translateY(-50%); font-size: 1.5rem; color: var(--color-primary); opacity: 0.3; }
 .showcase-step__icon { width: 72px; height: 72px; margin: 0 auto var(--space-4); background: linear-gradient(135deg, var(--color-primary-light), #D4EDEC); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; }
@@ -114,35 +130,30 @@
 .status-step { display: flex; align-items: center; gap: var(--space-2); }
 .status-step__badge { padding: var(--space-2) var(--space-4); border-radius: var(--radius-full); font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); white-space: nowrap; }
 .status-step__badge--pending { background: #FEF3C7; color: #92400E; }
-.status-step__badge--confirmed { background: #DBEAFE; color: #1E40AF; }
+.status-step__badge--confirmed { background: #E8EEF4; color: #5D7895; }
 .status-step__badge--completed { background: #D1FAE5; color: #065F46; }
 .status-step__badge--cancelled { background: #FEE2E2; color: #991B1B; }
-.status-step__badge--rescheduled { background: #F3E8FF; color: #6B21A8; }
+.status-step__badge--rescheduled { background: var(--surface-primary-soft); color: #6B21A8; }
 .status-step__arrow { color: var(--color-text-light); font-size: var(--font-size-sm); }
 
 /* ── Section 8: Patient Experience ── */
-.appt-experience { padding: var(--space-16) 0; background: var(--color-gray-50); }
-.exp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-6); margin-top: var(--space-8); }
+.appt-experience { padding: var(--space-16) 0; background: var(--color-gray-50); }.exp-grid { display: flex;
+  flex-wrap: wrap;
+  justify-content: center;  gap: var(--space-6); margin-top: var(--space-8); }
+.exp-grid > * {
+  flex: 0 1 300px;
+  max-width: 420px;
+}
 .exp-card { background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: var(--space-6); transition: all 0.3s; }
 .exp-card:hover { box-shadow: var(--shadow-card-hover); border-color: var(--color-primary); }
-.exp-card__rating { color: #F59E0B; font-size: var(--font-size-base); margin-bottom: var(--space-3); letter-spacing: 2px; }
+.exp-card__rating { color: var(--color-accent); font-size: var(--font-size-base); margin-bottom: var(--space-3); letter-spacing: 2px; }
 .exp-card__text { font-size: var(--font-size-sm); color: var(--color-text-light); line-height: var(--line-height-relaxed); margin-bottom: var(--space-4); font-style: italic; }
 .exp-card__author { display: flex; align-items: center; gap: var(--space-3); }
 .exp-card__avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-primary-light); color: var(--color-primary-dark); display: flex; align-items: center; justify-content: center; font-weight: var(--font-weight-bold); font-size: var(--font-size-sm); }
 .exp-card__name { font-weight: var(--font-weight-semibold); color: var(--color-gray-800); font-size: var(--font-size-sm); }
 .exp-card__role { font-size: var(--font-size-xs); color: var(--color-text-light); }
 
-/* ── Section 9: FAQ ── */
-.appt-faq { padding: var(--space-16) 0; background: var(--color-white); }
-.appt-faq-list { max-width: 700px; margin: var(--space-8) auto 0; display: flex; flex-direction: column; gap: var(--space-3); }
-.appt-faq-item { border: 1px solid var(--color-border); border-radius: var(--radius-lg); overflow: hidden; transition: all var(--transition-base); }
-.appt-faq-item:hover { border-color: var(--color-primary-light); }
-.appt-faq-question { width: 100%; padding: var(--space-4) var(--space-5); background: none; border: none; text-align: left; font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--color-gray-800); cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); font-family: var(--font-family); }
-.appt-faq-question .icon { font-size: var(--font-size-xs); color: var(--color-text-light); transition: transform 0.3s; }
-.appt-faq-item.is-open .appt-faq-question .icon { transform: rotate(180deg); color: var(--color-primary); }
-.appt-faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-.appt-faq-item.is-open .appt-faq-answer { max-height: 300px; }
-.appt-faq-answer-inner { padding: 0 var(--space-5) var(--space-4); font-size: var(--font-size-sm); color: var(--color-text-light); line-height: var(--line-height-relaxed); }
+
 
 /* ── Section 10: CTA ── */
 .appt-cta { padding: var(--space-16) 0; background: linear-gradient(135deg, var(--color-primary) 0%, #2D6B68 100%); text-align: center; position: relative; overflow: hidden; }
