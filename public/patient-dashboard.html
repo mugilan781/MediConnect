@@ -14,294 +14,459 @@
   <link rel="stylesheet" href="/css/utilities.css">
   <link rel="stylesheet" href="/css/navbar.css">
   <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/doctors.css">
+  <link rel="stylesheet" href="/css/lab-tests.css">
 </head>
 <body>
   <div id="global-navbar"></div>
   <div class="app">
-    <!-- Sidebar (rendered by sidebar.js) -->
     <aside class="sidebar" id="sidebar"></aside>
-
-    <!-- Main Content -->
     <main class="main">
-      <!-- Topbar (rendered by sidebar.js) -->
       <header class="topbar" id="topbar"></header>
-
-      <!-- Content -->
       <div class="content fade-in">
 
-        <!-- ═══ SECTION 1: HERO OVERVIEW ═══ -->
-        <div class="welcome-banner">
-          <div class="welcome-banner__content">
-            <div class="welcome-banner__greeting">Good day,</div>
-            <div class="welcome-banner__name" id="welcome-name">Patient</div>
-            <div class="welcome-banner__message">Here's a quick overview of your health dashboard.</div>
-          </div>
-        </div>
+        <!-- ════════════════════════════════════════════════════
+             TAB 1: OVERVIEW — Dashboard Summary (UNCHANGED)
+             Only stats, recent activity summaries, quick access.
+             NO booking forms. NO full data tables.
+             ════════════════════════════════════════════════════ -->
+        <div id="tab-overview" class="tab-content">
 
-        <!-- ═══ SECTION 2: KPI CARDS ═══ -->
-        <div class="stats-row">
-          <div class="stat-card">
-            <div class="stat-card__icon stat-card__icon--primary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-            <div class="stat-card__content">
-              <div class="stat-card__label">Total Appointments</div>
-              <div class="stat-card__value" id="stat-appointments">0</div>
+          <div class="welcome-banner">
+            <div class="welcome-banner__content">
+              <div class="welcome-banner__greeting">Good day,</div>
+              <div class="welcome-banner__name" id="welcome-name">Patient</div>
+              <div class="welcome-banner__message">Here's a quick overview of your health dashboard.</div>
             </div>
           </div>
-          <div class="stat-card">
-            <div class="stat-card__icon stat-card__icon--success"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div>
-            <div class="stat-card__content">
-              <div class="stat-card__label">Upcoming</div>
-              <div class="stat-card__value" id="stat-upcoming">0</div>
-            </div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-card__icon stat-card__icon--warning"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
-            <div class="stat-card__content">
-              <div class="stat-card__label">Lab Tests</div>
-              <div class="stat-card__value" id="stat-lab-tests">0</div>
-            </div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-card__icon stat-card__icon--info"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
-            <div class="stat-card__content">
-              <div class="stat-card__label">Reports</div>
-              <div class="stat-card__value" id="stat-reports">0</div>
-            </div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-card__icon stat-card__icon--primary" style="background:#e6fffa;color:#0d9488;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-            <div class="stat-card__content">
-              <div class="stat-card__label">Active Consultations</div>
-              <div class="stat-card__value" id="stat-consultations">0</div>
-            </div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-card__icon stat-card__icon--success" style="background:#E5F1E6;color:#6F9E75;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-            <div class="stat-card__content">
-              <div class="stat-card__label">Active Collections</div>
-              <div class="stat-card__value" id="stat-collections">0</div>
-            </div>
-          </div>
-        </div>
 
-        <!-- ═══ SECTION 3: HEALTH ACTIVITY TIMELINE ═══ -->
-        <div class="dashboard-section">
-          <div class="dashboard-section__header">
-            <h3 class="dashboard-section__title"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:8px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Recent Healthcare Activity</h3>
-            <a href="/history.html" class="dashboard-section__link">View Full Timeline</a>
+          <div class="stats-row">
+            <div class="stat-card"><div class="stat-card__icon stat-card__icon--primary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div class="stat-card__content"><div class="stat-card__label">Total Appointments</div><div class="stat-card__value" id="stat-appointments">0</div></div></div>
+            <div class="stat-card"><div class="stat-card__icon stat-card__icon--success"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div><div class="stat-card__content"><div class="stat-card__label">Upcoming</div><div class="stat-card__value" id="stat-upcoming">0</div></div></div>
+            <div class="stat-card"><div class="stat-card__icon stat-card__icon--warning"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div class="stat-card__content"><div class="stat-card__label">Lab Tests</div><div class="stat-card__value" id="stat-lab-tests">0</div></div></div>
+            <div class="stat-card"><div class="stat-card__icon stat-card__icon--info"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="stat-card__content"><div class="stat-card__label">Reports</div><div class="stat-card__value" id="stat-reports">0</div></div></div>
+            <div class="stat-card"><div class="stat-card__icon stat-card__icon--primary" style="background:#e6fffa;color:#0d9488;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="stat-card__content"><div class="stat-card__label">Active Consultations</div><div class="stat-card__value" id="stat-consultations">0</div></div></div>
+            <div class="stat-card"><div class="stat-card__icon stat-card__icon--success" style="background:#E5F1E6;color:#6F9E75;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div class="stat-card__content"><div class="stat-card__label">Active Collections</div><div class="stat-card__value" id="stat-collections">0</div></div></div>
           </div>
-          <div class="timeline-widget">
-            <div id="recent-history-timeline-list">
-              <div class="empty-state"><div class="spinner"></div></div>
-            </div>
-          </div>
-        </div>
 
-        <div class="section-divider"></div>
-
-        <!-- ═══ SECTION 4: UPCOMING APPOINTMENTS ═══ -->
-        <div class="dashboard-section">
-          <div class="dashboard-section__header">
-            <h3 class="dashboard-section__title"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:8px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Upcoming Appointments</h3>
-            <a href="/appointments.html" class="dashboard-section__link">View All</a>
-          </div>
-          <div id="upcoming-appointments-list">
-            <div class="empty-state"><div class="spinner"></div></div>
-          </div>
-        </div>
-
-        <div class="section-divider"></div>
-
-        <!-- ═══ SECTION 5: REPORTS + LAB BOOKINGS (2-col) ═══ -->
-        <div class="dashboard-grid-2">
           <div class="dashboard-section">
             <div class="dashboard-section__header">
-              <h3 class="dashboard-section__title"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:8px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Recent Reports</h3>
-              <a href="/reports.html" class="dashboard-section__link">View All</a>
+              <h3 class="dashboard-section__title"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:8px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Recent Healthcare Activity</h3>
+              <a href="javascript:void(0)" class="dashboard-section__link" data-tab="history">View Full Timeline</a>
             </div>
-            <div id="recent-reports-list">
-              <div class="empty-state"><div class="spinner"></div></div>
-            </div>
+            <div class="timeline-widget"><div id="recent-history-timeline-list"><div class="empty-state"><div class="spinner"></div></div></div></div>
           </div>
+          <div class="section-divider"></div>
           <div class="dashboard-section">
             <div class="dashboard-section__header">
-              <h3 class="dashboard-section__title"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:8px;"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Latest Lab Bookings</h3>
-              <a href="/lab-tests.html" class="dashboard-section__link">View All</a>
+              <h3 class="dashboard-section__title"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:8px;"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Upcoming Appointments</h3>
+              <a href="javascript:void(0)" class="dashboard-section__link" data-tab="appointments">View All</a>
             </div>
-            <div id="recent-lab-bookings-list">
-              <div class="empty-state"><div class="spinner"></div></div>
-            </div>
+            <div id="upcoming-appointments-list"><div class="empty-state"><div class="spinner"></div></div></div>
           </div>
-        </div>
-
-        <div class="section-divider"></div>
-
-        <!-- ═══ SECTION 6: LAB TEST STATUS TRACKER ═══ -->
-        <div class="dashboard-section">
-          <div class="dashboard-section__header">
-            <h3 class="dashboard-section__title"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:8px;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Lab Test Status</h3>
-            <a href="/lab-tests.html" class="dashboard-section__link">View All</a>
-          </div>
-          <div class="empty-state">Your lab test statuses will appear here once booked.</div>
-        </div>
-
-        <div class="section-divider"></div>
-
-        <!-- ═══ SECTION 7: UPCOMING SAMPLE COLLECTIONS ═══ -->
-        <div class="dashboard-section">
-          <div class="dashboard-section__header">
-            <h3 class="dashboard-section__title"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:8px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Upcoming Sample Collections</h3>
-            <a href="/sample-collection.html" class="dashboard-section__link">View All</a>
-          </div>
-          <div id="upcoming-collections-list">
-            <div class="empty-state"><div class="spinner"></div></div>
-          </div>
-        </div>
-
-        <div class="section-divider"></div>
-
-        <!-- ═══ SECTION 8: HEALTH INSIGHTS ═══ -->
-        <div class="dashboard-section">
-          <div class="dashboard-section__header">
-            <h3 class="dashboard-section__title"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:8px;"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>Health Insights</h3>
-            <a href="/analytics.html" class="dashboard-section__link">View Analytics</a>
-          </div>
-          <div class="insight-grid">
-            <div class="insight-card">
-              <div class="insight-card__header">
-                <div class="insight-card__icon"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 21V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16"/><path d="M9 21v-6h6v6"/><path d="M12 7v5M9.5 9.5h5"/></svg></div>
-                <div>
-                  <div class="insight-card__label">Appointment Rate</div>
-                  <div class="insight-card__value">100%</div>
-                </div>
+          <div class="section-divider"></div>
+          <div class="dashboard-grid-2">
+            <div class="dashboard-section">
+              <div class="dashboard-section__header">
+                <h3 class="dashboard-section__title"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:8px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Recent Reports</h3>
+                <a href="javascript:void(0)" class="dashboard-section__link" data-tab="reports">View All</a>
               </div>
-              <div class="insight-card__trend">⬆ No missed appointments</div>
+              <div id="recent-reports-list"><div class="empty-state"><div class="spinner"></div></div></div>
             </div>
-            <div class="insight-card">
-              <div class="insight-card__header">
-                <div class="insight-card__icon"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 18h8"/><path d="M3 22h18"/><path d="M14 22a7 7 0 0 0 0-14h-1"/><path d="M9 14h2"/><path d="M9 2h4v6H9z"/><path d="M6 10l3-2"/></svg></div>
-                <div>
-                  <div class="insight-card__label">Tests This Month</div>
-                  <div class="insight-card__value">—</div>
-                </div>
+            <div class="dashboard-section">
+              <div class="dashboard-section__header">
+                <h3 class="dashboard-section__title"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:8px;"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Latest Lab Bookings</h3>
+                <a href="javascript:void(0)" class="dashboard-section__link" data-tab="lab-tests">View All</a>
               </div>
-              <div class="insight-card__trend">Keep up with regular checkups</div>
-            </div>
-            <div class="insight-card">
-              <div class="insight-card__header">
-                <div class="insight-card__icon"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M8 12h8M8 16h5"/></svg></div>
-                <div>
-                  <div class="insight-card__label">Reports Pending</div>
-                  <div class="insight-card__value">0</div>
-                </div>
-              </div>
-              <div class="insight-card__trend">All reports reviewed</div>
-            </div>
-            <div class="insight-card">
-              <div class="insight-card__header">
-                <div class="insight-card__icon"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.8 2.1z"/></svg></div>
-                <div>
-                  <div class="insight-card__label">Consultations</div>
-                  <div class="insight-card__value">—</div>
-                </div>
-              </div>
-              <div class="insight-card__trend">Stay connected with your doctor</div>
+              <div id="recent-lab-bookings-list"><div class="empty-state"><div class="spinner"></div></div></div>
             </div>
           </div>
-        </div>
-
-        <div class="section-divider"></div>
-
-        <!-- ═══ SECTION 9: NOTIFICATION CENTER PREVIEW ═══ -->
-        <div class="dashboard-section">
-          <div class="dashboard-section__header">
-            <h3 class="dashboard-section__title"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:8px;"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>Notifications</h3>
-            <a href="/notifications.html" class="dashboard-section__link">View All</a>
-          </div>
-          <div id="recent-notifications-list">
-            <div class="empty-state"><div class="spinner"></div></div>
-          </div>
-        </div>
-
-        <div class="section-divider"></div>
-
-        <!-- ═══ SECTION 10: QUICK ACCESS MODULES ═══ -->
-        <div class="dashboard-section">
-          <div class="dashboard-section__header">
-            <h3 class="dashboard-section__title"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:8px;"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Quick Access</h3>
-          </div>
-          <div class="access-grid">
-            <a href="/appointments.html" class="access-card">
-              <div class="access-card__icon"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-              <div class="access-card__label">Appointments</div>
-            </a>
-            <a href="/consultations.html" class="access-card">
-              <div class="access-card__icon"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 4v6a4 4 0 0 0 8 0V4"/><path d="M8 14v2a4 4 0 0 0 8 0v-3"/><circle cx="19" cy="10" r="3"/><path d="M6 4H4M12 4h-2"/></svg></div>
-              <div class="access-card__label">Consultations</div>
-            </a>
-            <a href="/lab-tests.html" class="access-card">
-              <div class="access-card__icon"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 18h8"/><path d="M3 22h18"/><path d="M14 22a7 7 0 0 0 0-14h-1"/><path d="M9 14h2"/><path d="M9 2h4v6H9z"/><path d="M6 10l3-2"/></svg></div>
-              <div class="access-card__label">Lab Tests</div>
-            </a>
-            <a href="/reports.html" class="access-card">
-              <div class="access-card__icon"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h6"/></svg></div>
-              <div class="access-card__label">Reports</div>
-            </a>
-            <a href="/prescriptions.html" class="access-card">
-              <div class="access-card__icon"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m10.5 20.5 10-10a4.24 4.24 0 1 0-6-6l-10 10a4.24 4.24 0 0 0 6 6z"/><path d="m8.5 8.5 7 7"/></svg></div>
-              <div class="access-card__label">Prescriptions</div>
-            </a>
-            <a href="/billing.html" class="access-card">
-              <div class="access-card__icon"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>
-              <div class="access-card__label">Billing</div>
-            </a>
-            <a href="/profile.html" class="access-card">
-              <div class="access-card__icon"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="7" r="4"/></svg></div>
-              <div class="access-card__label">Profile</div>
-            </a>
-            <a href="/messages.html" class="access-card">
-              <div class="access-card__icon"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div>
-              <div class="access-card__label">Messages</div>
-            </a>
-            <a href="/history.html" class="access-card">
-              <div class="access-card__icon"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M8 12h8M8 16h5"/></svg></div>
-              <div class="access-card__label">History</div>
-            </a>
-            <a href="/notifications.html" class="access-card">
-              <div class="access-card__icon"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
-              <div class="access-card__label">Notifications</div>
-            </a>
-          </div>
-        </div>
-
-        <!-- ═══ LEGACY SECTIONS: Consultations (kept for dashboard.js renders) ═══ -->
-        <div class="section-divider"></div>
-
-        <div class="dashboard-grid-2">
+          <div class="section-divider"></div>
           <div class="dashboard-section">
             <div class="dashboard-section__header">
-              <h3 class="dashboard-section__title"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:8px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Upcoming Consultations</h3>
-              <a href="/consultations.html" class="dashboard-section__link">View All</a>
+              <h3 class="dashboard-section__title"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:8px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Upcoming Sample Collections</h3>
+              <a href="javascript:void(0)" class="dashboard-section__link" data-tab="sample-collection">View All</a>
             </div>
-            <div id="upcoming-consultations-list">
-              <div class="empty-state"><div class="spinner"></div></div>
-            </div>
+            <div id="upcoming-collections-list"><div class="empty-state"><div class="spinner"></div></div></div>
           </div>
+          <div class="section-divider"></div>
           <div class="dashboard-section">
             <div class="dashboard-section__header">
-              <h3 class="dashboard-section__title"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:8px;"><path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>Recent Consultation History</h3>
-              <a href="/consultations.html" class="dashboard-section__link">View All</a>
+              <h3 class="dashboard-section__title"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:8px;"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>Notifications</h3>
+              <a href="javascript:void(0)" class="dashboard-section__link" data-tab="notifications">View All</a>
             </div>
-            <div id="consultation-history-list">
-              <div class="empty-state"><div class="spinner"></div></div>
+            <div id="recent-notifications-list"><div class="empty-state"><div class="spinner"></div></div></div>
+          </div>
+          <div class="section-divider"></div>
+          <div class="dashboard-grid-2">
+            <div class="dashboard-section">
+              <div class="dashboard-section__header"><h3 class="dashboard-section__title">Upcoming Consultations</h3><a href="javascript:void(0)" class="dashboard-section__link" data-tab="consultations">View All</a></div>
+              <div id="upcoming-consultations-list"><div class="empty-state"><div class="spinner"></div></div></div>
+            </div>
+            <div class="dashboard-section">
+              <div class="dashboard-section__header"><h3 class="dashboard-section__title">Recent Consultation History</h3><a href="javascript:void(0)" class="dashboard-section__link" data-tab="consultations">View All</a></div>
+              <div id="consultation-history-list"><div class="empty-state"><div class="spinner"></div></div></div>
+            </div>
+          </div>
+        </div><!-- /tab-overview -->
+
+
+        <!-- ════════════════════════════════════════════════════
+             TAB 2: FIND A DOCTOR
+             ONLY: Doctor search, filters, cards, profile, booking
+             ════════════════════════════════════════════════════ -->
+        <div id="tab-doctors" class="tab-content" style="display:none;">
+          <!-- Search & Filters (mirrors doctors.html directory-controls) -->
+          <div class="directory-controls" style="margin-bottom:var(--space-5);">
+            <div class="directory-search">
+              <span class="search-icon"><svg class="mc-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span>
+              <input type="text" id="pd-search-doctors" placeholder="Search doctors by name or specialization...">
+            </div>
+            <div class="filter-group">
+              <select id="pd-filter-specialization" class="filter-select">
+                <option value="">All Specializations</option>
+                <option value="Cardiology">Cardiology</option>
+                <option value="Dermatology">Dermatology</option>
+                <option value="Pediatrics">Pediatrics</option>
+                <option value="Neurology">Neurology</option>
+                <option value="General Medicine">General Medicine</option>
+                <option value="Orthopedics">Orthopedics</option>
+                <option value="Ophthalmology">Ophthalmology</option>
+                <option value="Gynecology">Gynecology</option>
+                <option value="Psychiatry">Psychiatry</option>
+                <option value="ENT">ENT</option>
+              </select>
+              <select id="pd-filter-experience" class="filter-select">
+                <option value="">Any Experience</option>
+                <option value="0-5">0–5 Years</option>
+                <option value="5-10">5–10 Years</option>
+                <option value="10-15">10–15 Years</option>
+                <option value="15+">15+ Years</option>
+              </select>
+            </div>
+          </div>
+          <div class="directory-results-info" id="pd-results-info" style="margin-bottom:var(--space-4);">
+            Showing <strong id="pd-results-count">0</strong> doctors
+          </div>
+          <div class="doctors-grid" id="pd-doctors-grid">
+            <div class="skeleton skeleton-doc-card"></div>
+            <div class="skeleton skeleton-doc-card"></div>
+            <div class="skeleton skeleton-doc-card"></div>
+          </div>
+          <div id="pd-doctors-pagination" style="margin-top:var(--space-6);display:flex;justify-content:center;gap:var(--space-2);flex-wrap:wrap;"></div>
+        </div>
+
+
+        <!-- ════════════════════════════════════════════════════
+             TAB 3: APPOINTMENTS
+             ONLY: Appointment list, status filter, reschedule, cancel
+             ════════════════════════════════════════════════════ -->
+        <div id="tab-appointments" class="tab-content" style="display:none;">
+          <div class="dashboard-section">
+            <div class="dashboard-section__header">
+              <h3 class="dashboard-section__title">My Appointments</h3>
+              <div style="display:flex;gap:var(--space-2);align-items:center;flex-wrap:wrap;">
+                <select id="pd-appt-filter-status" class="filter-select" style="min-width:140px;">
+                  <option value="">All Statuses</option>
+                  <option value="scheduled">Scheduled</option>
+                  <option value="confirmed">Confirmed</option>
+                  <option value="completed">Completed</option>
+                  <option value="cancelled">Cancelled</option>
+                  <option value="rescheduled">Rescheduled</option>
+                </select>
+                <button class="btn btn--primary btn--sm" data-tab="doctors">+ Book New Appointment</button>
+              </div>
+            </div>
+          </div>
+          <div id="pd-appts-list" style="margin-top:var(--space-4);"><div class="empty-state"><div class="spinner"></div></div></div>
+          <div id="pd-appts-pagination" style="display:flex;gap:var(--space-2);justify-content:center;padding:var(--space-4) 0;"></div>
+        </div>
+
+
+        <!-- ════════════════════════════════════════════════════
+             TAB 4: CONSULTATIONS
+             ONLY: Request form, consultation list, status, detail modal
+             ════════════════════════════════════════════════════ -->
+        <div id="tab-consultations" class="tab-content" style="display:none;">
+          <div class="dashboard-section">
+            <div class="dashboard-section__header">
+              <h3 class="dashboard-section__title">Online Consultations</h3>
+              <div style="display:flex;gap:var(--space-2);align-items:center;flex-wrap:wrap;">
+                <select id="pd-consult-filter-status" class="filter-select" style="min-width:140px;">
+                  <option value="">All Statuses</option>
+                  <option value="requested">Requested</option>
+                  <option value="accepted">Accepted</option>
+                  <option value="scheduled">Scheduled</option>
+                  <option value="completed">Completed</option>
+                  <option value="cancelled">Cancelled</option>
+                  <option value="rejected">Rejected</option>
+                </select>
+                <button class="btn btn--primary btn--sm" onclick="PatientDashboard.openConsultationRequestModal()">+ Request Consultation</button>
+              </div>
+            </div>
+          </div>
+          <div id="pd-consults-list" style="margin-top:var(--space-4);"><div class="empty-state"><div class="spinner"></div></div></div>
+          <div id="pd-consults-pagination" style="display:flex;gap:var(--space-2);justify-content:center;padding:var(--space-4) 0;"></div>
+        </div>
+
+
+        <!-- ════════════════════════════════════════════════════
+             TAB 5: LAB TESTS
+             ONLY: Test catalogue, search, category filter, book test, my bookings
+             ════════════════════════════════════════════════════ -->
+        <div id="tab-lab-tests" class="tab-content" style="display:none;">
+          <!-- Test Catalogue -->
+          <div class="dashboard-section">
+            <div class="dashboard-section__header">
+              <h3 class="dashboard-section__title">Lab Test Catalogue</h3>
+              <span class="text-sm text-muted" id="pd-lab-tests-count"></span>
+            </div>
+          </div>
+          <div style="display:flex;gap:var(--space-3);flex-wrap:wrap;margin:var(--space-4) 0;">
+            <div class="directory-search" style="flex:1;min-width:200px;">
+              <span class="search-icon"><svg class="mc-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span>
+              <input type="text" id="pd-lab-search" placeholder="Search lab tests...">
+            </div>
+            <select id="pd-lab-filter-category" class="filter-select" style="min-width:180px;">
+              <option value="">All Categories</option>
+            </select>
+          </div>
+          <div id="pd-lab-tests-catalog" style="margin-bottom:var(--space-8);"></div>
+
+          <!-- My Bookings -->
+          <div class="section-divider"></div>
+          <div class="dashboard-section">
+            <div class="dashboard-section__header">
+              <h3 class="dashboard-section__title">My Lab Bookings</h3>
+            </div>
+          </div>
+          <div id="pd-lab-bookings-list" style="margin-top:var(--space-4);"><div class="empty-state"><div class="spinner"></div></div></div>
+        </div>
+
+
+        <!-- ════════════════════════════════════════════════════
+             TAB 6: SAMPLE COLLECTION
+             ONLY: Pickup request, pickup history, collection status
+             ════════════════════════════════════════════════════ -->
+        <div id="tab-sample-collection" class="tab-content" style="display:none;">
+          <div class="dashboard-section">
+            <div class="dashboard-section__header">
+              <h3 class="dashboard-section__title">Home Sample Collection</h3>
+              <button class="btn btn--primary btn--sm" onclick="PatientDashboard.openSampleCollectionModal()">+ Request Pickup</button>
+            </div>
+          </div>
+          <div id="pd-sample-requests-list" style="margin-top:var(--space-4);"><div class="empty-state"><div class="spinner"></div></div></div>
+        </div>
+
+
+        <!-- ════════════════════════════════════════════════════
+             TAB 7: REPORTS
+             ONLY: Reports list, download, view
+             ════════════════════════════════════════════════════ -->
+        <div id="tab-reports" class="tab-content" style="display:none;">
+          <div class="dashboard-section">
+            <div class="dashboard-section__header">
+              <h3 class="dashboard-section__title">My Medical Reports</h3>
+            </div>
+          </div>
+          <div id="pd-reports-list" style="margin-top:var(--space-4);"><div class="empty-state"><div class="spinner"></div></div></div>
+          <div id="pd-reports-pagination" style="display:flex;gap:var(--space-2);justify-content:center;padding:var(--space-4) 0;"></div>
+        </div>
+
+
+        <!-- ════════════════════════════════════════════════════
+             TAB 8: HISTORY
+             ONLY: Timeline, search, source filter
+             ════════════════════════════════════════════════════ -->
+        <div id="tab-history" class="tab-content" style="display:none;">
+          <div class="dashboard-section">
+            <div class="dashboard-section__header">
+              <h3 class="dashboard-section__title">Medical History Timeline</h3>
+            </div>
+          </div>
+          <div style="display:flex;gap:var(--space-3);flex-wrap:wrap;margin:var(--space-4) 0;">
+            <div class="directory-search" style="flex:1;min-width:200px;">
+              <span class="search-icon"><svg class="mc-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span>
+              <input type="text" id="pd-history-search" placeholder="Search by doctor, event type...">
+            </div>
+            <select id="pd-history-filter" class="filter-select" style="min-width:180px;">
+              <option value="">All Activities</option>
+              <option value="appointments">Appointments</option>
+              <option value="consultations">Consultations</option>
+              <option value="lab_bookings">Lab Tests</option>
+              <option value="sample_collections">Collections</option>
+              <option value="reports">Reports</option>
+            </select>
+          </div>
+          <div id="pd-history-list"></div>
+          <div id="pd-history-pagination" style="display:flex;gap:var(--space-2);justify-content:center;padding:var(--space-4) 0;"></div>
+        </div>
+
+
+        <!-- ════════════════════════════════════════════════════
+             TAB 9: NOTIFICATIONS
+             ════════════════════════════════════════════════════ -->
+        <div id="tab-notifications" class="tab-content" style="display:none;">
+          <div class="dashboard-section">
+            <div class="dashboard-section__header">
+              <h3 class="dashboard-section__title">Notifications</h3>
+              <button class="btn btn--secondary btn--sm" id="pd-btn-mark-all-read">Mark All Read</button>
+            </div>
+          </div>
+          <div id="pd-notifications-list" style="margin-top:var(--space-4);"><div class="empty-state"><div class="spinner"></div></div></div>
+          <div id="pd-notifications-pagination" style="display:flex;gap:var(--space-2);justify-content:center;padding:var(--space-4) 0;"></div>
+        </div>
+
+
+        <!-- ════════════════════════════════════════════════════
+             TAB 10: PROFILE
+             ════════════════════════════════════════════════════ -->
+        <div id="tab-profile" class="tab-content" style="display:none;">
+          <div class="dashboard-section">
+            <div class="dashboard-section__header">
+              <h3 class="dashboard-section__title">My Profile</h3>
+            </div>
+            <div class="dashboard-section__body" style="padding:var(--space-5);">
+              <form id="pd-profile-form">
+                <div class="form-row">
+                  <div class="form-group"><label class="form-label" for="pd-prof-name">Full Name</label><input type="text" id="pd-prof-name" class="form-input" readonly></div>
+                  <div class="form-group"><label class="form-label" for="pd-prof-email">Email</label><input type="email" id="pd-prof-email" class="form-input" readonly></div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group"><label class="form-label" for="pd-prof-phone">Phone</label><input type="text" id="pd-prof-phone" class="form-input"></div>
+                  <div class="form-group"><label class="form-label" for="pd-prof-dob">Date of Birth</label><input type="date" id="pd-prof-dob" class="form-input"></div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group"><label class="form-label" for="pd-prof-gender">Gender</label>
+                    <select id="pd-prof-gender" class="form-select"><option value="">Select</option><option value="male">Male</option><option value="female">Female</option><option value="other">Other</option></select>
+                  </div>
+                  <div class="form-group"><label class="form-label" for="pd-prof-blood">Blood Group</label>
+                    <select id="pd-prof-blood" class="form-select"><option value="">Select</option><option value="A+">A+</option><option value="A-">A-</option><option value="B+">B+</option><option value="B-">B-</option><option value="AB+">AB+</option><option value="AB-">AB-</option><option value="O+">O+</option><option value="O-">O-</option></select>
+                  </div>
+                </div>
+                <div class="form-group"><label class="form-label" for="pd-prof-address">Address</label><textarea id="pd-prof-address" class="form-textarea" rows="2"></textarea></div>
+                <div class="form-group"><label class="form-label" for="pd-prof-emergency">Emergency Contact</label><input type="text" id="pd-prof-emergency" class="form-input" placeholder="Name - Phone"></div>
+                <div class="mt-4"><button type="submit" class="btn btn--primary">Save Profile</button></div>
+              </form>
             </div>
           </div>
         </div>
 
-      </div>
+      </div><!-- /.content -->
     </main>
   </div>
 
+
+  <!-- ════════════════════════════════════════════════════════════
+       MODALS — each scoped to its own section
+       ════════════════════════════════════════════════════════════ -->
+
+  <!-- DOCTORS: View Profile Modal (read-only) -->
+  <div class="modal-overlay" id="pd-view-profile-modal">
+    <div class="modal" style="max-width:620px;width:92%;">
+      <div class="modal__header">
+        <h3>Doctor Profile</h3>
+        <button class="btn btn--ghost btn--icon" onclick="UI.closeModal('pd-view-profile-modal')">✕</button>
+      </div>
+      <div class="modal__body" id="pd-view-profile-body">
+        <div class="empty-state"><div class="spinner"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DOCTORS: Book Appointment Modal (booking form) -->
+  <div class="modal-overlay" id="pd-book-doctor-modal">
+    <div class="modal" style="max-width:560px;width:92%;">
+      <div class="modal__header">
+        <h3>Book Appointment</h3>
+        <button class="btn btn--ghost btn--icon" onclick="UI.closeModal('pd-book-doctor-modal')">✕</button>
+      </div>
+      <div class="modal__body" id="pd-book-doctor-body">
+        <div class="empty-state"><div class="spinner"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- APPOINTMENTS: Reschedule Modal -->
+  <div class="modal-overlay" id="pd-reschedule-modal">
+    <div class="modal">
+      <div class="modal__header"><h3>Reschedule Appointment</h3><button class="btn btn--ghost btn--icon" onclick="UI.closeModal('pd-reschedule-modal')">✕</button></div>
+      <div class="modal__body">
+        <form id="pd-reschedule-form">
+          <input type="hidden" id="pd-reschedule-appt-id">
+          <div class="form-group"><label class="form-label form-label--required" for="pd-resched-date">New Date</label><input type="date" id="pd-resched-date" class="form-input" required></div>
+          <div class="form-group"><label class="form-label form-label--required" for="pd-resched-time">New Time</label><input type="time" id="pd-resched-time" class="form-input" required></div>
+          <button type="submit" class="btn btn--primary btn--block">Confirm Reschedule</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONSULTATIONS: Request Modal -->
+  <div class="modal-overlay" id="pd-request-consultation-modal">
+    <div class="modal">
+      <div class="modal__header"><h3>Request Online Consultation</h3><button class="btn btn--ghost btn--icon" onclick="UI.closeModal('pd-request-consultation-modal')">✕</button></div>
+      <div class="modal__body">
+        <form id="pd-request-consultation-form">
+          <div class="form-group"><label class="form-label form-label--required" for="pd-request-doctor">Select Doctor</label><select id="pd-request-doctor" class="form-select" required><option value="">Loading doctors...</option></select></div>
+          <div class="form-group"><label class="form-label form-label--required" for="pd-request-date">Preferred Date</label><input type="date" id="pd-request-date" class="form-input" required></div>
+          <div class="form-group"><label class="form-label form-label--required" for="pd-request-symptoms">Symptoms</label><textarea id="pd-request-symptoms" class="form-textarea" rows="2" placeholder="Describe your symptoms..." required></textarea></div>
+          <div class="form-group"><label class="form-label" for="pd-request-concerns">Health Concerns</label><textarea id="pd-request-concerns" class="form-textarea" rows="2" placeholder="Chronic conditions..."></textarea></div>
+          <div class="form-group"><label class="form-label" for="pd-request-notes">Additional Notes</label><textarea id="pd-request-notes" class="form-textarea" rows="2"></textarea></div>
+          <button type="submit" class="btn btn--primary btn--block">Submit Request</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONSULTATIONS: Detail Modal -->
+  <div class="modal-overlay" id="pd-consultation-detail-modal">
+    <div class="modal" style="max-width:700px;width:90%;">
+      <div class="modal__header"><h3>Consultation Details</h3><button class="btn btn--ghost btn--icon" onclick="UI.closeModal('pd-consultation-detail-modal')">✕</button></div>
+      <div class="modal__body" id="pd-consultation-details"></div>
+    </div>
+  </div>
+
+  <!-- LAB TESTS: Booking Modal -->
+  <div class="modal-overlay" id="pd-book-lab-modal">
+    <div class="modal">
+      <div class="modal__header"><h3>Book Lab Test</h3><button class="btn btn--ghost btn--icon" onclick="UI.closeModal('pd-book-lab-modal')">✕</button></div>
+      <div class="modal__body">
+        <form id="pd-book-lab-form">
+          <input type="hidden" id="pd-book-lab-test-id">
+          <div class="form-group"><label class="form-label">Test</label><div id="pd-book-lab-test-name" style="font-weight:600;margin-bottom:var(--space-2);"></div></div>
+          <div class="form-group"><label class="form-label form-label--required" for="pd-book-lab-date">Preferred Date</label><input type="date" id="pd-book-lab-date" class="form-input" required></div>
+          <div class="form-group"><label class="form-label" for="pd-book-lab-time">Preferred Time</label>
+            <select id="pd-book-lab-time" class="form-select"><option value="">Any time</option><option value="morning">Morning (8 AM - 12 PM)</option><option value="afternoon">Afternoon (12 PM - 4 PM)</option><option value="evening">Evening (4 PM - 7 PM)</option></select>
+          </div>
+          <div class="form-group"><label class="form-label" for="pd-book-lab-notes">Notes</label><textarea id="pd-book-lab-notes" class="form-textarea" rows="2"></textarea></div>
+          <button type="submit" class="btn btn--primary btn--block">Book Test</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAMPLE COLLECTION: Request Modal -->
+  <div class="modal-overlay" id="pd-sample-collection-modal">
+    <div class="modal">
+      <div class="modal__header"><h3>Request Home Sample Collection</h3><button class="btn btn--ghost btn--icon" onclick="UI.closeModal('pd-sample-collection-modal')">✕</button></div>
+      <div class="modal__body">
+        <form id="pd-sample-collection-form">
+          <div class="form-group"><label class="form-label form-label--required" for="pd-sc-booking-id">Lab Booking</label><select id="pd-sc-booking-id" class="form-select" required><option value="">Loading...</option></select></div>
+          <div class="form-group"><label class="form-label form-label--required" for="pd-sc-address">Collection Address</label><textarea id="pd-sc-address" class="form-textarea" rows="2" placeholder="Full address for pickup..." required></textarea></div>
+          <div class="form-group"><label class="form-label form-label--required" for="pd-sc-date">Preferred Date</label><input type="date" id="pd-sc-date" class="form-input" required></div>
+          <div class="form-group"><label class="form-label" for="pd-sc-time-slot">Preferred Time Slot</label>
+            <select id="pd-sc-time-slot" class="form-select"><option value="">Any time</option><option value="09:00-11:00">9:00 AM – 11:00 AM</option><option value="11:00-13:00">11:00 AM – 1:00 PM</option><option value="14:00-16:00">2:00 PM – 4:00 PM</option><option value="16:00-18:00">4:00 PM – 6:00 PM</option></select>
+          </div>
+          <div class="form-group"><label class="form-label" for="pd-sc-notes">Notes</label><textarea id="pd-sc-notes" class="form-textarea" rows="2"></textarea></div>
+          <button type="submit" class="btn btn--primary btn--block">Submit Request</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Scripts -->
   <script src="/js/config.js"></script>
   <script src="/js/api.js"></script>
   <script src="/js/ui.js"></script>
@@ -313,6 +478,12 @@
   <script src="/js/global-navbar.js"></script>
   <script src="/js/animations.js"></script>
   <script src="/js/dashboard.js"></script>
-  <script>document.addEventListener('DOMContentLoaded', () => { Sidebar.init('Dashboard', 'Home / Patient Dashboard'); Dashboard.initPatient(); });</script>
+  <script src="/js/patient-dashboard.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Sidebar.init('Patient Dashboard', 'Home / Dashboard');
+      PatientDashboard.init();
+    });
+  </script>
 </body>
 </html>

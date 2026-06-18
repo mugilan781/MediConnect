@@ -27,22 +27,22 @@ const Sidebar = {
   navItems: {
     patient: [
       { section: 'MAIN', items: [
-        { href: '/patient-dashboard.html', icon: 'chart', label: 'Dashboard' },
-        { href: '/doctors.html', icon: 'search', label: 'Find a Doctor' },
+        { dashboardPath: '/patient-dashboard.html', dataTab: 'overview', icon: 'chart', label: 'Dashboard' },
+        { dashboardPath: '/patient-dashboard.html', dataTab: 'doctors', icon: 'search', label: 'Find a Doctor' },
       ] },
       { section: 'CARE', items: [
-        { href: '/appointments.html', icon: 'calendar', label: 'Appointments' },
-        { href: '/consultations.html', icon: 'stethoscope', label: 'Consultations' },
+        { dashboardPath: '/patient-dashboard.html', dataTab: 'appointments', icon: 'calendar', label: 'Appointments' },
+        { dashboardPath: '/patient-dashboard.html', dataTab: 'consultations', icon: 'stethoscope', label: 'Consultations' },
       ] },
       { section: 'LAB & REPORTS', items: [
-        { href: '/lab-tests.html', icon: 'microscope', label: 'Lab Tests' },
-        { href: '/sample-collection.html', icon: 'home', label: 'Sample Collection' },
-        { href: '/reports.html', icon: 'file', label: 'Reports' },
-        { href: '/history.html', icon: 'clipboard', label: 'History' },
+        { dashboardPath: '/patient-dashboard.html', dataTab: 'lab-tests', icon: 'microscope', label: 'Lab Tests' },
+        { dashboardPath: '/patient-dashboard.html', dataTab: 'sample-collection', icon: 'home', label: 'Sample Collection' },
+        { dashboardPath: '/patient-dashboard.html', dataTab: 'reports', icon: 'file', label: 'Reports' },
+        { dashboardPath: '/patient-dashboard.html', dataTab: 'history', icon: 'clipboard', label: 'History' },
       ] },
       { section: 'ACCOUNT', items: [
-        { href: '/notifications.html', icon: 'bell', label: 'Notifications' },
-        { href: '/profile.html', icon: 'user', label: 'My Profile' },
+        { dashboardPath: '/patient-dashboard.html', dataTab: 'notifications', icon: 'bell', label: 'Notifications' },
+        { dashboardPath: '/patient-dashboard.html', dataTab: 'profile', icon: 'user', label: 'My Profile' },
       ] },
     ],
     doctor: [
