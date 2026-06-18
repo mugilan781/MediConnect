@@ -3,31 +3,7 @@
    Premium Doctors Directory — 10-Section Layout
    ============================================================ */
 
-/* ── SECTION 1: HERO ── */
-.doctors-hero {
-  padding: var(--space-16) 0 var(--space-20);
-  background: var(--gradient-hero);
-  position: relative;
-  overflow: hidden;
-  min-height: 60vh;
-  display: flex;
-  align-items: center;
-}
-.doctors-hero::before {
-  content: ''; position: absolute;
-  top: -20%; right: -10%;
-  width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(78,154,151,0.08) 0%, transparent 70%);
-  border-radius: 50%; pointer-events: none;
-}
-.doctors-hero .container { position: relative; z-index: 1; text-align: center; }
-.doctors-hero h1 { font-size: 3.5rem; font-weight: var(--font-weight-extrabold); color: white; margin-bottom: var(--space-4); letter-spacing: -0.03em; }
-.doctors-hero h1 .text-gradient { background: linear-gradient(135deg, #67E8F9 0%, #A5F3FC 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.doctors-hero p { font-size: var(--font-size-lg); color: rgba(255,255,255,0.85); max-width: 600px; margin: 0 auto var(--space-8); }
-.doctors-hero-stats { display: flex; justify-content: center; gap: var(--space-10); flex-wrap: wrap; }
-.doctors-hero-stat { text-align: center; }
-.doctors-hero-stat-value { font-size: var(--font-size-3xl); font-weight: var(--font-weight-bold); color: white; }
-.doctors-hero-stat-label { font-size: var(--font-size-sm); color: rgba(255,255,255,0.7); }
+/* ── SECTION 1: HERO (layout handled by .page-hero in components.css) ── */
 
 /* ── SECTION 2–4: SEARCH, FILTER & GRID ── */
 .directory-section { padding: var(--space-12) 0; }
@@ -61,10 +37,10 @@
 
 /* ── DOCTOR CARDS ── */
 .doctors-grid {
-  display: flex; flex-wrap: wrap; justify-content: center; 
-.doctors-grid > * { flex: 0 1 320px; max-width: 416px; }
+  display: flex; flex-wrap: wrap; justify-content: center;
   gap: var(--space-6);
 }
+.doctors-grid > * { flex: 0 1 320px; max-width: 416px; }
 .doc-card {
   background: var(--color-white); border: 1px solid var(--color-border);
   border-radius: var(--radius-xl); padding: var(--space-6);
@@ -142,8 +118,8 @@
 
 /* ── SECTION 6: FEATURED SPECIALISTS ── */
 .featured-section { padding: var(--space-12) 0; }
-.featured-grid { display: flex; flex-wrap: wrap; justify-content: center; 
-.featured-grid > * { flex: 0 1 280px; max-width: 364px; } gap: var(--space-6); }
+.featured-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-6); }
+.featured-grid > * { flex: 0 1 280px; max-width: 364px; }
 .featured-card { background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: var(--space-6); text-align: center; transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
 .featured-card:hover { box-shadow: var(--shadow-card-hover); border-color: var(--color-primary); transform: translateY(-4px); }
 .featured-card__avatar { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--color-primary-light), #D4EDEC); color: var(--color-primary-dark); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-2xl); font-weight: var(--font-weight-bold); margin: 0 auto var(--space-4); }
@@ -158,8 +134,8 @@
   padding: var(--space-12) 0;
   background: linear-gradient(135deg, var(--color-gray-50) 0%, var(--color-white) 100%);
 }
-.dept-grid { display: flex; flex-wrap: wrap; justify-content: center; 
-.dept-grid > * { flex: 0 1 280px; max-width: 364px; } gap: var(--space-4); }
+.dept-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-4); }
+.dept-grid > * { flex: 0 1 280px; max-width: 364px; }
 .dept-card {
   background: var(--color-white); border: 1px solid var(--color-border);
   border-radius: var(--radius-xl); padding: var(--space-5); text-align: center;
@@ -172,21 +148,15 @@
 .dept-card__count { font-size: var(--font-size-xs); color: var(--color-text-light); }
 
 /* ── SECTION 8: CONSULTATION PROCESS ── */
-.process-section { padding: var(--space-12) 0; }.process-steps { display: flex;
-  flex-wrap: wrap;
-  justify-content: center;  gap: var(--space-6); counter-reset: step; }
-.process-steps > * {
-  flex: 0 1 280px;
-  max-width: 420px;
-}
+.process-section { padding: var(--space-12) 0; }
+.process-steps { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-6); counter-reset: step; }
+.process-steps > * { flex: 0 1 280px; max-width: 420px; }
 .process-step { text-align: center; position: relative; padding: var(--space-6); }
 .process-step::before { counter-increment: step; content: counter(step); position: absolute; top: var(--space-2); left: var(--space-2); width: 32px; height: 32px; background: var(--color-primary); color: var(--color-white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); }
 .process-step__icon { font-size: 2.5rem; margin-bottom: var(--space-4); }
 .process-step h3 { font-size: var(--font-size-lg); color: var(--color-gray-800); margin-bottom: var(--space-2); }
 .process-step p { font-size: var(--font-size-sm); color: var(--color-text-light); max-width: 280px; margin: 0 auto; }
 .process-step:not(:last-child)::after { content: '→'; position: absolute; right: -1em; top: 50%; transform: translateY(-50%); font-size: 1.5rem; color: var(--color-primary); opacity: 0.4; }
-
-
 
 /* ── SECTION 10: CTA ── */
 .doctors-cta {
@@ -204,9 +174,6 @@
 
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
-  .doctors-hero h1 { font-size: 2rem; }
-  .doctors-hero p { font-size: var(--font-size-base); }
-  .doctors-hero-stats { gap: var(--space-6); }
   .directory-controls { flex-direction: column; align-items: stretch; padding: var(--space-4); }
   .directory-search { min-width: 0; }
   .filter-group { flex-direction: column; }
@@ -227,7 +194,6 @@
 }
 
 @media (max-width: 425px) {
-  .doctors-hero h1 { font-size: 1.75rem; }
   .doctors-cta h2 { font-size: var(--font-size-xl); }
   .doctors-cta__actions { flex-direction: column; align-items: center; }
   .dept-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-3); }
@@ -236,8 +202,5 @@
 }
 
 @media (max-width: 320px) {
-  .doctors-hero h1 { font-size: 1.5rem; }
-  .doctors-hero-stat-value { font-size: var(--font-size-2xl); }
-  .doctors-hero-stats { flex-direction: column; align-items: center; gap: var(--space-4); }
   .dept-grid { grid-template-columns: 1fr; }
 }

@@ -1,180 +1,10 @@
-/* ============================================================
-   MediConnect – lab-tests.css
+﻿/* ============================================================
+   MediConnect - lab-tests.css
    Premium Diagnostics Lab Tests Page
    10-Section Layout
    ============================================================ */
 
-/* ── Section 1: Hero ── */
-.lab-hero {
-  padding: var(--space-20) 0 var(--space-16);
-  background: var(--gradient-hero); color: white;
-  position: relative;
-  overflow: hidden;
-  min-height: 600px;
-  display: flex;
-  align-items: center;
-}
-.lab-hero::before {
-  content: ''; position: absolute;
-  top: -20%; right: -10%;
-  width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(var(--color-accent-rgb), 0.12) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-}
-.lab-hero::after {
-  content: ''; position: absolute;
-  bottom: -30%; left: -5%;
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(var(--color-primary-rgb), 0.08) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-}
-.lab-hero__grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-12);
-  align-items: center;
-  position: relative;
-  z-index: 1;
-}
-.lab-hero__badge {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-1) var(--space-4);
-  background: rgba(255,255,255,0.12);
-  color: #67E8F9;
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
-  border-radius: var(--radius-full);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: var(--space-4);
-}
-.lab-hero__badge::before {
-  content: '';
-  width: 6px; height: 6px;
-  background: var(--color-primary);
-  border-radius: 50%;
-}
-.lab-hero__content h1 {
-  font-size: var(--font-size-5xl);
-  font-weight: var(--font-weight-extrabold);
-  color: white;
-  line-height: 1.15;
-  margin-bottom: var(--space-4);
-  letter-spacing: -0.02em;
-}
-.lab-hero__content h1 .text-gradient {
-  background: linear-gradient(135deg, #67E8F9 0%, #A5F3FC 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.lab-hero__content > p {
-  font-size: var(--font-size-lg);
-  color: rgba(255,255,255,0.85);
-  line-height: var(--line-height-relaxed);
-  max-width: 540px;
-  margin-bottom: var(--space-8);
-}
-.lab-hero__actions {
-  display: flex;
-  gap: var(--space-4);
-  margin-bottom: var(--space-10);
-}
-.lab-hero__btn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-3) var(--space-8);
-  border-radius: var(--radius-full);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  text-decoration: none;
-  transition: all var(--transition-base);
-  cursor: pointer;
-}
-.lab-hero__btn--primary {
-  background: var(--gradient-primary);
-  color: white;
-  box-shadow: 0 4px 14px rgba(78,154,151,0.3);
-}
-.lab-hero__btn--primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(78,154,151,0.4);
-}
-.lab-hero__btn--ghost {
-  background: transparent;
-  color: rgba(255,255,255,0.75);
-  border: 1px solid var(--color-border);
-}
-.lab-hero__btn--ghost:hover {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
-  background: var(--color-mint-light);
-}
-.lab-hero__stats {
-  display: flex;
-  gap: var(--space-8);
-}
-.lab-hero__stat-value {
-  display: block;
-  font-size: var(--font-size-3xl);
-  font-weight: var(--font-weight-extrabold);
-  color: white;
-  line-height: 1;
-  margin-bottom: var(--space-1);
- color: #67E8F9; }
-.lab-hero__stat-label {
-  font-size: var(--font-size-xs);
-  color: rgba(255,255,255,0.7);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-weight: var(--font-weight-medium);
- color: rgba(255, 255, 255, 0.8); }
-.lab-hero__visual {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.lab-hero__illustration {
-  position: relative;
-  width: 280px;
-  height: 320px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.lab-hero__flask svg {
-  width: 200px;
-  height: 240px;
-  animation: float 4s ease-in-out infinite;
-}
-.lab-hero__particle {
-  position: absolute;
-  border-radius: 50%;
-  animation: float 3s ease-in-out infinite;
-}
-.lab-hero__particle.p1 {
-  width: 12px; height: 12px;
-  background: rgba(78,154,151,0.2);
-  top: 10%; left: 5%;
-  animation-delay: 0.5s;
-}
-.lab-hero__particle.p2 {
-  width: 8px; height: 8px;
-  background: rgba(78,154,151,0.15);
-  top: 60%; right: 0%;
-  animation-delay: 1s;
-}
-.lab-hero__particle.p3 {
-  width: 16px; height: 16px;
-  background: rgba(78,154,151,0.1);
-  bottom: 15%; left: 10%;
-  animation-delay: 1.5s;
-}
+/* -- Section 1: Hero (layout handled by .page-hero in components.css) -- */
 
 /* ── Section 2: Lab Services Overview ── */
 .lab-services-overview {
@@ -849,10 +679,6 @@
 
 /* ── Responsive: Tablet ── */
 @media (max-width: 1024px) {
-  .lab-hero__grid { grid-template-columns: 1fr; gap: var(--space-8); }
-  .lab-hero__visual { display: none; }
-  .lab-hero { min-height: auto; padding: var(--space-16) 0 var(--space-12); }
-  .lab-hero__content h1 { font-size: var(--font-size-4xl); }
   .lab-services-grid { grid-template-columns: repeat(2, 1fr); }
   .lab-delivery-grid { grid-template-columns: repeat(2, 1fr); }
   .lab-detail-meta { grid-template-columns: 1fr; }
@@ -876,11 +702,6 @@
 
 /* ── Responsive: Mobile ── */
 @media (max-width: 768px) {
-  .lab-hero__content h1 { font-size: var(--font-size-3xl); }
-  .lab-hero__content > p { font-size: var(--font-size-base); }
-  .lab-hero__actions { flex-direction: column; }
-  .lab-hero__stats { gap: var(--space-6); }
-  .lab-hero__stat-value { font-size: var(--font-size-2xl);  color: #67E8F9; }
   .lab-services-grid { grid-template-columns: 1fr; }
   .lab-tests-grid { grid-template-columns: 1fr; }
   .lab-catalog__controls { flex-direction: column; }
@@ -893,16 +714,12 @@
 }
 
 @media (max-width: 425px) {
-  .lab-hero__content h1 { font-size: var(--font-size-2xl); }
   .lab-cta h2 { font-size: var(--font-size-2xl); }
   .lab-cta__actions { flex-direction: column; }
-  .lab-hero__stats { flex-wrap: wrap; gap: var(--space-4); }
-  .lab-hero__stat-value { font-size: var(--font-size-xl);  color: #67E8F9; }
   .lab-service-card { padding: var(--space-6); }
 }
 
 @media (max-width: 320px) {
-  .lab-hero__content h1 { font-size: var(--font-size-xl); }
   .lab-test-card { padding: var(--space-4); }
   .lab-delivery-card { padding: var(--space-5); }
 }

@@ -1,6 +1,6 @@
 // ============================================================
 // MediConnect - public/js/global-navbar.js
-// Global navigation component
+// Global navigation component with dropdown menus
 // ============================================================
 
 const NavbarIcons = {
@@ -20,13 +20,27 @@ const NavbarIcons = {
 const navIcon = name => `<svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${NavbarIcons[name] || NavbarIcons.user}</svg>`;
 
 const GlobalNavbar = {
+  // Navigation items — supports dropdowns via `children` array
   navLinks: [
     { href: '/index.html', label: 'Home' },
     { href: '/about.html', label: 'About' },
     { href: '/services.html', label: 'Services' },
     { href: '/doctors.html', label: 'Doctors' },
-    { href: '/appointments.html', label: 'Appointments' },
-    { href: '/lab-tests.html', label: 'Lab Tests' },
+    {
+      label: 'Appointments',
+      children: [
+        { href: '/appointments.html', label: 'Appointments' },
+        { href: '/consultations.html', label: 'Consultations' },
+      ],
+    },
+    {
+      label: 'Lab Tests',
+      children: [
+        { href: '/lab-tests.html', label: 'Lab Tests' },
+        { href: '/sample-collection.html', label: 'Home Sample Collection' },
+        { href: '/reports.html', label: 'Reports' },
+      ],
+    },
     { href: '/pricing.html', label: 'Pricing' },
     { href: '/contact.html', label: 'Contact' },
   ],
@@ -41,13 +55,67 @@ const GlobalNavbar = {
     this.handleScroll();
   },
 
+  _isActiveLink(href) {
+    const p = window.location.pathname;
+    return p === href || (href !== '/index.html' && p.startsWith(href.replace('.html', '')));
+  },
+
+  _isDropdownActive(children) {
+    return children.some(c => this._isActiveLink(c.href));
+  },
+
+  _chevronSvg() {
+    return '<svg class="nav-dropdown__chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
+  },
+
   render(container) {
     const currentPath = window.location.pathname;
     const user = Auth.getUser();
 
-    const centerLinks = this.navLinks.map(link => {
-      const isActive = currentPath === link.href || (link.href !== '/index.html' && currentPath.startsWith(link.href.replace('.html', '')));
-      return `<a href="${link.href}" class="global-navbar__link${isActive ? ' active' : ''}">${link.label}</a>`;
+    // Build center nav links
+    const centerLinks = this.navLinks.map((item, idx) => {
+      if (item.children) {
+        const isActive = this._isDropdownActive(item.children);
+        const dropdownItems = item.children.map(child => {
+          const childActive = this._isActiveLink(child.href);
+          return `<a href="${child.href}" class="nav-dropdown__item${childActive ? ' active' : ''}">${child.label}</a>`;
+        }).join('');
+        return `
+          <div class="nav-dropdown" data-dropdown-idx="${idx}">
+            <button type="button" class="global-navbar__link nav-dropdown__trigger${isActive ? ' active' : ''}" aria-expanded="false" aria-haspopup="true">
+              ${item.label}${this._chevronSvg()}
+            </button>
+            <div class="nav-dropdown__menu" role="menu">
+              ${dropdownItems}
+            </div>
+          </div>
+        `;
+      }
+      const isActive = this._isActiveLink(item.href);
+      return `<a href="${item.href}" class="global-navbar__link${isActive ? ' active' : ''}">${item.label}</a>`;
+    }).join('');
+
+    // Build mobile menu links
+    const mobileLinks = this.navLinks.map((item, idx) => {
+      if (item.children) {
+        const isActive = this._isDropdownActive(item.children);
+        const subLinks = item.children.map(child => {
+          const childActive = this._isActiveLink(child.href);
+          return `<a href="${child.href}" class="global-navbar__mobile-sublink${childActive ? ' active' : ''}">${child.label}</a>`;
+        }).join('');
+        return `
+          <div class="global-navbar__mobile-dropdown" data-mobile-dropdown="${idx}">
+            <button type="button" class="global-navbar__mobile-link global-navbar__mobile-dropdown-trigger${isActive ? ' active' : ''}">
+              ${item.label}${this._chevronSvg()}
+            </button>
+            <div class="global-navbar__mobile-dropdown-menu">
+              ${subLinks}
+            </div>
+          </div>
+        `;
+      }
+      const isActive = currentPath === item.href;
+      return `<a href="${item.href}" class="global-navbar__mobile-link${isActive ? ' active' : ''}">${item.label}</a>`;
     }).join('');
 
     container.innerHTML = `
@@ -81,10 +149,7 @@ const GlobalNavbar = {
         </div>
 
         <div class="global-navbar__mobile-menu" id="global-navbar-mobile-menu">
-          ${this.navLinks.map(link => {
-            const isActive = currentPath === link.href;
-            return `<a href="${link.href}" class="global-navbar__mobile-link${isActive ? ' active' : ''}">${link.label}</a>`;
-          }).join('')}
+          ${mobileLinks}
           <div class="global-navbar__mobile-section">Account</div>
           ${user ? `
             <a href="${CONFIG.DASHBOARD_ROUTES[user.role] || '/patient-dashboard.html'}" class="global-navbar__mobile-link">My Dashboard</a>
@@ -140,6 +205,7 @@ const GlobalNavbar = {
   },
 
   initEventListeners(container) {
+    // ── Profile dropdown ──
     const profileBtn = document.getElementById('global-navbar-profile-btn');
     const profileMenu = document.getElementById('global-navbar-profile-menu');
 
@@ -150,6 +216,7 @@ const GlobalNavbar = {
       });
     }
 
+    // ── Mobile toggle ──
     const mobileToggle = document.getElementById('global-navbar-mobile-toggle');
     const mobileMenu = document.getElementById('global-navbar-mobile-menu');
     if (mobileToggle && mobileMenu) {
@@ -159,10 +226,104 @@ const GlobalNavbar = {
       });
     }
 
-    document.addEventListener('click', () => {
-      if (profileMenu) profileMenu.classList.remove('open');
+    // ── Nav dropdowns (desktop: hover + click, keyboard) ──
+    const dropdowns = container.querySelectorAll('.nav-dropdown');
+    dropdowns.forEach(dd => {
+      const trigger = dd.querySelector('.nav-dropdown__trigger');
+      const menu = dd.querySelector('.nav-dropdown__menu');
+      if (!trigger || !menu) return;
+
+      let hoverTimeout;
+
+      // Desktop hover open
+      dd.addEventListener('mouseenter', () => {
+        clearTimeout(hoverTimeout);
+        this._closeAllDropdowns(container, dd);
+        dd.classList.add('open');
+        trigger.setAttribute('aria-expanded', 'true');
+      });
+
+      dd.addEventListener('mouseleave', () => {
+        hoverTimeout = setTimeout(() => {
+          dd.classList.remove('open');
+          trigger.setAttribute('aria-expanded', 'false');
+        }, 120);
+      });
+
+      // Click toggle (also serves as accessible trigger)
+      trigger.addEventListener('click', e => {
+        e.stopPropagation();
+        const isOpen = dd.classList.contains('open');
+        this._closeAllDropdowns(container);
+        if (!isOpen) {
+          dd.classList.add('open');
+          trigger.setAttribute('aria-expanded', 'true');
+          // Focus first item
+          const firstItem = menu.querySelector('.nav-dropdown__item');
+          if (firstItem) firstItem.focus();
+        }
+      });
+
+      // Keyboard navigation
+      trigger.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          dd.classList.add('open');
+          trigger.setAttribute('aria-expanded', 'true');
+          const firstItem = menu.querySelector('.nav-dropdown__item');
+          if (firstItem) firstItem.focus();
+        }
+      });
+
+      menu.addEventListener('keydown', e => {
+        const items = [...menu.querySelectorAll('.nav-dropdown__item')];
+        const idx = items.indexOf(document.activeElement);
+
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          const next = items[idx + 1] || items[0];
+          next.focus();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          const prev = items[idx - 1] || items[items.length - 1];
+          prev.focus();
+        } else if (e.key === 'Escape') {
+          dd.classList.remove('open');
+          trigger.setAttribute('aria-expanded', 'false');
+          trigger.focus();
+        } else if (e.key === 'Tab') {
+          dd.classList.remove('open');
+          trigger.setAttribute('aria-expanded', 'false');
+        }
+      });
     });
 
+    // ── Mobile dropdowns ──
+    const mobileDropdowns = container.querySelectorAll('.global-navbar__mobile-dropdown-trigger');
+    mobileDropdowns.forEach(trigger => {
+      trigger.addEventListener('click', e => {
+        e.stopPropagation();
+        const parent = trigger.closest('.global-navbar__mobile-dropdown');
+        if (parent) parent.classList.toggle('open');
+      });
+    });
+
+    // ── Click outside to close all ──
+    document.addEventListener('click', () => {
+      if (profileMenu) profileMenu.classList.remove('open');
+      this._closeAllDropdowns(container);
+    });
+
+    // ── ESC to close all ──
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        if (profileMenu) profileMenu.classList.remove('open');
+        this._closeAllDropdowns(container);
+        if (mobileMenu) mobileMenu.classList.remove('open');
+      }
+    });
+
+    // ── Logout ──
     const logoutBtn = document.getElementById('global-navbar-logout-btn');
     if (logoutBtn) logoutBtn.addEventListener('click', event => {
       event.preventDefault();
@@ -173,6 +334,16 @@ const GlobalNavbar = {
     if (mobileLogout) mobileLogout.addEventListener('click', event => {
       event.preventDefault();
       Auth.logout();
+    });
+  },
+
+  _closeAllDropdowns(container, except = null) {
+    container.querySelectorAll('.nav-dropdown.open').forEach(dd => {
+      if (dd !== except) {
+        dd.classList.remove('open');
+        const trigger = dd.querySelector('.nav-dropdown__trigger');
+        if (trigger) trigger.setAttribute('aria-expanded', 'false');
+      }
     });
   },
 
@@ -215,4 +386,5 @@ if (typeof window.toggleFaq === 'undefined') {
     }
   };
 }
+
 

@@ -4,53 +4,17 @@
    13-Section Layout
    ============================================================ */
 
-/* ── Section 1: Hero ── */
-.services-hero {
-  padding: var(--space-20) 0 var(--space-16);
-  background: var(--gradient-hero); color: white;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.services-hero::before {
-  content: ''; position: absolute;
-  top: -30%; left: -10%;
-  width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(var(--color-accent-rgb), 0.12) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-}
-.services-hero h1 {
-  font-size: 3.5rem;
-  font-weight: var(--font-weight-extrabold);
-  color: white;
-  margin-bottom: var(--space-4);
-  position: relative;
-}
-.services-hero h1 .text-gradient {
-  background: linear-gradient(135deg, #67E8F9 0%, #A5F3FC 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.services-hero p {
-  font-size: var(--font-size-lg);
-  color: white;
-  max-width: 600px;
-  margin: 0 auto;
-  line-height: var(--line-height-relaxed);
-  position: relative;
-}
+/* ── Section 1: Hero (layout handled by .page-hero in components.css) ── */
 
 /* ── Section 2: Service Categories Grid ── */
 .categories-section {
   padding: var(--space-20) 0;
   background: var(--color-white);
-}.categories-grid {
+}
+.categories-grid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  
   gap: var(--space-5);
 }
 .categories-grid > * {
@@ -227,7 +191,7 @@
   .service-detail__visual { min-height: 220px; }
 }
 @media (max-width: 768px) {
-  .services-hero h1 { font-size: 2.5rem;  color: white; }
+  .services-hero h1 { font-size: 2.5rem; color: white; }
   .services-hero { padding: var(--space-12) 0 var(--space-10); }
   .service-detail { padding: var(--space-12) 0; }
   .service-detail__content h2 { font-size: var(--font-size-2xl); }
@@ -235,16 +199,16 @@
   .services-cta h2 { font-size: var(--font-size-2xl); }
 }
 @media (max-width: 480px) {
-  .services-hero h1 { font-size: 2rem;  color: white; }
+  .services-hero h1 { font-size: 2rem; color: white; }
 }
 @media (max-width: 425px) {
-  .services-hero h1 { font-size: 1.75rem;  color: white; }
+  .services-hero h1 { font-size: 1.75rem; color: white; }
   .service-detail__content h2 { font-size: var(--font-size-2xl); }
   .service-detail { padding: var(--space-10) 0; }
   .services-cta h2 { font-size: var(--font-size-2xl); }
   .cat-card { padding: var(--space-4); }
 }
 @media (max-width: 320px) {
-  .services-hero h1 { font-size: 1.5rem;  color: white; }
+  .services-hero h1 { font-size: 1.5rem; color: white; }
   .service-detail__visual { padding: var(--space-6); min-height: 200px; }
 }

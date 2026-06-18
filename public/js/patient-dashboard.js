@@ -27,8 +27,87 @@ const PatientDashboard = {
     }
     this.setupTabs();
     this.bindGlobalEvents();
-    const initialTab = new URLSearchParams(window.location.search).get('tab') || 'overview';
+    const params = new URLSearchParams(window.location.search);
+    const initialTab = params.get('tab') || 'overview';
     this.switchTab(initialTab);
+
+    // Auto-open modals from URL params (used by public page redirects)
+    const action = params.get('action');
+    const doctorId = params.get('doctor_id');
+    const testId = params.get('test_id');
+    if (action) {
+      // Small delay to let the tab content render first
+      setTimeout(() => this._handleAutoAction(action, doctorId, testId), 600);
+    }
+  },
+
+  /**
+   * Handle auto-open actions from URL params.
+   * Called after redirect from public pages (Doctors, Lab Tests, etc.)
+   */
+  _handleAutoAction(action, doctorId, testId) {
+    switch (action) {
+      case 'book':
+        if (doctorId) {
+          this.bookDoctorAppointment(parseInt(doctorId, 10));
+        } else if (testId) {
+          this._autoBookLabTest(parseInt(testId, 10));
+        }
+        break;
+      case 'request':
+        // Auto-open request modals for consultations / sample collection
+        const tab = new URLSearchParams(window.location.search).get('tab');
+        if (tab === 'consultations') {
+          this._autoRequestConsultation(doctorId ? parseInt(doctorId, 10) : null);
+        } else if (tab === 'sample-collection') {
+          this._autoRequestSampleCollection();
+        }
+        break;
+    }
+    // Clean the URL params after handling (keep only tab)
+    const cleanUrl = `${window.location.pathname}?tab=${new URLSearchParams(window.location.search).get('tab') || 'overview'}`;
+    window.history.replaceState(null, '', cleanUrl);
+  },
+
+  /** Auto-open lab booking modal with a specific test pre-selected */
+  async _autoBookLabTest(testId) {
+    try {
+      const response = await Api.get(`/lab-tests/${testId}`);
+      if (response.success && response.data) {
+        const test = response.data;
+        document.getElementById('pd-book-lab-test-id').value = test.id;
+        document.getElementById('pd-book-lab-test-name').textContent = test.test_name;
+        const dateInput = document.getElementById('pd-book-lab-date');
+        if (dateInput) { dateInput.value = ''; dateInput.setAttribute('min', new Date().toISOString().split('T')[0]); }
+        UI.openModal('pd-book-lab-modal');
+      }
+    } catch (e) { console.warn('Auto-book lab test failed:', e); }
+  },
+
+  /** Auto-open consultation request modal with optional doctor pre-selected */
+  async _autoRequestConsultation(doctorId) {
+    // Load doctors dropdown first
+    try {
+      const response = await Api.get('/doctors?limit=100&is_available=1');
+      if (response.success) {
+        const select = document.getElementById('pd-request-doctor');
+        if (select) {
+          select.innerHTML = '<option value="">Select a doctor...</option>' +
+            response.data.map(d => `<option value="${d.id}">${d.full_name} — ${d.specialization}</option>`).join('');
+          if (doctorId) select.value = doctorId;
+        }
+      }
+    } catch (e) { /* ignore */ }
+    const dateInput = document.getElementById('pd-request-date');
+    if (dateInput) { dateInput.value = ''; dateInput.setAttribute('min', new Date().toISOString().split('T')[0]); }
+    UI.openModal('pd-request-consultation-modal');
+  },
+
+  /** Auto-open sample collection request modal */
+  _autoRequestSampleCollection() {
+    // The loadSampleCollectionTab already loads eligible bookings
+    // Just open the modal
+    UI.openModal('pd-sample-collection-modal');
   },
 
   // ══════════════════════════════════════

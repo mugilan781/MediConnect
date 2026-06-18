@@ -218,7 +218,7 @@ const Doctors = {
           </div>
         </div>
         <div class="doc-card__footer">
-          <button class="btn btn--primary btn--sm" onclick="Doctors.openProfile(${doc.id})">Book Appointment</button>
+          <button class="btn btn--primary btn--sm" onclick="Doctors.goBookAppointment(${doc.id})">Book Appointment</button>
           <button class="btn btn--secondary btn--sm" onclick="Doctors.openProfile(${doc.id})">View Profile</button>
         </div>
       </div>
@@ -243,13 +243,14 @@ const Doctors = {
     return { label: 'Available This Week', class: 'week' };
   },
 
-  // ── PROFILE MODAL ──
+  // ── PROFILE MODAL (Read-only — no booking form) ──
   async openProfile(doctorId) {
     const overlay = document.getElementById('doctor-profile-overlay');
     const body = document.getElementById('doctor-profile-body');
     if (!overlay || !body) return;
 
     overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
     body.innerHTML = '<div class="spinner"></div>';
 
     try {
@@ -265,56 +266,7 @@ const Doctors = {
       const stars = '★'.repeat(Math.floor(rating)) + (rating % 1 >= 0.5 ? '½' : '');
       const fee = parseFloat(doc.consultation_fee || 0).toFixed(2);
       const bio = doc.bio || 'Experienced healthcare professional dedicated to providing compassionate, evidence-based medical care to patients.';
-
-      let bookingHTML = '';
-      if (Auth.isAuthenticated()) {
-        bookingHTML = `
-          <div class="doc-profile-booking-label">Book an Appointment</div>
-          <div class="doc-profile-form">
-            <div style="display:flex;gap:var(--space-3);flex-wrap:wrap">
-              <div style="flex:1;min-width:150px">
-                <label style="font-size:var(--font-size-xs);font-weight:600;color:var(--color-gray-800);margin-bottom:4px;display:block">Select Date</label>
-                <input type="date" id="profile-date" class="form-input" style="width:100%" onchange="Doctors.loadProfileSlots(${doctorId})">
-              </div>
-              <div style="flex:1;min-width:150px">
-                <label style="font-size:var(--font-size-xs);font-weight:600;color:var(--color-gray-800);margin-bottom:4px;display:block">Consultation Type</label>
-                <select id="profile-type" class="form-select" style="width:100%">
-                  <option value="in_person">In-Person Visit</option>
-                  <option value="teleconsult">Video Teleconsult</option>
-                </select>
-              </div>
-            </div>
-            <div>
-              <label style="font-size:var(--font-size-xs);font-weight:600;color:var(--color-gray-800);margin-bottom:4px;display:block">Available Time Slots</label>
-              <div class="doc-profile-slots" id="profile-slots">
-                <p style="font-size:var(--font-size-sm);color:var(--color-text-light)">Select a date to view slots.</p>
-              </div>
-            </div>
-            <div>
-              <label style="font-size:var(--font-size-xs);font-weight:600;color:var(--color-gray-800);margin-bottom:4px;display:block">Reason for Visit</label>
-              <textarea id="profile-reason" rows="2" placeholder="Briefly describe your symptoms or reason..."></textarea>
-            </div>
-          </div>
-          <div class="doc-profile-actions">
-            <button class="btn btn--secondary" onclick="Doctors.closeProfile()">Cancel</button>
-            <button class="btn btn--primary" onclick="Doctors.bookFromProfile()">Confirm Booking</button>
-          </div>
-        `;
-      } else {
-        bookingHTML = `
-          <div class="doc-profile-auth-prompt">
-            <p style="font-size:var(--font-size-lg);margin-bottom:var(--space-2)">${MediIcons.icon('lock')} Sign in to book an appointment</p>
-            <p>Create an account or log in to view available time slots and schedule your visit.</p>
-            <div style="display:flex;gap:var(--space-3);justify-content:center;margin-top:var(--space-4)">
-              <a href="/login.html" class="btn btn--primary">Sign In</a>
-              <a href="/signup.html" class="btn btn--secondary">Create Account</a>
-            </div>
-          </div>
-          <div class="doc-profile-actions">
-            <button class="btn btn--secondary" onclick="Doctors.closeProfile()">Close</button>
-          </div>
-        `;
-      }
+      const avail = doc.is_available ? '<span class="badge badge--success" style="font-size:var(--font-size-sm)">Available</span>' : '<span class="badge badge--danger" style="font-size:var(--font-size-sm)">Unavailable</span>';
 
       body.innerHTML = `
         <div class="doc-profile-header">
@@ -334,19 +286,26 @@ const Doctors = {
           <div class="doc-profile-stat"><div class="doc-profile-stat-value">₹${fee}</div><div class="doc-profile-stat-label">Consultation Fee</div></div>
           <div class="doc-profile-stat"><div class="doc-profile-stat-value">${doc.available_days || 'Mon–Fri'}</div><div class="doc-profile-stat-label">Working Days</div></div>
         </div>
+        <div style="display:flex;flex-direction:column;gap:var(--space-3);margin:var(--space-5) 0;">
+          <div style="display:flex;justify-content:space-between;padding:var(--space-3) var(--space-4);background:var(--color-gray-50);border-radius:var(--radius-md);">
+            <span style="font-size:var(--font-size-sm);color:var(--color-text-light)">License Number</span>
+            <span style="font-size:var(--font-size-sm);font-weight:600">${doc.license_number || 'Verified'}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:var(--space-3) var(--space-4);background:var(--color-gray-50);border-radius:var(--radius-md);">
+            <span style="font-size:var(--font-size-sm);color:var(--color-text-light)">Availability</span>
+            ${avail}
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:var(--space-3) var(--space-4);background:var(--color-gray-50);border-radius:var(--radius-md);">
+            <span style="font-size:var(--font-size-sm);color:var(--color-text-light)">Department</span>
+            <span style="font-size:var(--font-size-sm);font-weight:600">${doc.department || doc.specialization}</span>
+          </div>
+        </div>
         <div class="doc-profile-bio">${bio}</div>
-        ${bookingHTML}
-        <input type="hidden" id="profile-doctor-id" value="${doctorId}">
-        <input type="hidden" id="profile-time" value="">
+        <div class="doc-profile-actions">
+          <button class="btn btn--secondary" onclick="Doctors.closeProfile()">Close</button>
+          <button class="btn btn--primary" onclick="Doctors.closeProfile(); Doctors.goBookAppointment(${doctorId})">Book Appointment</button>
+        </div>
       `;
-
-      // Set min date
-      const dateInput = document.getElementById('profile-date');
-      if (dateInput) {
-        const today = new Date().toISOString().split('T')[0];
-        dateInput.value = '';
-        dateInput.setAttribute('min', today);
-      }
     } catch (e) {
       console.error('Profile load failed:', e);
       body.innerHTML = '<p style="text-align:center;padding:var(--space-8);color:var(--color-text-light)">Error loading profile. Please try again.</p>';
@@ -355,90 +314,21 @@ const Doctors = {
 
   closeProfile() {
     const overlay = document.getElementById('doctor-profile-overlay');
-    if (overlay) overlay.classList.remove('active');
+    if (overlay) {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
     this.selectedDoctorId = null;
   },
 
-  // ── LOAD SLOTS IN PROFILE ──
-  async loadProfileSlots(doctorId) {
-    const dateInput = document.getElementById('profile-date');
-    const slotsContainer = document.getElementById('profile-slots');
-    if (!dateInput || !slotsContainer) return;
-
-    const date = dateInput.value;
-    if (!date) return;
-
-    slotsContainer.innerHTML = '<div class="spinner spinner--sm"></div>';
-
-    try {
-      const response = await Api.get(`/doctors/${doctorId}/slots?date=${date}`);
-      if (!response.success) {
-        slotsContainer.innerHTML = '<p style="font-size:var(--font-size-sm);color:var(--color-text-light)">Failed to load slots.</p>';
-        return;
-      }
-
-      const { availableSlots, bookedSlots } = response.data;
-      if (!availableSlots || !availableSlots.length) {
-        slotsContainer.innerHTML = '<p style="font-size:var(--font-size-sm);color:var(--color-text-light)">No available slots for this date.</p>';
-        return;
-      }
-
-      slotsContainer.innerHTML = availableSlots.map(slot => {
-        const isBooked = bookedSlots && bookedSlots.includes(slot);
-        return `
-          <button type="button" class="slot-btn ${isBooked ? 'slot-btn--booked' : ''}"
-                  data-time="${slot}" onclick="Doctors.selectProfileSlot(this)"
-                  ${isBooked ? 'disabled' : ''}>
-            ${this.formatTime(slot)}
-          </button>
-        `;
-      }).join('');
-    } catch (e) {
-      console.error('Slots load failed:', e);
-      slotsContainer.innerHTML = '<p style="font-size:var(--font-size-sm);color:var(--color-text-light)">Error loading slots.</p>';
+  // ── BOOK APPOINTMENT — Auto demo-login + redirect to dashboard ──
+  goBookAppointment(doctorId) {
+    // Auto-activate demo patient session if not authenticated
+    if (typeof DemoAuth !== 'undefined') {
+      DemoAuth.activateDemoMode();
     }
-  },
-
-  selectProfileSlot(btn) {
-    document.querySelectorAll('.slot-btn:not([disabled])').forEach(b => {
-      b.classList.remove('slot-btn--selected');
-    });
-    btn.classList.add('slot-btn--selected');
-    document.getElementById('profile-time').value = btn.dataset.time;
-  },
-
-  // ── BOOK ──
-  async bookFromProfile() {
-    const doctorId = parseInt(document.getElementById('profile-doctor-id')?.value);
-    const date = document.getElementById('profile-date')?.value;
-    const time = document.getElementById('profile-time')?.value;
-    const type = document.getElementById('profile-type')?.value || 'in_person';
-    const reason = document.getElementById('profile-reason')?.value || '';
-
-    if (!doctorId || !date || !time) {
-      alert('Please select a date and time slot.');
-      return;
-    }
-
-    try {
-      const response = await Api.post('/appointments', {
-        doctor_id: doctorId,
-        appointment_date: date,
-        appointment_time: time,
-        type,
-        reason,
-      });
-      if (response.success) {
-        alert('Appointment booked successfully!');
-        this.closeProfile();
-        setTimeout(() => { window.location.href = '/appointments.html'; }, 500);
-      } else {
-        alert(response.message || 'Failed to book appointment.');
-      }
-    } catch (e) {
-      console.error('Booking failed:', e);
-      alert(e.message || 'Failed to book appointment.');
-    }
+    // Redirect to patient dashboard with doctor pre-selected
+    window.location.href = `/patient-dashboard.html?tab=doctors&doctor_id=${doctorId}&action=book`;
   },
 
   // ── FEATURED SPECIALISTS ──
@@ -464,7 +354,7 @@ const Doctors = {
             <div class="featured-card__spec">${doc.specialization}</div>
             <div class="featured-card__exp">${doc.experience_years} years · ${doc.qualification}</div>
             <div class="featured-card__rating">${stars}</div>
-            <button class="btn btn--primary btn--sm" onclick="Doctors.openProfile(${doc.id})">Book Appointment</button>
+            <button class="btn btn--primary btn--sm" onclick="Doctors.goBookAppointment(${doc.id})">Book Appointment</button>
           </div>
         `;
       }).join('');

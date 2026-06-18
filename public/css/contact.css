@@ -1,51 +1,9 @@
-/* ============================================================
-   MediConnect – contact.css
-   Premium Healthcare Contact Page
-   10-Section Layout
+﻿/* ============================================================
+   MediConnect - contact.css
+   Premium Contact Page
    ============================================================ */
 
-/* ── Section 1: Hero ── */
-.contact-hero {
-  padding: var(--space-20) 0 var(--space-12);
-  background: var(--gradient-hero); color: white;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.contact-hero::before {
-  content: '';
-  position: absolute;
-  top: -30%; left: -10%;
-  width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(var(--color-accent-rgb), 0.12) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-}
-.contact-hero__inner {
-  max-width: 700px;
-  margin: 0 auto;
-  position: relative;
-}
-.contact-hero h1 {
-  font-size: 3.25rem;
-  font-weight: var(--font-weight-extrabold);
-  color: white;
-  margin-bottom: var(--space-3);
-  line-height: 1.15;
-}
-.contact-hero h1 .text-gradient {
-  background: linear-gradient(135deg, #67E8F9 0%, #A5F3FC 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.contact-hero p {
-  font-size: var(--font-size-lg);
-  color: rgba(255,255,255,0.85);
-  max-width: 520px;
-  margin: 0 auto;
-  line-height: var(--line-height-relaxed);
- color: white; opacity: 0.9; }
+/* -- Section 1: Hero (layout handled by .page-hero in components.css) -- */
 
 /* ── Section 2: Contact Options ── */
 .contact-options {
@@ -590,8 +548,6 @@
   }
 }
 @media (max-width: 768px) {
-  .contact-hero h1 { font-size: 2.25rem;  color: white; }
-  .contact-hero { padding: var(--space-12) 0 var(--space-10); }
   .contact-form .form-row { grid-template-columns: 1fr; }
   .contact-form-card { padding: var(--space-5); }
   .contact-main { padding: var(--space-10) 0; }
@@ -605,17 +561,14 @@
   .contact-map__overlay { display: none; }
 }
 @media (max-width: 480px) {
-  .contact-hero h1 { font-size: 1.75rem;  color: white; }
 }
 @media (max-width: 425px) {
-  .contact-hero h1 { font-size: 1.5rem;  color: white; }
   .contact-cta h2 { font-size: var(--font-size-xl); }
   .contact-methods { grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
   .contact-form-card { padding: var(--space-5); }
   .contact-form-row { flex-direction: column; }
 }
 @media (max-width: 320px) {
-  .contact-hero h1 { font-size: 1.35rem;  color: white; }
   .contact-methods { grid-template-columns: 1fr; }
   .contact-method-card { padding: var(--space-5); }
   .contact-map__container { height: 200px; }

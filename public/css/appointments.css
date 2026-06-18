@@ -3,48 +3,7 @@
    Premium Appointment Booking Experience — 10-Section Layout
    ============================================================ */
 
-/* ── Section 1: Hero ── */
-.appt-hero {
-  padding: var(--space-16) 0 var(--space-20);
-  background: var(--gradient-hero);
-  position: relative; overflow: hidden; min-height: 65vh;
-  display: flex; align-items: center;
-}
-.appt-hero::before {
-  content: ''; position: absolute; top: -20%; right: -10%;
-  width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(78,154,151,0.08) 0%, transparent 70%);
-  border-radius: 50%; pointer-events: none;
-}
-.appt-hero .container { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-12); align-items: center; position: relative; z-index: 1; }
-.appt-hero__content { position: relative; }
-.appt-hero__badge {
-  display: inline-flex; align-items: center; gap: var(--space-2);
-  padding: var(--space-1) var(--space-4) var(--space-1) var(--space-2);
-  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
-  border-radius: var(--radius-full); font-size: var(--font-size-sm);
-  color: #67E8F9; font-weight: var(--font-weight-medium);
-  margin-bottom: var(--space-5);
-}
-.appt-hero__badge-dot { width: 8px; height: 8px; background: var(--color-success); border-radius: 50%; display: inline-block; margin-right: var(--space-1); }
-.appt-hero__title { font-size: 3.5rem; font-weight: var(--font-weight-extrabold); color: white; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: var(--space-5); }
-.appt-hero__title .text-gradient { background: linear-gradient(135deg, #67E8F9 0%, #A5F3FC 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.appt-hero__desc { font-size: var(--font-size-lg); color: rgba(255,255,255,0.85); line-height: var(--line-height-relaxed); margin-bottom: var(--space-7); max-width: 520px; }
-.appt-hero__actions { display: flex; gap: var(--space-4); flex-wrap: wrap; }
-.appt-hero__visual { display: flex; justify-content: center; align-items: center; }
-.appt-hero__illustration {
-  width: 100%; max-width: 480px; aspect-ratio: 1;
-  background: linear-gradient(135deg, rgba(78,154,151,0.1) 0%, rgba(45,107,104,0.05) 100%);
-  border-radius: var(--radius-2xl); display: flex; align-items: center; justify-content: center;
-  font-size: 8rem; position: relative;
-  border: 1px solid rgba(78,154,151,0.15);
-}
-.appt-hero__illustration::after {
-  content: ''; position: absolute; width: 120%; height: 120%;
-  top: -10%; left: -10%;
-  background: radial-gradient(circle at 30% 40%, rgba(78,154,151,0.06) 0%, transparent 60%);
-  pointer-events: none;
-}
+/* ── Section 1: Hero (layout handled by .page-hero in components.css) ── */
 
 /* ── Section 2: How It Works (Timeline) ── */
 .appt-timeline { padding: var(--space-16) 0; background: var(--color-white); }
@@ -169,17 +128,11 @@
 
 /* ── Responsive ── */
 @media (max-width: 768px) {
-  .appt-hero .container { grid-template-columns: 1fr; text-align: center; }
-  .appt-hero__title { font-size: 2rem; }
-  .appt-hero__desc { max-width: 100%; }
-  .appt-hero__actions { justify-content: center; }
-  .appt-hero__visual { display: none; }
   .appt-timeline-steps::before { left: 23px; }
   .timeline-step__number { width: 48px; height: 48px; min-width: 48px; font-size: var(--font-size-base); }
   .showcase-step:not(:last-child)::after { display: none; }
   .status-flow { flex-direction: column; align-items: center; }
   .status-step__arrow { transform: rotate(90deg); }
-  .appt-doctors-grid { grid-template-columns: 1fr; }
   .spec-grid { grid-template-columns: repeat(2, 1fr); }
   .appt-cta h2 { font-size: var(--font-size-2xl); }
 }
@@ -189,7 +142,6 @@
 }
 
 @media (max-width: 425px) {
-  .appt-hero__title { font-size: 1.75rem; }
   .appt-cta h2 { font-size: var(--font-size-xl); }
   .appt-cta__actions { flex-direction: column; align-items: center; }
   .showcase-step { padding: var(--space-4); }
@@ -197,7 +149,5 @@
 }
 
 @media (max-width: 320px) {
-  .appt-hero__title { font-size: 1.5rem; }
   .timeline-step__number { width: 40px; height: 40px; min-width: 40px; font-size: var(--font-size-sm); }
-  .appt-hero { padding: var(--space-10) 0 var(--space-12); }
 }

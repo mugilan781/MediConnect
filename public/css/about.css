@@ -4,30 +4,8 @@
    14-Section Layout
    ============================================================ */
 
-/* ── Section 1: Hero ── */
-.about-hero {
-  padding: var(--space-20) 0 var(--space-16);
-  background: var(--gradient-hero); color: white;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.about-hero::before {
-  content: ''; position: absolute;
-  top: -30%; left: -10%;
-  width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(78,154,151,0.06) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-}
-.about-hero::after {
-  content: ''; position: absolute;
-  bottom: -20%; right: -5%;
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(78,154,151,0.04) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-}
+/* ── Section 1: Hero (layout handled by .page-hero in components.css) ── */
+/* Page-specific overrides only */
 .about-hero__label {
   display: inline-flex; align-items: center; gap: var(--space-2);
   padding: var(--space-1) var(--space-4) var(--space-1) var(--space-2);
@@ -36,47 +14,6 @@
   font-size: var(--font-size-sm); color: #67E8F9;
   font-weight: var(--font-weight-medium);
   margin-bottom: var(--space-5);
-}
-.about-hero h1 {
-  font-size: 3.5rem;
-  font-weight: var(--font-weight-extrabold);
-  color: white;
-  line-height: 1.1;
-  margin-bottom: var(--space-4);
-  letter-spacing: -0.03em;
-}
-.about-hero h1 .text-gradient {
-  background: linear-gradient(135deg, #67E8F9 0%, #A5F3FC 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.about-hero p {
-  max-width: 600px; margin: 0 auto var(--space-8);
-  color: rgba(255,255,255,0.85);
-  font-size: var(--font-size-lg);
-  line-height: var(--line-height-relaxed);
- color: white; opacity: 0.9; }
-.about-hero-stats {
-  display: flex; justify-content: center; gap: var(--space-10);
-  flex-wrap: wrap; margin-top: var(--space-8);
-  padding-top: var(--space-8);
-  border-top: 1px solid rgba(255,255,255,0.15);
-  max-width: 700px; margin-left: auto; margin-right: auto;
-}
-.about-hero-stat {
-  text-align: center;
-}
-.about-hero-stat__value {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-extrabold);
-  color: white;
-  line-height: 1;
-  margin-bottom: var(--space-1);
-}
-.about-hero-stat__label {
-  font-size: var(--font-size-sm);
-  color: rgba(255,255,255,0.7);
 }
 
 /* ── Section 2: Company Story ── */
@@ -177,11 +114,11 @@
 .values-section {
   padding: var(--space-24) 0;
   background: var(--color-white);
-}.values-grid {
+}
+.values-grid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  
   gap: var(--space-6);
 }
 .values-grid > * {
@@ -233,11 +170,11 @@
 }
 .impact-section .section-header__label { color: #67E8F9; background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
 .impact-section .section-header__title { color: white; }
-.impact-section .section-header__subtitle { color: rgba(255,255,255,0.75); }.impact-grid {
+.impact-section .section-header__subtitle { color: rgba(255,255,255,0.75); }
+.impact-grid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  
   gap: var(--space-6);
   margin-top: var(--space-10);
 }
@@ -314,13 +251,12 @@
 .about-stats-section {
   padding: var(--space-20) 0;
   background: linear-gradient(135deg, var(--color-gray-50) 0%, var(--color-mint-light) 100%);
-}.about-stats-grid {
+}
+.about-stats-grid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  
   gap: var(--space-6);
-  /* max-width removed for full-width layout */
   margin: 0 auto;
 }
 .about-stats-grid > * {
@@ -365,11 +301,11 @@
 .leadership-section {
   padding: var(--space-24) 0;
   background: var(--color-white);
-}.leadership-grid {
+}
+.leadership-grid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  
   gap: var(--space-6);
   margin-top: var(--space-10);
 }
@@ -407,11 +343,11 @@
 .tech-section {
   padding: var(--space-24) 0;
   background: var(--color-gray-50);
-}.tech-grid {
+}
+.tech-grid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  
   gap: var(--space-5);
   margin-top: var(--space-10);
 }
@@ -440,11 +376,11 @@
   padding: var(--space-20) 0;
 }
 .why-section-about--alt { background: var(--color-gray-50); }
-.why-section-about:not(.why-section-about--alt) { background: var(--color-white); }.why-cards-about {
+.why-section-about:not(.why-section-about--alt) { background: var(--color-white); }
+.why-cards-about {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  
   gap: var(--space-6);
   margin-top: var(--space-8);
 }
@@ -488,11 +424,11 @@
 }
 .roadmap-section .section-header__label { color: #67E8F9; background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
 .roadmap-section .section-header__title { color: white; }
-.roadmap-section .section-header__subtitle { color: rgba(255,255,255,0.75); }.roadmap-grid {
+.roadmap-section .section-header__subtitle { color: rgba(255,255,255,0.75); }
+.roadmap-grid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  
   gap: var(--space-6);
   margin-top: var(--space-10);
 }
@@ -553,8 +489,6 @@
   .story-grid { grid-template-columns: 1fr; gap: var(--space-8); }
 }
 @media (max-width: 768px) {
-  .about-hero h1 { font-size: 2.5rem;  color: white; }
-  .about-hero { padding: var(--space-12) 0 var(--space-10); }
   .mv-grid { grid-template-columns: 1fr; }
   .about-stats-grid { grid-template-columns: repeat(2, 1fr); }
   .timeline { padding-left: var(--space-8); }
@@ -563,16 +497,11 @@
   .impact-section, .timeline-section, .leadership-section,
   .tech-section, .roadmap-section, .about-cta { padding: var(--space-12) 0; }
   .about-cta h2 { font-size: var(--font-size-2xl); }
-  .about-hero-stats { gap: var(--space-6); }
 }
 @media (max-width: 480px) {
-  .about-hero h1 { font-size: 2rem;  color: white; }
   .about-stats-grid { grid-template-columns: 1fr; }
-  .about-hero-stats { flex-direction: column; align-items: center; gap: var(--space-4); }
 }
 @media (max-width: 425px) {
-  .about-hero h1 { font-size: 1.75rem;  color: white; }
-  .about-hero-stats { gap: var(--space-3); }
   .story-content h2 { font-size: var(--font-size-2xl); }
   .mv-card { padding: var(--space-6); }
   .mv-card h3 { font-size: var(--font-size-xl); }
@@ -581,8 +510,6 @@
   .roadmap-card { padding: var(--space-5); }
 }
 @media (max-width: 320px) {
-  .about-hero h1 { font-size: 1.5rem;  color: white; }
-  .about-hero-stat__value { font-size: var(--font-size-xl); }
   .value-card { padding: var(--space-6); }
   .why-card-about { flex-direction: column; }
   .story-visual { padding: var(--space-6); }

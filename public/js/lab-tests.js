@@ -52,8 +52,7 @@ const LabTests = {
       const bookBtn = e.target.closest('[data-book-test]');
       if (bookBtn) {
         const id = parseInt(bookBtn.dataset.bookTest, 10);
-        const name = bookBtn.dataset.testName;
-        this.openBookModal(id, name);
+        this.goBookTest(id);
       }
     });
 
@@ -281,56 +280,14 @@ const LabTests = {
     }
   },
 
-  // ── Booking Modal ──
-  openBookModal(testId, testName) {
-    if (!Auth.isAuthenticated()) {
-      UI.showToast('Please log in to book a test.', 'warning');
-      const currentPath = window.location.pathname;
-      sessionStorage.setItem('redirect_after_login', currentPath);
-      window.location.href = '/login.html';
-      return;
+  // ── Book Test — Auto demo-login + redirect to dashboard ──
+  goBookTest(testId) {
+    // Auto-activate demo patient session if not authenticated
+    if (typeof DemoAuth !== 'undefined') {
+      DemoAuth.activateDemoMode();
     }
-
-    document.getElementById('book-lab-test-id').value = testId;
-    document.getElementById('book-lab-test-name').textContent = testName;
-
-    const dateInput = document.getElementById('book-lab-date');
-    if (dateInput) {
-      dateInput.value = '';
-      dateInput.setAttribute('min', new Date().toISOString().split('T')[0]);
-    }
-
-    UI.openModal('book-lab-modal');
-  },
-
-  async bookTest() {
-    try {
-      const data = {
-        lab_test_id: parseInt(document.getElementById('book-lab-test-id').value, 10),
-        booking_date: document.getElementById('book-lab-date').value,
-        preferred_time: document.getElementById('book-lab-time')?.value || null,
-        notes: document.getElementById('book-lab-notes')?.value || '',
-      };
-
-      if (!data.booking_date) {
-        UI.showToast('Please select a date.', 'warning');
-        return;
-      }
-
-      UI.showLoader();
-      const response = await Api.post('/lab-bookings', data);
-      if (response.success) {
-        UI.showToast('Lab test booked successfully!', 'success');
-        UI.closeModal('book-lab-modal');
-        document.getElementById('book-lab-form')?.reset();
-      } else {
-        UI.showToast(response.message || 'Booking failed.', 'error');
-      }
-    } catch (error) {
-      UI.showToast(error.message || 'Booking failed.', 'error');
-    } finally {
-      UI.hideLoader();
-    }
+    // Redirect to patient dashboard lab tests tab with test pre-selected
+    window.location.href = `/patient-dashboard.html?tab=lab-tests&test_id=${testId}&action=book`;
   },
 
   // ── Section 9: FAQ ──

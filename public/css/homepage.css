@@ -260,6 +260,8 @@
   align-items: center;
   animation: fadeInRight 1s ease forwards 0.5s;
   opacity: 0;
+  /* Shift composition slightly left to prevent right-side overflow */
+  padding-right: var(--space-8);
 }
 
 .home-hero__visual-card {
@@ -276,7 +278,7 @@
   justify-content: center;
   position: relative;
   overflow: hidden;
-  padding: var(--space-10);
+  padding: var(--space-10) var(--space-10) var(--space-16);
   animation: float 5s ease-in-out infinite;
 }
 
@@ -319,10 +321,10 @@
 /* ECG line inside hero card */
 .home-hero__ecg {
   position: absolute;
-  bottom: 20px;
+  bottom: 10px;
   left: 0; right: 0;
   padding: 0 var(--space-6);
-  opacity: 0.4;
+  opacity: 0.35;
 }
 
 .home-hero__ecg svg {
@@ -375,20 +377,20 @@
 }
 
 .hero-widget--1 {
-  top: -8%;
-  right: -12%;
+  top: -6%;
+  right: -4%;
   animation: float 4.5s ease-in-out infinite;
 }
 
 .hero-widget--2 {
-  bottom: 8%;
-  left: -18%;
+  bottom: 4%;
+  left: -12%;
   animation: float 5s ease-in-out infinite 1s;
 }
 
 .hero-widget--3 {
-  bottom: -10%;
-  right: 8%;
+  bottom: -4%;
+  right: 20%;
   animation: float 4s ease-in-out infinite 2s;
 }
 

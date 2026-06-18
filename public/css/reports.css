@@ -1,149 +1,10 @@
-/* ============================================================
-   MediConnect – reports.css
-   Premium Medical Reports & Records Page
+﻿/* ============================================================
+   MediConnect - reports.css
+   Premium Medical Reports Page
    10-Section Layout
    ============================================================ */
 
-/* ── Section 1: Hero ── */
-.rpt-hero {
-  padding: var(--space-20) 0 var(--space-16);
-  background: var(--gradient-hero); color: white;
-  position: relative;
-  overflow: hidden;
-  min-height: 580px;
-  display: flex;
-  align-items: center;
-}
-.rpt-hero::before {
-  content: ''; position: absolute;
-  top: -25%; right: -8%;
-  width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(var(--color-accent-rgb), 0.12) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-}
-.rpt-hero::after {
-  content: ''; position: absolute;
-  bottom: -25%; left: -5%;
-  width: 350px; height: 350px;
-  background: radial-gradient(circle, rgba(var(--color-primary-rgb), 0.08) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-}
-.rpt-hero__grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-12);
-  align-items: center;
-  position: relative;
-  z-index: 1;
-}
-.rpt-hero__badge {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-1) var(--space-4);
-  background: rgba(255,255,255,0.12);
-  color: #67E8F9;
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
-  border-radius: var(--radius-full);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: var(--space-4);
-}
-.rpt-hero__badge::before {
-  content: '';
-  width: 6px; height: 6px;
-  background: var(--color-primary);
-  border-radius: 50%;
-}
-.rpt-hero__content h1 {
-  font-size: var(--font-size-5xl);
-  font-weight: var(--font-weight-extrabold);
-  color: white;
-  line-height: 1.15;
-  margin-bottom: var(--space-4);
-  letter-spacing: -0.02em;
-}
-.rpt-hero__content h1 .text-gradient {
-  background: linear-gradient(135deg, #67E8F9 0%, #A5F3FC 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.rpt-hero__content > p {
-  font-size: var(--font-size-lg);
-  color: var(--color-text-light);
-  line-height: var(--line-height-relaxed);
-  max-width: 540px;
-  margin-bottom: var(--space-8);
-}
-.rpt-hero__actions {
-  display: flex;
-  gap: var(--space-4);
-  margin-bottom: var(--space-10);
-}
-.rpt-hero__btn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-3) var(--space-8);
-  border-radius: var(--radius-full);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  text-decoration: none;
-  transition: all var(--transition-base);
-  cursor: pointer;
-}
-.rpt-hero__btn--primary {
-  background: var(--gradient-primary);
-  color: white;
-  box-shadow: 0 4px 14px rgba(78,154,151,0.3);
-}
-.rpt-hero__btn--primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(78,154,151,0.4);
-}
-.rpt-hero__btn--ghost {
-  background: transparent;
-  color: var(--color-gray-700);
-  border: 1px solid var(--color-border);
-}
-.rpt-hero__btn--ghost:hover {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
-  background: var(--color-mint-light);
-}
-.rpt-hero__stats {
-  display: flex;
-  gap: var(--space-8);
-}
-.rpt-hero__stat-value {
-  display: block;
-  font-size: var(--font-size-3xl);
-  font-weight: var(--font-weight-extrabold);
-  color: white;
-  line-height: 1;
-  margin-bottom: var(--space-1);
- color: #67E8F9; }
-.rpt-hero__stat-label {
-  font-size: var(--font-size-xs);
-  color: rgba(255,255,255,0.7);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-weight: var(--font-weight-medium);
- color: rgba(255, 255, 255, 0.8); }
-.rpt-hero__visual {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.rpt-hero__illustration svg {
-  width: 240px;
-  height: 260px;
-  animation: float 5s ease-in-out infinite;
-}
+/* -- Section 1: Hero (layout handled by .page-hero in components.css) -- */
 
 /* ── Section 2: Overview ── */
 .rpt-overview {
@@ -808,10 +669,6 @@
 
 /* ── Responsive: Tablet ── */
 @media (max-width: 1024px) {
-  .rpt-hero__grid { grid-template-columns: 1fr; gap: var(--space-8); }
-  .rpt-hero__visual { display: none; }
-  .rpt-hero { min-height: auto; padding: var(--space-16) 0 var(--space-12); }
-  .rpt-hero__content h1 { font-size: var(--font-size-4xl); }
   .rpt-overview__grid { grid-template-columns: repeat(2, 1fr); }
   .rpt-benefits__grid { grid-template-columns: repeat(2, 1fr); }
   .rpt-history__layout { grid-template-columns: 1fr; gap: var(--space-8); }
@@ -838,11 +695,6 @@
 
 /* ── Responsive: Mobile ── */
 @media (max-width: 768px) {
-  .rpt-hero__content h1 { font-size: var(--font-size-3xl); }
-  .rpt-hero__content > p { font-size: var(--font-size-base); }
-  .rpt-hero__actions { flex-direction: column; }
-  .rpt-hero__stats { gap: var(--space-6); flex-wrap: wrap; }
-  .rpt-hero__stat-value { font-size: var(--font-size-2xl);  color: #67E8F9; }
   .rpt-overview__grid { grid-template-columns: 1fr; }
   .rpt-benefits__grid { grid-template-columns: 1fr; }
   .rpt-security__grid { grid-template-columns: 1fr; }
@@ -851,9 +703,6 @@
 }
 
 @media (max-width: 425px) {
-  .rpt-hero__content h1 { font-size: var(--font-size-2xl); }
-  .rpt-hero__stats { flex-wrap: wrap; gap: var(--space-4); }
-  .rpt-hero__stat-value { font-size: var(--font-size-xl);  color: #67E8F9; }
   .rpt-overview__grid { gap: var(--space-4); }
   .rpt-auth-prompt { padding: var(--space-10) var(--space-4); }
   .rpt-reports-table { font-size: var(--font-size-xs); }
@@ -861,7 +710,6 @@
 }
 
 @media (max-width: 320px) {
-  .rpt-hero__content h1 { font-size: var(--font-size-xl); }
   .rpt-overview-card { padding: var(--space-5); }
   .rpt-benefit-card { padding: var(--space-6); }
 }

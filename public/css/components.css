@@ -627,3 +627,160 @@
   }
 }
 
+/* ============================================================
+   Shared Page Hero System
+   One structural pattern for ALL inner-page heroes.
+   Home page hero is excluded — it uses .home-hero.
+   ============================================================ */
+
+/* ── Layout Shell ── */
+.page-hero {
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-20) 0;
+  background: var(--gradient-hero);
+  color: white;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Decorative Blobs ── */
+.page-hero::before {
+  content: '';
+  position: absolute;
+  top: -30%; left: -10%;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(var(--color-accent-rgb), 0.12) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.page-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -20%; right: -15%;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(var(--color-primary-rgb), 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* ── Container z-index ── */
+.page-hero .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Content Block ── */
+.page-hero__content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* ── Heading ── */
+.page-hero h1 {
+  font-size: 3.5rem;
+  font-weight: var(--font-weight-extrabold);
+  color: white;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-4);
+}
+
+/* ── Gradient Text ── */
+.page-hero h1 .text-gradient {
+  background: linear-gradient(135deg, #67E8F9 0%, #A5F3FC 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Description ── */
+.page-hero p {
+  font-size: var(--font-size-lg);
+  color: rgba(255, 255, 255, 0.85);
+  line-height: var(--line-height-relaxed);
+  max-width: 600px;
+  margin: 0 auto var(--space-8);
+}
+
+/* ── Button Group ── */
+.page-hero__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+/* ── Stats Bar ── */
+.page-hero__stats {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-10);
+  flex-wrap: wrap;
+  margin-top: var(--space-8);
+  padding-top: var(--space-8);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ── Individual Stat ── */
+.page-hero__stat {
+  text-align: center;
+}
+.page-hero__stat-value {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-extrabold);
+  color: white;
+  line-height: 1;
+  margin-bottom: var(--space-1);
+}
+.page-hero__stat-label {
+  font-size: var(--font-size-sm);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ── Hero Responsive ── */
+@media (max-width: 768px) {
+  .page-hero {
+    min-height: 320px;
+    padding: var(--space-12) 0;
+  }
+  .page-hero h1 {
+    font-size: 2.5rem;
+  }
+  .page-hero__stats {
+    gap: var(--space-6);
+  }
+}
+@media (max-width: 480px) {
+  .page-hero h1 {
+    font-size: 2rem;
+  }
+  .page-hero__stats {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+  }
+}
+@media (max-width: 425px) {
+  .page-hero h1 {
+    font-size: 1.75rem;
+  }
+  .page-hero__stats {
+    gap: var(--space-3);
+  }
+}
+@media (max-width: 320px) {
+  .page-hero h1 {
+    font-size: 1.5rem;
+  }
+  .page-hero__stat-value {
+    font-size: var(--font-size-xl);
+  }
+}

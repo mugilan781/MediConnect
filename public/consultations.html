@@ -23,20 +23,17 @@
   <!-- ════════════════════════════════════════════════════
        SECTION 1: HERO
        ════════════════════════════════════════════════════ -->
-  <section class="consult-hero animate-on-scroll">
+  <section class="consult-hero page-hero animate-on-scroll">
     <div class="container">
-      <div class="consult-hero__content">
-        <div class="consult-hero__badge"><span class="consult-hero__badge-dot"></span> Secure &amp; Private Video Consultations</div>
-        <h1 class="consult-hero__title">Online <span class="text-gradient">Consultation</span></h1>
-        <p class="consult-hero__desc">Consult with certified doctors from the comfort of your home. Secure video calls, digital prescriptions, and follow-up care — all on MediConnect.</p>
-        <div class="consult-hero__actions">
+        <div class="page-hero__content">
+        <h1>Online <span class="text-gradient">Consultation</span></h1>
+        <p>Consult with certified doctors from the comfort of your home. Secure video calls, digital prescriptions, and follow-up care — all on MediConnect.</p>
+        <div class="page-hero__actions">
           <a href="#consult-doctors" class="btn btn--primary">Find a Consultant</a>
           <a href="#consult-how" class="btn btn--secondary">How It Works</a>
+          <a href="javascript:void(0)" class="btn btn--primary" onclick="if(typeof DemoAuth!=='undefined')DemoAuth.activateDemoMode(); window.location.href='/patient-dashboard.html?tab=consultations&action=request'" style="background:linear-gradient(135deg,var(--color-accent),var(--color-primary));border:none">Request Consultation →</a>
         </div>
-      </div>
-      <div class="consult-hero__visual">
-        <div class="consult-hero__illustration"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="14" height="14" rx="2"/><path d="m17 9 4-2v10l-4-2z"/></svg></div>
-      </div>
+        </div>
     </div>
   </section>
 
@@ -370,7 +367,7 @@
       <p>Join thousands of patients who trust MediConnect for convenient, secure, and professional telemedicine services.</p>
       <div class="consult-cta__actions">
         <a href="/doctors.html" class="btn">Find a Doctor →</a>
-        <a href="/signup.html" class="btn btn--outline">Create Free Account</a>
+        <a href="javascript:void(0)" class="btn btn--outline" onclick="if(typeof DemoAuth!=='undefined')DemoAuth.activateDemoMode(); window.location.href='/patient-dashboard.html?tab=consultations&action=request'">Request Consultation →</a>
       </div>
     </div>
   </section>
@@ -380,6 +377,7 @@
   <script src="/js/config.js"></script>
   <script src="/js/api.js"></script>
   <script src="/js/auth.js"></script>
+  <script src="/js/demo-auth.js"></script>
   <script src="/js/global-navbar.js"></script>
   <script src="/js/global-footer.js"></script>
   <script src="/js/animations.js"></script>

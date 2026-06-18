@@ -1,154 +1,9 @@
-/* ============================================================
-   MediConnect – pricing.css
-   Premium Healthcare SaaS Pricing Page
-   10-Section Layout
+﻿/* ============================================================
+   MediConnect - pricing.css
+   Premium Pricing Page
    ============================================================ */
 
-/* ── Section 1: Hero ── */
-.pricing-hero {
-  padding: var(--space-20) 0 var(--space-16);
-  background: var(--gradient-hero); color: white;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.pricing-hero::before {
-  content: '';
-  position: absolute;
-  top: -30%; left: -10%;
-  width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(var(--color-accent-rgb), 0.12) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-}
-.pricing-hero::after {
-  content: '';
-  position: absolute;
-  bottom: -20%; right: -15%;
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(var(--color-primary-rgb), 0.08) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-}
-.pricing-hero__inner {
-  max-width: 800px;
-  margin: 0 auto;
-  position: relative;
-}
-.pricing-hero h1 {
-  font-size: 3.5rem;
-  font-weight: var(--font-weight-extrabold);
-  color: white;
-  margin-bottom: var(--space-4);
-  line-height: 1.15;
-}
-.pricing-hero h1 .text-gradient {
-  background: linear-gradient(135deg, #67E8F9 0%, #A5F3FC 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.pricing-hero p {
-  font-size: var(--font-size-lg);
-  color: white;
-  max-width: 600px;
-  margin: 0 auto var(--space-8);
-  line-height: var(--line-height-relaxed);
-}
-.pricing-hero__actions {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-4);
-  flex-wrap: wrap;
-}
-.pricing-hero__illustration {
-  margin-top: var(--space-12);
-  display: flex;
-  justify-content: center;
-  gap: var(--space-6);
-  flex-wrap: wrap;
-}
-.pricing-hero__stat {
-  background: white;
-  border: 1px solid rgba(78,154,151,0.12);
-  border-radius: var(--radius-xl);
-  padding: var(--space-5) var(--space-7);
-  text-align: center;
-  min-width: 150px;
-  box-shadow: 0 4px 16px rgba(78,154,151,0.06);
-}
-.pricing-hero__stat-number {
-  font-size: var(--font-size-3xl);
-  font-weight: var(--font-weight-extrabold);
-  color: var(--color-primary);
-  line-height: 1;
-}
-.pricing-hero__stat-label {
-  font-size: var(--font-size-xs);
-  color: var(--color-text-muted);
-  margin-top: var(--space-1);
-}
-
-/* ── Billing Toggle ── */
-.pricing-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-4);
-  margin-bottom: var(--space-10);
-  font-size: var(--font-size-sm);
-  color: var(--color-text-light);
-}
-.pricing-toggle__label {
-  cursor: pointer;
-  user-select: none;
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-}
-.pricing-toggle__switch {
-  position: relative;
-  width: 48px;
-  height: 26px;
-  background: var(--color-border);
-  border-radius: var(--radius-full);
-  transition: background var(--transition-base);
-  flex-shrink: 0;
-}
-.pricing-toggle__switch::after {
-  content: '';
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 20px;
-  height: 20px;
-  background: white;
-  border-radius: 50%;
-  transition: transform var(--transition-base);
-  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-}
-.pricing-toggle input:checked + .pricing-toggle__switch {
-  background: var(--color-primary);
-}
-.pricing-toggle input:checked + .pricing-toggle__switch::after {
-  transform: translateX(22px);
-}
-.pricing-toggle__badge {
-  background: var(--color-mint-light);
-  color: var(--color-primary-dark);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-bold);
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-full);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-.pricing-toggle__save {
-  color: var(--color-success);
-  font-weight: var(--font-weight-semibold);
-  font-size: var(--font-size-xs);
-}
+/* -- Section 1: Hero (layout handled by .page-hero in components.css) -- */
 
 /* ── Section 2: Why MediConnect ── */
 .pricing-why {
@@ -699,8 +554,6 @@
   }
 }
 @media (max-width: 768px) {
-  .pricing-hero h1 { font-size: 2.5rem;  color: white; }
-  .pricing-hero { padding: var(--space-12) 0 var(--space-10); }
   .pricing-plans__grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
   .pricing-compare__table {
     font-size: var(--font-size-xs);
@@ -722,12 +575,8 @@
   .pricing-cta h2 { font-size: var(--font-size-2xl); }
 }
 @media (max-width: 480px) {
-  .pricing-hero h1 { font-size: 2rem;  color: white; }
-  .pricing-hero__stat { min-width: 120px; padding: var(--space-4); }
-  .pricing-hero__stat-number { font-size: var(--font-size-2xl); }
 }
 @media (max-width: 425px) {
-  .pricing-hero h1 { font-size: 1.75rem;  color: white; }
   .pricing-cta h2 { font-size: var(--font-size-2xl); }
   .pricing-plan__price { font-size: 2.25rem; }
   .pricing-why__card { padding: var(--space-5); }
@@ -737,8 +586,6 @@
   .pricing-compare__table td { padding: var(--space-1) var(--space-2); }
 }
 @media (max-width: 320px) {
-  .pricing-hero h1 { font-size: 1.5rem;  color: white; }
-  .pricing-hero__stat { min-width: 100px; padding: var(--space-3); }
   .pricing-plan__header { padding: var(--space-5) var(--space-4); }
 }
 
