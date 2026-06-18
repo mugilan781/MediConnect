@@ -10,7 +10,9 @@ const DoctorDashboard = {
 
   async init() {
     const user = Auth.getUser();
-    if (!user || user.role !== 'doctor') {
+    // Allow demo mode: if no user or wrong role, use demo context instead of redirecting
+    const isDemo = !user || user.role !== 'doctor';
+    if (isDemo && typeof DemoAuth === 'undefined') {
       window.location.href = '/login.html';
       return;
     }
@@ -35,11 +37,26 @@ const DoctorDashboard = {
         this.currentDoctor.email = response.data.user.email;
         document.getElementById('welcome-name').textContent = `Dr. ${this.currentDoctor.full_name}`;
       } else {
-        UI.showToast('Failed to load doctor profile.', 'error');
+        // Fallback for demo mode: use dashboard API data
+        await this._loadDemoProfile();
       }
     } catch (error) {
-      console.error(error);
-      UI.showToast('Profile fetch error.', 'error');
+      // In demo mode, /auth/me will fail — use demo fallback
+      console.warn('Auth profile unavailable, using demo profile');
+      await this._loadDemoProfile();
+    }
+  },
+
+  async _loadDemoProfile() {
+    try {
+      const dashResponse = await Api.get('/dashboard/doctor');
+      if (dashResponse.success && dashResponse.data.doctor) {
+        this.currentDoctor = dashResponse.data.doctor;
+        const name = this.currentDoctor.full_name;
+        document.getElementById('welcome-name').textContent = name.startsWith('Dr.') ? name : `Dr. ${name}`;
+      }
+    } catch (e) {
+      console.error('Failed to load demo doctor profile:', e);
     }
   },
 

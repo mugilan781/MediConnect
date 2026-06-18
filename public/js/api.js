@@ -1,11 +1,12 @@
 // ============================================================
 // MediConnect – public/js/api.js
-// Fetch wrapper for all API calls with JWT auth header
+// Fetch wrapper for all API calls with JWT / demo token auth
 // ============================================================
 
 const Api = {
   /**
-   * Base fetch wrapper that attaches Authorization header
+   * Base fetch wrapper that attaches Authorization header.
+   * Works with both real JWT tokens and demo tokens.
    * @param {string} endpoint - API endpoint (e.g. '/auth/login')
    * @param {Object} options - Fetch options
    * @returns {Promise<Object>} Parsed JSON response
@@ -25,6 +26,9 @@ const Api = {
 
     if (token) {
       headers['Authorization'] = `Bearer ${token}`;
+    } else if (typeof DemoAuth !== 'undefined') {
+      // Fallback: if no token at all but DemoAuth exists, send role hint header
+      headers['X-Demo-Role'] = DemoAuth.getDemoRoleHeader();
     }
 
     try {
@@ -36,15 +40,22 @@ const Api = {
 
       // Handle 401 — token expired or invalid
       if (response.status === 401) {
-        localStorage.removeItem(CONFIG.TOKEN_KEY);
-        localStorage.removeItem(CONFIG.USER_KEY);
-        sessionStorage.removeItem(CONFIG.TOKEN_KEY);
-        sessionStorage.removeItem(CONFIG.USER_KEY);
-        
-        const isAuthPage = window.location.pathname.includes('login.html') || window.location.pathname.includes('signup.html');
-        if (!isAuthPage) {
-          window.location.href = '/login.html';
-          return;
+        // Only clear tokens and redirect if it's a REAL token that expired
+        // Don't clear demo tokens — they don't expire
+        const isDemoToken = typeof DemoAuth !== 'undefined' && DemoAuth._isDemoToken(token);
+        if (!isDemoToken) {
+          localStorage.removeItem(CONFIG.TOKEN_KEY);
+          localStorage.removeItem(CONFIG.USER_KEY);
+          sessionStorage.removeItem(CONFIG.TOKEN_KEY);
+          sessionStorage.removeItem(CONFIG.USER_KEY);
+          
+          const isDashboardPage = window.location.pathname.includes('dashboard');
+          const isAuthPage = window.location.pathname.includes('login.html') || window.location.pathname.includes('signup.html');
+          // Don't redirect on auth pages or dashboard pages (demo mode handles dashboards)
+          if (!isAuthPage && !isDashboardPage) {
+            window.location.href = '/login.html';
+            return;
+          }
         }
       }
 

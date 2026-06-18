@@ -5,11 +5,11 @@
 const express = require('express');
 const router = express.Router();
 const sampleCollectionController = require('../controllers/sampleCollectionController');
-const { authenticate, authorize } = require('../middleware/auth');
+const { authenticate, authorize, authenticateOrDemo, authenticateOrDemoAny } = require('../middleware/auth');
 const { validate, schemas } = require('../middleware/validate');
 
 router.post('/',            authenticate, authorize('patient'), validate(schemas.createSampleCollection), sampleCollectionController.create);
-router.get('/',             authenticate,                       sampleCollectionController.getAll);
+router.get('/',             authenticateOrDemoAny, sampleCollectionController.getAll);
 router.get('/:id',          authenticate,                       sampleCollectionController.getById);
 router.put('/:id',          authenticate,                       sampleCollectionController.update);
 router.put('/:id/assign',   authenticate, authorize('admin'),   validate(schemas.assignSampleCollection),     sampleCollectionController.assignCollector);

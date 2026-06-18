@@ -6,12 +6,12 @@
 const express = require('express');
 const router = express.Router();
 const consultationController = require('../controllers/consultationController');
-const { authenticate, authorize } = require('../middleware/auth');
+const { authenticate, authorize, authenticateOrDemo, authenticateOrDemoAny } = require('../middleware/auth');
 const { validate, schemas } = require('../middleware/validate');
 
 // Create consultation request (Patient) or check list (All)
 router.post('/',                          authenticate, authorize('patient'),                  validate(schemas.createConsultationRequest), consultationController.create);
-router.get('/',                           authenticate,                                                                                     consultationController.getAll);
+router.get('/',                           authenticateOrDemoAny,                                                            consultationController.getAll);
 
 // Legacy lookup by appointment
 router.get('/appointment/:appointmentId', authenticate,                                                                                     consultationController.getByAppointment);

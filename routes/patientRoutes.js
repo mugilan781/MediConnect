@@ -5,10 +5,10 @@
 const express = require('express');
 const router = express.Router();
 const patientController = require('../controllers/patientController');
-const { authenticate, authorize } = require('../middleware/auth');
+const { authenticate, authorize, authenticateOrDemo } = require('../middleware/auth');
 
 // Patient self-service profile (must come before /:id to avoid route collision)
-router.get('/profile',    authenticate, authorize('patient'),                    patientController.getProfile);
+router.get('/profile',    authenticateOrDemo('patient'),                               patientController.getProfile);
 router.put('/profile',    authenticate, authorize('patient'),                    patientController.updateProfile);
 
 router.get('/',           authenticate, authorize('doctor', 'admin'),                    patientController.getAll);

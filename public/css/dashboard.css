@@ -27,7 +27,6 @@
 .content {
   flex: 1;
   padding: var(--space-6) var(--space-8);
-  /* max-width removed for full-width layout */
   min-width: 0;
   width: auto;
   max-width: 100%;
@@ -41,6 +40,28 @@
 @keyframes dashFadeIn {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Demo Mode Badge ── */
+.demo-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.28);
+  border-radius: 20px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  margin-left: var(--space-3);
+  animation: demoBadgePulse 2.5s ease-in-out infinite;
+}
+
+@keyframes demoBadgePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -109,14 +130,13 @@
 
 /* ════════════════════════════════════════════════════════════
    SECTION 2: KPI CARDS — Stats Row
-   ════════════════════════════════════════════════════════════ */.stats-row {
+   ════════════════════════════════════════════════════════════ */
+.stats-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  
   gap: var(--space-5);
   margin-bottom: var(--space-7);
 }
-
 
 .stat-card {
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(234, 244, 239, 0.72));

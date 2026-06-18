@@ -5,12 +5,12 @@
 const express = require('express');
 const router = express.Router();
 const appointmentController = require('../controllers/appointmentController');
-const { authenticate, authorize } = require('../middleware/auth');
+const { authenticate, authorize, authenticateOrDemo, authenticateOrDemoAny } = require('../middleware/auth');
 const { validate, schemas } = require('../middleware/validate');
 
 router.post('/',             authenticate, authorize('patient'),                       validate(schemas.createAppointment), appointmentController.create);
-router.get('/',              authenticate,                                              appointmentController.getAll);
-router.get('/upcoming',      authenticate,                                              appointmentController.getUpcoming);
+router.get('/',              authenticateOrDemoAny,                                      appointmentController.getAll);
+router.get('/upcoming',      authenticateOrDemoAny,                                      appointmentController.getUpcoming);
 router.get('/:id',           authenticate,                                              appointmentController.getById);
 router.put('/:id',           authenticate, authorize('patient', 'doctor', 'admin'),     validate(schemas.rescheduleAppointment), appointmentController.reschedule);
 router.put('/:id/reschedule',  authenticate, authorize('patient', 'doctor', 'admin'),     validate(schemas.rescheduleAppointment), appointmentController.reschedule);

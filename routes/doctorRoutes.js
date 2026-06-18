@@ -6,31 +6,32 @@
 const express = require('express');
 const router = express.Router();
 const doctorController = require('../controllers/doctorController');
-const { authenticate, authorize } = require('../middleware/auth');
+const { authenticate, authorize, authenticateOrDemo } = require('../middleware/auth');
 
 // --- Public Endpoints ---
 router.get('/', doctorController.getAll);
 
 // --- Doctor-Scoped Profile, Schedules, Leaves & Associated Patients (Must come before /:id) ---
-router.get('/me/schedule',    authenticate, authorize('doctor'), doctorController.getMySchedule);
+// GET routes use authenticateOrDemo so demo users can view data
+router.get('/me/schedule',    authenticateOrDemo('doctor'), doctorController.getMySchedule);
 router.put('/me/schedule',    authenticate, authorize('doctor'), doctorController.updateMySchedule);
 
-router.get('/me/slots',       authenticate, authorize('doctor'), doctorController.getMySlots);
+router.get('/me/slots',       authenticateOrDemo('doctor'), doctorController.getMySlots);
 router.post('/me/slots',      authenticate, authorize('doctor'), doctorController.createMySlot);
 router.put('/me/slots/:id',   authenticate, authorize('doctor'), doctorController.updateMySlot);
 router.delete('/me/slots/:id',authenticate, authorize('doctor'), doctorController.deleteMySlot);
 
-router.get('/me/leaves',      authenticate, authorize('doctor'), doctorController.getMyLeaves);
+router.get('/me/leaves',      authenticateOrDemo('doctor'), doctorController.getMyLeaves);
 router.post('/me/leaves',     authenticate, authorize('doctor'), doctorController.createMyLeave);
 router.delete('/me/leaves/:id',authenticate, authorize('doctor'), doctorController.deleteMyLeave);
 
-// Doctor-authorized access to associated patient records
-router.get('/me/patients/:id',               authenticate, authorize('doctor'), doctorController.getPatientProfile);
-router.get('/me/patients/:id/history',       authenticate, authorize('doctor'), doctorController.getPatientHistory);
-router.get('/me/patients/:id/reports',       authenticate, authorize('doctor'), doctorController.getPatientReports);
-router.get('/me/patients/:id/lab-tests',     authenticate, authorize('doctor'), doctorController.getPatientLabTests);
-router.get('/me/patients/:id/appointments',  authenticate, authorize('doctor'), doctorController.getPatientAppointments);
-router.get('/me/patients/:id/consultations', authenticate, authorize('doctor'), doctorController.getPatientConsultations);
+// Doctor-authorized access to associated patient records (read-only demo-aware)
+router.get('/me/patients/:id',               authenticateOrDemo('doctor'), doctorController.getPatientProfile);
+router.get('/me/patients/:id/history',       authenticateOrDemo('doctor'), doctorController.getPatientHistory);
+router.get('/me/patients/:id/reports',       authenticateOrDemo('doctor'), doctorController.getPatientReports);
+router.get('/me/patients/:id/lab-tests',     authenticateOrDemo('doctor'), doctorController.getPatientLabTests);
+router.get('/me/patients/:id/appointments',  authenticateOrDemo('doctor'), doctorController.getPatientAppointments);
+router.get('/me/patients/:id/consultations', authenticateOrDemo('doctor'), doctorController.getPatientConsultations);
 
 // --- Public / General Endpoints ---
 router.get('/:id',              doctorController.getById);

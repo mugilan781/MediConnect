@@ -6,13 +6,13 @@
 const express = require('express');
 const router = express.Router();
 const labBookingController = require('../controllers/labBookingController');
-const { authenticate, authorize } = require('../middleware/auth');
+const { authenticate, authorize, authenticateOrDemo, authenticateOrDemoAny } = require('../middleware/auth');
 const { validate, schemas } = require('../middleware/validate');
 const { uploadReport } = require('../middleware/upload');
 
 // Create lab booking or check list
 router.post('/',             authenticate, authorize('patient', 'doctor', 'admin'), validate(schemas.createLabBooking), labBookingController.create);
-router.get('/',              authenticate,                                                                               labBookingController.getAll);
+router.get('/',              authenticateOrDemoAny,                                                                              labBookingController.getAll);
 
 // Detail and General updates
 router.get('/:id',           authenticate,                                                                               labBookingController.getById);

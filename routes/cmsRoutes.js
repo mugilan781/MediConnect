@@ -6,7 +6,7 @@
 const express = require('express');
 const router = express.Router();
 const cmsController = require('../controllers/cmsController');
-const { authenticate, authorize } = require('../middleware/auth');
+const { authenticate, authorize, authenticateOrDemo } = require('../middleware/auth');
 const { uploadCmsMedia } = require('../middleware/upload');
 
 // ── Public Routes ──────────────────────────────────────────
@@ -26,24 +26,26 @@ router.get('/social-links', cmsController.getSocialLinks);
 router.get('/settings', cmsController.getSettings);
 
 
-// ── Admin Routes (Requires Authenticated Admin) ────────────
+// ── Admin Routes ───────────────────────────────────────────
+// GET routes use authenticateOrDemo so demo admin can browse CMS
+// POST/PUT/DELETE remain strictly authenticated
 const adminMiddleware = [authenticate, authorize('admin')];
 
 // Pages CRUD
-router.get('/pages', ...adminMiddleware, cmsController.getAllPages);
+router.get('/pages', authenticateOrDemo('admin'), cmsController.getAllPages);
 router.post('/page', ...adminMiddleware, cmsController.createPage);
 router.put('/page/:id', ...adminMiddleware, cmsController.updatePage);
 router.delete('/page/:id', ...adminMiddleware, cmsController.deletePage);
 
 // Sections CRUD
-router.get('/sections', ...adminMiddleware, cmsController.getAllSections);
-router.get('/sections/:key', ...adminMiddleware, cmsController.getSection);
+router.get('/sections', authenticateOrDemo('admin'), cmsController.getAllSections);
+router.get('/sections/:key', authenticateOrDemo('admin'), cmsController.getSection);
 router.post('/sections', ...adminMiddleware, cmsController.createSection);
 router.put('/sections/:id', ...adminMiddleware, cmsController.updateSection);
 router.delete('/sections/:id', ...adminMiddleware, cmsController.deleteSection);
 
 // FAQs CRUD & Reordering
-router.get('/faqs/all', ...adminMiddleware, cmsController.getAllFaqs);
+router.get('/faqs/all', authenticateOrDemo('admin'), cmsController.getAllFaqs);
 router.post('/faqs', ...adminMiddleware, cmsController.createFaq);
 router.put('/faqs/:id', ...adminMiddleware, cmsController.updateFaq);
 router.delete('/faqs/:id', ...adminMiddleware, cmsController.deleteFaq);
@@ -53,11 +55,11 @@ router.post('/faqs/reorder', ...adminMiddleware, cmsController.reorderFaqs);
 router.put('/settings', ...adminMiddleware, cmsController.updateSettings);
 
 // Social Links CRUD
-router.get('/social-links/all', ...adminMiddleware, cmsController.getAllSocialLinks);
+router.get('/social-links/all', authenticateOrDemo('admin'), cmsController.getAllSocialLinks);
 router.put('/social-links/:id', ...adminMiddleware, cmsController.updateSocialLink);
 
 // Media Management (Physical upload uses uploadCmsMedia middleware)
-router.get('/media', ...adminMiddleware, cmsController.getMediaList);
+router.get('/media', authenticateOrDemo('admin'), cmsController.getMediaList);
 router.post('/media', ...adminMiddleware, uploadCmsMedia.single('file'), cmsController.uploadMedia);
 router.delete('/media/:id', ...adminMiddleware, cmsController.deleteMedia);
 

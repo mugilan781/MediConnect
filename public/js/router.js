@@ -110,18 +110,19 @@ const Router = {
    */
   loadUserInfo() {
     const user = Auth.getUser();
-    if (!user) return;
+    if (user) {
+      const nameEl = document.getElementById('topbar-user-name');
+      const roleEl = document.getElementById('topbar-user-role');
+      const avatarEl = document.getElementById('topbar-user-avatar');
 
-    const nameEl = document.getElementById('topbar-user-name');
-    const roleEl = document.getElementById('topbar-user-role');
-    const avatarEl = document.getElementById('topbar-user-avatar');
+      if (nameEl) nameEl.textContent = user.full_name;
+      if (roleEl) roleEl.textContent = user.role.charAt(0).toUpperCase() + user.role.slice(1);
+      if (avatarEl) avatarEl.textContent = user.full_name.charAt(0).toUpperCase();
 
-    if (nameEl) nameEl.textContent = user.full_name;
-    if (roleEl) roleEl.textContent = user.role.charAt(0).toUpperCase() + user.role.slice(1);
-    if (avatarEl) avatarEl.textContent = user.full_name.charAt(0).toUpperCase();
-
-    // Load notification count
-    this.loadNotificationCount();
+      // Load notification count
+      this.loadNotificationCount();
+    }
+    // Demo fallback is handled by Sidebar._applyDemoContext()
   },
 
   /**

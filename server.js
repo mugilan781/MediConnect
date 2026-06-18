@@ -101,6 +101,10 @@ async function startServer() {
     console.log('✅ MySQL database connected successfully');
     connection.release();
 
+    // Seed demo users for demonstration mode
+    const demoSeed = require('./services/demoSeed');
+    await demoSeed.init();
+
     // Start background notification & reminder engine (every 30 seconds in dev, 1 hour in prod)
     const reminderEngine = require('./services/reminderEngine');
     reminderEngine.start(process.env.NODE_ENV === 'production' ? 60 * 60 * 1000 : 30 * 1000);

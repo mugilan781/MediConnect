@@ -1,51 +1,40 @@
 // ============================================================
 // MediConnect – routes/adminRoutes.js
 // Platform administrative routes
+// Demo mode: GET (read-only) routes use authenticateOrDemo
+// Write routes remain fully protected
 // ============================================================
 
 const express = require('express');
 const router = express.Router();
 const adminController = require('../controllers/adminController');
-const { authenticate, authorize } = require('../middleware/auth');
+const { authenticate, authorize, authenticateOrDemo } = require('../middleware/auth');
 const { validate, schemas } = require('../middleware/validate');
 
-// Ensure all subroutes are administrative
-router.use(authenticate, authorize('admin'));
+// --- READ-ONLY routes (demo-accessible) ---
+router.get('/dashboard',         authenticateOrDemo('admin'), adminController.getDashboard);
+router.get('/users',             authenticateOrDemo('admin'), adminController.getAllUsers);
+router.get('/settings',          authenticateOrDemo('admin'), adminController.getSettings);
+router.get('/patients',          authenticateOrDemo('admin'), adminController.getPatients);
+router.get('/patients/:id',      authenticateOrDemo('admin'), adminController.getPatientById);
+router.get('/doctors',           authenticateOrDemo('admin'), adminController.getDoctors);
+router.get('/doctors/:id/schedule', authenticateOrDemo('admin'), adminController.getDoctorSchedule);
+router.get('/doctors/:id/slots',    authenticateOrDemo('admin'), adminController.getDoctorSlots);
+router.get('/doctors/:id/leaves',   authenticateOrDemo('admin'), adminController.getDoctorLeaves);
+router.get('/notifications',     authenticateOrDemo('admin'), adminController.getNotificationsHistory);
+router.get('/analytics',         authenticateOrDemo('admin'), adminController.getAnalytics);
 
-// --- Overview ---
-router.get('/dashboard', adminController.getDashboard);
-
-// --- User Core Controls ---
-router.get('/users',             adminController.getAllUsers);
-router.patch('/users/:id/status', adminController.updateUserStatus);
-router.patch('/users/:id/role',  validate(schemas.updateUserRole), adminController.updateUserRole);
-
-// --- Settings Management ---
-router.get('/settings',          adminController.getSettings);
-router.put('/settings/:key',     adminController.updateSetting);
-
-// --- Patients Management (Section 2) ---
-router.get('/patients',          adminController.getPatients);
-router.get('/patients/:id',      adminController.getPatientById);
-router.put('/patients/:id',      adminController.updatePatient);
-router.delete('/patients/:id',   adminController.deletePatient);
-
-// --- Doctors Management (Section 3) ---
-router.get('/doctors',          adminController.getDoctors);
-router.post('/doctors',         adminController.createDoctor);
-router.get('/doctors/:id/schedule', adminController.getDoctorSchedule);
-router.get('/doctors/:id/slots',     adminController.getDoctorSlots);
-router.get('/doctors/:id/leaves',    adminController.getDoctorLeaves);
-router.put('/doctors/:id',      adminController.updateDoctor);
-router.delete('/doctors/:id',   adminController.deleteDoctor);
-
-// --- Notifications Management (Section 9) ---
-router.post('/notifications/send',      adminController.sendCustomNotification);
-router.post('/notifications/broadcast', adminController.broadcastNotification);
-router.post('/notifications',           adminController.createNotification);
-router.get('/notifications',            adminController.getNotificationsHistory);
-
-// --- Analytics (Section 10) ---
-router.get('/analytics',        adminController.getAnalytics);
+// --- WRITE routes (require real authentication) ---
+router.patch('/users/:id/status', authenticate, authorize('admin'), adminController.updateUserStatus);
+router.patch('/users/:id/role',   authenticate, authorize('admin'), validate(schemas.updateUserRole), adminController.updateUserRole);
+router.put('/settings/:key',      authenticate, authorize('admin'), adminController.updateSetting);
+router.put('/patients/:id',       authenticate, authorize('admin'), adminController.updatePatient);
+router.delete('/patients/:id',    authenticate, authorize('admin'), adminController.deletePatient);
+router.post('/doctors',           authenticate, authorize('admin'), adminController.createDoctor);
+router.put('/doctors/:id',        authenticate, authorize('admin'), adminController.updateDoctor);
+router.delete('/doctors/:id',     authenticate, authorize('admin'), adminController.deleteDoctor);
+router.post('/notifications/send',      authenticate, authorize('admin'), adminController.sendCustomNotification);
+router.post('/notifications/broadcast', authenticate, authorize('admin'), adminController.broadcastNotification);
+router.post('/notifications',           authenticate, authorize('admin'), adminController.createNotification);
 
 module.exports = router;

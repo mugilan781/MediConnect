@@ -96,7 +96,11 @@ const Sidebar = {
     if (!container) return;
 
     const user = Auth.getUser();
-    const role = user?.role || 'patient';
+    // On dashboard pages, ALWAYS use page-inferred role for sidebar nav
+    // This prevents role leakage (e.g. admin logged in visiting doctor dashboard)
+    const pageRole = typeof DemoAuth !== 'undefined' ? DemoAuth.inferRoleFromPage() : null;
+    const isDashboardPage = window.location.pathname.includes('-dashboard');
+    const role = isDashboardPage ? (pageRole || user?.role || 'patient') : (user?.role || pageRole || 'patient');
     const sections = this.navItems[role] || this.navItems.patient;
     const currentPath = window.location.pathname;
 
@@ -164,6 +168,7 @@ const Sidebar = {
             <div class="topbar__user-role" id="topbar-user-role">Role</div>
           </div>
         </div>
+        <span class="demo-badge" id="demo-mode-badge" style="display:none;">Demo Mode</span>
       </div>
     `;
   },
@@ -171,5 +176,31 @@ const Sidebar = {
   init(title, breadcrumb) {
     this.render();
     this.renderTopbar(title || 'Dashboard', breadcrumb || 'Home');
+    this._applyDemoContext();
+  },
+
+  /**
+   * Apply demo user context to topbar if no real user is logged in.
+   */
+  _applyDemoContext() {
+    if (typeof DemoAuth === 'undefined') return;
+    const role = DemoAuth.inferRoleFromPage();
+    const { user, isDemo } = DemoAuth.getCurrentUserOrDemo(role);
+
+    // Populate topbar with user info (real or demo)
+    const nameEl = document.getElementById('topbar-user-name');
+    const roleEl = document.getElementById('topbar-user-role');
+    const avatarEl = document.getElementById('topbar-user-avatar');
+    const demoBadge = document.getElementById('demo-mode-badge');
+
+    if (user) {
+      if (nameEl) nameEl.textContent = user.full_name;
+      if (roleEl) roleEl.textContent = user.role.charAt(0).toUpperCase() + user.role.slice(1);
+      if (avatarEl) avatarEl.textContent = user.full_name.charAt(0).toUpperCase();
+    }
+
+    if (demoBadge) {
+      demoBadge.style.display = isDemo ? 'inline-flex' : 'none';
+    }
   },
 };

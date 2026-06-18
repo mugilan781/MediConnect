@@ -5,10 +5,10 @@
 const express = require('express');
 const router = express.Router();
 const notificationController = require('../controllers/notificationController');
-const { authenticate } = require('../middleware/auth');
+const { authenticate, authenticateOrDemo, authenticateOrDemoAny } = require('../middleware/auth');
 
-router.get('/',             authenticate, notificationController.getAll);
-router.get('/unread-count', authenticate, notificationController.getUnreadCount);
+router.get('/',             authenticateOrDemoAny, notificationController.getAll);
+router.get('/unread-count', authenticateOrDemoAny, notificationController.getUnreadCount);
 router.get('/search',       authenticate, notificationController.search);
 router.get('/preferences',  authenticate, notificationController.getPreferences);
 router.put('/preferences',  authenticate, notificationController.updatePreferences);
