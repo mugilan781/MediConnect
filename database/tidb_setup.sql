@@ -1,21 +1,11 @@
 -- ============================================================
--- MediConnect – database/schema.sql
--- Complete MySQL Database Schema
+-- MediConnect – TiDB Cloud Compatible Setup
+-- All tables + seed data in one file (NO foreign keys)
 -- ============================================================
-
-CREATE DATABASE IF NOT EXISTS mediconnect
-  CHARACTER SET utf8mb4
-  COLLATE utf8mb4_unicode_ci;
 
 USE mediconnect;
 
--- Disable FK checks for cloud DB compatibility (TiDB)
-SET FOREIGN_KEY_CHECKS = 0;
-
--- ============================================================
 -- 1. users
--- Central authentication table
--- ============================================================
 CREATE TABLE IF NOT EXISTS users (
   id              INT AUTO_INCREMENT PRIMARY KEY,
   email           VARCHAR(255) NOT NULL UNIQUE,
@@ -28,16 +18,12 @@ CREATE TABLE IF NOT EXISTS users (
   last_login      DATETIME DEFAULT NULL,
   created_at      DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at      DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
   INDEX idx_users_email (email),
   INDEX idx_users_role (role),
   INDEX idx_users_active (is_active)
 ) ENGINE=InnoDB;
 
--- ============================================================
 -- 2. patients
--- Extended profile for patient users
--- ============================================================
 CREATE TABLE IF NOT EXISTS patients (
   id                INT AUTO_INCREMENT PRIMARY KEY,
   user_id           INT NOT NULL UNIQUE,
@@ -49,15 +35,10 @@ CREATE TABLE IF NOT EXISTS patients (
   insurance_id      VARCHAR(100) DEFAULT NULL,
   allergies         TEXT DEFAULT NULL,
   created_at        DATETIME DEFAULT CURRENT_TIMESTAMP,
-  updated_at        DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
-  CONSTRAINT fk_patients_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+  updated_at        DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
--- ============================================================
 -- 3. doctors
--- Extended profile for doctor users
--- ============================================================
 CREATE TABLE IF NOT EXISTS doctors (
   id                INT AUTO_INCREMENT PRIMARY KEY,
   user_id           INT NOT NULL UNIQUE,
@@ -73,17 +54,12 @@ CREATE TABLE IF NOT EXISTS doctors (
   is_available      TINYINT(1) DEFAULT 1,
   created_at        DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at        DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
-  CONSTRAINT fk_doctors_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
   INDEX idx_doctors_specialization (specialization),
   INDEX idx_doctors_department (department),
   INDEX idx_doctors_available (is_available)
 ) ENGINE=InnoDB;
 
--- ============================================================
 -- 4. appointments
--- Core booking table
--- ============================================================
 CREATE TABLE IF NOT EXISTS appointments (
   id                INT AUTO_INCREMENT PRIMARY KEY,
   patient_id        INT NOT NULL,
@@ -99,9 +75,6 @@ CREATE TABLE IF NOT EXISTS appointments (
   cancel_reason     TEXT DEFAULT NULL,
   created_at        DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at        DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
-  CONSTRAINT fk_appointments_patient FOREIGN KEY (patient_id) REFERENCES patients(id) ON DELETE CASCADE,
-  CONSTRAINT fk_appointments_doctor  FOREIGN KEY (doctor_id)  REFERENCES doctors(id)  ON DELETE CASCADE,
   UNIQUE KEY uq_doctor_slot (doctor_id, appointment_date, appointment_time),
   INDEX idx_appointments_date (appointment_date),
   INDEX idx_appointments_status (status),
@@ -109,10 +82,7 @@ CREATE TABLE IF NOT EXISTS appointments (
   INDEX idx_appointments_doctor (doctor_id)
 ) ENGINE=InnoDB;
 
--- ============================================================
 -- 5. consultations
--- Records created by doctors after appointments
--- ============================================================
 CREATE TABLE IF NOT EXISTS consultations (
   id                    INT AUTO_INCREMENT PRIMARY KEY,
   appointment_id        INT NOT NULL UNIQUE,
@@ -126,18 +96,11 @@ CREATE TABLE IF NOT EXISTS consultations (
   notes                 TEXT DEFAULT NULL,
   created_at            DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at            DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
-  CONSTRAINT fk_consultations_appointment FOREIGN KEY (appointment_id) REFERENCES appointments(id) ON DELETE CASCADE,
-  CONSTRAINT fk_consultations_doctor      FOREIGN KEY (doctor_id)      REFERENCES doctors(id),
-  CONSTRAINT fk_consultations_patient     FOREIGN KEY (patient_id)     REFERENCES patients(id),
   INDEX idx_consultations_doctor (doctor_id),
   INDEX idx_consultations_patient (patient_id)
 ) ENGINE=InnoDB;
 
--- ============================================================
 -- 6. lab_tests
--- Master catalog of available lab tests
--- ============================================================
 CREATE TABLE IF NOT EXISTS lab_tests (
   id                       INT AUTO_INCREMENT PRIMARY KEY,
   test_name                VARCHAR(200) NOT NULL,
@@ -150,15 +113,11 @@ CREATE TABLE IF NOT EXISTS lab_tests (
   is_active                TINYINT(1) DEFAULT 1,
   created_at               DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at               DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
   INDEX idx_lab_tests_category (category),
   INDEX idx_lab_tests_active (is_active)
 ) ENGINE=InnoDB;
 
--- ============================================================
 -- 7. lab_bookings
--- Patient bookings for lab tests
--- ============================================================
 CREATE TABLE IF NOT EXISTS lab_bookings (
   id              INT AUTO_INCREMENT PRIMARY KEY,
   patient_id      INT NOT NULL,
@@ -172,19 +131,12 @@ CREATE TABLE IF NOT EXISTS lab_bookings (
   notes           TEXT DEFAULT NULL,
   created_at      DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at      DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
-  CONSTRAINT fk_lab_bookings_patient  FOREIGN KEY (patient_id)  REFERENCES patients(id)  ON DELETE CASCADE,
-  CONSTRAINT fk_lab_bookings_lab_test FOREIGN KEY (lab_test_id) REFERENCES lab_tests(id),
-  CONSTRAINT fk_lab_bookings_doctor   FOREIGN KEY (doctor_id)   REFERENCES doctors(id),
   INDEX idx_lab_bookings_status (status),
   INDEX idx_lab_bookings_patient (patient_id),
   INDEX idx_lab_bookings_date (booking_date)
 ) ENGINE=InnoDB;
 
--- ============================================================
 -- 8. sample_collection_requests
--- Home / on-site sample collection
--- ============================================================
 CREATE TABLE IF NOT EXISTS sample_collection_requests (
   id                  INT AUTO_INCREMENT PRIMARY KEY,
   lab_booking_id      INT NOT NULL,
@@ -199,17 +151,11 @@ CREATE TABLE IF NOT EXISTS sample_collection_requests (
   notes               TEXT DEFAULT NULL,
   created_at          DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at          DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
-  CONSTRAINT fk_sample_lab_booking FOREIGN KEY (lab_booking_id) REFERENCES lab_bookings(id) ON DELETE CASCADE,
-  CONSTRAINT fk_sample_patient     FOREIGN KEY (patient_id)     REFERENCES patients(id),
   INDEX idx_sample_status (status),
   INDEX idx_sample_date (preferred_date)
 ) ENGINE=InnoDB;
 
--- ============================================================
 -- 9. medical_reports
--- Uploaded reports (lab results, imaging, prescriptions)
--- ============================================================
 CREATE TABLE IF NOT EXISTS medical_reports (
   id                     INT AUTO_INCREMENT PRIMARY KEY,
   patient_id             INT NOT NULL,
@@ -223,18 +169,11 @@ CREATE TABLE IF NOT EXISTS medical_reports (
   is_shared_with_patient TINYINT(1) DEFAULT 1,
   created_at             DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at             DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
-  CONSTRAINT fk_reports_patient     FOREIGN KEY (patient_id)     REFERENCES patients(id)     ON DELETE CASCADE,
-  CONSTRAINT fk_reports_doctor      FOREIGN KEY (doctor_id)      REFERENCES doctors(id),
-  CONSTRAINT fk_reports_lab_booking FOREIGN KEY (lab_booking_id)  REFERENCES lab_bookings(id),
   INDEX idx_reports_patient (patient_id),
   INDEX idx_reports_type (report_type)
 ) ENGINE=InnoDB;
 
--- ============================================================
 -- 10. patient_history
--- Aggregated timeline of a patient's medical journey
--- ============================================================
 CREATE TABLE IF NOT EXISTS patient_history (
   id           INT AUTO_INCREMENT PRIMARY KEY,
   patient_id   INT NOT NULL,
@@ -245,18 +184,12 @@ CREATE TABLE IF NOT EXISTS patient_history (
   event_date   DATETIME NOT NULL,
   recorded_by  INT DEFAULT NULL,
   created_at   DATETIME DEFAULT CURRENT_TIMESTAMP,
-
-  CONSTRAINT fk_history_patient  FOREIGN KEY (patient_id)  REFERENCES patients(id) ON DELETE CASCADE,
-  CONSTRAINT fk_history_recorder FOREIGN KEY (recorded_by) REFERENCES users(id),
   INDEX idx_history_patient (patient_id),
   INDEX idx_history_event_date (event_date),
   INDEX idx_history_event_type (event_type)
 ) ENGINE=InnoDB;
 
--- ============================================================
 -- 11. notifications
--- In-app notification system
--- ============================================================
 CREATE TABLE IF NOT EXISTS notifications (
   id         INT AUTO_INCREMENT PRIMARY KEY,
   user_id    INT NOT NULL,
@@ -266,17 +199,12 @@ CREATE TABLE IF NOT EXISTS notifications (
   link       VARCHAR(500) DEFAULT NULL,
   is_read    TINYINT(1) DEFAULT 0,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-
-  CONSTRAINT fk_notifications_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
   INDEX idx_notifications_user (user_id),
   INDEX idx_notifications_read (is_read),
   INDEX idx_notifications_created (created_at)
 ) ENGINE=InnoDB;
 
--- ============================================================
 -- 12. admin_settings
--- Key-value configuration store
--- ============================================================
 CREATE TABLE IF NOT EXISTS admin_settings (
   id             INT AUTO_INCREMENT PRIMARY KEY,
   setting_key    VARCHAR(100) NOT NULL UNIQUE,
@@ -286,15 +214,10 @@ CREATE TABLE IF NOT EXISTS admin_settings (
   updated_by     INT DEFAULT NULL,
   created_at     DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at     DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
-  CONSTRAINT fk_settings_user FOREIGN KEY (updated_by) REFERENCES users(id),
   INDEX idx_settings_group (setting_group)
 ) ENGINE=InnoDB;
 
--- ============================================================
 -- 13. password_reset_tokens
--- Secure token store for password recovery
--- ============================================================
 CREATE TABLE IF NOT EXISTS password_reset_tokens (
   id         INT AUTO_INCREMENT PRIMARY KEY,
   user_id    INT NOT NULL,
@@ -302,16 +225,11 @@ CREATE TABLE IF NOT EXISTS password_reset_tokens (
   expires_at DATETIME NOT NULL,
   used       TINYINT(1) DEFAULT 0,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-
-  CONSTRAINT fk_reset_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
   INDEX idx_reset_token (token),
   INDEX idx_reset_expires (expires_at)
 ) ENGINE=InnoDB;
 
--- ============================================================
 -- 14. doctor_schedules
--- Per-day time-range scheduling for doctors
--- ============================================================
 CREATE TABLE IF NOT EXISTS doctor_schedules (
   id          INT AUTO_INCREMENT PRIMARY KEY,
   doctor_id   INT NOT NULL,
@@ -321,11 +239,73 @@ CREATE TABLE IF NOT EXISTS doctor_schedules (
   is_active   TINYINT(1) DEFAULT 1,
   created_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at  DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
-  CONSTRAINT fk_schedules_doctor FOREIGN KEY (doctor_id) REFERENCES doctors(id) ON DELETE CASCADE,
   UNIQUE KEY uq_doctor_day (doctor_id, day_of_week),
   INDEX idx_schedules_doctor (doctor_id)
 ) ENGINE=InnoDB;
 
--- Re-enable FK checks
-SET FOREIGN_KEY_CHECKS = 1;
+-- 15. cms_content
+CREATE TABLE IF NOT EXISTS cms_content (
+  id           INT AUTO_INCREMENT PRIMARY KEY,
+  section_key  VARCHAR(100) NOT NULL UNIQUE,
+  section_data JSON NOT NULL,
+  is_active    TINYINT(1) DEFAULT 1,
+  updated_by   INT DEFAULT NULL,
+  created_at   DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at   DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX idx_cms_section (section_key),
+  INDEX idx_cms_active (is_active)
+) ENGINE=InnoDB;
+
+-- 16. cms_pages
+CREATE TABLE IF NOT EXISTS cms_pages (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  slug              VARCHAR(100) NOT NULL UNIQUE,
+  title             VARCHAR(255) NOT NULL,
+  meta_title        VARCHAR(255) DEFAULT NULL,
+  meta_description  TEXT DEFAULT NULL,
+  meta_keywords     VARCHAR(500) DEFAULT NULL,
+  og_title          VARCHAR(255) DEFAULT NULL,
+  og_description    TEXT DEFAULT NULL,
+  og_image          VARCHAR(500) DEFAULT NULL,
+  is_active         TINYINT(1) DEFAULT 1,
+  created_at        DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at        DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX idx_pages_slug (slug),
+  INDEX idx_pages_active (is_active)
+) ENGINE=InnoDB;
+
+-- 17. cms_faqs
+CREATE TABLE IF NOT EXISTS cms_faqs (
+  id            INT AUTO_INCREMENT PRIMARY KEY,
+  question      TEXT NOT NULL,
+  answer        TEXT NOT NULL,
+  display_order INT DEFAULT 0,
+  is_active     TINYINT(1) DEFAULT 1,
+  created_at    DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at    DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX idx_faqs_active (is_active),
+  INDEX idx_faqs_order (display_order)
+) ENGINE=InnoDB;
+
+-- 18. cms_social_links
+CREATE TABLE IF NOT EXISTS cms_social_links (
+  id          INT AUTO_INCREMENT PRIMARY KEY,
+  platform    VARCHAR(50) NOT NULL UNIQUE,
+  url         VARCHAR(500) DEFAULT NULL,
+  is_active   TINYINT(1) DEFAULT 1,
+  created_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at  DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX idx_social_active (is_active)
+) ENGINE=InnoDB;
+
+-- 19. cms_media
+CREATE TABLE IF NOT EXISTS cms_media (
+  id            INT AUTO_INCREMENT PRIMARY KEY,
+  filename      VARCHAR(255) NOT NULL,
+  original_name VARCHAR(255) NOT NULL,
+  mime_type     VARCHAR(100) NOT NULL,
+  file_size     INT NOT NULL,
+  file_path     VARCHAR(500) NOT NULL,
+  uploaded_by   INT NOT NULL,
+  created_at    DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;

@@ -1,3 +1,5 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
 -- ============================================================
 -- MediConnect – database/migration_appointment_management.sql
 -- Schema updates for appointment status logs and reschedule history
@@ -38,3 +40,6 @@ CREATE TABLE IF NOT EXISTS appointment_reschedules (
   CONSTRAINT fk_reschedules_appt FOREIGN KEY (appointment_id) REFERENCES appointments(id) ON DELETE CASCADE,
   INDEX idx_reschedules_appt (appointment_id)
 ) ENGINE=InnoDB;
+
+
+SET FOREIGN_KEY_CHECKS = 1;

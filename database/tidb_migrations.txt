@@ -1,0 +1,539 @@
+﻿=== migration_appointment_management.sql ===
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ============================================================
+-- MediConnect â€“ database/migration_appointment_management.sql
+-- Schema updates for appointment status logs and reschedule history
+-- ============================================================
+
+USE mediconnect;
+
+-- 1. Alter appointments table: Expand status column enum options
+ALTER TABLE appointments MODIFY COLUMN status ENUM('pending', 'scheduled', 'confirmed', 'completed', 'cancelled', 'rescheduled', 'no_show') DEFAULT 'pending';
+
+-- Update any existing 'scheduled' rows to 'pending' to match standard starting state
+UPDATE appointments SET status = 'pending' WHERE status = 'scheduled';
+
+-- 2. Create appointment_status_logs table
+CREATE TABLE IF NOT EXISTS appointment_status_logs (
+  id              INT AUTO_INCREMENT PRIMARY KEY,
+  appointment_id  INT NOT NULL,
+  previous_status VARCHAR(50) DEFAULT NULL,
+  new_status      VARCHAR(50) NOT NULL,
+  changed_by      ENUM('patient', 'doctor', 'admin', 'system') NOT NULL,
+  reason          TEXT DEFAULT NULL,
+  created_at      DATETIME DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_status_logs_appt FOREIGN KEY (appointment_id) REFERENCES appointments(id) ON DELETE CASCADE,
+  INDEX idx_status_logs_appt (appointment_id)
+) ENGINE=InnoDB;
+
+-- 3. Create appointment_reschedules table
+CREATE TABLE IF NOT EXISTS appointment_reschedules (
+  id              INT AUTO_INCREMENT PRIMARY KEY,
+  appointment_id  INT NOT NULL,
+  previous_date   DATE NOT NULL,
+  previous_time   TIME NOT NULL,
+  new_date        DATE NOT NULL,
+  new_time        TIME NOT NULL,
+  rescheduled_by  ENUM('patient', 'doctor', 'admin') NOT NULL,
+  reason          TEXT DEFAULT NULL,
+  created_at      DATETIME DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_reschedules_appt FOREIGN KEY (appointment_id) REFERENCES appointments(id) ON DELETE CASCADE,
+  INDEX idx_reschedules_appt (appointment_id)
+) ENGINE=InnoDB;
+
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+=== migration_cms.sql ===
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ============================================================
+-- MediConnect â€“ database/migration_cms.sql
+-- Schema updates for Enterprise CMS Module
+-- ============================================================
+
+USE mediconnect;
+
+-- 1. Create cms_pages table for managing pages metadata & SEO
+CREATE TABLE IF NOT EXISTS cms_pages (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  slug              VARCHAR(100) NOT NULL UNIQUE,
+  title             VARCHAR(255) NOT NULL,
+  meta_title        VARCHAR(255) DEFAULT NULL,
+  meta_description  TEXT DEFAULT NULL,
+  meta_keywords     VARCHAR(500) DEFAULT NULL,
+  og_title          VARCHAR(255) DEFAULT NULL,
+  og_description    TEXT DEFAULT NULL,
+  og_image          VARCHAR(500) DEFAULT NULL,
+  is_active         TINYINT(1) DEFAULT 1,
+  created_at        DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at        DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  
+  INDEX idx_pages_slug (slug),
+  INDEX idx_pages_active (is_active)
+) ENGINE=InnoDB;
+
+-- 2. Create cms_faqs table for searchable, reorderable public FAQs
+CREATE TABLE IF NOT EXISTS cms_faqs (
+  id            INT AUTO_INCREMENT PRIMARY KEY,
+  question      TEXT NOT NULL,
+  answer        TEXT NOT NULL,
+  display_order INT DEFAULT 0,
+  is_active     TINYINT(1) DEFAULT 1,
+  created_at    DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at    DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  
+  INDEX idx_faqs_active (is_active),
+  INDEX idx_faqs_order (display_order)
+) ENGINE=InnoDB;
+
+-- 3. Create cms_social_links table for site social profiles
+CREATE TABLE IF NOT EXISTS cms_social_links (
+  id          INT AUTO_INCREMENT PRIMARY KEY,
+  platform    VARCHAR(50) NOT NULL UNIQUE,
+  url         VARCHAR(500) DEFAULT NULL,
+  is_active   TINYINT(1) DEFAULT 1,
+  created_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at  DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  
+  INDEX idx_social_active (is_active)
+) ENGINE=InnoDB;
+
+-- 4. Create cms_media table for tracking uploaded assets
+CREATE TABLE IF NOT EXISTS cms_media (
+  id            INT AUTO_INCREMENT PRIMARY KEY,
+  filename      VARCHAR(255) NOT NULL,
+  original_name VARCHAR(255) NOT NULL,
+  mime_type     VARCHAR(100) NOT NULL,
+  file_size     INT NOT NULL,
+  file_path     VARCHAR(500) NOT NULL,
+  uploaded_by   INT NOT NULL,
+  created_at    DATETIME DEFAULT CURRENT_TIMESTAMP,
+  
+  CONSTRAINT fk_media_user FOREIGN KEY (uploaded_by) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- 5. Create a placeholder patient (ID 999) for general/system administrative logs in patient_history
+-- Admin user has user_id = 1. We insert a matching patient record.
+INSERT IGNORE INTO patients (id, user_id, date_of_birth, gender, blood_group, address, emergency_contact)
+VALUES (999, 1, '1970-01-01', 'other', 'O+', 'MediConnect System Log', '9000000001');
+
+-- 6. Seed default pages metadata
+INSERT IGNORE INTO cms_pages (slug, title, meta_title, meta_description, meta_keywords, og_title, og_description) VALUES
+('homepage', 'Home', 'MediConnect â€“ Digital Clinic & Appointment Management', 'Book appointments, consult with top doctors, manage lab tests, and access your complete medical history online.', 'healthcare, clinic, doctor appointment, lab test, medical record', 'MediConnect Homepage', 'Your Health, Connected & Simplified.'),
+('about', 'About Us', 'About Us â€“ MediConnect', 'Learn about our mission to make healthcare accessible, digital, and seamless for everyone.', 'about us, clinic history, team, healthcare objectives', 'About Us â€“ MediConnect', 'Our Mission to digitalize healthcare.'),
+('contact', 'Contact Us', 'Contact Us â€“ MediConnect', 'Get in touch with our team for appointments, inquiries, or emergency services.', 'contact details, working hours, phone number, clinic address', 'Contact Us â€“ MediConnect', 'We are here to help. Reach out to us.'),
+('services', 'Our Services', 'Our Services â€“ MediConnect', 'Explore our healthcare services including doctor scheduling, telehealth consultations, and diagnostics.', 'telehealth, lab booking, home care services', 'Our Services â€“ MediConnect', 'Complete healthcare management services.'),
+('faq', 'Frequently Asked Questions', 'FAQ â€“ MediConnect Support', 'Find answers to common questions about booking, payments, medical records, and reports.', 'faq, support, help center, questions', 'FAQ â€“ MediConnect Support', 'Help and support guides.');
+
+-- 7. Seed social links placeholders
+INSERT IGNORE INTO cms_social_links (platform, url, is_active) VALUES
+('facebook', 'https://facebook.com/mediconnect', 1),
+('instagram', 'https://instagram.com/mediconnect', 1),
+('linkedin', 'https://linkedin.com/company/mediconnect', 1),
+('twitter', 'https://twitter.com/mediconnect', 1),
+('youtube', 'https://youtube.com/mediconnect', 1);
+
+-- 8. Seed About & Contact sections inside cms_content
+INSERT IGNORE INTO cms_content (section_key, section_data, is_active, updated_by) VALUES
+('about', JSON_OBJECT(
+  'title', 'About MediConnect',
+  'subtitle', 'We\'re on a mission to make healthcare accessible, digital, and seamless for everyone â€” patients, doctors, and clinics alike.',
+  'description', 'MediConnect is a comprehensive digital clinic and appointment management platform built to modernize the healthcare experience. We believe that managing your health should be as easy as managing your daily tasks.',
+  'description_secondary', 'From booking appointments with top doctors to tracking lab results and maintaining complete medical records, MediConnect brings every aspect of clinic management into one unified, secure platform.',
+  'mission_title', 'Our Mission',
+  'mission_desc', 'To bridge the gap between clinics, doctors, and patients through a fast, transparent, and unified digital platform.',
+  'vision_title', 'Our Vision',
+  'vision_desc', 'To build a global network of connected clinics where medical services are accessible at everyone\'s fingertips.',
+  'values', JSON_ARRAY(
+    JSON_OBJECT('icon', 'hospital', 'title', 'Patient First', 'description', 'Every feature is designed with the patient experience at the center.'),
+    JSON_OBJECT('icon', 'lock', 'title', 'Security', 'description', 'Your medical data is encrypted and protected with industry-standard security.'),
+    JSON_OBJECT('icon', 'zap', 'title', 'Innovation', 'description', 'We leverage the latest technology to continuously improve healthcare delivery.'),
+    JSON_OBJECT('icon', 'users', 'title', 'Accessibility', 'description', 'Healthcare management that\'s available to everyone, everywhere, anytime.')
+  )
+), 1, 1),
+('contact', JSON_OBJECT(
+  'title', 'Get in Touch',
+  'subtitle', 'We\'d love to hear from you. Reach out with any questions or feedback.',
+  'address_title', 'Address',
+  'address_value', '100 Health Avenue, Bengaluru 560001, India',
+  'phone_title', 'Phone',
+  'phone_value', '+91-80-1234-5678',
+  'email_title', 'Email',
+  'email_value', 'contact@mediconnect.com',
+  'hours_title', 'Working Hours',
+  'hours_value', 'Mon â€“ Sat: 8:00 AM â€“ 8:00 PM\nSunday: 9:00 AM â€“ 2:00 PM',
+  'emergency_title', 'Emergency Contacts',
+  'emergency_value', '+91-80-9999-9999'
+), 1, 1);
+
+-- 9. Seed default FAQs to populate FAQ module
+INSERT IGNORE INTO cms_faqs (question, answer, display_order, is_active) VALUES
+('How do I book an appointment?', 'Go to the Patient Dashboard, select the Appointments tab, search for your preferred doctor, select an available date/slot, and click Book Appointment.', 1, 1),
+('What is the refund policy for cancellations?', 'Cancellations made up to 24 hours before the scheduled time slot receive a full refund. Same-day cancellations may incur a processing fee.', 2, 1),
+('How do I access my lab reports?', 'Once your sample is processed and the report is uploaded, you will receive an in-app notification. You can view and securely download the PDF from the Medical Reports section of your dashboard.', 3, 1),
+('Is home sample collection available for all tests?', 'Yes, home sample collection can be scheduled for most blood and urine tests during booking. A phlebotomist will visit your specified address.', 4, 1),
+('Can I share my medical reports with other doctors?', 'Absolutely. You can edit report sharing permissions to securely grant visibility to any registered doctor on MediConnect.', 5, 1);
+
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+=== migration_doctor_dashboard.sql ===
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ============================================================
+-- MediConnect â€“ Doctor Dashboard Module Migration
+-- Schema updates for leaves, slots, and break times
+-- ============================================================
+
+-- 1. Add break times to doctor_schedules table
+ALTER TABLE doctor_schedules
+  ADD COLUMN break_start_time TIME DEFAULT NULL AFTER end_time,
+  ADD COLUMN break_end_time TIME DEFAULT NULL AFTER break_start_time;
+
+-- 2. Create doctor_leaves table
+CREATE TABLE IF NOT EXISTS doctor_leaves (
+  id          INT AUTO_INCREMENT PRIMARY KEY,
+  doctor_id   INT NOT NULL,
+  start_date  DATE NOT NULL,
+  end_date    DATE NOT NULL,
+  reason      TEXT DEFAULT NULL,
+  created_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at  DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_leaves_doctor FOREIGN KEY (doctor_id) REFERENCES doctors(id) ON DELETE CASCADE,
+  INDEX idx_leaves_doctor (doctor_id),
+  INDEX idx_leaves_dates (start_date, end_date)
+) ENGINE=InnoDB;
+
+-- 3. Create doctor_availability_slots table
+CREATE TABLE IF NOT EXISTS doctor_availability_slots (
+  id           INT AUTO_INCREMENT PRIMARY KEY,
+  doctor_id    INT NOT NULL,
+  slot_date    DATE NOT NULL,
+  start_time   TIME NOT NULL,
+  end_time     TIME NOT NULL,
+  is_available TINYINT(1) DEFAULT 1,
+  created_at   DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at   DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_slots_doctor FOREIGN KEY (doctor_id) REFERENCES doctors(id) ON DELETE CASCADE,
+  UNIQUE KEY uq_doctor_slot_time (doctor_id, slot_date, start_time),
+  INDEX idx_slots_doctor (doctor_id),
+  INDEX idx_slots_date (slot_date)
+) ENGINE=InnoDB;
+
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+=== migration_lab_bookings_status.sql ===
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ============================================================
+-- MediConnect â€“ database/migration_lab_bookings_status.sql
+-- Schema updates for Lab Booking & Management Module
+-- ============================================================
+
+USE mediconnect;
+
+-- 1. Alter lab_bookings status column to include both old and new enum values temporarily
+ALTER TABLE lab_bookings MODIFY COLUMN status ENUM('booked', 'sample_collected', 'processing', 'completed', 'cancelled', 'pending', 'confirmed', 'sample_scheduled') DEFAULT 'booked';
+
+-- 2. Update any existing 'booked' statuses to 'pending'
+UPDATE lab_bookings SET status = 'pending' WHERE status = 'booked';
+
+-- 3. Modify the status column again to restrict it to only the new enum values, setting default to 'pending'
+ALTER TABLE lab_bookings MODIFY COLUMN status ENUM('pending', 'confirmed', 'sample_scheduled', 'sample_collected', 'processing', 'completed', 'cancelled') DEFAULT 'pending';
+
+-- 4. Create lab_booking_status_logs table
+CREATE TABLE IF NOT EXISTS lab_booking_status_logs (
+  id              INT AUTO_INCREMENT PRIMARY KEY,
+  lab_booking_id  INT NOT NULL,
+  previous_status VARCHAR(50) DEFAULT NULL,
+  new_status      VARCHAR(50) NOT NULL,
+  changed_by      ENUM('patient', 'doctor', 'admin', 'system') NOT NULL,
+  reason          TEXT DEFAULT NULL,
+  created_at      DATETIME DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_logs_lab_booking FOREIGN KEY (lab_booking_id) REFERENCES lab_bookings(id) ON DELETE CASCADE,
+  INDEX idx_logs_lab_booking (lab_booking_id)
+) ENGINE=InnoDB;
+
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+=== migration_medical_reports.sql ===
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ============================================================
+-- MediConnect â€“ database/migration_medical_reports.sql
+-- Schema updates for Medical Report Management Module
+-- ============================================================
+
+USE mediconnect;
+
+-- 1. Alter medical_reports table to add the missing columns
+ALTER TABLE medical_reports
+  ADD COLUMN original_filename VARCHAR(255) DEFAULT NULL AFTER file_url,
+  ADD COLUMN file_size INT DEFAULT NULL AFTER original_filename,
+  ADD COLUMN category VARCHAR(100) DEFAULT NULL AFTER file_type,
+  ADD COLUMN appointment_id INT DEFAULT NULL AFTER lab_booking_id,
+  ADD COLUMN consultation_id INT DEFAULT NULL AFTER appointment_id;
+
+-- 2. Add foreign keys and constraints to medical_reports
+ALTER TABLE medical_reports
+  ADD CONSTRAINT fk_reports_appointment FOREIGN KEY (appointment_id) REFERENCES appointments(id) ON DELETE SET NULL,
+  ADD CONSTRAINT fk_reports_consultation FOREIGN KEY (consultation_id) REFERENCES consultations(id) ON DELETE SET NULL;
+
+-- 3. Create indexes
+CREATE INDEX idx_reports_appointment ON medical_reports(appointment_id);
+CREATE INDEX idx_reports_consultation ON medical_reports(consultation_id);
+CREATE INDEX idx_reports_category ON medical_reports(category);
+
+-- 4. Create report_categories table
+CREATE TABLE IF NOT EXISTS report_categories (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  category_name VARCHAR(100) NOT NULL UNIQUE,
+  is_active TINYINT(1) DEFAULT 1,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+-- 5. Seed report_categories
+INSERT INTO report_categories (category_name) VALUES
+  ('Consultation Report'),
+  ('Diagnosis Report'),
+  ('Prescription Report'),
+  ('General Medical Report'),
+  ('Blood Test Report'),
+  ('Thyroid Report'),
+  ('Liver Function Report'),
+  ('Vitamin Report'),
+  ('CBC Report'),
+  ('Custom Lab Report'),
+  ('X-Ray Report'),
+  ('Scan Report'),
+  ('MRI Report'),
+  ('Ultrasound Report')
+ON DUPLICATE KEY UPDATE category_name = VALUES(category_name);
+
+-- 6. Create report_activity_logs table
+CREATE TABLE IF NOT EXISTS report_activity_logs (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  report_id INT NOT NULL,
+  user_id INT NOT NULL,
+  activity_type ENUM('upload', 'view', 'edit', 'download', 'delete') NOT NULL,
+  ip_address VARCHAR(45) DEFAULT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_activity_report FOREIGN KEY (report_id) REFERENCES medical_reports(id) ON DELETE CASCADE,
+  CONSTRAINT fk_activity_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  INDEX idx_activity_report (report_id)
+) ENGINE=InnoDB;
+
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+=== migration_notifications.sql ===
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ============================================================
+-- MediConnect â€“ database/migration_notifications.sql
+-- Schema updates for Notifications & Reminders Module
+-- ============================================================
+
+USE mediconnect;
+
+-- 1. Alter notifications table to support linkages to appointments, consultations, labs, collections, and reports
+ALTER TABLE notifications
+  ADD COLUMN related_module VARCHAR(100) DEFAULT NULL AFTER link,
+  ADD COLUMN related_record_id INT DEFAULT NULL AFTER related_module;
+
+-- Add optimization index for linked notifications
+CREATE INDEX idx_notifications_related ON notifications(related_module, related_record_id);
+
+-- 2. Create scheduled_notifications table for background delivery / broadcasting
+CREATE TABLE IF NOT EXISTS scheduled_notifications (
+  id              INT AUTO_INCREMENT PRIMARY KEY,
+  sender_id       INT NOT NULL,
+  target_group    ENUM('all', 'all_patients', 'all_doctors', 'individual') NOT NULL,
+  target_user_id  INT DEFAULT NULL,
+  title           VARCHAR(255) NOT NULL,
+  message         TEXT NOT NULL,
+  type            ENUM('appointment', 'lab', 'report', 'system', 'reminder') NOT NULL DEFAULT 'system',
+  link            VARCHAR(500) DEFAULT NULL,
+  scheduled_for   DATETIME NOT NULL,
+  status          ENUM('pending', 'sent', 'failed') DEFAULT 'pending',
+  created_at      DATETIME DEFAULT CURRENT_TIMESTAMP,
+  
+  CONSTRAINT fk_scheduled_sender FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE,
+  CONSTRAINT fk_scheduled_target FOREIGN KEY (target_user_id) REFERENCES users(id) ON DELETE CASCADE,
+  INDEX idx_scheduled_status (status),
+  INDEX idx_scheduled_time (scheduled_for)
+) ENGINE=InnoDB;
+
+-- 3. Create notification_preferences table for user configurable reminders/notifications
+CREATE TABLE IF NOT EXISTS notification_preferences (
+  id                            INT AUTO_INCREMENT PRIMARY KEY,
+  user_id                       INT NOT NULL UNIQUE,
+  enable_appointment_reminders  TINYINT(1) DEFAULT 1,
+  enable_consultation_reminders TINYINT(1) DEFAULT 1,
+  enable_lab_reminders          TINYINT(1) DEFAULT 1,
+  enable_collection_reminders   TINYINT(1) DEFAULT 1,
+  enable_report_notifications   TINYINT(1) DEFAULT 1,
+  enable_system_notifications   TINYINT(1) DEFAULT 1,
+  updated_at                    DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  
+  CONSTRAINT fk_preferences_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- 4. Seed default preferences for existing users
+INSERT IGNORE INTO notification_preferences (user_id)
+SELECT id FROM users;
+
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+=== migration_online_consultations.sql ===
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ============================================================
+-- MediConnect â€“ database/migration_online_consultations.sql
+-- Schema updates for Online Consultation Module
+-- ============================================================
+
+USE mediconnect;
+
+-- 1. Alter consultations table: make appointment_id NULLable, modify status enum, and add fields
+ALTER TABLE consultations MODIFY COLUMN appointment_id INT NULL;
+
+ALTER TABLE consultations MODIFY COLUMN status ENUM('requested', 'accepted', 'rejected', 'scheduled', 'in_progress', 'completed', 'cancelled') DEFAULT 'requested';
+
+-- Add columns if they do not exist
+ALTER TABLE consultations ADD COLUMN preferred_date DATE DEFAULT NULL;
+ALTER TABLE consultations ADD COLUMN health_concerns TEXT DEFAULT NULL;
+ALTER TABLE consultations ADD COLUMN additional_notes TEXT DEFAULT NULL;
+ALTER TABLE consultations ADD COLUMN consultation_date DATE DEFAULT NULL;
+ALTER TABLE consultations ADD COLUMN consultation_time TIME DEFAULT NULL;
+ALTER TABLE consultations ADD COLUMN duration INT DEFAULT 30;
+ALTER TABLE consultations ADD COLUMN scheduled_notes TEXT DEFAULT NULL;
+
+-- 2. Create consultation_notes table
+CREATE TABLE IF NOT EXISTS consultation_notes (
+  id              INT AUTO_INCREMENT PRIMARY KEY,
+  consultation_id INT NOT NULL,
+  diagnosis       TEXT DEFAULT NULL,
+  recommendations TEXT DEFAULT NULL,
+  follow_up_advice TEXT DEFAULT NULL,
+  prescription_notes TEXT DEFAULT NULL,
+  created_at      DATETIME DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_notes_consultation FOREIGN KEY (consultation_id) REFERENCES consultations(id) ON DELETE CASCADE,
+  INDEX idx_notes_consultation (consultation_id)
+) ENGINE=InnoDB;
+
+-- 3. Create consultation_status_logs table
+CREATE TABLE IF NOT EXISTS consultation_status_logs (
+  id              INT AUTO_INCREMENT PRIMARY KEY,
+  consultation_id INT NOT NULL,
+  previous_status VARCHAR(50) DEFAULT NULL,
+  new_status      VARCHAR(50) NOT NULL,
+  changed_by      ENUM('patient', 'doctor', 'admin', 'system') NOT NULL,
+  reason          TEXT DEFAULT NULL,
+  created_at      DATETIME DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_logs_consultation FOREIGN KEY (consultation_id) REFERENCES consultations(id) ON DELETE CASCADE,
+  INDEX idx_logs_consultation (consultation_id)
+) ENGINE=InnoDB;
+
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+=== migration_patient_dashboard.sql ===
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ============================================================
+-- MediConnect â€“ Patient Dashboard Module Migration
+-- Prompt 4 â€” Minor schema additions
+-- ============================================================
+
+-- 1. Add 'status' column to consultations table
+--    Currently consultations have no status tracking.
+--    Adding status to support: requested, accepted, completed, rejected
+ALTER TABLE consultations
+  ADD COLUMN status ENUM('requested', 'accepted', 'completed', 'rejected')
+  DEFAULT 'completed'
+  AFTER notes;
+
+-- 2. Add 'in_progress' to sample_collection_requests status enum
+--    Current: requested, assigned, collected, cancelled
+--    Adding: in_progress (between assigned and collected)
+ALTER TABLE sample_collection_requests
+  MODIFY COLUMN status ENUM('requested', 'assigned', 'in_progress', 'collected', 'cancelled')
+  DEFAULT 'requested';
+
+-- 3. Verify changes
+SELECT 'consultations.status added' AS migration_step;
+SELECT 'sample_collection_requests.status updated' AS migration_step;
+
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+=== migration_patient_history.sql ===
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ============================================================
+-- MediConnect â€“ database/migration_patient_history.sql
+-- Schema updates for Patient History Tracking Module
+-- ============================================================
+
+USE mediconnect;
+
+-- Alter patient_history table structure to support dynamic event types, source references, and JSON metadata
+ALTER TABLE patient_history
+  MODIFY COLUMN event_type VARCHAR(100) NOT NULL,
+  ADD COLUMN source_module VARCHAR(100) DEFAULT NULL AFTER event_type,
+  ADD COLUMN source_record_id INT DEFAULT NULL AFTER source_module,
+  ADD COLUMN metadata JSON DEFAULT NULL AFTER description;
+
+-- Add optimization indexes
+CREATE INDEX idx_history_source ON patient_history(source_module, source_record_id);
+
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+=== migration_sample_collection.sql ===
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ============================================================
+-- MediConnect â€“ database/migration_sample_collection.sql
+-- Schema updates for Home Sample Collection Module
+-- ============================================================
+
+USE mediconnect;
+
+-- 1. Alter status column enum on sample_collection_requests to include both old and new enum values temporarily to prevent truncation
+ALTER TABLE sample_collection_requests MODIFY COLUMN status ENUM('requested', 'assigned', 'in_progress', 'collected', 'cancelled', 'scheduled', 'in_transit', 'testing', 'report_ready', 'delivered') DEFAULT 'requested';
+
+-- 2. Update any existing 'in_progress' statuses to 'in_transit'
+UPDATE sample_collection_requests SET status = 'in_transit' WHERE status = 'in_progress';
+
+-- 3. Modify the status column again to restrict it to only the final enum values
+ALTER TABLE sample_collection_requests MODIFY COLUMN status ENUM('requested', 'assigned', 'scheduled', 'in_transit', 'collected', 'testing', 'report_ready', 'delivered', 'cancelled') DEFAULT 'requested';
+
+-- 4. Add collection_date and collection_time columns if they don't exist
+ALTER TABLE sample_collection_requests
+  ADD COLUMN collection_date DATE DEFAULT NULL AFTER preferred_time_slot,
+  ADD COLUMN collection_time TIME DEFAULT NULL AFTER collection_date;
+
+-- 5. Create sample_collection_status_logs table
+CREATE TABLE IF NOT EXISTS sample_collection_status_logs (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  sample_collection_request_id INT NOT NULL,
+  previous_status VARCHAR(50) DEFAULT NULL,
+  new_status VARCHAR(50) NOT NULL,
+  changed_by ENUM('patient', 'doctor', 'admin', 'system') NOT NULL,
+  reason TEXT DEFAULT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_logs_sample_collection FOREIGN KEY (sample_collection_request_id) REFERENCES sample_collection_requests(id) ON DELETE CASCADE,
+  INDEX idx_logs_sample_collection (sample_collection_request_id)
+) ENGINE=InnoDB;
+
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+

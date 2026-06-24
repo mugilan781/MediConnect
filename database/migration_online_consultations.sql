@@ -1,3 +1,5 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
 -- ============================================================
 -- MediConnect – database/migration_online_consultations.sql
 -- Schema updates for Online Consultation Module
@@ -44,3 +46,6 @@ CREATE TABLE IF NOT EXISTS consultation_status_logs (
   CONSTRAINT fk_logs_consultation FOREIGN KEY (consultation_id) REFERENCES consultations(id) ON DELETE CASCADE,
   INDEX idx_logs_consultation (consultation_id)
 ) ENGINE=InnoDB;
+
+
+SET FOREIGN_KEY_CHECKS = 1;

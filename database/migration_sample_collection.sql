@@ -1,3 +1,5 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
 -- ============================================================
 -- MediConnect – database/migration_sample_collection.sql
 -- Schema updates for Home Sample Collection Module
@@ -31,3 +33,6 @@ CREATE TABLE IF NOT EXISTS sample_collection_status_logs (
   CONSTRAINT fk_logs_sample_collection FOREIGN KEY (sample_collection_request_id) REFERENCES sample_collection_requests(id) ON DELETE CASCADE,
   INDEX idx_logs_sample_collection (sample_collection_request_id)
 ) ENGINE=InnoDB;
+
+
+SET FOREIGN_KEY_CHECKS = 1;

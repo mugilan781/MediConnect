@@ -1,3 +1,5 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
 -- ============================================================
 -- MediConnect – Doctor Dashboard Module Migration
 -- Schema updates for leaves, slots, and break times
@@ -37,3 +39,6 @@ CREATE TABLE IF NOT EXISTS doctor_availability_slots (
   INDEX idx_slots_doctor (doctor_id),
   INDEX idx_slots_date (slot_date)
 ) ENGINE=InnoDB;
+
+
+SET FOREIGN_KEY_CHECKS = 1;

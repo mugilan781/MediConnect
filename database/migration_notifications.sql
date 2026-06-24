@@ -1,3 +1,5 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
 -- ============================================================
 -- MediConnect – database/migration_notifications.sql
 -- Schema updates for Notifications & Reminders Module
@@ -51,3 +53,6 @@ CREATE TABLE IF NOT EXISTS notification_preferences (
 -- 4. Seed default preferences for existing users
 INSERT IGNORE INTO notification_preferences (user_id)
 SELECT id FROM users;
+
+
+SET FOREIGN_KEY_CHECKS = 1;

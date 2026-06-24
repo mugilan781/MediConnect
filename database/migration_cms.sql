@@ -1,3 +1,5 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
 -- ============================================================
 -- MediConnect – database/migration_cms.sql
 -- Schema updates for Enterprise CMS Module
@@ -125,3 +127,6 @@ INSERT IGNORE INTO cms_faqs (question, answer, display_order, is_active) VALUES
 ('How do I access my lab reports?', 'Once your sample is processed and the report is uploaded, you will receive an in-app notification. You can view and securely download the PDF from the Medical Reports section of your dashboard.', 3, 1),
 ('Is home sample collection available for all tests?', 'Yes, home sample collection can be scheduled for most blood and urine tests during booking. A phlebotomist will visit your specified address.', 4, 1),
 ('Can I share my medical reports with other doctors?', 'Absolutely. You can edit report sharing permissions to securely grant visibility to any registered doctor on MediConnect.', 5, 1);
+
+
+SET FOREIGN_KEY_CHECKS = 1;

@@ -1,3 +1,5 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
 -- ============================================================
 -- MediConnect – Patient Dashboard Module Migration
 -- Prompt 4 — Minor schema additions
@@ -21,3 +23,6 @@ ALTER TABLE sample_collection_requests
 -- 3. Verify changes
 SELECT 'consultations.status added' AS migration_step;
 SELECT 'sample_collection_requests.status updated' AS migration_step;
+
+
+SET FOREIGN_KEY_CHECKS = 1;

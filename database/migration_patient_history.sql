@@ -1,3 +1,5 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
 -- ============================================================
 -- MediConnect – database/migration_patient_history.sql
 -- Schema updates for Patient History Tracking Module
@@ -14,3 +16,6 @@ ALTER TABLE patient_history
 
 -- Add optimization indexes
 CREATE INDEX idx_history_source ON patient_history(source_module, source_record_id);
+
+
+SET FOREIGN_KEY_CHECKS = 1;

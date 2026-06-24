@@ -1,3 +1,5 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
 -- ============================================================
 -- MediConnect – database/migration_medical_reports.sql
 -- Schema updates for Medical Report Management Module
@@ -61,3 +63,6 @@ CREATE TABLE IF NOT EXISTS report_activity_logs (
   CONSTRAINT fk_activity_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
   INDEX idx_activity_report (report_id)
 ) ENGINE=InnoDB;
+
+
+SET FOREIGN_KEY_CHECKS = 1;

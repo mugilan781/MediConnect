@@ -1,3 +1,5 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
 -- ============================================================
 -- MediConnect – database/migration_lab_bookings_status.sql
 -- Schema updates for Lab Booking & Management Module
@@ -26,3 +28,6 @@ CREATE TABLE IF NOT EXISTS lab_booking_status_logs (
   CONSTRAINT fk_logs_lab_booking FOREIGN KEY (lab_booking_id) REFERENCES lab_bookings(id) ON DELETE CASCADE,
   INDEX idx_logs_lab_booking (lab_booking_id)
 ) ENGINE=InnoDB;
+
+
+SET FOREIGN_KEY_CHECKS = 1;
