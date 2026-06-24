@@ -11,9 +11,11 @@
   <link rel="stylesheet" href="/css/layout.css">
   <link rel="stylesheet" href="/css/forms.css">
   <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/dashboard-polish.css">
   <link rel="stylesheet" href="/css/utilities.css">
   <link rel="stylesheet" href="/css/navbar.css">
   <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/responsive.css">
 </head>
 <body>
   <div id="global-navbar"></div>
@@ -86,12 +88,12 @@
             </div>
           </div>
 
-          <!-- SECTION 3 - TODAY'S SCHEDULE + SECTION 5 - CONSULTATION REQUESTS -->
+          <!-- SECTION 3 - TODAY'S SCHEDULE + CONSULTATION REQUESTS -->
           <div class="dashboard-grid-2" style="margin-bottom:var(--space-6);">
             <div class="doc-section">
               <div class="doc-section__header">
                 <h3 class="doc-section__title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Today's Schedule</h3>
-                <button class="tab-btn" data-tab="appointments" style="padding:4px 12px;font-size:12px;">View All</button>
+                <button class="btn btn--sm btn--ghost" data-tab="appointments">View All</button>
               </div>
               <div class="doc-section__body" id="overview-today-list" style="min-height:100px;">
                 <div class="empty-state"><div class="spinner"></div></div>
@@ -99,8 +101,8 @@
             </div>
             <div class="doc-section">
               <div class="doc-section__header">
-                <h3 class="doc-section__title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Consultation Requests</h3>
-                <button class="tab-btn" data-tab="consultations" style="padding:4px 12px;font-size:12px;">View All</button>
+                <h3 class="doc-section__title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Consultation Requests <span class="badge badge--warning" id="badge-consultations" style="display:none;margin-left:8px;">0</span></h3>
+                <button class="btn btn--sm btn--ghost" data-tab="consultations">View All</button>
               </div>
               <div class="doc-section__body" id="overview-requests-list" style="min-height:100px;">
                 <div class="empty-state"><div class="spinner"></div></div>
@@ -108,122 +110,14 @@
             </div>
           </div>
 
-          <!-- SECTION 4 - APPOINTMENT MANAGEMENT QUICK VIEW -->
+          <!-- SECTION 4 - NOTIFICATION CENTER -->
           <div class="doc-section" style="margin-bottom:var(--space-6);">
             <div class="doc-section__header">
-              <h3 class="doc-section__title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Appointment Management</h3>
-              <button class="tab-btn active" data-tab="appointments" style="padding:4px 12px;font-size:12px;">Manage</button>
-            </div>
-            <div class="doc-section__body" id="overview-appointments-mini">
-              <div class="empty-state">Switch to the <strong>Appointments</strong> tab above for full management.</div>
-            </div>
-          </div>
-
-          <!-- SECTION 6 - PATIENT RECORDS PREVIEW -->
-          <div class="doc-section" style="margin-bottom:var(--space-6);">
-            <div class="doc-section__header">
-              <h3 class="doc-section__title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Patient Records Preview</h3>
-              <button class="tab-btn" data-tab="patients" style="padding:4px 12px;font-size:12px;">View All</button>
-            </div>
-            <div class="doc-section__body">
-              <div class="empty-state">Browse patient records and history in the <strong>Patient Records</strong> tab above.</div>
-            </div>
-          </div>
-
-          <!-- SECTION 7 - REPORT MANAGEMENT -->
-          <div class="doc-section" style="margin-bottom:var(--space-6);">
-            <div class="doc-section__header">
-              <h3 class="doc-section__title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Report Management</h3>
-              <button class="tab-btn" data-tab="reports" style="padding:4px 12px;font-size:12px;">Upload</button>
-            </div>
-            <div class="doc-section__body">
-              <div class="empty-state">Upload and manage patient reports in the <strong>Reports</strong> tab above.</div>
-            </div>
-          </div>
-
-          <!-- SECTION 8 - AVAILABILITY OVERVIEW -->
-          <div class="dashboard-grid-2" style="margin-bottom:var(--space-6);">
-            <div class="doc-section">
-              <div class="doc-section__header">
-                <h3 class="doc-section__title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Availability Management</h3>
-                <button class="tab-btn" data-tab="schedule" style="padding:4px 12px;font-size:12px;">Configure</button>
-              </div>
-              <div class="doc-section__body">
-                <div class="empty-state">Set weekly hours, custom slots, and leave in the <strong>Schedule / Slots / Leaves</strong> tabs above.</div>
-              </div>
-            </div>
-            <div class="doc-section">
-              <div class="doc-section__header">
-                <h3 class="doc-section__title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>Performance Analytics</h3>
-              </div>
-              <div class="doc-section__body">
-                <div class="empty-state">Analytics and insights data will appear here as you use the platform.</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- SECTION 9 - NOTIFICATION CENTER -->
-          <div class="doc-section" style="margin-bottom:var(--space-6);">
-            <div class="doc-section__header">
-              <h3 class="doc-section__title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>Notification Center</h3>
-              <button class="tab-btn" data-tab="notifications" style="padding:4px 12px;font-size:12px;">View All</button>
+              <h3 class="doc-section__title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>Recent Notifications <span class="badge badge--info" id="badge-notifs" style="display:none;margin-left:8px;">0</span></h3>
+              <button class="btn btn--sm btn--ghost" data-tab="notifications">View All</button>
             </div>
             <div class="doc-section__body" id="overview-notifications-list" style="min-height:80px;">
               <div class="empty-state"><div class="spinner"></div></div>
-            </div>
-          </div>
-
-          <!-- SECTION 10 - PERFORMANCE ANALYTICS (detailed) -->
-          <div class="doc-section" style="margin-bottom:var(--space-6);">
-            <div class="doc-section__header">
-              <h3 class="doc-section__title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Performance Metrics</h3>
-              <span class="badge badge--primary">Updated Daily</span>
-            </div>
-            <div class="doc-section__body">
-              <div class="doc-analytics-grid">
-                <div class="doc-analytics-card">
-                  <div class="doc-analytics-card__icon" style="background:var(--color-mint-light);color:var(--color-primary);"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-                  <div class="doc-analytics-card__content">
-                    <div class="doc-analytics-card__label">Total Patients</div>
-                    <div class="doc-analytics-card__value">—</div>
-                  </div>
-                </div>
-                <div class="doc-analytics-card">
-                  <div class="doc-analytics-card__icon" style="background:#e8eef4;color:#5d7895;"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 4v6a4 4 0 0 0 8 0V4"/><path d="M8 14v2a4 4 0 0 0 8 0v-3"/><circle cx="19" cy="10" r="3"/><path d="M6 4H4M12 4h-2"/></svg></div>
-                  <div class="doc-analytics-card__content">
-                    <div class="doc-analytics-card__label">Completed Consultations</div>
-                    <div class="doc-analytics-card__value">—</div>
-                  </div>
-                </div>
-                <div class="doc-analytics-card">
-                  <div class="doc-analytics-card__icon" style="background:#F7E9CC;color:#C58A2B;"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h6"/></svg></div>
-                  <div class="doc-analytics-card__content">
-                    <div class="doc-analytics-card__label">Reports Uploaded</div>
-                    <div class="doc-analytics-card__value">—</div>
-                  </div>
-                </div>
-                <div class="doc-analytics-card">
-                  <div class="doc-analytics-card__icon" style="background:#E5F1E6;color:#6F9E75;"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-                  <div class="doc-analytics-card__content">
-                    <div class="doc-analytics-card__label">Availability Slots</div>
-                    <div class="doc-analytics-card__value">—</div>
-                  </div>
-                </div>
-                <div class="doc-analytics-card">
-                  <div class="doc-analytics-card__icon" style="background:#f3e8ff;color:#9333ea;"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="5" rx="1"/><rect x="12" y="8" width="3" height="9" rx="1"/><rect x="17" y="5" width="3" height="12" rx="1"/></svg></div>
-                  <div class="doc-analytics-card__content">
-                    <div class="doc-analytics-card__label">Appt. Completion Rate</div>
-                    <div class="doc-analytics-card__value">—</div>
-                  </div>
-                </div>
-                <div class="doc-analytics-card">
-                  <div class="doc-analytics-card__icon" style="background:#F7DFE2;color:#B85C68;"><svg class="mc-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1z"/></svg></div>
-                  <div class="doc-analytics-card__content">
-                    <div class="doc-analytics-card__label">Patient Satisfaction</div>
-                    <div class="doc-analytics-card__value">—</div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -236,9 +130,9 @@
           <div class="doc-section">
             <div class="doc-section__header">
               <h3 class="doc-section__title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Appointments Management</h3>
-              <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;">
-                <input type="text" id="appt-search" class="form-input" placeholder="Search patient..." style="max-width:200px;">
-                <select id="appt-filter-status" class="form-select" style="max-width:150px;">
+              <div style="display:flex;gap:var(--space-3);flex-wrap:wrap;align-items:center;">
+                <input type="text" id="appt-search" class="form-input" placeholder="Search patient..." style="width:220px;height:38px;">
+                <select id="appt-filter-status" class="form-select" style="width:160px;height:38px;">
                   <option value="">All Statuses</option>
                   <option value="scheduled">Scheduled</option>
                   <option value="confirmed">Confirmed</option>
@@ -365,9 +259,9 @@
           <div class="doc-section">
             <div class="doc-section__header">
               <h3 class="doc-section__title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>Doctor Notifications</h3>
-              <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;">
-                <input type="text" id="notif-search" class="form-input" placeholder="Search title/message..." style="max-width:200px;">
-                <select id="notif-filter-type" class="form-select" style="max-width:150px;">
+              <div style="display:flex;gap:var(--space-3);flex-wrap:wrap;align-items:center;">
+                <input type="text" id="notif-search" class="form-input" placeholder="Search title/message..." style="width:220px;height:38px;">
+                <select id="notif-filter-type" class="form-select" style="width:160px;height:38px;">
                   <option value="">All Types</option>
                   <option value="appointment">Appointment</option>
                   <option value="lab">Lab</option>
@@ -375,7 +269,7 @@
                   <option value="system">System</option>
                   <option value="reminder">Reminder</option>
                 </select>
-                <button class="btn btn--secondary btn--sm" id="btn-mark-all-read">Mark All Read</button>
+                <button class="btn btn--secondary btn--sm" id="btn-mark-all-read" style="height:38px;">Mark All Read</button>
               </div>
             </div>
             <div class="doc-section__body" id="notifications-list"><div class="empty-state"><div class="spinner"></div></div></div>

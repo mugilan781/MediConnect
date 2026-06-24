@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    MediConnect – auth.css
    Premium split-screen login with glassmorphism
    ============================================================ */
@@ -11,6 +11,9 @@
     radial-gradient(circle at 12% 24%, rgba(var(--color-primary-rgb), 0.16), transparent 34%),
     linear-gradient(145deg, #FAF5FF 0%, #EDE9FE 48%, #FEF3C7 100%);
   position: relative;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -19,14 +22,14 @@
 .auth-panel {
   flex: 1;
   background:
-    radial-gradient(circle at 20% 12%, rgba(255, 255, 255, 0.16), transparent 32%),
-    radial-gradient(circle at 80% 70%, rgba(var(--color-accent-rgb), 0.18), transparent 32%),
-    linear-gradient(145deg, var(--color-primary-dark) 0%, var(--color-primary) 56%, var(--color-accent) 100%);
+    radial-gradient(circle at 20% 10%, rgba(6, 182, 212, 0.15), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.12), transparent 40%),
+    linear-gradient(160deg, #0F172A 0%, #1E293B 40%, #0F172A 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: var(--space-12);
+  padding: var(--space-10) var(--space-8);
   color: white;
   position: relative;
   overflow: hidden;
@@ -38,7 +41,7 @@
   top: -20%;
   left: -15%;
   width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.06) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -49,7 +52,7 @@
   bottom: -15%;
   right: -10%;
   width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -61,86 +64,102 @@
   max-width: 420px;
 }
 
-.auth-panel__illustration {
-  margin-bottom: var(--space-8);
-  font-size: 5rem;
-  line-height: 1;
-  animation: float 6s ease-in-out infinite;
-  width: 104px;
-  height: 104px;
-  display: inline-flex;
+/* ── Brand Component ── */
+.auth-panel__brand {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-2xl);
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.12);
-  backdrop-filter: blur(10px);
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
 }
 
-.auth-panel__illustration .mc-icon {
-  width: 64px;
-  height: 64px;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
-}
-
-.auth-panel__logo {
-  width: 64px; height: 64px;
-  background: rgba(255,255,255,0.18);
-  border-radius: var(--radius-xl);
+.auth-panel__logo-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--gradient-brand);
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto var(--space-5);
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(6, 182, 212, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-panel__logo-icon svg {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.auth-panel__logo-icon::after {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  border-radius: 6px;
+}
+
+.auth-panel__brand-text {
+  font-family: 'Plus Jakarta Sans', var(--font-family);
   font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.1);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
 }
 
 .auth-panel__title {
-  font-size: var(--font-size-3xl);
-  font-weight: var(--font-weight-bold);
-  margin-bottom: var(--space-3);
+  font-family: 'Plus Jakarta Sans', var(--font-family);
+  font-size: clamp(1.6rem, 2.2vw, 2.2rem);
+  font-weight: 800;
+  color: #FFFFFF;
+  margin-bottom: var(--space-4);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
 }
 
 .auth-panel__description {
-  font-size: var(--font-size-md);
-  opacity: 0.85;
+  font-size: var(--font-size-base);
+  opacity: 0.7;
   line-height: var(--line-height-relaxed);
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-6);
 }
 
 .auth-panel__stats {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-3);
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-6);
 }
 
 .auth-panel__stat {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: var(--radius-lg);
-  padding: var(--space-3);
+  padding: var(--space-3) var(--space-4);
   text-align: center;
   backdrop-filter: blur(8px);
+  transition: background 0.2s ease;
+}
+
+.auth-panel__stat:hover {
+  background: rgba(255,255,255,0.08);
 }
 
 .auth-panel__stat-number {
+  font-family: 'Plus Jakarta Sans', var(--font-family);
   font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-extrabold);
-  color: white;
+  font-weight: 800;
+  color: #22D3EE;
   line-height: 1.2;
 }
 
 .auth-panel__stat-label {
   font-size: var(--font-size-xs);
-  opacity: 0.7;
+  opacity: 0.55;
+  margin-top: 2px;
 }
 
 .auth-panel__testimonial {
@@ -188,28 +207,32 @@
 }
 
 .auth-panel__features {
-  margin-top: var(--space-6);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2) var(--space-4);
+  margin-bottom: var(--space-6);
   text-align: left;
 }
 
 .auth-panel__feature {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  margin-bottom: var(--space-3);
-  font-size: var(--font-size-base);
-  opacity: 0.9;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  opacity: 0.8;
 }
 
 .auth-panel__feature-icon {
-  width: 28px; height: 28px;
-  background: rgba(255,255,255,0.15);
-  border-radius: var(--radius-md);
+  width: 22px; height: 22px;
+  background: rgba(34, 211, 238, 0.15);
+  color: #22D3EE;
+  border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  font-size: var(--font-size-sm);
+  font-size: 0.65rem;
+  font-weight: 700;
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -221,6 +244,7 @@
   align-items: center;
   justify-content: center;
   padding: var(--space-8);
+  overflow-x: hidden;
   overflow-y: auto;
   position: relative;
 }
@@ -229,9 +253,9 @@
   content: '';
   position: absolute;
   top: 20%;
-  right: -10%;
-  width: 300px; height: 300px;
-  background: radial-gradient(circle, rgba(var(--color-primary-rgb),0.08) 0%, transparent 70%);
+  right: 0;
+  width: 250px; height: 250px;
+  background: radial-gradient(circle, rgba(var(--color-primary-rgb),0.06) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -315,6 +339,45 @@
 .auth-form__role-btn .role-icon {
   font-size: 1.25rem;
   color: var(--color-primary);
+}
+
+/* ── Google Sign-In Button ── */
+.auth-google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 50px;
+  padding: var(--space-3) var(--space-6);
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: var(--space-2);
+}
+
+.auth-google-btn:hover {
+  background: #F9FAFB;
+  border-color: #D1D5DB;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.auth-google-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.auth-google-btn__icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
 
 /* ── Divider ── */
@@ -403,8 +466,13 @@
   justify-content: center;
 }
 
-.password-toggle:hover {
+button.password-toggle:hover,
+button.password-toggle:focus,
+button.password-toggle:active {
   color: var(--color-primary);
+  transform: translateY(-50%) !important;
+  box-shadow: none;
+  outline: none;
 }
 
 /* ── Remember + Forgot ── */

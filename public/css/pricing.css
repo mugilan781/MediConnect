@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    MediConnect - pricing.css
    Premium Pricing Page
    ============================================================ */
@@ -103,23 +103,28 @@
   letter-spacing: 0.08em;
 }
 .pricing-plan__header {
-  padding: var(--space-8) var(--space-6) var(--space-6);
+  padding: var(--space-10) var(--space-6) var(--space-6);
   text-align: center;
   border-bottom: 1px solid var(--color-gray-100);
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
 }
 .pricing-plan--featured .pricing-plan__header {
-  padding-top: var(--space-10);
+  /* Same padding as normal cards to keep names aligned */
 }
 .pricing-plan__name {
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
   color: var(--color-gray-800);
   margin-bottom: var(--space-2);
+  min-height: 30px;
 }
 .pricing-plan__desc {
   font-size: var(--font-size-sm);
   color: var(--color-text-light);
   line-height: var(--line-height-relaxed);
+  min-height: 48px;
 }
 .pricing-plan__price {
   font-size: 2.75rem;
@@ -127,6 +132,7 @@
   color: var(--color-gray-800);
   line-height: 1;
   margin: var(--space-4) 0 var(--space-1);
+  min-height: 44px;
 }
 .pricing-plan__price .currency {
   font-size: var(--font-size-xl);
@@ -142,6 +148,7 @@
   color: var(--color-success);
   font-weight: var(--font-weight-medium);
   margin-top: var(--space-1);
+  min-height: 18px;
 }
 .pricing-plan__body {
   padding: var(--space-6);

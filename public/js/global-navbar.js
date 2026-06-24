@@ -71,61 +71,62 @@ const GlobalNavbar = {
   render(container) {
     const currentPath = window.location.pathname;
     const user = Auth.getUser();
+    const isDashboard = currentPath.includes('-dashboard');
 
-    // Build center nav links
-    const centerLinks = this.navLinks.map((item, idx) => {
-      if (item.children) {
-        const isActive = this._isDropdownActive(item.children);
-        const dropdownItems = item.children.map(child => {
-          const childActive = this._isActiveLink(child.href);
-          return `<a href="${child.href}" class="nav-dropdown__item${childActive ? ' active' : ''}">${child.label}</a>`;
-        }).join('');
-        return `
-          <div class="nav-dropdown" data-dropdown-idx="${idx}">
-            <button type="button" class="global-navbar__link nav-dropdown__trigger${isActive ? ' active' : ''}" aria-expanded="false" aria-haspopup="true">
-              ${item.label}${this._chevronSvg()}
-            </button>
-            <div class="nav-dropdown__menu" role="menu">
-              ${dropdownItems}
+    // Build center nav links (empty on dashboard pages)
+    let centerLinks = '';
+    if (!isDashboard) {
+      centerLinks = this.navLinks.map((item, idx) => {
+        if (item.children) {
+          const isActive = this._isDropdownActive(item.children);
+          const dropdownItems = item.children.map(child => {
+            const childActive = this._isActiveLink(child.href);
+            return `<a href="${child.href}" class="nav-dropdown__item${childActive ? ' active' : ''}">${child.label}</a>`;
+          }).join('');
+          return `
+            <div class="nav-dropdown" data-dropdown-idx="${idx}">
+              <button type="button" class="global-navbar__link nav-dropdown__trigger${isActive ? ' active' : ''}" aria-expanded="false" aria-haspopup="true">
+                ${item.label}${this._chevronSvg()}
+              </button>
+              <div class="nav-dropdown__menu" role="menu">
+                ${dropdownItems}
+              </div>
             </div>
-          </div>
-        `;
-      }
-      const isActive = this._isActiveLink(item.href);
-      return `<a href="${item.href}" class="global-navbar__link${isActive ? ' active' : ''}">${item.label}</a>`;
-    }).join('');
+          `;
+        }
+        const isActive = this._isActiveLink(item.href);
+        return `<a href="${item.href}" class="global-navbar__link${isActive ? ' active' : ''}">${item.label}</a>`;
+      }).join('');
+    }
 
-    // Build mobile menu links
-    const mobileLinks = this.navLinks.map((item, idx) => {
-      if (item.children) {
-        const isActive = this._isDropdownActive(item.children);
-        const subLinks = item.children.map(child => {
-          const childActive = this._isActiveLink(child.href);
-          return `<a href="${child.href}" class="global-navbar__mobile-sublink${childActive ? ' active' : ''}">${child.label}</a>`;
-        }).join('');
-        return `
-          <div class="global-navbar__mobile-dropdown" data-mobile-dropdown="${idx}">
-            <button type="button" class="global-navbar__mobile-link global-navbar__mobile-dropdown-trigger${isActive ? ' active' : ''}">
-              ${item.label}${this._chevronSvg()}
-            </button>
-            <div class="global-navbar__mobile-dropdown-menu">
-              ${subLinks}
-            </div>
-          </div>
-        `;
-      }
-      const isActive = currentPath === item.href;
-      return `<a href="${item.href}" class="global-navbar__mobile-link${isActive ? ' active' : ''}">${item.label}</a>`;
-    }).join('');
+    // Build mobile menu links — flat list, no dropdowns (ISSUE 2)
+    // Also skip Account/Dashboard sections (ISSUE 3)
+    let mobileLinks = '';
+    if (!isDashboard) {
+      const flatLinks = [];
+      this.navLinks.forEach(item => {
+        if (item.children) {
+          // Flatten children into direct links
+          item.children.forEach(child => {
+            const childActive = this._isActiveLink(child.href);
+            flatLinks.push(`<a href="${child.href}" class="global-navbar__mobile-link${childActive ? ' active' : ''}">${child.label}</a>`);
+          });
+        } else {
+          const isActive = currentPath === item.href;
+          flatLinks.push(`<a href="${item.href}" class="global-navbar__mobile-link${isActive ? ' active' : ''}">${item.label}</a>`);
+        }
+      });
+      mobileLinks = flatLinks.join('');
+    }
 
     container.innerHTML = `
-      <nav class="global-navbar" id="global-navbar-inner">
+      <nav class="global-navbar${isDashboard ? ' global-navbar--dashboard' : ''}" id="global-navbar-inner"${isDashboard ? ' data-dashboard' : ''}>
         <div class="global-navbar__inner">
           <div class="global-navbar__left">
             <a href="/index.html" class="global-navbar__logo-link">
-              <div class="global-navbar__logo-icon">M</div>
+              <div class="global-navbar__logo-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2L4 6v5c0 5.5 3.4 10.7 8 12 4.6-1.3 8-6.5 8-12V6l-8-4z" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.5)" stroke-width="1"/><path d="M12 8v8M8 12h8" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg></div>
               <div class="global-navbar__brand">
-                <span class="global-navbar__brand-name">MediConnect</span>
+                <span class="global-navbar__brand-name"><span class="brand-medi">Medi</span><span class="brand-connect">Connect</span></span>
                 <span class="global-navbar__brand-subtitle">Smart Clinic Management</span>
               </div>
             </a>
@@ -142,26 +143,14 @@ const GlobalNavbar = {
               ${this.getProfileMenuHTML(user)}
             </div>
 
-            <button class="global-navbar__mobile-toggle" id="global-navbar-mobile-toggle" type="button" aria-label="Toggle menu">
+            ${!isDashboard ? `<button class="global-navbar__mobile-toggle" id="global-navbar-mobile-toggle" type="button" aria-label="Toggle menu">
               ${navIcon('menu')}
-            </button>
+            </button>` : ''}
           </div>
         </div>
 
         <div class="global-navbar__mobile-menu" id="global-navbar-mobile-menu">
           ${mobileLinks}
-          <div class="global-navbar__mobile-section">Account</div>
-          ${user ? `
-            <a href="${CONFIG.DASHBOARD_ROUTES[user.role] || '/patient-dashboard.html'}" class="global-navbar__mobile-link">My Dashboard</a>
-            <a href="#" class="global-navbar__mobile-link" id="global-navbar-mobile-logout">Logout</a>
-          ` : `
-            <a href="/login.html" class="global-navbar__mobile-link">Login</a>
-            <a href="/signup.html" class="global-navbar__mobile-link">Sign Up</a>
-          `}
-          <div class="global-navbar__mobile-section">Dashboards</div>
-          <a href="/patient-dashboard.html" class="global-navbar__mobile-link">Patient Dashboard</a>
-          <a href="/doctor-dashboard.html" class="global-navbar__mobile-link">Doctor Dashboard</a>
-          <a href="/admin-dashboard.html" class="global-navbar__mobile-link">Admin Dashboard</a>
         </div>
       </nav>
     `;
@@ -220,9 +209,32 @@ const GlobalNavbar = {
     const mobileToggle = document.getElementById('global-navbar-mobile-toggle');
     const mobileMenu = document.getElementById('global-navbar-mobile-menu');
     if (mobileToggle && mobileMenu) {
+      const toggleMobileMenu = (forceClose) => {
+        const isOpen = forceClose ? true : mobileMenu.classList.contains('open');
+        if (isOpen) {
+          mobileMenu.classList.remove('open');
+          mobileToggle.classList.remove('active');
+          document.body.classList.remove('menu-open');
+        } else {
+          mobileMenu.classList.add('open');
+          mobileToggle.classList.add('active');
+          document.body.classList.add('menu-open');
+        }
+      };
+
       mobileToggle.addEventListener('click', event => {
         event.stopPropagation();
-        mobileMenu.classList.toggle('open');
+        toggleMobileMenu();
+      });
+
+      // Close menu when a link is clicked
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => toggleMobileMenu(true));
+      });
+
+      // Close menu on click outside
+      mobileMenu.addEventListener('click', event => {
+        event.stopPropagation();
       });
     }
 
@@ -298,20 +310,27 @@ const GlobalNavbar = {
       });
     });
 
-    // ── Mobile dropdowns ──
-    const mobileDropdowns = container.querySelectorAll('.global-navbar__mobile-dropdown-trigger');
-    mobileDropdowns.forEach(trigger => {
-      trigger.addEventListener('click', e => {
-        e.stopPropagation();
-        const parent = trigger.closest('.global-navbar__mobile-dropdown');
-        if (parent) parent.classList.toggle('open');
-      });
-    });
+    // ── ISSUE 5: Close mobile menu on viewport resize past desktop breakpoint ──
+    const closeMobileOnResize = () => {
+      if (window.innerWidth > 1024 && mobileMenu && mobileMenu.classList.contains('open')) {
+        mobileMenu.classList.remove('open');
+        if (mobileToggle) mobileToggle.classList.remove('active');
+        document.body.classList.remove('menu-open');
+      }
+    };
+    window.addEventListener('resize', closeMobileOnResize, { passive: true });
+    window.addEventListener('orientationchange', () => setTimeout(closeMobileOnResize, 100));
 
     // ── Click outside to close all ──
     document.addEventListener('click', () => {
       if (profileMenu) profileMenu.classList.remove('open');
       this._closeAllDropdowns(container);
+      // Close mobile menu on outside click
+      if (mobileMenu && mobileMenu.classList.contains('open')) {
+        mobileMenu.classList.remove('open');
+        if (mobileToggle) mobileToggle.classList.remove('active');
+        document.body.classList.remove('menu-open');
+      }
     });
 
     // ── ESC to close all ──
@@ -319,7 +338,11 @@ const GlobalNavbar = {
       if (e.key === 'Escape') {
         if (profileMenu) profileMenu.classList.remove('open');
         this._closeAllDropdowns(container);
-        if (mobileMenu) mobileMenu.classList.remove('open');
+        if (mobileMenu && mobileMenu.classList.contains('open')) {
+          mobileMenu.classList.remove('open');
+          if (mobileToggle) mobileToggle.classList.remove('active');
+          document.body.classList.remove('menu-open');
+        }
       }
     });
 

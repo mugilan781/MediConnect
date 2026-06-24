@@ -33,8 +33,8 @@ const GlobalFooter = {
         <div class="global-footer__inner">
           <div class="global-footer__brand">
             <a href="/index.html" class="global-footer__logo">
-              <div class="global-footer__logo-icon">M</div>
-              <span class="global-footer__logo-text">MediConnect</span>
+              <div class="global-footer__logo-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2L4 6v5c0 5.5 3.4 10.7 8 12 4.6-1.3 8-6.5 8-12V6l-8-4z" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.5)" stroke-width="1"/><path d="M12 8v8M8 12h8" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+              <span class="global-footer__logo-text"><span class="brand-medi">Medi</span><span class="brand-connect">Connect</span></span>
             </a>
             <p class="global-footer__desc">
               Your trusted digital clinic and appointment management platform.

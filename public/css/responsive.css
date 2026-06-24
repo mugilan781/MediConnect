@@ -1,0 +1,1979 @@
+/* ============================================================
+   MediConnect – responsive.css
+   Global Responsive Overlay
+   Load LAST on every page to fix mobile/tablet layouts
+   without modifying existing desktop CSS.
+   ============================================================ */
+
+/* ════════════════════════════════════════════════════
+   GLOBAL OVERFLOW SAFETY
+   ════════════════════════════════════════════════════ */
+html {
+  overflow-x: hidden;
+}
+
+/* Body scroll lock when mobile menu is open */
+body.menu-open {
+  overflow: hidden;
+}
+
+/* Ensure mobile menu always appears above page content */
+/* backdrop-filter on .global-navbar creates a new containing block,
+   breaking position:fixed on children. Use absolute + explicit height instead. */
+.global-navbar__mobile-menu {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0;
+  right: 0;
+  bottom: auto !important;
+  height: calc(100vh - var(--navbar-height)) !important;
+  z-index: 9999 !important;
+  background: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(20px) !important;
+}
+
+/* ── Homepage hamburger contrast fix ── */
+.homepage .global-navbar:not(.scrolled) .global-navbar__mobile-toggle {
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(8px);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+/* ── Hamburger ↔ Close icon toggle ── */
+.global-navbar__mobile-toggle {
+  position: relative;
+}
+
+.global-navbar__mobile-toggle .mc-icon {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.global-navbar__mobile-toggle.active .mc-icon {
+  opacity: 0;
+  transform: rotate(45deg) scale(0.5);
+}
+
+.global-navbar__mobile-toggle::before,
+.global-navbar__mobile-toggle::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.global-navbar__mobile-toggle::before {
+  transform: rotate(0deg);
+}
+
+.global-navbar__mobile-toggle::after {
+  transform: rotate(0deg);
+}
+
+.global-navbar__mobile-toggle.active::before {
+  opacity: 1;
+  transform: rotate(45deg);
+}
+
+.global-navbar__mobile-toggle.active::after {
+  opacity: 1;
+  transform: rotate(-45deg);
+}
+
+/* ════════════════════════════════════════════════════
+   GLOBAL OVERFLOW PREVENTION (all breakpoints)
+   ════════════════════════════════════════════════════ */
+img, video, iframe, embed, object {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Don't constrain inline SVG icons — only content SVGs */
+svg:not(.mc-icon):not(.global-navbar svg) {
+  max-width: 100%;
+}
+
+pre, code {
+  overflow-x: auto;
+  word-wrap: break-word;
+}
+
+table {
+  max-width: 100%;
+}
+
+/* ════════════════════════════════════════════════════
+   FORCE-REVEAL ON MOBILE / TABLET
+   The IntersectionObserver that adds .is-visible can
+   misfire when dynamic AJAX content inflates section
+   height after the observer has already evaluated.
+   On ≤1024px just make everything visible immediately.
+   ════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .animate-on-scroll,
+  .reveal,
+  .reveal-left,
+  .reveal-right,
+  .reveal-scale {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════
+   1024px — TABLET LANDSCAPE
+   ════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+
+  /* ── Container ── */
+  .container {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  /* ── Hero ── */
+  .page-hero h1 {
+    font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+  }
+
+  .page-hero p {
+    max-width: 100%;
+  }
+
+  .page-hero__stats {
+    gap: var(--space-4);
+  }
+
+  /* ── About: Story Grid ── */
+  .story-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  .story-visual {
+    min-height: 300px;
+  }
+
+  /* ── About: Mission/Vision ── */
+  .mv-grid {
+    grid-template-columns: 1fr;
+    max-width: 600px;
+  }
+
+  /* ── Services: Detail Grid ── */
+  .service-detail__grid {
+    grid-template-columns: 1fr !important;
+    gap: var(--space-6);
+  }
+
+  .service-detail__grid[style*="direction:rtl"],
+  .service-detail__grid[style*="direction: rtl"] {
+    direction: ltr !important;
+  }
+
+  .service-detail__grid > * {
+    direction: ltr !important;
+  }
+
+  .service-detail__visual {
+    min-height: 280px;
+  }
+
+  /* ── Pricing Grid ── */
+  .pricing-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* ── Pricing toggle ── */
+  .pricing-toggle {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* ── Contact Grid ── */
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* ── Auth Pages ── */
+  .auth-panel {
+    display: none;
+  }
+
+  .auth-form-container {
+    flex: 1;
+    padding: var(--space-6);
+  }
+
+  .auth-form {
+    max-width: 480px;
+    width: 100%;
+  }
+
+  /* ── Dashboard: Sidebar collapses ── */
+  .main {
+    margin-left: 0 !important;
+  }
+
+  /* ── Dashboard: Grids ── */
+  .dashboard-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  /* ── Doctors: Filter bar ── */
+  .doctors-filter-bar {
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .doctors-filter-bar .filter-search {
+    flex: 1 1 100%;
+  }
+
+  /* ── Lab Tests: Hero search ── */
+  .lab-hero-search {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .lab-hero-search input,
+  .lab-hero-search .btn {
+    width: 100%;
+  }
+
+  /* ── Reports: Grid ── */
+  .reports-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* ── Sample Collection: Grid ── */
+  .sc-steps-grid,
+  .sc-benefits-grid,
+  .sc-tests-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* ── FAQ: Stats ── */
+  .faq-hero-stats {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-4);
+  }
+
+  /* ── Appointments: Doctor cards equal height at tablet ── */
+  .appt-doctors-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6);
+  }
+
+  .appt-doctor-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+}
+
+/* ════════════════════════════════════════════════════
+   768px — TABLET PORTRAIT / MOBILE LANDSCAPE
+   ════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* ── Container ── */
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* ── About: Timeline ── */
+  /* line at 8px, 3px wide → center at 9.5px.
+     dot 16px wide → dot center at dot_left + 8.
+     From timeline-item at 40px: dot_left = 9.5 - 8 - 40 = -38.5 ≈ -39px */
+  .timeline {
+    padding-left: 40px;
+    max-width: 100%;
+  }
+
+  .timeline::before {
+    left: 8px;
+  }
+
+  .timeline-item {
+    padding-left: var(--space-4);
+  }
+
+  .timeline-item__dot {
+    left: -39px;
+    width: 16px;
+    height: 16px;
+  }
+
+  .timeline-item h3 {
+    font-size: var(--font-size-base);
+  }
+
+  .timeline-item p {
+    max-width: 100%;
+    font-size: var(--font-size-sm);
+  }
+
+  /* ── Hero ── */
+  .page-hero {
+    min-height: 320px;
+    padding: var(--space-12) 0 var(--space-8);
+  }
+
+  .page-hero h1 {
+    font-size: clamp(1.5rem, 5vw, 2.2rem);
+  }
+
+  .page-hero p {
+    font-size: var(--font-size-sm);
+  }
+
+  .page-hero__stats {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-3);
+  }
+
+  .page-hero__stat {
+    min-width: 100px;
+  }
+
+  .page-hero__actions {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .page-hero__actions .btn {
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+  }
+
+  /* ── About: Values Grid ── */
+  .values-grid > *,
+  .impact-grid > *,
+  .leadership-grid > *,
+  .why-cards-about > *,
+  .roadmap-grid > *,
+  .about-stats-grid > * {
+    flex: 0 1 100%;
+    max-width: 100%;
+  }
+
+  /* ── About: Story visual ── */
+  .story-visual {
+    min-height: 250px;
+    padding: var(--space-8);
+  }
+
+  .story-content h2 {
+    font-size: var(--font-size-2xl);
+  }
+
+  /* ── About: Section spacing ── */
+  .story-section,
+  .mission-vision-section,
+  .values-section,
+  .impact-section,
+  .timeline-section,
+  .about-stats-section,
+  .leadership-section,
+  .why-section-about,
+  .roadmap-section {
+    padding: var(--space-12) 0;
+  }
+
+  /* ── About: CTA ── */
+  .about-cta {
+    padding: var(--space-12) 0;
+  }
+
+  /* ── Services ── */
+  .categories-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .categories-grid > * {
+    flex: 0 1 calc(50% - var(--space-3));
+    max-width: calc(50% - var(--space-3));
+  }
+
+  .service-detail {
+    padding: var(--space-10) 0;
+  }
+
+  .service-detail h2 {
+    font-size: var(--font-size-xl);
+  }
+
+  .service-benefits li {
+    font-size: var(--font-size-sm);
+  }
+
+  /* ── Pricing ── */
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .pricing-section {
+    padding: var(--space-12) 0;
+  }
+
+  .pricing-toggle {
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  /* ── Pricing Page: Remove card header empty space ── */
+  .pricing-plan__header {
+    min-height: auto;
+    padding: var(--space-6) var(--space-5) var(--space-4);
+  }
+
+  .pricing-plan__name {
+    min-height: auto;
+  }
+
+  .pricing-plan__desc {
+    min-height: auto;
+  }
+
+  .pricing-plan__price {
+    min-height: auto;
+  }
+
+  .pricing-plan__annual-note {
+    min-height: auto;
+  }
+
+  /* ── Pricing Page: Feature table horizontal scroll ── */
+  .pricing-compare__table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .pricing-compare__table-wrapper .pricing-compare__table {
+    min-width: 600px;
+  }
+
+  /* ── Pricing Page: Enterprise cards overflow fix ── */
+  .pricing-enterprise__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pricing-enterprise__card {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* ── Doctors Grid ── */
+  .doctor-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .doctors-filter-bar {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .filter-search,
+  .filter-select {
+    width: 100%;
+    min-width: 0 !important;
+  }
+
+  /* ── Lab Tests ── */
+  .lab-category-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .lab-popular-grid,
+  .lab-packages-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* ── FAQ ── */
+  .faq-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .faq-category-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .faq-hero-search {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .faq-hero-search input {
+    width: 100%;
+  }
+
+  /* ── Contact ── */
+  .contact-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* ── Appointments ── */
+  .appt-how-grid,
+  .appt-benefits-grid,
+  .appt-types-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* ── Consultations ── */
+  .consult-why-grid > *,
+  .consult-types-grid > *,
+  .consult-doctors-grid > *,
+  .consult-process-grid > *,
+  .consult-security-grid > *,
+  .consult-test-grid > * {
+    flex: 0 1 100%;
+    max-width: 100%;
+  }
+
+  /* ── Sample Collection ── */
+  .sc-steps-grid,
+  .sc-benefits-grid,
+  .sc-tests-grid,
+  .sc-areas-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* ── Appointments & Consultations: Timeline line alignment ── */
+  .appt-timeline-steps::before,
+  .consult-timeline::before {
+    /* 48px circle → center at 24px; 3px line → left = 24 - 1.5 = 22.5 */
+    left: 22.5px;
+  }
+
+  /* ── Appointments: Status flow centering ── */
+  .status-flow {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .status-step {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    width: 100%;
+    max-width: 260px;
+  }
+
+  .status-step__badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    width: 100%;
+    min-width: 160px;
+    text-align: center;
+  }
+
+  .status-step__arrow {
+    transform: rotate(90deg);
+  }
+
+  /* ── Appointments: Doctor card uniform height ── */
+  .appt-doctors-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .appt-doctor-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .appt-doctor-card__top {
+    flex-shrink: 0;
+  }
+
+  .appt-doctor-card__meta {
+    flex-wrap: wrap;
+  }
+
+  /* ── Reports ── */
+  .reports-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reports-hero-search {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  /* ── Reports: Role-Based Dashboard Mockup ── */
+  .rpt-dashboard-panel__mockup {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .rpt-mockup-list {
+    min-width: 480px;
+  }
+
+  .rpt-mockup-item {
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  }
+
+  .rpt-mockup-item div strong,
+  .rpt-mockup-item div span {
+    white-space: normal;
+  }
+
+  .rpt-mockup-stats {
+    min-width: 480px;
+  }
+
+  /* ── Tables: Horizontal scroll ── */
+  .table-responsive-wrapper,
+  .dashboard-section__body {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .table-responsive-wrapper table,
+  .dashboard-section__body table {
+    min-width: 600px;
+  }
+
+  /* ── Dashboard: Sidebar overlay ── */
+  .sidebar {
+    z-index: 1000;
+    box-shadow: 4px 0 24px rgba(0,0,0,0.3);
+  }
+
+  .sidebar.open ~ .main::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 999;
+  }
+
+  /* ── Dashboard: Content padding ── */
+  .content {
+    padding: var(--space-4);
+  }
+
+  /* ── Dashboard: Welcome banner ── */
+  .welcome-banner {
+    padding: var(--space-5);
+  }
+
+  .welcome-banner__name {
+    font-size: var(--font-size-xl);
+  }
+
+  .welcome-banner__message {
+    font-size: var(--font-size-sm);
+  }
+
+  /* ── Dashboard: Stats row ── */
+  .stats-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+
+  .stat-card {
+    padding: var(--space-4);
+  }
+
+  .stat-card__value {
+    font-size: var(--font-size-2xl);
+  }
+
+  /* ── Dashboard: Quick actions ── */
+  .quick-actions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* ── Auth: Form ── */
+  .auth-form-container {
+    padding: var(--space-4);
+    align-items: flex-start;
+    padding-top: var(--space-8);
+  }
+
+  .auth-form {
+    padding: var(--space-6);
+    max-width: 100%;
+  }
+
+  .auth-form__quick-roles {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--space-2);
+  }
+
+  /* ── Footer ── */
+  .global-footer__inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    padding: var(--space-10) 16px 0;
+  }
+
+  .global-footer__bottom-inner {
+    padding: 0 16px;
+    flex-direction: column;
+    text-align: center;
+    gap: var(--space-3);
+  }
+
+  .global-footer__newsletter-form {
+    flex-direction: column;
+  }
+
+  .global-footer__social {
+    justify-content: center;
+  }
+
+  .global-footer__bottom-links {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ── Modals ── */
+  .modal {
+    width: 95%;
+    max-height: 90vh;
+    margin: var(--space-4);
+  }
+
+  .modal__header,
+  .modal__body {
+    padding: var(--space-4);
+  }
+
+  .modal__footer {
+    padding: var(--space-3) var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  /* ── Forms ── */
+  .form-group input,
+  .form-group select,
+  .form-group textarea,
+  .form-control {
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* ── Profile page ── */
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* ── CTA sections global ── */
+  .services-cta,
+  .appt-cta,
+  .doctors-cta {
+    padding: var(--space-12) 0;
+  }
+
+  .services-cta h2,
+  .appt-cta h2,
+  .doctors-cta h2 {
+    font-size: var(--font-size-2xl);
+  }
+
+  .services-cta p,
+  .appt-cta p,
+  .doctors-cta p {
+    font-size: var(--font-size-sm);
+  }
+
+  /* ── Notification items ── */
+  .notification-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+
+  .notification-item__actions {
+    align-self: flex-end;
+  }
+}
+
+/* ════════════════════════════════════════════════════
+   480px — SMALL MOBILE
+   ════════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+
+  /* ── Container ── */
+  .container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  /* ── About: Timeline ── */
+  /* line at 6px, 3px wide → center at 7.5px.
+     dot 14px wide → center at dot_left + 7.
+     From timeline-item at 36px: dot_left = 7.5 - 7 - 36 = -35.5 ≈ -36px */
+  .timeline {
+    padding-left: 36px;
+  }
+
+  .timeline::before {
+    left: 6px;
+  }
+
+  .timeline-item__dot {
+    left: -36px;
+    width: 14px;
+    height: 14px;
+    border-width: 2px;
+  }
+
+  .timeline-item__date {
+    font-size: 0.65rem;
+    padding: 2px var(--space-2);
+  }
+
+  .timeline-item h3 {
+    font-size: var(--font-size-sm);
+  }
+
+  .timeline-item p {
+    font-size: var(--font-size-xs);
+  }
+
+  .timeline-item {
+    margin-bottom: var(--space-6);
+    padding-left: var(--space-3);
+  }
+
+  /* ── Lab Tests: Catalog Search ── */
+  .lab-catalog__search {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .lab-catalog__controls {
+    flex-direction: column;
+  }
+
+  .lab-catalog__filter {
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* ── Hero ── */
+  .page-hero {
+    min-height: 280px;
+    padding: var(--space-10) 0 var(--space-6);
+  }
+
+  .page-hero h1 {
+    font-size: clamp(1.3rem, 6vw, 1.8rem);
+  }
+
+  .page-hero__stats {
+    gap: var(--space-2);
+  }
+
+  .page-hero__stat-value {
+    font-size: var(--font-size-lg);
+  }
+
+  .page-hero__stat-label {
+    font-size: var(--font-size-xs);
+  }
+
+  /* ── Section header ── */
+  .section-header__title {
+    font-size: var(--font-size-xl);
+  }
+
+  .section-header__subtitle {
+    font-size: var(--font-size-sm);
+  }
+
+  /* ── About: Section padding ── */
+  .story-section,
+  .mission-vision-section,
+  .values-section,
+  .impact-section,
+  .timeline-section,
+  .about-stats-section,
+  .leadership-section,
+  .why-section-about,
+  .roadmap-section {
+    padding: var(--space-8) 0;
+  }
+
+  /* ── About: Story ── */
+  .story-content h2 {
+    font-size: var(--font-size-xl);
+  }
+
+  .story-visual {
+    min-height: 200px;
+    padding: var(--space-6);
+  }
+
+  /* ── About: Cards ── */
+  .mv-card {
+    padding: var(--space-6);
+  }
+
+  .value-card {
+    padding: var(--space-6);
+  }
+
+  .impact-card {
+    padding: var(--space-5);
+  }
+
+  .leader-card {
+    padding: var(--space-5);
+  }
+
+  .roadmap-card {
+    padding: var(--space-4);
+  }
+
+  /* ── About CTA ── */
+  .about-cta {
+    padding: var(--space-8) 0;
+  }
+
+  .about-cta h2 {
+    font-size: var(--font-size-xl);
+  }
+
+  /* ── Services ── */
+  .categories-grid > * {
+    flex: 0 1 100%;
+    max-width: 100%;
+  }
+
+  .service-detail__visual {
+    min-height: 220px;
+  }
+
+  .cat-card {
+    padding: var(--space-4);
+  }
+
+  .service-detail h2 {
+    font-size: var(--font-size-lg);
+  }
+
+  /* ── Pricing ── */
+  .pricing-card {
+    padding: var(--space-5);
+  }
+
+  .pricing-card__price {
+    font-size: var(--font-size-3xl);
+  }
+
+  /* ── Lab Tests ── */
+  .lab-category-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lab-category-card {
+    padding: var(--space-4);
+  }
+
+  /* ── Doctors ── */
+  .doctor-card__info h3 {
+    font-size: var(--font-size-base);
+  }
+
+  /* ── Auth ── */
+  .auth-form {
+    padding: var(--space-5) var(--space-4);
+    border-radius: var(--radius-lg);
+  }
+
+  .auth-form__title {
+    font-size: var(--font-size-xl);
+  }
+
+  .auth-form__quick-roles {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--space-1);
+  }
+
+  .auth-form__role-btn {
+    padding: var(--space-2);
+    font-size: 0.65rem;
+  }
+
+  .auth-google-btn {
+    font-size: var(--font-size-sm);
+    padding: var(--space-3);
+  }
+
+  /* ── Dashboard ── */
+  .dashboard-section {
+    border-radius: var(--radius-md);
+  }
+
+  .dashboard-section__header {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .dashboard-section__body {
+    padding: var(--space-3);
+  }
+
+  /* ── Dashboard: Stats ── */
+  .stats-row {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+  }
+
+  .stat-card__label {
+    font-size: 0.7rem;
+  }
+
+  .stat-card__value {
+    font-size: var(--font-size-xl);
+  }
+
+  /* ── Contact ── */
+  .contact-form {
+    padding: var(--space-5);
+  }
+
+  .contact-info-card {
+    padding: var(--space-4);
+  }
+
+  /* ── FAQ ── */
+  .faq-category-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .faq-hero-stats {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  /* ── Reports ── */
+  .report-card {
+    padding: var(--space-4);
+  }
+
+  /* ── Sample Collection ── */
+  .sc-step-card,
+  .sc-benefit-card,
+  .sc-test-card {
+    padding: var(--space-4);
+  }
+
+  /* ── Consultations ── */
+  .consult-tl-step {
+    gap: var(--space-3);
+  }
+
+  /* ── Appointments ── */
+  .appt-step-card,
+  .appt-benefit-card,
+  .appt-type-card {
+    padding: var(--space-4);
+  }
+
+  /* ── CTA sections ── */
+  .services-cta h2,
+  .appt-cta h2,
+  .doctors-cta h2 {
+    font-size: var(--font-size-xl);
+  }
+
+  .services-cta .btn,
+  .appt-cta .btn,
+  .doctors-cta .btn {
+    font-size: var(--font-size-sm);
+    padding: var(--space-3) var(--space-6);
+  }
+
+  /* ── Footer ── */
+  .global-footer__inner {
+    padding: var(--space-8) 12px 0;
+  }
+
+  .global-footer__bottom-inner {
+    padding: 0 12px;
+  }
+}
+
+/* ════════════════════════════════════════════════════
+   425px — EXTRA SMALL MOBILE
+   ════════════════════════════════════════════════════ */
+@media (max-width: 425px) {
+
+  /* ── Hero ── */
+  .page-hero h1 {
+    font-size: 1.25rem;
+    line-height: 1.3;
+  }
+
+  .page-hero p {
+    font-size: 0.8rem;
+  }
+
+  .page-hero__actions .btn {
+    font-size: var(--font-size-sm);
+    padding: var(--space-3) var(--space-5);
+  }
+
+  /* ── About ── */
+  .why-card-about {
+    flex-direction: column;
+  }
+
+  /* line at 5px, 3px wide → center at 6.5px.
+     dot 12px → center at dot_left + 6.
+     From timeline-item at 30px: dot_left = 6.5 - 6 - 30 = -29.5 ≈ -30px */
+  .timeline {
+    padding-left: 30px;
+  }
+
+  .timeline::before {
+    left: 5px;
+  }
+
+  .timeline-item__dot {
+    left: -30px;
+    width: 12px;
+    height: 12px;
+    border-width: 2px;
+  }
+
+  .timeline-item {
+    padding-left: var(--space-2);
+    margin-bottom: var(--space-5);
+  }
+
+  .timeline-item h3 {
+    font-size: var(--font-size-xs);
+  }
+
+  .timeline-item p {
+    font-size: 0.7rem;
+  }
+
+  /* ── Auth ── */
+  .auth-form__header-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 2rem;
+  }
+
+  /* ── Dashboard: Stat cards ── */
+  .stat-card__label {
+    font-size: 0.65rem;
+  }
+
+  .stat-card__value {
+    font-size: var(--font-size-lg);
+  }
+
+  /* ── Section headers ── */
+  .section-header__title {
+    font-size: var(--font-size-lg);
+  }
+
+  /* ── CTA sections ── */
+  .about-cta h2,
+  .services-cta h2 {
+    font-size: var(--font-size-lg);
+  }
+
+  /* ── Services ── */
+  .service-detail {
+    padding: var(--space-8) 0;
+  }
+
+  .service-detail__visual {
+    min-height: 180px;
+  }
+
+  .service-detail__badge {
+    font-size: var(--font-size-xs);
+  }
+
+  /* ── Pricing ── */
+  .pricing-card__name {
+    font-size: var(--font-size-lg);
+  }
+
+  .pricing-card__price {
+    font-size: var(--font-size-2xl);
+  }
+
+  .pricing-features li {
+    font-size: var(--font-size-xs);
+  }
+
+  /* ── Lab Tests ── */
+  .lab-test-card__footer {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .lab-test-card__footer .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* ── Doctors ── */
+  .doctor-card {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+
+  .doctor-card__meta {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ── Contact ── */
+  .contact-form__row {
+    grid-template-columns: 1fr;
+  }
+
+  /* ── Sample Collection ── */
+  .sc-hero-features {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  /* ── Reports ── */
+  .report-card__header {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .report-card__actions {
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  /* ── Consultations ── */
+  .consult-process-step:not(:last-child)::after {
+    display: none;
+  }
+
+  .consult-cta__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* ── Appointments ── */
+  .appt-cta__actions {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  /* ── Dashboard: Quick actions ── */
+  .quick-actions {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
+
+  .access-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
+
+  /* ── Notification page ── */
+  .notifications-filter {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .notifications-filter .btn,
+  .notifications-filter select {
+    width: 100%;
+  }
+}
+
+/* ════════════════════════════════════════════════════
+   320px — MINIMUM SUPPORTED WIDTH
+   ════════════════════════════════════════════════════ */
+@media (max-width: 320px) {
+
+  .container {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .page-hero {
+    min-height: 240px;
+  }
+
+  .page-hero h1 {
+    font-size: 1.1rem;
+  }
+
+  .page-hero__stats {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ── About ── */
+  .story-content h2 {
+    font-size: var(--font-size-lg);
+  }
+
+  /* ── About: Timeline ── */
+  /* line at 3px, 3px wide → center at 4.5px.
+     dot 10px → center at dot_left + 5.
+     From timeline-item at 24px: dot_left = 4.5 - 5 - 24 = -24.5 ≈ -25px */
+  .timeline {
+    padding-left: 24px;
+  }
+
+  .timeline::before {
+    left: 3px;
+  }
+
+  .timeline-item__dot {
+    left: -25px;
+    width: 10px;
+    height: 10px;
+    border-width: 2px;
+  }
+
+  .timeline-item {
+    padding-left: var(--space-1);
+    margin-bottom: var(--space-4);
+  }
+
+  .timeline-item h3 {
+    font-size: var(--font-size-xs);
+  }
+
+  .timeline-item p {
+    font-size: 0.65rem;
+    line-height: 1.5;
+  }
+
+  .timeline-item__date {
+    font-size: 0.6rem;
+    padding: 1px var(--space-1);
+  }
+
+  .mv-card {
+    padding: var(--space-4);
+  }
+
+  /* ── Auth ── */
+  .auth-form-container {
+    padding: var(--space-3);
+  }
+
+  .auth-form {
+    padding: var(--space-4) var(--space-3);
+  }
+
+  .auth-form__title {
+    font-size: var(--font-size-lg);
+  }
+
+  .auth-form__quick-roles {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .auth-form__role-btn {
+    padding: var(--space-1);
+    font-size: 0.6rem;
+    gap: 2px;
+  }
+
+  /* ── Dashboard ── */
+  .content {
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .stats-row {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+
+  .quick-actions {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2);
+  }
+
+  .access-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2);
+  }
+
+  .welcome-banner {
+    padding: var(--space-4);
+  }
+
+  .welcome-banner__name {
+    font-size: var(--font-size-lg);
+  }
+
+  /* ── Services ── */
+  .service-detail__visual {
+    min-height: 160px;
+  }
+
+  .service-detail h2 {
+    font-size: var(--font-size-base);
+  }
+
+  .service-benefits li {
+    font-size: var(--font-size-xs);
+  }
+
+  /* ── Pricing ── */
+  .pricing-card {
+    padding: var(--space-4);
+  }
+
+  .pricing-card__price {
+    font-size: var(--font-size-2xl);
+  }
+
+  /* ── Lab Tests ── */
+  .lab-category-card__icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* ── Consultations ── */
+  .consult-tl-step__num {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    font-size: var(--font-size-sm);
+  }
+
+  /* ── Footer ── */
+  .global-footer__inner {
+    padding: var(--space-6) 8px 0;
+  }
+
+  /* ── Appointments & Consultations: Timeline line at 320px ── */
+  /* 40px circle → center at 20px; 3px line → left = 20 - 1.5 = 18.5 */
+  .appt-timeline-steps::before,
+  .consult-timeline::before {
+    left: 18.5px;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════
+   DASHBOARD RESPONSIVE — Sidebar, Cards, Tables, Charts,
+   Forms, Modals, Topbar, Overflow Prevention
+   ════════════════════════════════════════════════════════════ */
+
+/* ── Sidebar Overlay ── */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 9998;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
+
+.sidebar-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Body scroll lock when sidebar open */
+body.sidebar-open {
+  overflow: hidden !important;
+  position: fixed;
+  width: 100%;
+}
+
+/* ── 1024px — Tablet & below: off-canvas sidebar ── */
+@media (max-width: 1024px) {
+  /* Main content: remove sidebar margin */
+  .app .main {
+    margin-left: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* Sidebar: off-canvas drawer */
+  .sidebar {
+    position: fixed;
+    top: var(--navbar-height, 64px);
+    left: 0;
+    width: 280px;
+    max-width: 85vw;
+    height: calc(100vh - var(--navbar-height, 64px));
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 9999;
+    box-shadow: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Show hamburger toggle */
+  .topbar__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Stats row: force 2-col, override minmax(280px) */
+  .stats-row {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px;
+  }
+
+  /* Grid children overflow prevention */
+  .stats-row > *,
+  .quick-actions > *,
+  .access-grid > *,
+  .insight-grid > *,
+  .admin-kpi-grid > *,
+  .doc-analytics-grid > *,
+  .admin-health-grid > * {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Grid collapses */
+  .quick-actions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .access-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .insight-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .admin-health-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .doc-analytics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Table responsive scroll */
+  .doc-section__body {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .dashboard-section {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .doc-section__body > .table,
+  .dashboard-section > .table,
+  .doc-section__body > .data-table,
+  .doc-section__body > .analytics-table {
+    min-width: 600px;
+  }
+
+  /* Forms / Filters stacking */
+  .directory-controls {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .filter-group {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .filter-select,
+  .directory-search {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .directory-search input {
+    width: 100% !important;
+  }
+
+  /* Dashboard section header: wrap */
+  .dashboard-section__header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* Charts scaling */
+  .analytics-chart-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Modals */
+  .modal {
+    max-width: 95vw !important;
+    width: 95% !important;
+  }
+
+  .modal__body {
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+
+  /* Tab bar: scrollable */
+  .tab-bar {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+  }
+
+  /* Schedule rows: stack */
+  .schedule-day-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .schedule-day-label {
+    width: 100%;
+  }
+}
+
+/* ── 480px — Small Mobile ── */
+@media (max-width: 480px) {
+  .stats-row {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px;
+  }
+
+  .stat-card {
+    padding: 14px 16px;
+    min-height: unset;
+    gap: 10px;
+  }
+
+  .stat-card__icon {
+    width: 38px;
+    height: 38px;
+    font-size: 0.95rem;
+  }
+
+  .stat-card__value {
+    font-size: 1.1rem;
+  }
+
+  .quick-actions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .access-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .insight-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-kpi-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .doc-analytics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Appointment / report / notification items */
+  .appointment-item {
+    flex-wrap: wrap;
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  .appointment-item__time {
+    min-width: 56px;
+  }
+
+  .appointment-item__info {
+    flex: 1 1 60%;
+    min-width: 0;
+  }
+
+  .appointment-item__name {
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .report-card {
+    flex-wrap: wrap;
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  .notif-item {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  /* Charts: smaller */
+  .ac-chart-wrapper {
+    height: 180px;
+    padding-left: 32px;
+  }
+
+  .ac-bar-label {
+    font-size: 0.4375rem;
+    max-width: 36px;
+  }
+
+  .ac-grid-label {
+    width: 28px;
+    font-size: 0.5rem;
+  }
+
+  /* Topbar */
+  .topbar__right {
+    gap: 8px;
+  }
+
+  .topbar__breadcrumb {
+    display: none;
+  }
+
+  .demo-badge {
+    font-size: 9px;
+    padding: 2px 8px;
+  }
+
+  /* Welcome banner */
+  .welcome-banner {
+    padding: 16px 18px;
+  }
+
+  .welcome-banner__name {
+    font-size: 1.1rem;
+  }
+
+  .welcome-banner__message {
+    font-size: 0.8125rem;
+  }
+
+  /* Content padding */
+  .app .content {
+    padding: 12px 14px;
+  }
+
+  /* Modal: full width */
+  .modal {
+    max-width: 98vw !important;
+    width: 98% !important;
+    margin: 8px;
+  }
+
+  /* Tab buttons */
+  .tab-btn {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+  }
+
+  /* Doc section */
+  .doc-section__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 14px 16px;
+  }
+
+  .doc-section__body {
+    padding: 14px 16px;
+  }
+
+  /* Empty state */
+  .empty-state {
+    padding: 28px 16px;
+  }
+}
+
+/* ── 425px — Extra Small Mobile ── */
+@media (max-width: 425px) {
+  .stats-row {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 6px;
+  }
+
+  .stat-card__label {
+    font-size: 0.65rem;
+  }
+
+  .stat-card__value {
+    font-size: 1rem;
+  }
+
+  .stat-card__icon {
+    width: 36px;
+    height: 36px;
+    font-size: 0.875rem;
+  }
+
+  .quick-actions,
+  .access-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+
+  .dashboard-section__title {
+    font-size: 0.95rem;
+  }
+
+  .dashboard-section__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .doc-section__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .time-slot-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ── 320px — Minimum Mobile ── */
+@media (max-width: 320px) {
+  .stats-row {
+    grid-template-columns: 1fr !important;
+    gap: 6px;
+  }
+
+  .quick-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .access-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+
+  .admin-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .app .content {
+    padding: 8px 10px;
+  }
+
+  .welcome-banner {
+    padding: 14px 16px;
+  }
+
+  .welcome-banner__name {
+    font-size: 1rem;
+  }
+
+  .topbar {
+    padding: 0 10px;
+  }
+
+  .tab-bar {
+    overflow-x: auto;
+    gap: 2px;
+  }
+
+  .tab-btn {
+    font-size: 0.625rem;
+    padding: 4px 6px;
+    min-height: 28px;
+  }
+
+  .doc-analytics-card {
+    padding: 12px;
+  }
+
+  .doc-analytics-card__value {
+    font-size: 1rem;
+  }
+}
+
+/* ════════════════════════════════════════════════════
+   PRINT — basic cleanup
+   ════════════════════════════════════════════════════ */
+@media print {
+  .sidebar,
+  .global-navbar,
+  .topbar,
+  .global-footer,
+  .page-hero,
+  .modal-overlay {
+    display: none !important;
+  }
+
+  .main {
+    margin-left: 0 !important;
+  }
+
+  .content {
+    padding: 0 !important;
+  }
+}
+

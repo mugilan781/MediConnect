@@ -56,16 +56,40 @@
   align-items: center;
   justify-content: center;
   color: white;
-  font-weight: var(--font-weight-hero);
-  font-size: var(--font-size-lg);
   flex-shrink: 0;
+  box-shadow: var(--shadow-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+.global-footer__logo-icon svg {
+  width: 22px;
+  height: 22px;
+  position: relative;
+  z-index: 1;
+}
+
+.global-footer__logo-icon::after {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  border-radius: 6px;
 }
 
 .global-footer__logo-text {
+  font-family: 'Plus Jakarta Sans', var(--font-family);
   font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-hero);
-  color: var(--color-white);
-  letter-spacing: -0.02em;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.global-footer .brand-medi {
+  color: #FFFFFF;
+}
+
+.global-footer .brand-connect {
+  color: #22D3EE;
 }
 
 .global-footer__desc {

@@ -519,7 +519,7 @@ const PatientDashboard = {
                   ${['scheduled','confirmed','rescheduled'].includes(a.status) ? `
                     <button class="btn btn--sm btn--ghost" onclick="PatientDashboard.openRescheduleModal(${a.id})">Reschedule</button>
                     <button class="btn btn--sm btn--danger" onclick="PatientDashboard.cancelAppointment(${a.id})">Cancel</button>
-                  ` : ''}
+                  ` : '<span class="text-muted">—</span>'}
                 </div></td>
               </tr>
             `).join('')}</tbody>
@@ -981,7 +981,7 @@ const PatientDashboard = {
         <div class="appointment-item" style="margin-bottom:var(--space-2);">
           <div class="appointment-item__time" style="background:var(--color-mint-light);color:#0d9488;min-width:50px;font-size:1.2rem;display:flex;align-items:center;justify-content:center;">${icons[h.source_module] || '📋'}</div>
           <div class="appointment-item__info" style="flex:1;"><div class="appointment-item__name">${this._escapeHtml(h.title)}</div><div class="appointment-item__detail">${this._escapeHtml(h.description || '')} • ${UI.formatDate(h.event_date)}</div></div>
-          <div><span class="badge badge--gray" style="text-transform:capitalize;">${(h.source_module || '').replace('_', ' ')}</span></div>
+          <div>${h.source_module ? `<span class="badge badge--gray" style="text-transform:capitalize;">${h.source_module.replace('_', ' ')}</span>` : '<span class="text-muted">—</span>'}</div>
         </div>
       `).join('');
       const pagEl = document.getElementById('pd-history-pagination');

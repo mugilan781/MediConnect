@@ -16,6 +16,15 @@
   <link rel="stylesheet" href="/css/footer.css">
   <link rel="stylesheet" href="/css/animations.css">
   <link rel="stylesheet" href="/css/doctors.css">
+  <style>
+    /* Improve Book Appointment button horizontal spacing */
+    .doc-card__footer .btn--primary,
+    .featured-card .btn--primary {
+      padding-left: var(--space-6) !important;
+      padding-right: var(--space-6) !important;
+    }
+  </style>
+  <link rel="stylesheet" href="/css/responsive.css">
 </head>
 <body class="public-page">
   <div id="global-navbar"></div>
@@ -92,7 +101,7 @@
         <div class="skeleton skeleton-doc-card"></div>
         <div class="skeleton skeleton-doc-card"></div>
       </div>
-      <div id="doctors-pagination" style="margin-top:var(--space-8);display:flex;justify-content:center;gap:var(--space-2);flex-wrap:wrap;"></div>
+      <div id="doctors-pagination" style="display:none;margin:0;padding:0;"></div>
     </div>
   </section>
 

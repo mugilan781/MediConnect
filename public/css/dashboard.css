@@ -140,14 +140,15 @@
 
 .stat-card {
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(234, 244, 239, 0.72));
-  border-radius: var(--radius-lg);
-  padding: var(--space-5) var(--space-6);
+  border-radius: 14px;
+  padding: 20px 24px;
   display: flex;
   align-items: center;
   gap: var(--space-4);
   border: 1px solid rgba(var(--color-primary-rgb), 0.14);
   transition: all var(--transition-base);
   box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+  min-height: 100px;
 }
 
 .stat-card:hover {
@@ -190,9 +191,10 @@
 }
 
 .dashboard-section__title {
-  font-size: var(--font-size-lg);
+  font-size: 1.125rem;
   font-weight: var(--font-weight-bold);
   color: var(--color-gray-800);
+  letter-spacing: -0.01em;
 }
 
 .dashboard-section__link {
@@ -633,9 +635,10 @@
 }
 
 /* ── Empty State (from UI.js) ── */
+/* Empty State deferred to components.css unified rules */
 .empty-state {
   text-align: center;
-  padding: var(--space-8) var(--space-6);
+  padding: 48px 32px;
   color: var(--color-text-muted);
 }
 
@@ -653,14 +656,13 @@
 }
 
 /* ── Badge (from UI.js renders) ── */
+/* Badge overrides deferred to components.css unified rules */
 .badge {
-  display: inline-flex;
-  align-items: center;
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-full);
+  padding: 4px var(--space-3);
+  min-height: 24px;
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semibold);
-  white-space: nowrap;
+  line-height: 1;
 }
 
 .badge--primary {

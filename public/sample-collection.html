@@ -17,6 +17,60 @@
   <link rel="stylesheet" href="/css/footer.css">
   <link rel="stylesheet" href="/css/animations.css">
   <link rel="stylesheet" href="/css/sample-collection.css">
+  <style>
+    /* Coverage Area Redesign */
+    .sc-coverage {
+      text-align: center;
+    }
+    .sc-coverage__grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-6);
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .sc-coverage-card {
+      width: calc(33.333% - var(--space-6) * 2 / 3);
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6) var(--space-5);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+      transition: transform var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .sc-coverage-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(var(--color-primary-rgb), 0.3);
+      box-shadow: 0 12px 24px rgba(var(--color-primary-rgb), 0.08);
+    }
+    .sc-coverage-card strong {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-800);
+      margin-bottom: var(--space-2);
+    }
+    .sc-coverage-card span {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-light);
+    }
+    
+    @media (max-width: 992px) {
+      .sc-coverage-card {
+        width: calc(50% - var(--space-6) / 2);
+      }
+    }
+    @media (max-width: 576px) {
+      .sc-coverage-card {
+        width: 100%;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="/css/responsive.css">
 </head>
 <body class="public-page">
   <div id="global-navbar"></div>
@@ -172,66 +226,30 @@
         <h2 class="section-header__title">Service Coverage Areas</h2>
         <p class="section-header__subtitle">We're expanding to serve more communities every month</p>
       </div>
-      <div class="sc-coverage__layout">
-        <div class="sc-coverage__map reveal">
-          <div class="sc-coverage__map-grid">
-            <div class="sc-coverage__dot sc-coverage__dot--active" style="top:25%;left:30%;"><span class="sc-coverage__pulse"></span></div>
-            <div class="sc-coverage__dot sc-coverage__dot--active" style="top:40%;left:55%;"><span class="sc-coverage__pulse"></span></div>
-            <div class="sc-coverage__dot sc-coverage__dot--active" style="top:60%;left:25%;"><span class="sc-coverage__pulse"></span></div>
-            <div class="sc-coverage__dot sc-coverage__dot--active" style="top:35%;left:75%;"><span class="sc-coverage__pulse"></span></div>
-            <div class="sc-coverage__dot sc-coverage__dot--active" style="top:70%;left:60%;"><span class="sc-coverage__pulse"></span></div>
-            <div class="sc-coverage__dot" style="top:50%;left:40%;"></div>
-            <div class="sc-coverage__dot" style="top:20%;left:50%;"></div>
-            <div class="sc-coverage__dot" style="top:75%;left:40%;"></div>
-            <svg class="sc-coverage__map-svg" viewBox="0 0 300 200" preserveAspectRatio="xMidYMid meet">
-              <rect x="20" y="15" width="260" height="170" rx="20" fill="rgba(78,154,151,0.04)" stroke="rgba(78,154,151,0.15)" stroke-width="1.5" stroke-dasharray="6 4"/>
-              <path d="M50 40 Q80 30 110 50 Q140 70 170 45 Q200 20 230 50" stroke="rgba(78,154,151,0.2)" stroke-width="1" fill="none" stroke-dasharray="3 3"/>
-              <path d="M40 90 Q100 70 150 100 Q200 130 260 100" stroke="rgba(78,154,151,0.2)" stroke-width="1" fill="none" stroke-dasharray="3 3"/>
-              <path d="M60 140 Q130 160 200 130 Q240 110 270 140" stroke="rgba(78,154,151,0.2)" stroke-width="1" fill="none" stroke-dasharray="3 3"/>
-            </svg>
+      <div class="sc-coverage__content reveal">
+        <div class="sc-coverage__grid">
+          <div class="sc-coverage-card">
+            <strong>City Center</strong>
+            <span>Downtown & Business District</span>
+          </div>
+          <div class="sc-coverage-card">
+            <strong>North Zone</strong>
+            <span>North Residential & Tech Park</span>
+          </div>
+          <div class="sc-coverage-card">
+            <strong>South Extension</strong>
+            <span>South Colony & Lake Area</span>
+          </div>
+          <div class="sc-coverage-card">
+            <strong>East Township</strong>
+            <span>East Gate & Industrial Zone</span>
+          </div>
+          <div class="sc-coverage-card">
+            <strong>West Campus</strong>
+            <span>University Area & Medical District</span>
           </div>
         </div>
-        <div class="sc-coverage__content reveal">
-          <h3>Currently Serving</h3>
-          <div class="sc-coverage__areas">
-            <div class="sc-coverage__area">
-              <span class="sc-coverage__area-dot"></span>
-              <div>
-                <strong>City Center</strong>
-                <span>Downtown & Business District</span>
-              </div>
-            </div>
-            <div class="sc-coverage__area">
-              <span class="sc-coverage__area-dot"></span>
-              <div>
-                <strong>North Zone</strong>
-                <span>North Residential & Tech Park</span>
-              </div>
-            </div>
-            <div class="sc-coverage__area">
-              <span class="sc-coverage__area-dot"></span>
-              <div>
-                <strong>South Extension</strong>
-                <span>South Colony & Lake Area</span>
-              </div>
-            </div>
-            <div class="sc-coverage__area">
-              <span class="sc-coverage__area-dot"></span>
-              <div>
-                <strong>East Township</strong>
-                <span>East Gate & Industrial Zone</span>
-              </div>
-            </div>
-            <div class="sc-coverage__area">
-              <span class="sc-coverage__area-dot"></span>
-              <div>
-                <strong>West Campus</strong>
-                <span>University Area & Medical District</span>
-              </div>
-            </div>
-          </div>
-          <p class="sc-coverage__note">New areas added every month. Enter your pincode during checkout to check eligibility.</p>
-        </div>
+        <p class="sc-coverage__note" style="margin-top: var(--space-8);">New areas added every month. Enter your pincode during checkout to check eligibility.</p>
       </div>
     </div>
   </section>

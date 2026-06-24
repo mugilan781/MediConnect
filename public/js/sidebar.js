@@ -85,8 +85,6 @@ const Sidebar = {
       ] },
       { section: 'SYSTEM', items: [
         { dashboardPath: '/admin-dashboard.html', dataTab: 'notifications', icon: 'bell', label: 'Notifications' },
-        { dashboardPath: '/admin-dashboard.html', dataTab: 'cms', icon: 'file', label: 'CMS Content' },
-        { dashboardPath: '/admin-dashboard.html', dataTab: 'settings', icon: 'settings', label: 'Settings' },
       ] },
     ],
   },
@@ -134,11 +132,7 @@ const Sidebar = {
     });
 
     container.innerHTML = `
-      <div class="sidebar__logo">
-        <div class="sidebar__logo-icon">M</div>
-        <span class="sidebar__logo-text">MediConnect</span>
-      </div>
-      <nav class="sidebar__nav">${navHtml}</nav>
+      <nav class="sidebar__nav" style="padding-top:var(--space-4);">${navHtml}</nav>
       <div class="sidebar__footer">
         <a href="#" class="sidebar__link" id="logout-btn"><span class="sidebar__link-icon">${sideIcon('logout')}</span> Logout</a>
       </div>
@@ -163,10 +157,6 @@ const Sidebar = {
         </button>
         <div class="topbar__user">
           <div class="avatar avatar-placeholder" id="topbar-user-avatar">P</div>
-          <div class="hide-mobile">
-            <div class="topbar__user-name" id="topbar-user-name">User</div>
-            <div class="topbar__user-role" id="topbar-user-role">Role</div>
-          </div>
         </div>
         <span class="demo-badge" id="demo-mode-badge" style="display:none;">Demo Mode</span>
       </div>
@@ -177,6 +167,94 @@ const Sidebar = {
     this.render();
     this.renderTopbar(title || 'Dashboard', breadcrumb || 'Home');
     this._applyDemoContext();
+    this.initToggle();
+  },
+
+  /**
+   * Initialize mobile sidebar toggle behavior:
+   * - Hamburger button opens/closes sidebar
+   * - Overlay appears behind sidebar, clicking it closes
+   * - Body scroll is locked when sidebar is open
+   * - Clicking a nav link closes the sidebar on mobile
+   * - Resizing to desktop auto-resets mobile state
+   */
+  initToggle() {
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('sidebar-toggle');
+    if (!sidebar || !toggleBtn) return;
+
+    // Create overlay element (appended to body for proper stacking)
+    let overlay = document.querySelector('.sidebar-overlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.className = 'sidebar-overlay';
+      document.body.appendChild(overlay);
+    }
+
+    // Track scroll position for scroll lock
+    let scrollY = 0;
+
+    const openSidebar = () => {
+      // Save scroll position before locking
+      scrollY = window.scrollY;
+      sidebar.classList.add('open');
+      overlay.classList.add('active');
+      document.body.classList.add('sidebar-open');
+      document.body.style.top = `-${scrollY}px`;
+    };
+
+    const closeSidebar = () => {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('active');
+      document.body.classList.remove('sidebar-open');
+      document.body.style.top = '';
+      // Restore scroll position
+      window.scrollTo(0, scrollY);
+    };
+
+    // Hamburger toggle
+    toggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (sidebar.classList.contains('open')) {
+        closeSidebar();
+      } else {
+        openSidebar();
+      }
+    });
+
+    // Overlay click closes sidebar (both mouse and touch)
+    overlay.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      closeSidebar();
+    });
+
+    overlay.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      closeSidebar();
+    }, { passive: false });
+
+    // Clicking a sidebar nav link closes sidebar on mobile/tablet
+    sidebar.addEventListener('click', (e) => {
+      const link = e.target.closest('.sidebar__link');
+      if (link && window.innerWidth <= 1024) {
+        // Small delay so navigation action fires first
+        setTimeout(() => closeSidebar(), 100);
+      }
+    });
+
+    // Auto-reset when resizing past breakpoint
+    const mql = window.matchMedia('(min-width: 1025px)');
+    const handleResize = (e) => {
+      if (e.matches) {
+        closeSidebar();
+      }
+    };
+    if (mql.addEventListener) {
+      mql.addEventListener('change', handleResize);
+    } else {
+      mql.addListener(handleResize);
+    }
   },
 
   /**
@@ -188,14 +266,10 @@ const Sidebar = {
     const { user, isDemo } = DemoAuth.getCurrentUserOrDemo(role);
 
     // Populate topbar with user info (real or demo)
-    const nameEl = document.getElementById('topbar-user-name');
-    const roleEl = document.getElementById('topbar-user-role');
     const avatarEl = document.getElementById('topbar-user-avatar');
     const demoBadge = document.getElementById('demo-mode-badge');
 
     if (user) {
-      if (nameEl) nameEl.textContent = user.full_name;
-      if (roleEl) roleEl.textContent = user.role.charAt(0).toUpperCase() + user.role.slice(1);
       if (avatarEl) avatarEl.textContent = user.full_name.charAt(0).toUpperCase();
     }
 

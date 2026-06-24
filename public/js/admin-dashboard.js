@@ -33,6 +33,17 @@ const Utils = {
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  },
+
+  /**
+   * Safe value display: returns escaped value if present,
+   * or a muted centered hyphen for null/undefined/empty/whitespace.
+   */
+  val(value) {
+    if (value === null || value === undefined) return '<span style="color:var(--color-gray-400,#9ca3af);">&mdash;</span>';
+    const str = String(value).trim();
+    if (str === '') return '<span style="color:var(--color-gray-400,#9ca3af);">&mdash;</span>';
+    return Utils.escapeHtml(str);
   }
 };
 
@@ -68,6 +79,15 @@ const AdminDashboard = {
         const tabId = btn.getAttribute('data-tab');
         this.switchTab(tabId);
       });
+    });
+
+    // Delegated handler for any [data-tab] button outside sidebar (e.g. overview "View All" buttons)
+    document.addEventListener('click', (e) => {
+      const tabTrigger = e.target.closest('[data-tab]');
+      if (tabTrigger && !tabTrigger.classList.contains('sidebar__link')) {
+        e.preventDefault();
+        this.switchTab(tabTrigger.dataset.tab);
+      }
     });
 
     // Initialize general event listeners
@@ -410,6 +430,35 @@ const AdminDashboard = {
         if (d.notifTypeStats) {
           this.renderBarChart('notif-stats-chart', d.notifTypeStats, 'type', 'count');
         }
+
+        // ── Platform Health & Insights panel ──
+        const hPatients = document.getElementById('health-active-patients');
+        if (hPatients) hPatients.textContent = d.users?.patients || 0;
+
+        const hDoctors = document.getElementById('health-active-doctors');
+        if (hDoctors) hDoctors.textContent = d.users?.doctors || 0;
+
+        const hLabs = document.getElementById('health-pending-labs');
+        if (hLabs) hLabs.textContent = d.labBookings?.pending || 0;
+
+        const hCollections = document.getElementById('health-pending-collections');
+        if (hCollections) hCollections.textContent = d.collectionStats?.pending || 0;
+
+        const hConsultations = document.getElementById('health-total-consultations');
+        if (hConsultations) hConsultations.textContent = d.consultationAnalytics?.total || 0;
+
+        // Appointment completion rate
+        const hCompletion = document.getElementById('health-appt-completion');
+        if (hCompletion) {
+          const total = Number(d.appointments?.total || 0);
+          const upcoming = Number(d.appointments?.upcoming || 0);
+          const completed = total - upcoming;
+          if (total > 0) {
+            hCompletion.textContent = Math.round((completed / total) * 100) + '%';
+          } else {
+            hCompletion.textContent = '—';
+          }
+        }
       }
 
       // Populate activity feed with latest broadcast logs
@@ -423,22 +472,26 @@ const AdminDashboard = {
 
         const listHtml = activityRes.data.map(n => {
           const typeDot = n.type === 'warning' ? 'danger' : (n.type === 'success' ? 'success' : 'primary');
-          const roleBadge = n.role ? `<span class="badge badge--gray badge--sm">${n.role.toUpperCase()}</span>` : '';
+          const typeBadgeClass = n.type === 'warning' ? 'badge--warning' : (n.type === 'success' ? 'badge--success' : (n.type === 'info' ? 'badge--info' : 'badge--primary'));
+          const roleBadge = n.role ? `<span class="badge badge--gray" style="font-size:10px;padding:2px 8px;">${n.role.toUpperCase()}</span>` : '';
           return `
-            <div class="activity-item">
+            <div class="activity-item" style="padding:14px 0;border-bottom:1px solid var(--color-border);">
               <div class="activity-item__dot activity-item__dot--${typeDot}"></div>
-              <div class="activity-item__content">
-                <div class="activity-item__text">
-                  <strong>${Utils.escapeHtml(n.title)}</strong> - ${Utils.escapeHtml(n.message)}
+              <div class="activity-item__content" style="flex:1;min-width:0;">
+                <div class="activity-item__text" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                  <strong style="white-space:nowrap;">${Utils.escapeHtml(n.title)}</strong>
+                  <span class="badge ${typeBadgeClass}" style="font-size:10px;padding:2px 8px;">${n.type || 'system'}</span>
+                  ${roleBadge}
                 </div>
-                <div class="activity-item__time">
-                  Sent to ${Utils.escapeHtml(n.full_name || 'All')} ${roleBadge} | ${UI.formatDate(n.created_at)} ${UI.formatTime(n.created_at)}
+                <div style="font-size:0.8125rem;color:var(--color-gray-600);margin-top:4px;line-height:1.5;">${Utils.escapeHtml(n.message)}</div>
+                <div class="activity-item__time" style="margin-top:6px;font-size:0.75rem;color:var(--color-gray-400);">
+                  Sent to ${Utils.escapeHtml(n.full_name || 'All')} · ${UI.formatDate(n.created_at)} ${UI.formatTime(n.created_at)}
                 </div>
               </div>
             </div>
           `;
         }).join('');
-        container.innerHTML = `<div class="activity-list">${listHtml}</div>`;
+        container.innerHTML = `<div class="activity-list" style="padding:0 4px;">${listHtml}</div>`;
       }
     } catch (error) {
       UI.showToast('Failed to load dashboard statistics.', 'error');
@@ -532,7 +585,7 @@ const AdminDashboard = {
             <td>${Utils.escapeHtml(d.specialization)}</td>
             <td>${Utils.escapeHtml(d.department || '—')}</td>
             <td>$${d.consultation_fee}</td>
-            <td><span class="badge ${d.is_available ? 'badge--success' : 'badge--warning'}">${d.is_available ? 'Available' : 'Unavailable'}</span></td>
+            <td style="text-align:center;"><span class="badge ${d.is_available ? 'badge--success' : 'badge--warning'}">${d.is_available ? 'Available' : 'Unavailable'}</span></td>
             <td>
               <div class="d-flex gap-2">
                 <button class="btn btn--secondary btn--xs" onclick="AdminDashboard.viewDoctorDetails(${d.id})">${MediIcons.icon('calendar')} Schedule/Leaves</button>
@@ -547,12 +600,12 @@ const AdminDashboard = {
           <table class="table">
             <thead>
               <tr>
-                <th>Doctor Name</th>
-                <th>Specialization</th>
-                <th>Department</th>
-                <th>Consult Fee</th>
-                <th>Availability</th>
-                <th>Actions</th>
+                <th style="min-width:150px;">Doctor Name</th>
+                <th style="min-width:120px;">Specialization</th>
+                <th style="min-width:110px;">Department</th>
+                <th style="width:100px;">Consult Fee</th>
+                <th style="width:110px;text-align:center;">Availability</th>
+                <th style="min-width:220px;">Actions</th>
               </tr>
             </thead>
             <tbody>${rows}</tbody>
@@ -597,8 +650,8 @@ const AdminDashboard = {
             <tr>
               <td><strong>${Utils.escapeHtml(a.patient_name)}</strong></td>
               <td>Dr. ${Utils.escapeHtml(a.doctor_name)}</td>
-              <td>${UI.formatDate(a.appointment_date)} at ${UI.formatTime(a.appointment_time)}</td>
-              <td>${UI.statusBadge(a.status)}</td>
+              <td style="white-space:nowrap;">${UI.formatDate(a.appointment_date)} at ${UI.formatTime(a.appointment_time)}</td>
+              <td style="text-align:center;">${UI.statusBadge(a.status)}</td>
               <td>
                 <div class="d-flex gap-2">
                   ${isConfirmable ? `<button class="btn btn--success btn--xs" onclick="AdminDashboard.handleConfirmAppointment(${a.id})">${MediIcons.icon('check')} Confirm</button>` : ''}
@@ -615,11 +668,11 @@ const AdminDashboard = {
           <table class="table">
             <thead>
               <tr>
-                <th>Patient</th>
-                <th>Doctor</th>
-                <th>Date & Time</th>
-                <th>Status</th>
-                <th>Actions</th>
+                <th style="min-width:130px;">Patient</th>
+                <th style="min-width:130px;">Doctor</th>
+                <th style="min-width:160px;">Date & Time</th>
+                <th style="width:110px;text-align:center;">Status</th>
+                <th style="min-width:240px;">Actions</th>
               </tr>
             </thead>
             <tbody>${rows}</tbody>
@@ -656,9 +709,9 @@ const AdminDashboard = {
           <tr>
             <td><strong>${Utils.escapeHtml(c.patient_name)}</strong></td>
             <td>Dr. ${Utils.escapeHtml(c.doctor_name)}</td>
-            <td>${Utils.escapeHtml(c.diagnosis)}</td>
-            <td>${Utils.escapeHtml(c.prescription || '—')}</td>
-            <td>${c.follow_up_date ? UI.formatDate(c.follow_up_date) : 'None'}</td>
+            <td>${Utils.val(c.diagnosis)}</td>
+            <td>${Utils.val(c.prescription)}</td>
+            <td>${c.follow_up_date ? UI.formatDate(c.follow_up_date) : '<span style="color:var(--color-gray-400,#9ca3af);">&mdash;</span>'}</td>
             <td>${UI.formatDate(c.created_at)}</td>
           </tr>
         `).join('');
@@ -703,9 +756,9 @@ const AdminDashboard = {
         const rows = res.data.map(t => `
           <tr>
             <td><strong>${Utils.escapeHtml(t.test_name)}</strong></td>
-            <td><span class="badge badge--info">${Utils.escapeHtml(t.category)}</span></td>
-            <td><strong>$${t.price}</strong></td>
-            <td>${Utils.escapeHtml(t.description || '—')}</td>
+            <td><span class="badge badge--info">${Utils.val(t.category)}</span></td>
+            <td><strong>$${t.price != null ? t.price : '<span style="color:var(--color-gray-400,#9ca3af);">&mdash;</span>'}</strong></td>
+            <td>${Utils.val(t.description)}</td>
             <td><span class="badge ${t.is_active ? 'badge--success' : 'badge--gray'}">${t.is_active ? 'Active' : 'Inactive'}</span></td>
             <td>
               <div class="d-flex gap-2">
@@ -771,20 +824,23 @@ const AdminDashboard = {
             <tr>
               <td><strong>${Utils.escapeHtml(b.patient_name)}</strong></td>
               <td>${Utils.escapeHtml(b.test_name)}</td>
-              <td>${UI.formatDate(b.booking_date)} ${b.preferred_time ? 'at ' + UI.formatTime(b.preferred_time) : ''}</td>
+              <td style="white-space:nowrap;">${UI.formatDate(b.booking_date)}${b.preferred_time ? ' at ' + UI.formatTime(b.preferred_time) : ''}</td>
               <td>${UI.statusBadge(b.status)}</td>
               <td>
-                ${b.result_file_url ? `<a href="${b.result_file_url}" target="_blank" class="btn btn--ghost btn--xs">${MediIcons.icon('file')} View Result</a>` : '—'}
+                ${b.result_file_url ? `<a href="${b.result_file_url}" target="_blank" class="btn btn--ghost btn--xs">${MediIcons.icon('file')} View Result</a>` : '<span style="color:var(--color-gray-400,#9ca3af);">&mdash;</span>'}
               </td>
               <td>
-                <div class="d-flex gap-2">
-                  ${canConfirm ? `<button class="btn btn--success btn--xs" onclick="AdminDashboard.handleUpdateLabStatus(${b.id}, 'confirmed')">Confirm</button>` : ''}
-                  ${canSchedule ? `<button class="btn btn--info btn--xs" onclick="AdminDashboard.handleUpdateLabStatus(${b.id}, 'sample_scheduled')">Schedule Sample</button>` : ''}
-                  ${canCollect ? `<button class="btn btn--primary btn--xs" onclick="AdminDashboard.handleUpdateLabStatus(${b.id}, 'sample_collected')">Collected</button>` : ''}
-                  ${canProcess ? `<button class="btn btn--warning btn--xs" onclick="AdminDashboard.handleUpdateLabStatus(${b.id}, 'processing')">Process</button>` : ''}
-                  ${canComplete ? `<button class="btn btn--success btn--xs" onclick="AdminDashboard.openLabResultModal(${b.id})">Upload Result</button>` : ''}
-                  ${b.status !== 'completed' && b.status !== 'cancelled' ? `<button class="btn btn--danger btn--xs" onclick="AdminDashboard.handleUpdateLabStatus(${b.id}, 'cancelled')">Cancel</button>` : ''}
-                </div>
+                ${b.status === 'completed' || b.status === 'cancelled'
+                  ? '<span style="color:var(--color-gray-400,#9ca3af);">&mdash;</span>'
+                  : `<div class="d-flex gap-2" style="flex-wrap:wrap;">
+                      ${canConfirm ? `<button class="btn btn--success btn--xs" onclick="AdminDashboard.handleUpdateLabStatus(${b.id}, 'confirmed')">Confirm</button>` : ''}
+                      ${canSchedule ? `<button class="btn btn--info btn--xs" onclick="AdminDashboard.handleUpdateLabStatus(${b.id}, 'sample_scheduled')">Schedule Sample</button>` : ''}
+                      ${canCollect ? `<button class="btn btn--primary btn--xs" onclick="AdminDashboard.handleUpdateLabStatus(${b.id}, 'sample_collected')">Collected</button>` : ''}
+                      ${canProcess ? `<button class="btn btn--warning btn--xs" onclick="AdminDashboard.handleUpdateLabStatus(${b.id}, 'processing')">Process</button>` : ''}
+                      ${canComplete ? `<button class="btn btn--success btn--xs" onclick="AdminDashboard.openLabResultModal(${b.id})">Upload Result</button>` : ''}
+                      <button class="btn btn--danger btn--xs" onclick="AdminDashboard.handleUpdateLabStatus(${b.id}, 'cancelled')">Cancel</button>
+                    </div>`
+                }
               </td>
             </tr>
           `;
@@ -794,12 +850,12 @@ const AdminDashboard = {
           <table class="table">
             <thead>
               <tr>
-                <th>Patient</th>
-                <th>Lab Test</th>
-                <th>Date & Time</th>
-                <th>Status</th>
-                <th>Report File</th>
-                <th>Actions</th>
+                <th style="min-width:120px;">Patient</th>
+                <th style="min-width:110px;">Lab Test</th>
+                <th style="min-width:150px;">Date & Time</th>
+                <th style="width:120px;text-align:center;">Status</th>
+                <th style="width:110px;">Report File</th>
+                <th style="min-width:240px;">Actions</th>
               </tr>
             </thead>
             <tbody>${rows}</tbody>
@@ -1172,25 +1228,36 @@ const AdminDashboard = {
           return;
         }
 
-        const rows = res.data.map(n => `
+        const typeBadgeMap = {
+          system: 'badge--primary',
+          info: 'badge--info',
+          warning: 'badge--warning',
+          success: 'badge--success',
+          error: 'badge--danger'
+        };
+
+        const rows = res.data.map(n => {
+          const badgeClass = typeBadgeMap[n.type] || 'badge--gray';
+          return `
           <tr>
             <td><strong>${Utils.escapeHtml(n.full_name || 'All Users')}</strong></td>
             <td>${Utils.escapeHtml(n.title)}</td>
-            <td>${Utils.escapeHtml(n.message)}</td>
-            <td><span class="badge badge--info">${n.type}</span></td>
-            <td>${UI.formatDate(n.created_at)} ${UI.formatTime(n.created_at)}</td>
+            <td style="max-width:320px;word-wrap:break-word;overflow-wrap:break-word;white-space:normal;line-height:1.5;">${Utils.escapeHtml(n.message)}</td>
+            <td><span class="badge ${badgeClass}">${n.type}</span></td>
+            <td style="white-space:nowrap;">${UI.formatDate(n.created_at)} ${UI.formatTime(n.created_at)}</td>
           </tr>
-        `).join('');
+        `;
+        }).join('');
 
         container.innerHTML = `
           <table class="table">
             <thead>
               <tr>
-                <th>Recipient</th>
-                <th>Title</th>
-                <th>Message</th>
-                <th>Type</th>
-                <th>Sent At</th>
+                <th style="min-width:120px;">Recipient</th>
+                <th style="min-width:140px;">Title</th>
+                <th style="min-width:200px;">Message</th>
+                <th style="width:90px;">Type</th>
+                <th style="width:150px;">Sent At</th>
               </tr>
             </thead>
             <tbody>${rows}</tbody>
@@ -1220,41 +1287,75 @@ const AdminDashboard = {
 
         // 3. Top Doctors table
         const docContainer = document.getElementById('analytics-top-doctors');
+        const docCountBadge = document.getElementById('analytics-doc-count');
         if (d.topDoctors && d.topDoctors.length > 0) {
-          const docRows = d.topDoctors.map(doc => `
+          if (docCountBadge) {
+            docCountBadge.textContent = d.topDoctors.length;
+            docCountBadge.style.display = 'inline-flex';
+          }
+          const maxBookings = Math.max(...d.topDoctors.map(doc => doc.appointment_count || 0), 1);
+          const docRows = d.topDoctors.map((doc, i) => {
+            const pct = Math.round(((doc.appointment_count || 0) / maxBookings) * 100);
+            return `
             <tr>
+              <td style="width:36px;text-align:center;font-weight:700;color:var(--color-gray-400);">${i + 1}</td>
               <td><strong>${Utils.escapeHtml(doc.name)}</strong></td>
-              <td>${Utils.escapeHtml(doc.specialization)}</td>
-              <td><span class="badge badge--success">${doc.appointment_count} Bookings</span></td>
+              <td><span class="badge badge--gray" style="font-size:11px;">${Utils.escapeHtml(doc.specialization)}</span></td>
+              <td style="min-width:140px;">
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <div style="flex:1;height:6px;background:var(--color-border, #e5e7eb);border-radius:3px;overflow:hidden;">
+                    <div style="width:${pct}%;height:100%;background:var(--color-primary, #16a34a);border-radius:3px;transition:width 600ms ease;"></div>
+                  </div>
+                  <span style="font-weight:700;font-size:0.8125rem;white-space:nowrap;">${doc.appointment_count}</span>
+                </div>
+              </td>
             </tr>
-          `).join('');
+          `;
+          }).join('');
           docContainer.innerHTML = `
-            <table class="table">
-              <thead><tr><th>Doctor</th><th>Specialty</th><th>Total Bookings</th></tr></thead>
+            <table class="table analytics-table">
+              <thead><tr><th style="width:36px;">#</th><th>Doctor</th><th>Specialty</th><th>Bookings</th></tr></thead>
               <tbody>${docRows}</tbody>
             </table>
           `;
         } else {
-          docContainer.innerHTML = '<div class="empty-state">No appointments recorded yet.</div>';
+          docContainer.innerHTML = '<div class="empty-state" style="padding:32px;">No appointments recorded yet.</div>';
         }
 
         // 4. Popular lab tests
         const testContainer = document.getElementById('analytics-top-labtests');
+        const testCountBadge = document.getElementById('analytics-test-count');
         if (d.labTestTrends && d.labTestTrends.length > 0) {
-          const testRows = d.labTestTrends.map(t => `
+          if (testCountBadge) {
+            testCountBadge.textContent = d.labTestTrends.length;
+            testCountBadge.style.display = 'inline-flex';
+          }
+          const maxTests = Math.max(...d.labTestTrends.map(t => t.booking_count || 0), 1);
+          const testRows = d.labTestTrends.map((t, i) => {
+            const pct = Math.round(((t.booking_count || 0) / maxTests) * 100);
+            return `
             <tr>
+              <td style="width:36px;text-align:center;font-weight:700;color:var(--color-gray-400);">${i + 1}</td>
               <td><strong>${Utils.escapeHtml(t.test_name)}</strong></td>
-              <td><span class="badge badge--info">${t.booking_count} Booked</span></td>
+              <td style="min-width:140px;">
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <div style="flex:1;height:6px;background:var(--color-border, #e5e7eb);border-radius:3px;overflow:hidden;">
+                    <div style="width:${pct}%;height:100%;background:#0284c7;border-radius:3px;transition:width 600ms ease;"></div>
+                  </div>
+                  <span style="font-weight:700;font-size:0.8125rem;white-space:nowrap;">${t.booking_count}</span>
+                </div>
+              </td>
             </tr>
-          `).join('');
+          `;
+          }).join('');
           testContainer.innerHTML = `
-            <table class="table">
-              <thead><tr><th>Lab Test</th><th>Times Booked</th></tr></thead>
+            <table class="table analytics-table">
+              <thead><tr><th style="width:36px;">#</th><th>Lab Test</th><th>Times Booked</th></tr></thead>
               <tbody>${testRows}</tbody>
             </table>
           `;
         } else {
-          testContainer.innerHTML = '<div class="empty-state">No lab tests booked yet.</div>';
+          testContainer.innerHTML = '<div class="empty-state" style="padding:32px;">No lab tests booked yet.</div>';
         }
       }
     } catch (error) {
@@ -1270,28 +1371,44 @@ const AdminDashboard = {
     if (!container) return;
 
     if (!data || data.length === 0) {
-      container.innerHTML = '<div class="empty-state">No data available</div>';
+      container.innerHTML = '<div class="empty-state" style="padding:32px;">No data available for this period.</div>';
       return;
     }
 
     const values = data.map(item => Number(item[yKey] || 0));
-    const maxVal = Math.max(...values, 5);
+    const maxVal = Math.max(...values, 1);
 
-    const barsHtml = data.map(item => {
+    // Generate Y-axis grid lines (4 lines)
+    const gridLines = [0.25, 0.5, 0.75, 1].map(pct => {
+      const val = Math.round(maxVal * pct);
+      return `<div class="ac-grid-line" style="bottom:${pct * 100}%;"><span class="ac-grid-label">${prefix}${val}</span></div>`;
+    }).join('');
+
+    const barsHtml = data.map((item, idx) => {
       const val = Number(item[yKey] || 0);
-      const pct = (val / maxVal) * 100;
+      const pct = Math.max((val / maxVal) * 100, 2); // min 2% so bars are visible
       const label = item[xKey] || '';
+      // Shorten date labels: "2026-06-15" → "Jun 15"
+      let displayLabel = label;
+      if (label.match(/^\d{4}-\d{2}-\d{2}$/)) {
+        const d = new Date(label);
+        displayLabel = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      }
       return `
-        <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;">
-          <div class="bar-chart-bar" style="height: ${pct}%; width: 50%;" title="${label}: ${prefix}${val}">
-            <div class="bar-chart-bar-tooltip">${prefix}${val}</div>
-          </div>
-          <div class="bar-chart-label" style="max-width: 60px; font-size: 8px;">${label}</div>
+        <div class="ac-bar-col" style="animation-delay:${idx * 30}ms;">
+          <div class="ac-bar-tooltip">${prefix}${val}</div>
+          <div class="ac-bar" style="height:${pct}%;" title="${displayLabel}: ${prefix}${val}"></div>
+          <div class="ac-bar-label">${displayLabel}</div>
         </div>
       `;
     }).join('');
 
-    container.innerHTML = barsHtml;
+    container.innerHTML = `
+      <div class="ac-chart-wrapper">
+        <div class="ac-grid-lines">${gridLines}</div>
+        <div class="ac-bars-row">${barsHtml}</div>
+      </div>
+    `;
   },
 
   /**

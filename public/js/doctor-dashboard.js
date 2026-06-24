@@ -69,6 +69,15 @@ const DoctorDashboard = {
       });
     });
 
+    // Delegated handler for any [data-tab] button outside sidebar (e.g. overview "View All" buttons)
+    document.addEventListener('click', (e) => {
+      const tabTrigger = e.target.closest('[data-tab]');
+      if (tabTrigger && !tabTrigger.classList.contains('sidebar__link')) {
+        e.preventDefault();
+        this.switchTab(tabTrigger.dataset.tab);
+      }
+    });
+
     const nestedButtons = document.querySelectorAll('.nested-tab-btn');
     nestedButtons.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -219,7 +228,15 @@ const DoctorDashboard = {
         document.getElementById('stat-today-appts').textContent = summary.todayAppointments || 0;
         document.getElementById('stat-upcoming-appts').textContent = consultationStats?.scheduled || 0;
         document.getElementById('stat-pending-consults').textContent = consultationStats?.requested || 0;
-        document.getElementById('stat-active-patients').textContent = summary.totalPatients || 0;
+
+        // Fetch uploaded reports count for KPI card
+        try {
+          const reportsRes = await Api.get('/reports?limit=1');
+          const reportsCount = reportsRes.success && reportsRes.pagination ? reportsRes.pagination.total : (reportsRes.success && reportsRes.data ? reportsRes.data.length : 0);
+          document.getElementById('stat-active-patients').textContent = reportsCount;
+        } catch (e) {
+          document.getElementById('stat-active-patients').textContent = summary.totalPatients || 0;
+        }
 
         // Render pending consultations request on overview
         const requestList = document.getElementById('overview-requests-list');
@@ -231,7 +248,7 @@ const DoctorDashboard = {
           }
 
           if (pendingConsultations.length === 0) {
-            requestList.innerHTML = '<div class="empty-state">No pending consultation requests.</div>';
+            requestList.innerHTML = '<div class="empty-state" style="padding:24px;">No pending consultation requests.</div>';
           } else {
             requestList.innerHTML = `<ul class="activity-list">
               ${pendingConsultations.slice(0, 5).map(c => `
@@ -240,7 +257,7 @@ const DoctorDashboard = {
                   <div class="activity-item__content">
                     <div class="activity-item__text"><strong>${c.patient_name}</strong> requested a consultation.</div>
                     <div class="activity-item__time">Pref. Date: ${UI.formatDate(c.preferred_date)}<br>Symptoms: ${c.symptoms || 'None recorded'}</div>
-                    <div class="mt-2">
+                    <div style="display:flex;gap:8px;margin-top:8px;">
                       <button class="btn btn--sm btn--primary" onclick="DoctorDashboard.handleConsultationRequest(${c.id}, 'accepted')">Accept</button>
                       <button class="btn btn--sm btn--ghost" onclick="DoctorDashboard.handleConsultationRequest(${c.id}, 'rejected')">Reject</button>
                     </div>
@@ -258,7 +275,7 @@ const DoctorDashboard = {
       const todayList = document.getElementById('overview-today-list');
       if (todayList && apptRes.success) {
         if (apptRes.data.length === 0) {
-          todayList.innerHTML = '<div class="empty-state">No appointments scheduled for today.</div>';
+          todayList.innerHTML = '<div class="empty-state" style="padding:24px;">No appointments scheduled for today.</div>';
         } else {
           todayList.innerHTML = `<div class="table-container"><table class="data-table">
             <thead><tr><th>Time</th><th>Patient</th><th>Type</th><th>Status</th></tr></thead>
@@ -290,11 +307,11 @@ const DoctorDashboard = {
       const overviewNotifList = document.getElementById('overview-notifications-list');
       if (overviewNotifList && notifsRes.success) {
         if (notifsRes.data.length === 0) {
-          overviewNotifList.innerHTML = '<div class="empty-state">No notifications yet.</div>';
+          overviewNotifList.innerHTML = '<div class="empty-state" style="padding:24px;">No notifications yet.</div>';
         } else {
           overviewNotifList.innerHTML = `<ul class="activity-list">
             ${notifsRes.data.map(n => `
-              <li class="activity-item" style="padding: 10px 0; border-bottom: 1px solid var(--border-color);">
+              <li class="activity-item" style="padding:12px 0;border-bottom:1px solid var(--color-border);">
                 <span class="activity-item__dot ${n.is_read ? 'activity-item__dot--secondary' : 'activity-item__dot--primary'}"></span>
                 <div class="activity-item__content">
                   <div class="activity-item__text"><strong>${n.title}</strong> — ${n.message}</div>

@@ -135,9 +135,10 @@ const UI = {
   },
 
   /**
-   * Get status badge HTML
+   * Get status badge HTML — handles null/undefined/empty status gracefully
    */
   statusBadge(status) {
+    if (!status || typeof status !== 'string' || !status.trim()) return '<span class="text-muted">—</span>';
     const badgeClass = CONFIG.STATUS_BADGES[status] || 'badge--gray';
     const label = status.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
     return `<span class="badge ${badgeClass}">${label}</span>`;
