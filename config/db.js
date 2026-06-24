@@ -17,6 +17,10 @@ const pool = mysql.createPool({
   queueLimit: 0,
   charset: 'utf8mb4',
   timezone: '+00:00',
+  // Enable SSL for cloud-hosted MySQL (Aiven, TiDB, etc.)
+  ...(env.NODE_ENV === 'production' && {
+    ssl: { rejectUnauthorized: false }
+  }),
 });
 
 module.exports = pool;
